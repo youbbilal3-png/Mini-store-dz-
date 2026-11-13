@@ -1,6 +1,6 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
-let user=null,store=null,products=[],orders=[];
+let user=null,store=null,products=[],orders=[],reviews=[];
 const message=(id,text)=>$(id).textContent=text;
 const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function makeSlug(name,id){const base=String(name||"store").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,25)||"store";return base+"-"+id.slice(0,7);}
@@ -66,6 +66,28 @@ async function updateOrderStatus(event){
  const {data,error}=await supabase.from("orders").update({status:select.value}).eq("id",select.dataset.orderStatus).eq("store_id",store.id).select("*").single();
  if(error){message("profileFeedback","تعذر تحديث حالة الطلب: "+error.message);return;}
  const index=orders.findIndex(o=>o.id===data.id);if(index>=0)orders[index]=data;renderOrders();
+}
+
+
+async function loadReviews(){
+ const {data,error}=await supabase.from("store_reviews").select("*").eq("store_id",store.id).order("created_at",{ascending:false});
+ if(error)throw error;reviews=data||[];renderReviews();
+}
+function renderReviews(){
+ const approved=reviews.filter(r=>r.status==="approved"),average=approved.length?approved.reduce((s,r)=>s+Number(r.rating),0)/approved.length:0;
+ $("reviewsAdminAverage").textContent=approved.length?average.toFixed(1)+"/5":"—";
+ $("reviewsAdminStars").textContent=approved.length?"★".repeat(Math.round(average))+"☆".repeat(5-Math.round(average)):"☆☆☆☆☆";
+ $("reviewsAdminCount").textContent=approved.length+" تقييم منشور · "+reviews.length+" إجمالي";
+ const labels={pending:"بانتظار المراجعة",approved:"منشور",rejected:"مرفوض"};
+ if(!reviews.length){$("managedReviews").innerHTML='<p class="empty-products">لا توجد تقييمات بعد. ستظهر هنا آراء الزبائن عندما يرسلونها من صفحة متجرك.</p>';return;}
+ $("managedReviews").innerHTML=reviews.map(r=>'<article class="managed-review"><div class="managed-review-body"><div class="managed-review-head"><strong>'+escapeHtml(r.customer_name)+'</strong><span class="review-stars">'+("★".repeat(Number(r.rating))+"☆".repeat(5-Number(r.rating)))+'</span></div><p>'+escapeHtml(r.comment)+'</p><small>'+new Date(r.created_at).toLocaleString("ar-DZ")+'</small><span class="review-state review-state-'+r.status+'">'+(labels[r.status]||r.status)+'</span></div><div class="managed-review-actions">'+(r.status!=="approved"?'<button type="button" data-review-action="approved" data-review-id="'+r.id+'">نشر</button>':"")+(r.status!=="rejected"?'<button type="button" data-review-action="rejected" data-review-id="'+r.id+'">رفض</button>':"")+'</div></article>').join("");
+}
+async function moderateReview(event){
+ const button=event.target.closest("[data-review-action]");if(!button)return;
+ button.disabled=true;
+ const {data,error}=await supabase.from("store_reviews").update({status:button.dataset.reviewAction}).eq("id",button.dataset.reviewId).eq("store_id",store.id).select("*").single();
+ if(error){message("profileFeedback","تعذر تحديث التقييم: "+error.message);button.disabled=false;return;}
+ const i=reviews.findIndex(r=>r.id===data.id);if(i>=0)reviews[i]=data;renderReviews();
 }
 
 async function loadProducts(){
@@ -198,7 +220,7 @@ async function init(){
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
  try{
-  store=await ensureStore();fillSettings();await loadProducts();await loadOrders();
+  store=await ensureStore();fillSettings();await loadProducts();await loadOrders();await loadReviews();
  }catch(error){
   $("storeStatus").textContent="تعذر تحميل بيانات المتجر";message("profileFeedback",error.message||"تحقق من الاتصال ثم أعد المحاولة.");
  }
@@ -208,7 +230,7 @@ async function init(){
  $("productForm").addEventListener("submit",saveProduct);
  $("productCategory").addEventListener("change",syncCustomCategory);
  $("managedProducts").addEventListener("click",manageProductClick);
- $("managedOrders").addEventListener("change",updateOrderStatus);
+ $("managedOrders").addEventListener("change",updateOrderStatus);\n $("managedReviews").addEventListener("click",moderateReview);
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
