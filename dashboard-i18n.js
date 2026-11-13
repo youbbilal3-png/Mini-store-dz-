@@ -123,6 +123,7 @@
     const picker = document.getElementById("dashboardLanguageSelect");
     if (picker) picker.value = lang;
     try { localStorage.setItem("msdz-language", lang); } catch (_) {}
+    document.dispatchEvent(new CustomEvent("msdz-language-changed", {detail:{language:lang}}));
   };
   document.addEventListener("DOMContentLoaded", () => {
     try { const saved = localStorage.getItem("msdz-language"); lang = ["ar","fr","en","es","de","tr"].includes(saved) ? saved : "ar"; } catch (_) {}
