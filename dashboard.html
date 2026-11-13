@@ -50,11 +50,19 @@ window.addEventListener("unhandledrejection",function(event){
 <a class="side-link" href="#stats"><span class="dashboard-menu-icon">📈</span><span>الإحصائيات</span></a>
 <a class="side-link" href="#reviews"><span class="dashboard-menu-icon">⭐</span><span>تقييمات الزبائن</span></a>
 <a class="side-link" href="#subscription"><span class="dashboard-menu-icon">💎</span><span>الاشتراكات والباقات</span></a>
+<a class="side-link" href="#referrals"><span class="dashboard-menu-icon">🎁</span><span data-referral-i18n="menu">ادعُ أصدقاءك</span></a>
 <a class="side-link featured-promotion-link" href="#featured-promotion"><span class="dashboard-menu-icon">🏆</span><span data-featured-i18n="menu">تمييز المتجر</span></a>
 <a class="side-link" href="#support"><span class="dashboard-menu-icon">💬</span><span>الدعم الفني</span></a>
 <a class="side-link" id="publicStoreSidebarLink" href="index.html" target="_blank" rel="noopener"><span class="dashboard-menu-icon">🌐</span><span>صفحة المتجر</span></a>
 </aside>
 <div class="dashboard-content">
+<section class="dash-panel referral-dashboard-panel" id="referrals">
+<div class="panel-heading"><div><span class="eyebrow">INVITE & GROW</span><h2>🎁 <span data-referral-i18n="title">ادعُ أصدقاءك واكسب شارات</span></h2><p data-referral-i18n="description">شارك رابطك الخاص مع أصدقائك. تُحتسب الدعوة بعد تأكيد الحساب بالبريد الإلكتروني.</p></div><span class="referral-count-pill"><strong id="referralCount">—</strong> <span data-referral-i18n="confirmed">دعوة مؤكدة</span></span></div>
+<div class="referral-link-box"><label for="referralLink" data-referral-i18n="yourLink">رابط دعوتك الخاص</label><div class="referral-link-row"><input id="referralLink" type="text" readonly dir="ltr" aria-label="Referral link"><button type="button" class="save-button" id="copyReferralLink" data-referral-i18n="copy">نسخ الرابط</button><button type="button" class="secondary-btn" id="shareReferralLink" data-referral-i18n="share">مشاركة</button></div><p id="referralFeedback" class="save-feedback" role="status"></p></div>
+<div class="referral-rewards-grid"><article><strong>3</strong><span data-referral-i18n="badge1">شارة داعٍ نشيط</span></article><article><strong>5</strong><span data-referral-i18n="badge2">شارة سفير المنصة</span></article><article><strong>10</strong><span data-referral-i18n="badge3">شارة نجم Mini Store</span></article></div>
+<p class="referral-progress" id="referralProgress" data-referral-i18n="progress">ابدأ بمشاركة رابطك لتجميع الدعوات المؤكدة.</p>
+<small class="referral-note" data-referral-i18n="note">تُحتسب الحسابات الجديدة المؤكدة فقط. لا تُمنح مكافأة عند النقر على الرابط أو إنشاء حسابات مكررة أو ذاتية.</small>
+</section>
 <section class="dash-panel subscription-panel" id="subscription" hidden>
 <div class="panel-heading"><div><span class="eyebrow">PLANS & BILLING</span><h2>الاشتراك والباقات</h2><p>اختر الخطة المناسبة لنمو متجرك. جرّب الخطط المدفوعة مجاناً لمدة 7 أيام.</p></div><span class="subscription-status" id="subscriptionStatus">جارٍ تحميل الاشتراك...</span></div>
 <div class="billing-cycle-switch" role="group" aria-label="دورة الاشتراك"><button type="button" class="active" id="billingMonthly">شهري</button><button type="button" id="billingYearly">سنوي — وفر شهرين</button></div>
