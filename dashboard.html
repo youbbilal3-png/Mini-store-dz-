@@ -7,7 +7,7 @@
 <link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg">
 <title>لوحة التاجر | Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-20"><link rel="stylesheet" href="dashboard.css?v=20261113-10">
+<link rel="stylesheet" href="styles.css?v=20261113-20"><link rel="stylesheet" href="dashboard.css?v=20261113-11">
 <script>document.documentElement.classList.add("language-loading");try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="dashboard-i18n.js?v=20261113-11"></script>
 <script>
@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261113-26" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261113-27" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body class="dashboard-page">
@@ -52,7 +52,7 @@ window.addEventListener("unhandledrejection",function(event){
 <div class="sidebar-note"><strong>متجرك على السحابة</strong><p>بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.</p></div>
 </aside>
 <div class="dashboard-content">
-<section class="dash-panel subscription-panel" id="subscription">
+<section class="dash-panel subscription-panel" id="subscription" hidden>
 <div class="panel-heading"><div><span class="eyebrow">PLANS & BILLING</span><h2>الاشتراك والباقات</h2><p>اختر الخطة المناسبة لنمو متجرك. جرّب الخطط المدفوعة مجاناً لمدة 7 أيام.</p></div><span class="subscription-status" id="subscriptionStatus">جارٍ تحميل الاشتراك...</span></div>
 <div class="billing-cycle-switch" role="group" aria-label="دورة الاشتراك"><button type="button" class="active" id="billingMonthly">شهري</button><button type="button" id="billingYearly">سنوي — وفر شهرين</button></div>
 <div class="subscription-current" id="subscriptionCurrent">جارٍ تحميل تفاصيل خطتك...</div>
