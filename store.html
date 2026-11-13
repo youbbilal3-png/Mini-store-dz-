@@ -11,7 +11,7 @@
 <meta property="og:title" content="اكتشف المتجر على Mini Store DZ">
 <meta property="og:description" content="تصفح المنتجات والتقييمات واطلب بسهولة عبر WhatsApp.">
 <link rel="stylesheet" href="styles.css?v=20261113-18">
-<script type="module" src="app.js?v=20261113-15"></script>
+<script type="module" src="app.js?v=20261113-16"></script>
 </head>
 <body>
 <header class="site-header">
@@ -31,7 +31,7 @@
       <a href="#products" data-i18n="navProducts">المنتجات</a>
       <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span data-i18n="navAbout">من نحن</span></button>
       <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span data-i18n="navContact">اتصل بنا</span></button>
-      <a href="dashboard.html" id="merchantAccountLink">حساب التاجر</a>
+      <a href="dashboard.html" id="merchantAccountLink" data-i18n="merchantAccount">حساب التاجر</a>
       <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html">أنشئ متجرك</a>
     </nav>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button>
@@ -109,8 +109,8 @@
   <dialog id="cartDialog" class="cart-dialog"><div class="cart-dialog-card"><button type="button" class="order-close" id="closeCartDialog" aria-label="إغلاق">×</button><span class="eyebrow">MINI STORE DZ · CART</span><h2 data-i18n="cart">سلة المشتريات</h2><div id="cartItemsList" class="cart-items-list"></div><div id="cartDialogTotal" class="order-dialog-total"></div><div class="cart-dialog-actions"><button type="button" class="secondary-btn" id="continueShoppingButton" data-i18n="continueShopping">متابعة التسوق</button><button type="button" class="primary-btn" id="checkoutCartButton" data-i18n="checkout">إتمام الطلب</button></div><p id="cartFeedback" class="cart-feedback" role="status"></p></div></dialog>
   <dialog id="orderDialog" class="order-dialog"><form id="customerOrderForm" class="order-dialog-card">
 <button type="button" class="order-close" id="closeOrderDialog" aria-label="إغلاق">×</button><span class="eyebrow">MINI STORE DZ · ORDER</span><h2 id="orderDialogTitle">إتمام الطلب</h2><p id="orderProductSummary"></p>
-<div class="order-form-fields"><label>الاسم الكامل<input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل"></label><label>رقم الهاتف<input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..."></label><label>ملاحظات (اختياري)<textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
-<div class="order-dialog-total" id="orderDialogTotal"></div><button class="primary-btn" id="submitCustomerOrder" type="submit">تأكيد الطلب والمتابعة إلى WhatsApp</button><p class="order-dialog-feedback" id="orderDialogFeedback" role="status"></p></form></dialog>
+<div class="order-form-fields"><label><span data-i18n="orderFullName">الاسم الكامل</span><input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل" data-i18n-placeholder="orderNamePlaceholder"></label><label><span data-i18n="orderPhone">رقم الهاتف</span><input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..." data-i18n-placeholder="orderPhonePlaceholder"></label><label><span data-i18n="orderNotes">ملاحظات (اختياري)</span><textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
+<div class="order-dialog-total" id="orderDialogTotal"></div><button class="primary-btn" id="submitCustomerOrder" type="submit" data-i18n="orderSubmit">تأكيد الطلب والمتابعة إلى WhatsApp</button><p class="order-dialog-feedback" id="orderDialogFeedback" role="status"></p></form></dialog>
 </main>
 <footer>
   <a class="brand" href="#"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
