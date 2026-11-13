@@ -8,11 +8,11 @@ function applyDashboardTheme(mode){
  if(button){button.title="المظهر الحالي: "+(label?.textContent||"تلقائي")+" — اضغط للتغيير";button.setAttribute("aria-label",button.title);}
 }
 function initDashboardTheme(){
- let mode="system";try{mode=localStorage.getItem("msdz-theme")||"system";}catch(error){}
+ let mode="system";try{mode=localStorage.getItem("msdz-theme-merchant")||"system";}catch(error){}
  applyDashboardTheme(mode);
  $("themeToggle")?.addEventListener("click",()=>{
   const current=document.documentElement.dataset.theme||"system",next=current==="system"?"light":current==="light"?"dark":"system";
-  try{localStorage.setItem("msdz-theme",next);}catch(error){}
+  try{localStorage.setItem("msdz-theme-merchant",next);}catch(error){}
   applyDashboardTheme(next);
  });
 }
