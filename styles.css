@@ -388,3 +388,6 @@ html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="syst
  }
  .header-tools nav>#createStoreLink{padding:6px 5px!important}
 }
+
+/* Keep the page hidden until its saved language has been applied. */
+html.language-loading body{visibility:hidden}
