@@ -240,14 +240,15 @@ html[data-theme="dark"] .contact-email a,html[data-theme="system"] .contact-emai
  .brand-row{min-height:52px;padding:6px 12px}
  .brand-row .brand{font-size:17px}
  .brand-row .brand-mark{width:31px;height:31px}
- .header-tools{min-height:48px;padding:6px 10px;gap:9px}
- .header-tools nav{width:auto;flex:1;min-width:0;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;gap:14px;padding:4px 1px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
- .header-tools nav::-webkit-scrollbar{display:none}
- .header-tools nav a{font-size:11px}
- .header-tools nav .header-merchant-cta{padding:7px 10px;font-size:11px}
- .header-tools .language-picker select{font-size:11px;padding:6px 5px;max-width:66px}
- .header-tools .theme-toggle{min-height:31px;padding:4px 6px;font-size:9px;gap:3px}
- .header-tools .theme-toggle-icon{font-size:13px}
+ .header-tools{min-height:46px;padding:5px 7px;gap:5px}
+ .header-tools nav{width:auto;flex:1 1 0;min-width:0;justify-content:space-between;overflow:visible;gap:4px;padding:3px 0}
+ .header-tools nav a{font-size:9px;letter-spacing:-.25px}
+ .header-tools nav .header-merchant-cta{padding:5px 5px;font-size:9px;border-radius:7px}
+ .header-tools .language-picker{flex:0 0 auto}
+ .header-tools .language-picker select{font-size:9px;padding:5px 2px;max-width:43px;min-width:40px}
+ .header-tools .theme-toggle{min-height:29px;width:29px;padding:3px;justify-content:center;font-size:0;gap:0;flex:0 0 29px}
+ .header-tools .theme-toggle-label{display:none}
+ .header-tools .theme-toggle-icon{font-size:15px}
 }
 html[data-theme="dark"] .brand-row,html[data-theme="system"] .brand-row{background:#fff}
 html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .brand{color:#101827}
