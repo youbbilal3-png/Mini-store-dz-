@@ -437,6 +437,15 @@ async function init(){
  }
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
+
+  try{
+   const {data:verifiedUser}=await supabase.auth.getUser();
+   if(verifiedUser?.user?.app_metadata?.role==="admin"&&!$("adminDashboardLink")){
+    const link=document.createElement("a");link.id="adminDashboardLink";link.className="dashboard-back";link.href="admin.html";link.textContent="لوحة الإدارة";
+    $("storeLink").before(link);
+   }
+  }catch(error){console.warn("Admin shortcut check skipped:",error);}
+
  try{
   store=await ensureStore();
   fillSettings();
