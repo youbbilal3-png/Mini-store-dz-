@@ -66,3 +66,37 @@
 
 /* Red warning for low or empty stock in merchant dashboard */
 .stock-low{color:#b91c1c!important;font-weight:850;background:#fee2e2;padding:3px 7px;border-radius:7px;border:1px solid #fca5a5;display:inline-block}
+
+
+/* Dashboard theme toggle and dark appearance */
+.dashboard-header .theme-toggle{flex:0 0 auto}
+html[data-theme="dark"] .dashboard-page{background:#0c1420;color:#edf2f7}
+html[data-theme="dark"] .dashboard-page .site-header,html[data-theme="dark"] .dashboard-page .dashboard-sidebar,html[data-theme="dark"] .dashboard-page .dash-panel,html[data-theme="dark"] .dashboard-page .dashboard-status,html[data-theme="dark"] .dashboard-page .chart-card{background:#121e2b;color:#edf2f7;border-color:#2b3b4d}
+html[data-theme="dark"] .dashboard-page .dashboard-welcome p,html[data-theme="dark"] .dashboard-page .panel-heading p,html[data-theme="dark"] .dashboard-page .dashboard-tag,html[data-theme="dark"] .dashboard-page .dashboard-status,html[data-theme="dark"] .dashboard-page .stats-note,html[data-theme="dark"] .dashboard-page .chart-heading span,html[data-theme="dark"] .dashboard-page .dashboard-footer{color:#aebdca}
+html[data-theme="dark"] .dashboard-page .side-link{color:#d9e2ec}
+html[data-theme="dark"] .dashboard-page .side-link.active,html[data-theme="dark"] .dashboard-page .side-link:hover{background:#26394b;color:#c7f36b}
+html[data-theme="dark"] .dashboard-page .sidebar-note,html[data-theme="dark"] .dashboard-page .product-form,html[data-theme="dark"] .dashboard-page .stat-card,html[data-theme="dark"] .dashboard-page .chart-card{background:#172536;border-color:#2b3b4d}
+html[data-theme="dark"] .dashboard-page .form-fields label,html[data-theme="dark"] .dashboard-page .chart-heading h3,html[data-theme="dark"] .dashboard-page .stat-card strong,html[data-theme="dark"] .dashboard-page .store-identity-copy h3{color:#edf2f7}
+html[data-theme="dark"] .dashboard-page .form-fields input,html[data-theme="dark"] .dashboard-page .form-fields textarea,html[data-theme="dark"] .dashboard-page .form-fields select,html[data-theme="dark"] .dashboard-page .managed-order-controls select{background:#0f1a27;color:#edf2f7;border-color:#34485d}
+html[data-theme="dark"] .dashboard-page .store-identity-card{background:linear-gradient(120deg,#1a2b3c,#142131);border-color:#34485d}
+html[data-theme="dark"] .dashboard-page .store-identity-copy p,html[data-theme="dark"] .dashboard-page .managed-product-info span,html[data-theme="dark"] .dashboard-page .managed-order-main span,html[data-theme="dark"] .dashboard-page .managed-order-main small,html[data-theme="dark"] .dashboard-page .managed-review-body small{color:#aebdca}
+html[data-theme="dark"] .dashboard-page .managed-product,html[data-theme="dark"] .dashboard-page .managed-order,html[data-theme="dark"] .dashboard-page .managed-review{background:#172536;border-color:#2b3b4d}
+html[data-theme="dark"] .dashboard-page .managed-product-actions button,html[data-theme="dark"] .dashboard-page .cancel-button{background:#1c2c3d;color:#edf2f7;border-color:#34485d}
+html[data-theme="dark"] .dashboard-page .text-button{color:#c0cad5}
+html[data-theme="dark"] .dashboard-page .theme-toggle{background:#172536;color:#edf2f7;border-color:#34485d}
+@media(prefers-color-scheme:dark){
+ html[data-theme="system"] .dashboard-page{background:#0c1420;color:#edf2f7}
+ html[data-theme="system"] .dashboard-page .site-header,html[data-theme="system"] .dashboard-page .dashboard-sidebar,html[data-theme="system"] .dashboard-page .dash-panel,html[data-theme="system"] .dashboard-page .dashboard-status,html[data-theme="system"] .dashboard-page .chart-card{background:#121e2b;color:#edf2f7;border-color:#2b3b4d}
+ html[data-theme="system"] .dashboard-page .dashboard-welcome p,html[data-theme="system"] .dashboard-page .panel-heading p,html[data-theme="system"] .dashboard-page .dashboard-tag,html[data-theme="system"] .dashboard-page .dashboard-status,html[data-theme="system"] .dashboard-page .stats-note,html[data-theme="system"] .dashboard-page .chart-heading span,html[data-theme="system"] .dashboard-page .dashboard-footer{color:#aebdca}
+ html[data-theme="system"] .dashboard-page .side-link{color:#d9e2ec}
+ html[data-theme="system"] .dashboard-page .side-link.active,html[data-theme="system"] .dashboard-page .side-link:hover{background:#26394b;color:#c7f36b}
+ html[data-theme="system"] .dashboard-page .sidebar-note,html[data-theme="system"] .dashboard-page .product-form,html[data-theme="system"] .dashboard-page .stat-card,html[data-theme="system"] .dashboard-page .chart-card{background:#172536;border-color:#2b3b4d}
+ html[data-theme="system"] .dashboard-page .form-fields label,html[data-theme="system"] .dashboard-page .chart-heading h3,html[data-theme="system"] .dashboard-page .stat-card strong,html[data-theme="system"] .dashboard-page .store-identity-copy h3{color:#edf2f7}
+ html[data-theme="system"] .dashboard-page .form-fields input,html[data-theme="system"] .dashboard-page .form-fields textarea,html[data-theme="system"] .dashboard-page .form-fields select,html[data-theme="system"] .dashboard-page .managed-order-controls select{background:#0f1a27;color:#edf2f7;border-color:#34485d}
+ html[data-theme="system"] .dashboard-page .store-identity-card{background:linear-gradient(120deg,#1a2b3c,#142131);border-color:#34485d}
+ html[data-theme="system"] .dashboard-page .store-identity-copy p,html[data-theme="system"] .dashboard-page .managed-product-info span,html[data-theme="system"] .dashboard-page .managed-order-main span,html[data-theme="system"] .dashboard-page .managed-order-main small,html[data-theme="system"] .dashboard-page .managed-review-body small{color:#aebdca}
+ html[data-theme="system"] .dashboard-page .managed-product,html[data-theme="system"] .dashboard-page .managed-order,html[data-theme="system"] .dashboard-page .managed-review{background:#172536;border-color:#2b3b4d}
+ html[data-theme="system"] .dashboard-page .managed-product-actions button,html[data-theme="system"] .dashboard-page .cancel-button{background:#1c2c3d;color:#edf2f7;border-color:#34485d}
+ html[data-theme="system"] .dashboard-page .text-button{color:#c0cad5}
+ html[data-theme="system"] .dashboard-page .theme-toggle{background:#172536;color:#edf2f7;border-color:#34485d}
+}
