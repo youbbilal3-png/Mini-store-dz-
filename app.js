@@ -237,6 +237,13 @@ async function loadStore(){
  }catch(error){console.error("Store loading error:",error);}
 }
 el("languageSelect").addEventListener("change",e=>{language=e.target.value;activeCategory="all";applyLanguage();});
+function openInfoDialog(id){const dialog=el(id);if(dialog&&!dialog.open)dialog.showModal();}
+function closeInfoDialog(id){const dialog=el(id);if(dialog&&dialog.open)dialog.close();}
+el("openAboutDialog")?.addEventListener("click",()=>openInfoDialog("aboutDialog"));
+el("openContactDialog")?.addEventListener("click",()=>openInfoDialog("contactDialog"));
+el("closeAboutDialog")?.addEventListener("click",()=>closeInfoDialog("aboutDialog"));
+el("closeContactDialog")?.addEventListener("click",()=>closeInfoDialog("contactDialog"));
+["aboutDialog","contactDialog"].forEach(id=>{const dialog=el(id);dialog?.addEventListener("click",e=>{if(e.target===dialog)dialog.close();});});
 if(el("copyStoreLink"))el("copyStoreLink").addEventListener("click",copyStoreLink);
 el("searchInput").addEventListener("input",e=>{searchTerm=e.target.value;renderProducts();});
 el("clearSearch").addEventListener("click",()=>{searchTerm="";el("searchInput").value="";renderProducts();el("searchInput").focus();});
