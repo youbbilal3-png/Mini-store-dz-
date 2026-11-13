@@ -76,6 +76,44 @@
   }
 
   for (const [lang, value] of Object.entries({fr:"ESPACE VENDEUR",en:"MERCHANT AREA",es:"ÁREA DEL VENDEDOR",de:"HÄNDLERBEREICH",tr:"SATICI ALANI"})) dictionaries[lang]["مساحة التاجر"] = value;
+
+  const subscriptionLabels = {
+    "الاشتراك والباقات":["Abonnement et forfaits","Subscription & plans","Suscripción y planes","Abonnement & Tarife","Abonelik ve planlar"],
+    "اختر الخطة المناسبة لنمو متجرك. جرّب الخطط المدفوعة مجاناً لمدة 7 أيام.":["Choisissez le forfait adapté à votre boutique. Essayez gratuitement les forfaits payants pendant 7 jours.","Choose the plan that fits your store. Try paid plans free for 7 days.","Elige el plan adecuado para tu tienda. Prueba los planes de pago gratis durante 7 días.","Wählen Sie den passenden Tarif. Testen Sie kostenpflichtige Tarife 7 Tage kostenlos.","Mağazanıza uygun planı seçin. Ücretli planları 7 gün ücretsiz deneyin."],
+    "شهري":["Mensuel","Monthly","Mensual","Monatlich","Aylık"],
+    "سنوي — وفر شهرين":["Annuel — économisez 2 mois","Yearly — save 2 months","Anual — ahorra 2 meses","Jährlich — 2 Monate sparen","Yıllık — 2 ay tasarruf"],
+    "مجاني":["Gratuit","Free","Gratis","Kostenlos","Ücretsiz"],
+    "للبداية وتجربة البيع عبر الإنترنت.":["Pour commencer à vendre en ligne.","Start selling online.","Para empezar a vender en línea.","Für den Einstieg in den Online-Verkauf.","Çevrimiçi satışa başlamak için."],
+    "حتى 10 منتجات":["Jusqu’à 10 produits","Up to 10 products","Hasta 10 productos","Bis zu 10 Produkte","10 ürüne kadar"],
+    "إدارة الطلبات":["Gestion des commandes","Order management","Gestión de pedidos","Bestellverwaltung","Sipariş yönetimi"],
+    "صفحة متجر عامة":["Page de boutique publique","Public store page","Página de tienda pública","Öffentliche Shopseite","Herkese açık mağaza sayfası"],
+    "الخطة الأساسية":["Forfait de base","Basic plan","Plan básico","Basistarif","Temel plan"],
+    "احترافي":["Pro","Pro","Pro","Pro","Pro"],
+    "لنشاطك التجاري الذي ينمو.":["Pour votre activité en croissance.","For your growing business.","Para tu negocio en crecimiento.","Für Ihr wachsendes Geschäft.","Büyüyen işletmeniz için."],
+    "حتى 100 منتج":["Jusqu’à 100 produits","Up to 100 products","Hasta 100 productos","Bis zu 100 Produkte","100 ürüne kadar"],
+    "جميع أدوات الخطة المجانية":["Toutes les fonctionnalités du forfait gratuit","All Free plan features","Todas las funciones del plan gratuito","Alle Funktionen des kostenlosen Tarifs","Ücretsiz planın tüm özellikleri"],
+    "تجربة مجانية لمدة 7 أيام":["Essai gratuit de 7 jours","7-day free trial","Prueba gratuita de 7 días","7 Tage kostenlos testen","7 günlük ücretsiz deneme"],
+    "ابدأ تجربة Pro المجانية":["Commencer l’essai gratuit Pro","Start free Pro trial","Iniciar prueba gratuita Pro","Kostenlose Pro-Testversion starten","Ücretsiz Pro denemesini başlat"],
+    "مميز":["Premium","Premium","Premium","Premium","Premium"],
+    "للتجار الذين يريدون مساحة أكبر.":["Pour les vendeurs qui ont besoin de plus d’espace.","For merchants who need more room.","Para vendedores que necesitan más espacio.","Für Händler mit größerem Bedarf.","Daha fazla alana ihtiyaç duyan satıcılar için."],
+    "منتجات غير محدودة":["Produits illimités","Unlimited products","Productos ilimitados","Unbegrenzte Produkte","Sınırsız ürün"],
+    "جميع مزايا Pro":["Tous les avantages Pro","All Pro benefits","Todas las ventajas Pro","Alle Pro-Vorteile","Tüm Pro avantajları"],
+    "ابدأ تجربة Premium المجانية":["Commencer l’essai gratuit Premium","Start free Premium trial","Iniciar prueba gratuita Premium","Kostenlose Premium-Testversion starten","Ücretsiz Premium denemesini başlat"],
+    "الأسعار السنوية: Pro ‏15,000 دج وPremium ‏30,000 دج. الدفع الإلكتروني غير مفعّل حالياً؛ لن يتم خصم أي مبلغ بعد انتهاء التجربة.":["Tarifs annuels : Pro 15 000 DZD et Premium 30 000 DZD. Le paiement en ligne n’est pas encore activé ; aucun montant ne sera prélevé après l’essai.","Yearly prices: Pro DZD 15,000 and Premium DZD 30,000. Online payments are not enabled yet; no charge will be made when the trial ends.","Precios anuales: Pro 15.000 DZD y Premium 30.000 DZD. Los pagos en línea aún no están activados; no se cobrará nada al finalizar la prueba.","Jahrespreise: Pro 15.000 DZD und Premium 30.000 DZD. Online-Zahlungen sind noch nicht aktiviert; nach Ablauf des Tests wird nichts berechnet.","Yıllık fiyatlar: Pro 15.000 DZD ve Premium 30.000 DZD. Çevrimiçi ödeme henüz etkin değil; deneme bitince ücret alınmaz."],
+    "جارٍ تحميل الاشتراك...":["Chargement de l’abonnement...","Loading subscription...","Cargando suscripción...","Abonnement wird geladen...","Abonelik yükleniyor..."],
+    "جارٍ تحميل تفاصيل خطتك...":["Chargement des détails du forfait...","Loading your plan details...","Cargando los detalles de tu plan...","Tarifdetails werden geladen...","Plan ayrıntıları yükleniyor..."],
+    "تجربة مجانية نشطة":["Essai gratuit actif","Free trial active","Prueba gratuita activa","Kostenloser Test aktiv","Ücretsiz deneme etkin"],
+    "الخطة المجانية":["Forfait gratuit","Free plan","Plan gratuito","Kostenloser Tarif","Ücretsiz plan"],
+    "تم استخدام التجربة المجانية":["Essai gratuit déjà utilisé","Free trial already used","Prueba gratuita ya utilizada","Kostenloser Test bereits genutzt","Ücretsiz deneme kullanıldı"],
+    "لديك خطة مدفوعة":["Vous avez un forfait payant","You have a paid plan","Tienes un plan de pago","Sie haben einen kostenpflichtigen Tarif","Ücretli planınız var"],
+    "جارٍ تفعيل التجربة...":["Activation de l’essai...","Activating trial...","Activando la prueba...","Testversion wird aktiviert...","Deneme etkinleştiriliyor..."],
+    "تم تفعيل تجربتك المجانية لمدة 7 أيام لخطة " :["Votre essai gratuit de 7 jours est activé pour le forfait ","Your 7-day free trial is active for the ","Tu prueba gratuita de 7 días está activa para el plan ","Ihre 7-tägige kostenlose Testphase ist für den Tarif aktiviert: ","7 günlük ücretsiz denemeniz şu plan için etkinleştirildi: "]
+  };
+  for (const [source, values] of Object.entries(subscriptionLabels)) {
+    dictionaries.fr[source] = values[0]; dictionaries.en[source] = values[1];
+    dictionaries.es[source] = values[2]; dictionaries.de[source] = values[3]; dictionaries.tr[source] = values[4];
+  }
+
   const originals = Object.keys(dictionaries.fr);
   const reverse = { fr: {}, en: {}, es: {}, de: {}, tr: {} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
