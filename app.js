@@ -266,3 +266,15 @@ document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});
 el("year").textContent=new Date().getFullYear();
 initTheme();initHeroShowcase();
 await loadStore();if(!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"))){products=[];const productSection=el("products");if(productSection)productSection.hidden=true;}applyLanguage();updateCartButton();await loadFeaturedStores();await loadPublicReviews();
+
+
+/* Route merchant actions to the dashboard for signed-in users,
+   and through the login flow for visitors. */
+async function refreshMerchantLinks(session){
+ const target=session?"dashboard.html":"auth.html?next=dashboard.html";
+ ["merchantAccountLink","createStoreLink"].forEach(id=>{
+  const link=el(id);if(link)link.href=target;
+ });
+}
+supabase.auth.getSession().then(({data})=>refreshMerchantLinks(data.session));
+supabase.auth.onAuthStateChange((_event,session)=>refreshMerchantLinks(session));
