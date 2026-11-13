@@ -105,7 +105,7 @@ function fillSettings(){
  $("identityPublishStatus").classList.toggle("is-published",!!store.is_published);
  $("whatsappInput").value=store.whatsapp||"";
  $("accountEmail").textContent=user.email||"حساب التاجر";
- const publicUrl=new URL("index.html?store="+encodeURIComponent(store.slug),location.href).href;
+ const publicUrl=new URL("store.html?store="+encodeURIComponent(store.slug),location.href).href;
  $("storeLink").href=publicUrl;
  const openPublicStore=$("openPublicStore");if(openPublicStore)openPublicStore.href=publicUrl;
  $("publicStoreSidebarLink").href=publicUrl;
@@ -205,7 +205,7 @@ async function manageProductClick(event){
  }
 }
 async function copyStoreLink(){
- const publicUrl=new URL("index.html?store="+encodeURIComponent(store.slug),location.href).href;
+ const publicUrl=new URL("store.html?store="+encodeURIComponent(store.slug),location.href).href;
  try{await navigator.clipboard.writeText(publicUrl);message("profileFeedback","تم نسخ رابط متجرك. "+(store.is_published?"يمكنك مشاركته الآن.":"انشر المتجر أولاً ليتمكن الزوار من مشاهدة المنتجات."));}
  catch(error){message("profileFeedback","تعذر النسخ تلقائياً. استخدم زر عرض المتجر لفتح الرابط ونسخه من شريط العنوان.");}
 }
