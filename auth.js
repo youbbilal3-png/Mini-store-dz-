@@ -33,7 +33,7 @@ const authTranslations={
  de:{tagline:"DEIN SHOP. DEIN WEG.",ad1:"Alles, was Sie brauchen, an einem Ort",ad2:"Starten Sie Ihr Online-Geschäft",ad3:"Präsentieren Sie Ihre Produkte stilvoll",ad4:"Einfaches Einkaufserlebnis für alle",ad5:"Ihr Shop verdient Aufmerksamkeit",ad6:"Starten Sie mit Zuversicht",welcomeKicker:"MINI STORE DZ",welcomeTitle:'Starten Sie Ihr Geschäft <em>ganz einfach</em>',welcomeDesc:"Erstellen Sie Ihren Shop, präsentieren Sie Produkte und erhalten Sie Bestellungen.",signup:"Konto erstellen",login:"Anmelden",point1:"Shop und Produkte an einem Ort",point2:"Direkte Bestellungen per WhatsApp",point3:"Mehrsprachige Oberfläche",createTitle:"Konto erstellen",loginTitle:"Anmelden",createDesc:"Geben Sie Ihre Daten ein, um ein Konto zu erstellen.",loginDesc:"Geben Sie E-Mail und Passwort ein.",merchant:"Händlername",email:"E-Mail-Adresse",password:"Passwort",createAction:"Konto erstellen",loginAction:"Anmelden",close:"Schließen ✕",legal:"Nach der Anmeldung können Sie Ihren Shop auf der Plattform erstellen.",confirm:"Konto erstellt. Bestätigen Sie Ihre E-Mail und melden Sie sich an.",connecting:"Verbindung wird hergestellt...",error:"Ein Fehler ist aufgetreten. Bitte erneut versuchen."},
  tr:{tagline:"MAĞAZANIZ. SİZİN TARZINIZ.",ad1:"İhtiyacınız olan her şey tek yerde",ad2:"Online işinizi bugün başlatın",ad3:"Ürünlerinizi profesyonelce sergileyin",ad4:"Herkes için kolay alışveriş",ad5:"Mağazanız görünmeyi hak ediyor",ad6:"Güvenle ilk adımı atın",welcomeKicker:"MINI STORE DZ",welcomeTitle:'İşinizi <em>kolayca başlatın</em>',welcomeDesc:"Mağazanızı oluşturun, ürünlerinizi sergileyin ve siparişleri kolayca alın.",signup:"Hesap oluştur",login:"Giriş yap",point1:"Mağazanız ve ürünleriniz tek yerde",point2:"WhatsApp üzerinden doğrudan sipariş",point3:"Çok dilli arayüz",createTitle:"Hesap oluştur",loginTitle:"Giriş yap",createDesc:"Hesabınızı oluşturmak için bilgilerinizi girin.",loginDesc:"Devam etmek için e-posta ve şifrenizi girin.",merchant:"Mağaza sahibi adı",email:"E-posta adresi",password:"Şifre",createAction:"Hesabımı oluştur",loginAction:"Giriş yap",close:"Kapat ✕",legal:"Giriş yaptıktan sonra platform içinden mağazanızı oluşturabilirsiniz.",confirm:"Hesap oluşturuldu. E-postanızı doğrulayın ve giriş yapın.",connecting:"Bağlanıyor...",error:"Bir hata oluştu. Tekrar deneyin."}
 };
-let authLanguage=localStorage.getItem("msdz-language")||"ar";
+let authLanguage=(()=>{try{const saved=localStorage.getItem("msdz-language");return authTranslations[saved]?saved:"ar";}catch(e){return "ar";}})();
 function applyAuthLanguage(lang){
  authLanguage=authTranslations[lang]?lang:"ar";localStorage.setItem("msdz-language",authLanguage);
  document.documentElement.lang=authLanguage;document.documentElement.dir=authLanguage==="ar"?"rtl":"ltr";
@@ -48,6 +48,7 @@ function applyAuthLanguage(lang){
  $("fullName").placeholder=t.merchant;$("email").placeholder="name@example.com";$("password").placeholder=authLanguage==="ar"?"8 أحرف على الأقل":"••••••••";
  $("authFormSection").querySelector(".auth-legal").textContent=t.legal;
  setMode(mode);
+ document.documentElement.classList.remove("language-loading");
 }
 $("authLanguageSelect").addEventListener("change",e=>applyAuthLanguage(e.target.value));
 applyAuthLanguage(authLanguage);
