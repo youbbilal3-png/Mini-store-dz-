@@ -21,6 +21,7 @@ $("authForm").addEventListener("submit",async event=>{
   if(mode==="signup"){
    const signupMetadata={full_name:fullName};if(incomingReferralCode)signupMetadata.referral_code=incomingReferralCode;const {data,error}=await supabase.auth.signUp({email,password,options:{data:signupMetadata,emailRedirectTo:location.origin+"/index.html"}});
    if(error)throw error;
+   try{localStorage.removeItem("msdz-referral-code");}catch(storageError){}
    if(data.session){location.href=authNext;return;}
    $("authMessage").textContent=authTranslations[authLanguage].confirm;
   }else{
