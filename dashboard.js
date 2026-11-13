@@ -1,5 +1,6 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
+function dashboardLocale(){const lang=document.documentElement.lang;return lang==="fr"?"fr-DZ":lang==="en"?"en-DZ":dashboardLocale();}
 function applyDashboardTheme(mode){
  const selected=mode||"system";document.documentElement.dataset.theme=selected;
  const icon=$("themeToggleIcon"),label=$("themeToggleLabel"),button=$("themeToggle");
@@ -34,7 +35,7 @@ function renderDailyCharts(){
  for(let offset=6;offset>=0;offset--){
   const day=new Date(now);day.setHours(0,0,0,0);day.setDate(day.getDate()-offset);
   const key=day.getFullYear()+"-"+String(day.getMonth()+1).padStart(2,"0")+"-"+String(day.getDate()).padStart(2,"0");
-  days.push({key,label:day.toLocaleDateString("ar-DZ",{weekday:"short",day:"numeric"}),orders:0,sales:0});
+  days.push({key,label:day.toLocaleDateString(dashboardLocale(),{weekday:"short",day:"numeric"}),orders:0,sales:0});
  }
  const byDate=new Map(days.map(day=>[day.key,day]));
  orders.forEach(order=>{
@@ -53,16 +54,16 @@ function renderDailyCharts(){
   }).join("");
  };
  render("ordersChart","orders",maxOrders,value=>String(value),"");
- render("salesChart","sales",maxSales,value=>Number(value).toLocaleString("ar-DZ")+" دج","sales");
+ render("salesChart","sales",maxSales,value=>Number(value).toLocaleString(dashboardLocale())+" دج","sales");
 }
 function renderStats(){
- $("statOrders").textContent=orders.length.toLocaleString("ar-DZ");
- $("statNewOrders").textContent=orders.filter(o=>o.status==="new").length.toLocaleString("ar-DZ");
+ $("statOrders").textContent=orders.length.toLocaleString(dashboardLocale());
+ $("statNewOrders").textContent=orders.filter(o=>o.status==="new").length.toLocaleString(dashboardLocale());
  const completed=orders.filter(o=>o.status==="completed");
- $("statCompletedOrders").textContent=completed.length.toLocaleString("ar-DZ");
+ $("statCompletedOrders").textContent=completed.length.toLocaleString(dashboardLocale());
  const completedSales=completed.reduce((sum,o)=>sum+Number(o.total||0),0);
- $("statSales").textContent=completedSales.toLocaleString("ar-DZ")+" دج";
- $("statProducts").textContent=products.length.toLocaleString("ar-DZ");
+ $("statSales").textContent=completedSales.toLocaleString(dashboardLocale())+" دج";
+ $("statProducts").textContent=products.length.toLocaleString(dashboardLocale());
  renderDailyCharts();
 }
 async function loadOrders(){
@@ -74,7 +75,7 @@ function renderOrders(){
  $("managedOrders").innerHTML=orders.map(o=>{
   const items=Array.isArray(o.items)?o.items:[],detail=items.map(i=>escapeHtml(i.name)+" × "+Number(i.quantity||1)).join("، ");
   const opts=states.map(s=>'<option value="'+s+'" '+(o.status===s?"selected":"")+'>'+labels[s]+'</option>').join("");
-  return '<article class="managed-order"><div class="managed-order-main"><strong>'+escapeHtml(o.customer_name)+'</strong><span>'+escapeHtml(o.customer_phone)+'</span><p>'+detail+'</p><small>'+new Date(o.created_at).toLocaleString("ar-DZ")+' · '+Number(o.total||0).toLocaleString("ar-DZ")+' دج</small>'+(o.notes?'<p class="order-note">ملاحظات: '+escapeHtml(o.notes)+'</p>':"")+'</div><div class="managed-order-controls"><span class="order-status order-status-'+o.status+'">'+(labels[o.status]||o.status)+'</span><select data-order-status="'+o.id+'" aria-label="تغيير حالة الطلب">'+opts+'</select></div></article>';
+  return '<article class="managed-order"><div class="managed-order-main"><strong>'+escapeHtml(o.customer_name)+'</strong><span>'+escapeHtml(o.customer_phone)+'</span><p>'+detail+'</p><small>'+new Date(o.created_at).toLocaleString(dashboardLocale())+' · '+Number(o.total||0).toLocaleString(dashboardLocale())+' دج</small>'+(o.notes?'<p class="order-note">ملاحظات: '+escapeHtml(o.notes)+'</p>':"")+'</div><div class="managed-order-controls"><span class="order-status order-status-'+o.status+'">'+(labels[o.status]||o.status)+'</span><select data-order-status="'+o.id+'" aria-label="تغيير حالة الطلب">'+opts+'</select></div></article>';
  }).join("");
 }
 async function updateOrderStatus(event){
@@ -96,7 +97,7 @@ function renderReviews(){
  $("reviewsAdminCount").textContent=approved.length+" تقييم منشور · "+reviews.length+" إجمالي";
  const labels={pending:"بانتظار المراجعة",approved:"منشور",rejected:"مرفوض"};
  if(!reviews.length){$("managedReviews").innerHTML='<p class="empty-products">لا توجد تقييمات بعد. ستظهر هنا آراء الزبائن عندما يرسلونها من صفحة متجرك.</p>';return;}
- $("managedReviews").innerHTML=reviews.map(r=>'<article class="managed-review"><div class="managed-review-body"><div class="managed-review-head"><strong>'+escapeHtml(r.customer_name)+'</strong><span class="review-stars">'+("★".repeat(Number(r.rating))+"☆".repeat(5-Number(r.rating)))+'</span></div><p>'+escapeHtml(r.comment)+'</p><small>'+new Date(r.created_at).toLocaleString("ar-DZ")+'</small><span class="review-state review-state-'+r.status+'">'+(labels[r.status]||r.status)+'</span></div><div class="managed-review-actions">'+(r.status!=="approved"?'<button type="button" data-review-action="approved" data-review-id="'+r.id+'">نشر</button>':"")+(r.status!=="rejected"?'<button type="button" data-review-action="rejected" data-review-id="'+r.id+'">رفض</button>':"")+'</div></article>').join("");
+ $("managedReviews").innerHTML=reviews.map(r=>'<article class="managed-review"><div class="managed-review-body"><div class="managed-review-head"><strong>'+escapeHtml(r.customer_name)+'</strong><span class="review-stars">'+("★".repeat(Number(r.rating))+"☆".repeat(5-Number(r.rating)))+'</span></div><p>'+escapeHtml(r.comment)+'</p><small>'+new Date(r.created_at).toLocaleString(dashboardLocale())+'</small><span class="review-state review-state-'+r.status+'">'+(labels[r.status]||r.status)+'</span></div><div class="managed-review-actions">'+(r.status!=="approved"?'<button type="button" data-review-action="approved" data-review-id="'+r.id+'">نشر</button>':"")+(r.status!=="rejected"?'<button type="button" data-review-action="rejected" data-review-id="'+r.id+'">رفض</button>':"")+'</div></article>').join("");
 }
 async function moderateReview(event){
  const button=event.target.closest("[data-review-action]");if(!button)return;
@@ -186,7 +187,7 @@ function syncCustomCategory(){
 function renderProducts(){
  renderStats();$("productsTotal").textContent=products.length+" منتج";
  if(!products.length){$("managedProducts").innerHTML='<p class="empty-products">لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.</p>';return;}
-  $("managedProducts").innerHTML=products.map(p=>{const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;const qty=tracked?Number(p.stock_quantity):null;const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";const stockClass=tracked&&qty<=5?"stock-low":"";return '<article class="managed-product"><div class="managed-product-emoji">'+(p.image_url?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">':escapeHtml(p.emoji||"📦"))+'</div><div class="managed-product-info"><strong>'+escapeHtml(p.name)+'</strong><span>'+escapeHtml(p.category||"عام")+' · '+Number(p.price||0).toLocaleString("ar-DZ")+' دج · <b class="'+stockClass+'">'+stockLabel+'</b></span></div><div class="managed-product-actions"><button type="button" data-edit="'+p.id+'">تعديل</button><button type="button" class="delete-product" data-delete="'+p.id+'">حذف</button></div></article>';}).join("");
+  $("managedProducts").innerHTML=products.map(p=>{const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;const qty=tracked?Number(p.stock_quantity):null;const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";const stockClass=tracked&&qty<=5?"stock-low":"";return '<article class="managed-product"><div class="managed-product-emoji">'+(p.image_url?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">':escapeHtml(p.emoji||"📦"))+'</div><div class="managed-product-info"><strong>'+escapeHtml(p.name)+'</strong><span>'+escapeHtml(p.category||"عام")+' · '+Number(p.price||0).toLocaleString(dashboardLocale())+' دج · <b class="'+stockClass+'">'+stockLabel+'</b></span></div><div class="managed-product-actions"><button type="button" data-edit="'+p.id+'">تعديل</button><button type="button" class="delete-product" data-delete="'+p.id+'">حذف</button></div></article>';}).join("");
 }
 async function saveProduct(event){
  event.preventDefault();const id=$("editingProductId").value;const files=Array.from($("productImage").files||[]);
