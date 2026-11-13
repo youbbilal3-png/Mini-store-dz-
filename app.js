@@ -42,6 +42,12 @@ Object.assign(translations.es,{referralEyebrow:"Comparte y gana",referralTitle:"
 Object.assign(translations.de,{referralEyebrow:"Teilen und verdienen",referralTitle:"Lade Freunde zu Mini Store DZ ein",referralDescription:"Teile deinen persönlichen Link und erhalte Abzeichen für jede bestätigte Registrierung.",referralCTA:"Jetzt einladen"});
 Object.assign(translations.tr,{referralEyebrow:"Paylaş ve kazan",referralTitle:"Arkadaşlarını Mini Store DZ'ye davet et",referralDescription:"Kişisel bağlantını paylaş ve onaylanan her kayıt için özel rozetler kazan.",referralCTA:"Davet etmeye başla"});
 
+Object.assign(translations.ar,{sponsoredEyebrow:"إعلانات برعاية",sponsoredTitle:"شركاؤنا"});
+Object.assign(translations.fr,{sponsoredEyebrow:"Publicité sponsorisée",sponsoredTitle:"Nos partenaires"});
+Object.assign(translations.en,{sponsoredEyebrow:"SPONSORED",sponsoredTitle:"Our partners"});
+Object.assign(translations.es,{sponsoredEyebrow:"Publicidad patrocinada",sponsoredTitle:"Nuestros socios"});
+Object.assign(translations.de,{sponsoredEyebrow:"Gesponsert",sponsoredTitle:"Unsere Partner"});
+Object.assign(translations.tr,{sponsoredEyebrow:"Sponsorlu",sponsoredTitle:"İş ortaklarımız"});
 const el=id=>document.getElementById(id);
 const isPlatformHome=!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"));
 
@@ -122,6 +128,25 @@ async function loadFeaturedStores(){
  }catch(error){console.error("Featured stores:",error);featuredStores=[];regularStores=[];}
  renderFeaturedStores();
 }
+
+let sponsoredAds=[];
+function renderSponsoredAds(){
+ const section=el("sponsoredAdsSection"),grid=el("sponsoredAdsGrid");
+ if(!section||!grid)return;
+ section.hidden=!sponsoredAds.length;
+ grid.innerHTML=sponsoredAds.map(ad=>'<a class="sponsored-ad-card" href="'+safe(ad.target_url)+'" target="_blank" rel="noopener noreferrer sponsored" aria-label="'+safe(ad.title)+'"><img src="'+safe(ad.image_url)+'" alt="'+safe(ad.title)+'" loading="lazy"><span class="sponsored-ad-label">'+safe(translations[language].sponsoredEyebrow)+'</span></a>').join("");
+}
+async function loadSponsoredAds(){
+ if(!el("sponsoredAdsSection"))return;
+ try{
+  const now=new Date().toISOString();
+  const {data,error}=await supabase.from("sponsored_ads").select("id,title,image_url,target_url,starts_at,ends_at").eq("status","active").lte("starts_at",now).gt("ends_at",now).order("starts_at",{ascending:true}).limit(6);
+  if(error)throw error;
+  sponsoredAds=data||[];
+ }catch(error){console.error("Sponsored ads:",error);sponsoredAds=[];}
+ renderSponsoredAds();
+}
+
 function initHeroShowcase(){
  const root=el("heroShowcase");if(!root)return;
  const slides=[...root.querySelectorAll(".showcase-slide")],dots=[...(el("showcaseDots")?.querySelectorAll("button")||[])];if(slides.length<2)return;
@@ -170,7 +195,7 @@ async function sharePlatformLink(){
  }catch(error){console.error("Platform link sharing failed:",error);if(feedback)feedback.textContent=t.sharePlatformError;}
 }
 
-function applyLanguage(){const languagePicker=el("languageSelect");if(languagePicker)languagePicker.value=language;document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";if(!new URLSearchParams(location.search).has("store"))STORE_SETTINGS.sellerDescription=translations[language].sellerDescription;const metaDescription=document.querySelector('meta[name="description"]');if(metaDescription)metaDescription.content=currentStoreId?[STORE_SETTINGS.sellerDescription,translations[language].storeMetaDesc].filter(Boolean).join(" — "):translations[language].metaDescription;const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=metaDescription?.content||translations[language].metaDescription;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.dataset.i18n;if(translations[language][k])n.innerHTML=translations[language][k];});document.querySelectorAll("[data-i18n-placeholder]").forEach(n=>n.placeholder=translations[language][n.dataset.i18nPlaceholder]);document.querySelectorAll("[data-i18n-aria-label]").forEach(n=>n.setAttribute("aria-label",translations[language][n.dataset.i18nAriaLabel]||n.getAttribute("aria-label")));document.querySelectorAll("[data-i18n-alt]").forEach(n=>n.alt=translations[language][n.dataset.i18nAlt]||n.alt);applyTheme(document.documentElement.dataset.theme||"system");const browseLink=el("browseButton");if(browseLink){browseLink.href=isPlatformHome?"#featuredStoresSection":"#products";if(isPlatformHome)browseLink.textContent=translations[language].browseStores;}const productsNav=el("navProducts");if(productsNav&&isPlatformHome){productsNav.href="#featuredStoresSection";productsNav.textContent=translations[language].navStores;}renderSellerProfile();renderFilters();renderProducts();renderCart();renderFeaturedStores();if(currentStoreId&&el("reviews"))renderPublicReviews();const contactButton=el("contactButton");if(contactButton){if(currentStoreId){const storePhone=String(STORE_SETTINGS.whatsapp||"").replace(/\D/g,"");if(storePhone){contactButton.href="https://wa.me/"+storePhone;contactButton.target="_blank";contactButton.rel="noopener";contactButton.removeAttribute("aria-disabled");}else{contactButton.href="#";contactButton.removeAttribute("target");contactButton.setAttribute("aria-disabled","true");contactButton.textContent=translations[language].whatsappUnavailable;}}else{contactButton.href="mailto:support.ministoredz@gmail.com?subject="+encodeURIComponent(translations[language].supportSubject);contactButton.removeAttribute("target");contactButton.removeAttribute("aria-disabled");}}if(el("supportEmailLink"))el("supportEmailLink").href="mailto:support.ministoredz@gmail.com";updateStoreShareLinks();}
+function applyLanguage(){const languagePicker=el("languageSelect");if(languagePicker)languagePicker.value=language;document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";if(!new URLSearchParams(location.search).has("store"))STORE_SETTINGS.sellerDescription=translations[language].sellerDescription;const metaDescription=document.querySelector('meta[name="description"]');if(metaDescription)metaDescription.content=currentStoreId?[STORE_SETTINGS.sellerDescription,translations[language].storeMetaDesc].filter(Boolean).join(" — "):translations[language].metaDescription;const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=metaDescription?.content||translations[language].metaDescription;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.dataset.i18n;if(translations[language][k])n.innerHTML=translations[language][k];});document.querySelectorAll("[data-i18n-placeholder]").forEach(n=>n.placeholder=translations[language][n.dataset.i18nPlaceholder]);document.querySelectorAll("[data-i18n-aria-label]").forEach(n=>n.setAttribute("aria-label",translations[language][n.dataset.i18nAriaLabel]||n.getAttribute("aria-label")));document.querySelectorAll("[data-i18n-alt]").forEach(n=>n.alt=translations[language][n.dataset.i18nAlt]||n.alt);applyTheme(document.documentElement.dataset.theme||"system");const browseLink=el("browseButton");if(browseLink){browseLink.href=isPlatformHome?"#featuredStoresSection":"#products";if(isPlatformHome)browseLink.textContent=translations[language].browseStores;}const productsNav=el("navProducts");if(productsNav&&isPlatformHome){productsNav.href="#featuredStoresSection";productsNav.textContent=translations[language].navStores;}renderSellerProfile();renderFilters();renderProducts();renderCart();renderFeaturedStores();renderSponsoredAds();if(currentStoreId&&el("reviews"))renderPublicReviews();const contactButton=el("contactButton");if(contactButton){if(currentStoreId){const storePhone=String(STORE_SETTINGS.whatsapp||"").replace(/\D/g,"");if(storePhone){contactButton.href="https://wa.me/"+storePhone;contactButton.target="_blank";contactButton.rel="noopener";contactButton.removeAttribute("aria-disabled");}else{contactButton.href="#";contactButton.removeAttribute("target");contactButton.setAttribute("aria-disabled","true");contactButton.textContent=translations[language].whatsappUnavailable;}}else{contactButton.href="mailto:support.ministoredz@gmail.com?subject="+encodeURIComponent(translations[language].supportSubject);contactButton.removeAttribute("target");contactButton.removeAttribute("aria-disabled");}}if(el("supportEmailLink"))el("supportEmailLink").href="mailto:support.ministoredz@gmail.com";updateStoreShareLinks();}
 
 function renderDetailGallery(name){
  const t=translations[language],multiple=detailImages.length>1,current=detailImages[detailImageIndex];
@@ -358,7 +383,7 @@ const sharePlatformButton=el("sharePlatformButton");if(sharePlatformButton)share
 // Apply the saved language immediately, before waiting for store data.
 applyLanguage();
 document.documentElement.classList.remove("language-loading");
-await loadStore();if(!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"))){products=[];const productSection=el("products");if(productSection)productSection.hidden=true;}applyLanguage();updateCartButton();await loadFeaturedStores();await loadPublicReviews();
+await loadStore();if(!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"))){products=[];const productSection=el("products");if(productSection)productSection.hidden=true;}applyLanguage();updateCartButton();await loadFeaturedStores();await loadSponsoredAds();await loadPublicReviews();
 
 
 /* Route merchant actions to the dashboard for signed-in users,
