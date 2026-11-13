@@ -21,7 +21,10 @@ function fillSettings(){
  $("storeNameInput").value=store.store_name||"";
  $("whatsappInput").value=store.whatsapp||"";
  $("accountEmail").textContent=user.email||"حساب التاجر";
- $("storeLink").href="index.html?store="+encodeURIComponent(store.slug);
+ const publicUrl=new URL("index.html?store="+encodeURIComponent(store.slug),location.href).href;
+ $("storeLink").href=publicUrl;
+ $("shareWhatsApp").href="https://wa.me/?text="+encodeURIComponent("شاهد متجري على Mini Store DZ: "+publicUrl);
+ $("shareFacebook").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(publicUrl);
  $("publishStore").textContent=store.is_published?"إلغاء نشر المتجر":"نشر المتجر";
  $("storeStatus").textContent=store.is_published?"متجرك منشور للعامة":"متجرك خاص حتى تنشره";
  showAvatar();
@@ -113,6 +116,11 @@ async function manageProductClick(event){
   products=products.filter(x=>x.id!==p.id);renderProducts();message("productFeedback","تم حذف المنتج.");
  }
 }
+async function copyStoreLink(){
+ const publicUrl=new URL("index.html?store="+encodeURIComponent(store.slug),location.href).href;
+ try{await navigator.clipboard.writeText(publicUrl);message("profileFeedback","تم نسخ رابط متجرك. "+(store.is_published?"يمكنك مشاركته الآن.":"انشر المتجر أولاً ليتمكن الزوار من مشاهدة المنتجات."));}
+ catch(error){message("profileFeedback","تعذر النسخ تلقائياً. استخدم زر عرض المتجر لفتح الرابط ونسخه من شريط العنوان.");}
+}
 async function togglePublish(){
  const next=!store.is_published;
  const {data,error}=await supabase.from("stores").update({is_published:next,updated_at:new Date().toISOString()}).eq("id",store.id).select("*").single();
@@ -136,6 +144,7 @@ async function init(){
  $("managedProducts").addEventListener("click",manageProductClick);
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
+ $("copyStoreLink").addEventListener("click",copyStoreLink);
  $("logoutButton").addEventListener("click",async()=>{await supabase.auth.signOut();location.href="auth.html";});
  $("dashYear").textContent=new Date().getFullYear();
 }
