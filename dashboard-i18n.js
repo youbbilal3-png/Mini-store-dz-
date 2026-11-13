@@ -33,12 +33,13 @@
     const trimmed = raw.trim();
     if (!trimmed) return raw;
     let ar = trimmed;
-    if (lang !== "ar") ar = reverse[lang][trimmed] || trimmed;
-    if (lang === "ar") {
-      for (const [translated, source] of Object.entries(reverse.fr)) if (ar.includes(translated)) ar = ar.replaceAll(translated, source);
-      for (const [translated, source] of Object.entries(reverse.en)) if (ar.includes(translated)) ar = ar.replaceAll(translated, source);
-      return raw.replace(trimmed, ar);
+    for (const sourceLang of ["fr", "en"]) {
+      for (const [translated, source] of Object.entries(reverse[sourceLang]).sort((a,b)=>b[0].length-a[0].length)) {
+        if (ar === translated) { ar = source; break; }
+        if (translated.length > 5 && ar.includes(translated)) ar = ar.replaceAll(translated, source);
+      }
     }
+    if (lang === "ar") return raw.replace(trimmed, ar);
     let out = ar;
     for (const [source, translated] of Object.entries(dictionaries[lang]).sort((a,b)=>b[0].length-a[0].length)) {
       if (out === source) { out = translated; break; }
