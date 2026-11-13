@@ -131,3 +131,6 @@ html[data-theme="dark"] .dashboard-page .billing-cycle-switch button{color:#c6d0
 html[data-theme="dark"] .dashboard-page .billing-cycle-switch button.active{background:#26394b;color:#d7f3ad}
 html[data-theme="dark"] .dashboard-page .subscription-card .plan-current{background:#26394b;color:#edf2f7}
 @media(max-width:800px){.subscription-cards{grid-template-columns:1fr}.subscription-card p{min-height:0}.subscription-card{padding:17px}.billing-cycle-switch{width:100%}.billing-cycle-switch button{flex:1;padding-inline:8px}}
+
+/* Subscription plans are shown only when opened from their sidebar item. */
+#subscription[hidden]{display:none!important}
