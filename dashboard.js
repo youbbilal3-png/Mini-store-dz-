@@ -32,6 +32,52 @@ function applyFeaturedPromotionLanguage(){
  document.querySelectorAll("[data-featured-placeholder]").forEach(node=>{const key=node.dataset.featuredPlaceholder+"Placeholder";if(words[key])node.placeholder=words[key];});
 }
 
+
+const referralUiTranslations={
+ ar:{menu:"ادعُ أصدقاءك",title:"ادعُ أصدقاءك واكسب شارات",description:"شارك رابطك الخاص مع أصدقائك. تُحتسب الدعوة بعد تأكيد الحساب بالبريد الإلكتروني.",confirmed:"دعوة مؤكدة",yourLink:"رابط دعوتك الخاص",copy:"نسخ الرابط",share:"مشاركة",badge1:"شارة داعٍ نشيط",badge2:"شارة سفير المنصة",badge3:"شارة نجم Mini Store",progress:"ابدأ بمشاركة رابطك لتجميع الدعوات المؤكدة.",note:"تُحتسب الحسابات الجديدة المؤكدة فقط. لا تُمنح مكافأة عند النقر على الرابط أو إنشاء حسابات مكررة أو ذاتية.",copied:"تم نسخ رابط الدعوة.",failed:"تعذر نسخ الرابط. حاول مرة أخرى.",shareText:"انضم إلى Mini Store DZ عبر رابط دعوتي:"},
+ fr:{menu:"Inviter des amis",title:"Invitez vos amis et gagnez des badges",description:"Partagez votre lien personnel. Une invitation est comptée après confirmation de l’e-mail.",confirmed:"inscriptions confirmées",yourLink:"Votre lien d’invitation",copy:"Copier le lien",share:"Partager",badge1:"Badge Ambassadeur actif",badge2:"Badge Ambassadeur",badge3:"Badge Star Mini Store",progress:"Partagez votre lien pour commencer à cumuler des invitations confirmées.",note:"Seuls les nouveaux comptes avec e-mail confirmé sont comptés. Les clics, doublons et auto-invitations ne comptent pas.",copied:"Lien copié.",failed:"Impossible de copier le lien.",shareText:"Rejoignez Mini Store DZ avec mon lien :"},
+ en:{menu:"Invite friends",title:"Invite friends and earn badges",description:"Share your personal link. An invite counts after the new account confirms its email.",confirmed:"confirmed invites",yourLink:"Your personal invite link",copy:"Copy link",share:"Share",badge1:"Active Inviter badge",badge2:"Platform Ambassador badge",badge3:"Mini Store Star badge",progress:"Share your link to start collecting confirmed invites.",note:"Only new accounts with confirmed email count. Clicks, duplicate accounts and self-referrals do not count.",copied:"Invite link copied.",failed:"Could not copy the link.",shareText:"Join Mini Store DZ using my invite link:"},
+ es:{menu:"Invitar amigos",title:"Invita amigos y gana insignias",description:"Comparte tu enlace personal. La invitación cuenta cuando se confirma el correo.",confirmed:"invitaciones confirmadas",yourLink:"Tu enlace personal",copy:"Copiar enlace",share:"Compartir",badge1:"Insignia Invitador activo",badge2:"Insignia Embajador",badge3:"Insignia Estrella Mini Store",progress:"Comparte tu enlace para reunir invitaciones confirmadas.",note:"Solo cuentan las cuentas nuevas con correo confirmado. No cuentan clics, duplicados ni auto-invitaciones.",copied:"Enlace copiado.",failed:"No se pudo copiar el enlace.",shareText:"Únete a Mini Store DZ con mi enlace:"},
+ de:{menu:"Freunde einladen",title:"Lade Freunde ein und sammle Abzeichen",description:"Teile deinen persönlichen Link. Eine Einladung zählt nach bestätigter E-Mail.",confirmed:"bestätigte Einladungen",yourLink:"Dein persönlicher Einladungslink",copy:"Link kopieren",share:"Teilen",badge1:"Abzeichen Aktiver Einlader",badge2:"Abzeichen Botschafter",badge3:"Mini Store Star-Abzeichen",progress:"Teile deinen Link, um bestätigte Einladungen zu sammeln.",note:"Nur neue Konten mit bestätigter E-Mail zählen. Klicks, Duplikate und Selbsteinladungen zählen nicht.",copied:"Einladungslink kopiert.",failed:"Link konnte nicht kopiert werden.",shareText:"Tritt Mini Store DZ über meinen Einladungslink bei:"},
+ tr:{menu:"Arkadaşlarını davet et",title:"Arkadaşlarını davet et, rozet kazan",description:"Kişisel bağlantını paylaş. Davet, yeni hesap e-postasını doğruladığında sayılır.",confirmed:"onaylı davet",yourLink:"Kişisel davet bağlantın",copy:"Bağlantıyı kopyala",share:"Paylaş",badge1:"Aktif Davetçi rozeti",badge2:"Platform Elçisi rozeti",badge3:"Mini Store Yıldızı rozeti",progress:"Onaylı davetler toplamak için bağlantını paylaş.",note:"Yalnızca e-postası doğrulanmış yeni hesaplar sayılır. Tıklamalar, yinelenen hesaplar ve kendini davet etme sayılmaz.",copied:"Davet bağlantısı kopyalandı.",failed:"Bağlantı kopyalanamadı.",shareText:"Davet bağlantımla Mini Store DZ'ye katıl:"}
+};
+function applyReferralLanguage(){
+ const lang=document.documentElement.lang||"ar",words=referralUiTranslations[lang]||referralUiTranslations.ar;
+ document.querySelectorAll("[data-referral-i18n]").forEach(node=>{const key=node.dataset.referralI18n;if(words[key])node.textContent=words[key];});
+}
+async function copyReferralUrl(){
+ const field=$("referralLink");if(!field?.value)return false;
+ try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(field.value);else{field.focus();field.select();if(!document.execCommand("copy"))throw new Error("Copy unavailable");}}
+ catch(error){console.error("Referral link copy failed:",error);return false;}
+ const words=referralUiTranslations[document.documentElement.lang]||referralUiTranslations.ar;
+ $("referralFeedback").textContent=words.copied;return true;
+}
+async function loadReferralStats(){
+ const panel=$("referrals");if(!panel||!user)return;
+ const {data,error}=await supabase.rpc("get_my_referral_stats");if(error)throw error;
+ const row=Array.isArray(data)?data[0]:data;if(!row?.referral_code)throw new Error("Referral code unavailable");
+ const count=Number(row.invited_count||0),code=String(row.referral_code);
+ const inviteUrl=new URL("auth.html",location.href);inviteUrl.searchParams.set("next","dashboard.html");inviteUrl.searchParams.set("ref",code);
+ $("referralLink").value=inviteUrl.toString();$("referralCount").textContent=String(count);
+ const words=referralUiTranslations[document.documentElement.lang]||referralUiTranslations.ar;
+ const milestones=[3,5,10],next=milestones.find(n=>count<n);
+ if(count>=10)$("referralProgress").textContent=words.badge3+" ✓";
+ else if(count>=5)$("referralProgress").textContent=words.badge2+" ✓ · "+(next-count)+"";
+ else if(count>=3)$("referralProgress").textContent=words.badge1+" ✓ · "+(next-count)+"";
+ else $("referralProgress").textContent=words.progress+" "+(next-count)+"";
+}
+function initReferralControls(){
+ $("copyReferralLink")?.addEventListener("click",copyReferralUrl);
+ $("shareReferralLink")?.addEventListener("click",async()=>{
+  const url=$("referralLink")?.value;if(!url)return;
+  const words=referralUiTranslations[document.documentElement.lang]||referralUiTranslations.ar;
+  try{if(navigator.share){await navigator.share({title:"Mini Store DZ",text:words.shareText,url});return;}}
+  catch(error){if(error?.name==="AbortError")return;console.warn("Native referral share unavailable:",error);}
+  await copyReferralUrl();
+ });
+ applyReferralLanguage();
+}
+
 let user=null,store=null,products=[],orders=[],reviews=[];
 let subscription=null,billingCycle="monthly";
 const planConfig={free:{limit:10},pro:{limit:100},premium:{limit:Infinity}};
@@ -523,6 +569,7 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
  $("dashYear").textContent=new Date().getFullYear();
+ initReferralControls();
  // Bind logout before rendering charts or making any network request.
  const logoutButton=$("logoutButton");
  if(logoutButton)logoutButton.addEventListener("click",async()=>{
@@ -554,6 +601,7 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  }
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
+  try{await loadReferralStats();}catch(error){console.error("Referral data unavailable:",error);if($("referralFeedback"))$("referralFeedback").textContent="تعذر تحميل بيانات الدعوات حالياً. حاول تحديث الصفحة.";} 
   try{await loadMerchantSupportMessages();}catch(error){console.error('Support inbox load failed:',error);}
   try{await loadMerchantPaymentSettings();await loadMerchantPaymentHistory();}catch(error){console.error('Payment area load failed:',error);}
 
@@ -585,5 +633,5 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  }
  
 }
-document.addEventListener("msdz-language-changed",()=>{applyFeaturedPromotionLanguage();if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();if(subscription)renderSubscription();updateBillingPrices();});
+document.addEventListener("msdz-language-changed",()=>{applyFeaturedPromotionLanguage();applyReferralLanguage();if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();if(subscription)renderSubscription();updateBillingPrices();});
 init();
