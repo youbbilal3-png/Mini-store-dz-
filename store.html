@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="اكتشف منتجات المتجر وتقييمات الزبائن واطلب بسهولة عبر Mini Store DZ.">
+<title>المتجر | Mini Store DZ</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mini Store DZ">
+<meta property="og:title" content="اكتشف المتجر على Mini Store DZ">
+<meta property="og:description" content="تصفح المنتجات والتقييمات واطلب بسهولة عبر WhatsApp.">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="Mini Store DZ home"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
+  <nav aria-label="Main navigation">
+    <a href="#products" data-i18n="navProducts">المنتجات</a>
+    <a href="#about" data-i18n="navAbout">من نحن</a>
+    <a href="#contact" data-i18n="navContact">اتصل بنا</a>
+    <a href="auth.html">حساب التاجر</a>
+  </nav>
+  <label class="language-picker">
+    <span class="sr-only" data-i18n="languageLabel">اللغة</span>
+    <select id="languageSelect" aria-label="Choose language">
+      <option value="ar">العربية</option>
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+    </select>
+  </label>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow" data-i18n="eyebrow">متجرك يبدأ من هنا</span>
+      <h1 data-i18n="heroTitle">اكتشف منتجاتك المفضلة<br><em>بسهولة وثقة</em></h1>
+      <p data-i18n="heroText">تصفح منتجاتنا واختر ما يناسبك. اطلب مباشرة عبر واتساب.</p>
+      <a class="primary-btn" href="#products" data-i18n="browse">تصفح المنتجات</a>
+    </div>
+    <aside class="seller-card" aria-label="Seller profile">
+      <div class="avatar-wrap"><img id="sellerAvatar" alt="" hidden><span id="sellerInitials">S</span></div>
+      <div class="seller-meta">
+        <span class="seller-label" data-i18n="sellerLabel">صاحب المتجر</span>
+        <strong id="sellerName">Store Owner</strong>
+        <span class="seller-description" id="sellerDescription">Your store, your identity.</span>
+      </div>
+      <span class="seller-star" aria-hidden="true">✦</span>
+    </aside>
+  </section>
+
+  <section class="section" id="products">
+    <div class="section-heading">
+      <div><span class="eyebrow" data-i18n="collection">تشكيلتنا</span><h2 data-i18n="productsTitle">منتجات مختارة</h2></div>
+      <span class="product-count" id="productCount"></span>
+    </div>
+    <div class="toolbar">
+      <div class="search-controls"><input id="searchInput" type="search" placeholder="ابحث عن منتج..." data-i18n-placeholder="searchPlaceholder"><button id="clearSearch" class="clear-search-btn" type="button" data-i18n="clearSearch" hidden>مسح البحث</button></div>
+      <div class="category-select-wrap"><select id="categorySelect" class="category-select" aria-label="اختر تصنيفاً"><option value="all">كل التصنيفات</option></select></div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+    <p class="empty-state" id="emptyState" hidden data-i18n="empty">لا توجد منتجات مطابقة.</p>
+  </section>
+
+
+  <section class="reviews-section" id="reviews" hidden>
+    <div class="section-heading"><div><span class="eyebrow" data-i18n="reviewsEyebrow">آراء الزبائن</span><h2 data-i18n="reviewsTitle">ماذا يقول زبائننا؟</h2></div><div class="reviews-summary"><strong id="reviewsAverage">—</strong><span id="reviewsStars">☆☆☆☆☆</span><small id="reviewsCount">0 تقييم</small><div class="reviews-breakdown" id="reviewsBreakdown" aria-label="توزيع التقييمات"></div></div></div>
+    <div class="reviews-layout">
+      <div class="reviews-list" id="publicReviews"><p class="empty-state">لا توجد تقييمات منشورة بعد.</p></div>
+      <form class="review-form" id="customerReviewForm">
+        <h3 data-i18n="writeReview">شاركنا رأيك</h3>
+        <label><span data-i18n="reviewName">اسمك</span><input id="reviewCustomerName" required minlength="2" maxlength="60" placeholder="اسمك"></label>
+        <label><span data-i18n="reviewRating">تقييمك</span><select id="reviewRating" required><option value="5">★★★★★ — 5</option><option value="4">★★★★☆ — 4</option><option value="3">★★★☆☆ — 3</option><option value="2">★★☆☆☆ — 2</option><option value="1">★☆☆☆☆ — 1</option></select></label>
+        <label><span data-i18n="reviewComment">رأيك</span><textarea id="reviewComment" required minlength="3" maxlength="600" rows="4" placeholder="كيف كانت تجربتك مع المتجر؟"></textarea></label>
+        <button class="primary-btn" id="submitReview" type="submit" data-i18n="sendReview">إرسال التقييم</button>
+        <p class="review-feedback" id="reviewFeedback" role="status"></p>
+        <small data-i18n="reviewModeration">سيظهر تقييمك بعد مراجعته من صاحب المتجر.</small>
+      </form>
+    </div>
+  </section>
+
+  <section class="about-section" id="about">
+    <div><span class="eyebrow" data-i18n="whyUs">لماذا متجرنا؟</span><h2 data-i18n="aboutTitle">تجربة شراء سهلة ومباشرة</h2></div>
+    <p data-i18n="aboutText">منتجات مميزة ومعلومات واضحة وطلب سهل عبر واتساب.</p>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <div><span class="eyebrow" data-i18n="needHelp">هل لديك سؤال؟</span><h2 data-i18n="contactTitle">تواصل معنا</h2><p data-i18n="contactText">نحن هنا لمساعدتك.</p></div>
+    <a class="primary-btn" id="contactButton" href="#" target="_blank" rel="noopener" data-i18n="whatsappUs">راسلنا عبر واتساب</a>
+  </section>
+  <dialog id="orderDialog" class="order-dialog"><form id="customerOrderForm" class="order-dialog-card">
+<button type="button" class="order-close" id="closeOrderDialog" aria-label="إغلاق">×</button><span class="eyebrow">MINI STORE DZ · ORDER</span><h2 id="orderDialogTitle">إتمام الطلب</h2><p id="orderProductSummary"></p>
+<div class="order-form-fields"><label>الاسم الكامل<input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل"></label><label>رقم الهاتف<input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..."></label><label>الكمية<input id="customerQuantity" required type="number" min="1" max="99" value="1"></label><label>ملاحظات (اختياري)<textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
+<div class="order-dialog-total" id="orderDialogTotal"></div><button class="primary-btn" id="submitCustomerOrder" type="submit">تأكيد الطلب والمتابعة إلى WhatsApp</button><p class="order-dialog-feedback" id="orderDialogFeedback" role="status"></p></form></dialog>
+</main>
+<footer>
+  <a class="brand" href="#"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
+  <div class="footer-credit"><strong>Founder of Mini Store DZ — B.YB</strong><p>© <span id="year"></span> Mini Store DZ. <span data-i18n="rights">جميع الحقوق محفوظة.</span></p></div>
+</footer>
+</body>
+</html>
