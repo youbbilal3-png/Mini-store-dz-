@@ -1,13 +1,18 @@
 // STORE SETTINGS: customize these values for each store.
 // WhatsApp number format: country code + number, without +, spaces or dashes.
-const STORE_SETTINGS = {
+const DEFAULT_STORE_SETTINGS = {
   whatsapp: "213000000000",
   sellerName: "Store Owner",
   sellerDescription: "",
   sellerAvatar: "" // Optional public image URL. Leave empty to show the first letter.
 };
 
-const products = [
+const DEMO_STORAGE_KEY = "ministore_dz_demo_v1";
+let savedDemo = null;
+try { savedDemo = JSON.parse(localStorage.getItem(DEMO_STORAGE_KEY) || "null"); } catch (error) { savedDemo = null; }
+const STORE_SETTINGS = Object.assign({}, DEFAULT_STORE_SETTINGS, savedDemo && savedDemo.settings ? savedDemo.settings : {});
+
+const defaultProducts = [
   {id:1,name:"سماعات لاسلكية",fr:"Écouteurs sans fil",en:"Wireless Earbuds",category:"إلكترونيات",categoryFr:"Électronique",categoryEn:"Electronics",price:3500,description:"صوت واضح وتصميم مريح للاستخدام اليومي.",descriptionFr:"Un son clair et un design confortable au quotidien.",descriptionEn:"Clear sound and a comfortable everyday fit.",emoji:"🎧"},
   {id:2,name:"ساعة ذكية",fr:"Montre connectée",en:"Smart Watch",category:"إلكترونيات",categoryFr:"Électronique",categoryEn:"Electronics",price:6200,description:"تابع نشاطك وإشعاراتك بسهولة.",descriptionFr:"Suivez facilement votre activité et vos notifications.",descriptionEn:"Track your activity and notifications.",emoji:"⌚"},
   {id:3,name:"حقيبة عصرية",fr:"Sac tendance",en:"Everyday Bag",category:"إكسسوارات",categoryFr:"Accessoires",categoryEn:"Accessories",price:2800,description:"حقيبة عملية بتصميم أنيق.",descriptionFr:"Un sac pratique au design élégant.",descriptionEn:"A practical bag with a modern look.",emoji:"👜"},
