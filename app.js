@@ -11,6 +11,10 @@ const DEMO_STORAGE_KEY = "ministore_dz_demo_v1";
 let savedDemo = null;
 try { savedDemo = JSON.parse(localStorage.getItem(DEMO_STORAGE_KEY) || "null"); } catch (error) { savedDemo = null; }
 const STORE_SETTINGS = Object.assign({}, DEFAULT_STORE_SETTINGS, savedDemo && savedDemo.settings ? savedDemo.settings : {});
+if (savedDemo && savedDemo.settings) {
+  STORE_SETTINGS.sellerAvatar = savedDemo.settings.avatar || savedDemo.settings.sellerAvatar || "";
+  STORE_SETTINGS.sellerDescription = [savedDemo.settings.storeName, savedDemo.settings.sellerDescription].filter(Boolean).join(" · ");
+}
 
 const defaultProducts = [
   {id:1,name:"سماعات لاسلكية",fr:"Écouteurs sans fil",en:"Wireless Earbuds",category:"إلكترونيات",categoryFr:"Électronique",categoryEn:"Electronics",price:3500,description:"صوت واضح وتصميم مريح للاستخدام اليومي.",descriptionFr:"Un son clair et un design confortable au quotidien.",descriptionEn:"Clear sound and a comfortable everyday fit.",emoji:"🎧"},
