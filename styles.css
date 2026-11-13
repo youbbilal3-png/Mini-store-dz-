@@ -269,3 +269,18 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
  .header-tools nav .header-icon-link{width:28px;height:28px;flex-basis:28px;font-size:16px!important}
  .header-tools .language-picker select{width:96px;min-width:96px;max-width:96px;font-size:11px;padding:5px 4px}
 }
+
+
+/* About and contact content are revealed only when their toolbar icons are tapped. */
+.header-tools nav .header-icon-link{appearance:none;display:inline-grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #435064;border-radius:9px;background:#1b293b;color:#fff!important;font:700 18px/1 inherit;cursor:pointer;padding:0;text-decoration:none}
+.header-tools nav .header-icon-link:hover{border-color:var(--lime);color:var(--lime)!important}
+.info-dialog{width:min(92vw,620px);max-width:620px;max-height:85vh;overflow:auto;padding:0;border:0;border-radius:20px;background:transparent;box-shadow:0 24px 80px #10182755}
+.info-dialog::backdrop{background:#101827aa;backdrop-filter:blur(4px)}
+.info-dialog-card{position:relative;padding:30px 24px 24px;background:#fff;color:var(--ink);border-radius:20px}
+.info-dialog-card .about-section,.info-dialog-card .contact-section{display:flex!important;padding:0!important;margin:0!important;flex-direction:column;align-items:stretch;gap:12px;background:transparent!important}
+.info-dialog-card .about-section>div,.info-dialog-card .contact-section>div{max-width:none}
+.info-dialog-card .about-section p,.info-dialog-card .contact-section p{max-width:none}
+.info-dialog-card .order-close{position:absolute;top:12px;right:12px;left:auto;z-index:2}
+html[data-theme="dark"] .info-dialog-card,html[data-theme="system"] .info-dialog-card{background:#172536;color:#edf2f7}
+html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="system"] .info-dialog-card .contact-email a{color:#edf2f7}
+@media(max-width:600px){.header-tools nav .header-icon-link{width:29px;height:29px;flex-basis:29px;font-size:17px}.info-dialog-card{padding:28px 18px 20px}}
