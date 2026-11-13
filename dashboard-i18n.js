@@ -2,6 +2,7 @@
   const dictionaries = {
     fr: {
       "الرئيسية":"Accueil",
+      "لوحة الإدارة":"Administration",
       "الدعم الفني":"Support technique",
       "أرسل رسالتك وسيتمكن فريق Mini Store DZ من متابعتها والرد عليك.":"Envoyez votre message ; l’équipe Mini Store DZ le suivra et vous répondra.",
       "عنوان الرسالة":"Objet du message",
@@ -43,6 +44,7 @@
     },
     en: {
       "الرئيسية":"Home",
+      "لوحة الإدارة":"Admin panel",
       "الدعم الفني":"Support",
       "أرسل رسالتك وسيتمكن فريق Mini Store DZ من متابعتها والرد عليك.":"Send a message and the Mini Store DZ team will follow up and reply.",
       "عنوان الرسالة":"Subject",
