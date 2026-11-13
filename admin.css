@@ -2,3 +2,6 @@
 .admin-payment-settings{display:grid;gap:10px;margin-bottom:18px}.admin-payment-settings label{display:grid;gap:6px;color:#b9c9dc;font-size:13px}.admin-payment-settings input,.admin-payment-settings textarea{width:100%;background:#0b1525;border:1px solid #344760;border-radius:9px;padding:10px;color:#fff}.admin-payment-settings textarea{min-height:72px;resize:vertical}.admin-payment-settings .admin-action{justify-self:start}
 
 .admin-receipt-preview{display:block;width:min(100%,520px);margin:12px 0;border:1px solid #344760;border-radius:14px;overflow:hidden;background:#0b1525}.admin-receipt-preview img{display:block;width:100%;max-height:620px;object-fit:contain}
+
+.admin-featured-highlight{border-color:#9a7b35;background:linear-gradient(120deg,#1c2b3e,#2b2a20)}
+.admin-tabs [data-admin-tab="featured"]{border-color:#9a7b35}
