@@ -152,6 +152,7 @@ function showAvatar(){
 async function saveProfile(){
  if(!store?.id){message("profileFeedback","لم تكتمل تهيئة بيانات المتجر بعد. انتظر لحظة ثم حاول مجدداً.");return;}
  const whatsapp=$("whatsappInput").value.trim().replace(/[\s+()-]/g,"");
+ if(store.is_published&&!whatsapp){message("profileFeedback","أضف رقم WhatsApp قبل نشر متجرك حتى يتمكن الزبائن من إرسال الطلبات.");return;}
  if(whatsapp&&!/^\d{8,15}$/.test(whatsapp)){message("profileFeedback","تحقق من رقم WhatsApp ورمز الدولة.");return;}
  const updates={seller_name:$("sellerNameInput").value.trim()||"Store Owner",seller_bio:$("sellerBioInput").value.trim(),store_name:$("storeNameInput").value.trim()||"متجري",whatsapp:whatsapp||null,updated_at:new Date().toISOString()};
  const {data,error}=await supabase.from("stores").update(updates).eq("id",store.id).select("*").single();
@@ -276,6 +277,7 @@ async function copyStoreLink(){
 }
 async function togglePublish(){
  const next=!store.is_published;
+ if(next&&!String(store.whatsapp||"").replace(/\D/g,"")){message("profileFeedback","أضف رقم WhatsApp قبل نشر متجرك حتى يتمكن الزبائن من إرسال الطلبات.");return;}
  const {data,error}=await supabase.from("stores").update({is_published:next,updated_at:new Date().toISOString()}).eq("id",store.id).select("*").single();
  if(error){message("profileFeedback",error.message);return;}
  store=data;fillSettings();message("profileFeedback",next?"تم نشر متجرك. يمكنك مشاركة رابط المتجر.":"تم إلغاء نشر المتجر.");
