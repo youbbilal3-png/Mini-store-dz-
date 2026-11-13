@@ -134,7 +134,7 @@
 
   const originals = Object.keys(dictionaries.fr);
   const reverse = { fr: {}, en: {}, es: {
-      "الرئيسية":"Inicio",}, de: {
+      "الرئيسية":"Home",}, de: {
       "الرئيسية":"Startseite",}, tr: {
       "الرئيسية":"Ana sayfa",} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
