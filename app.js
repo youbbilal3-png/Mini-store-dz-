@@ -114,6 +114,10 @@ async function loadStore(){
   const {data:list,error:productError}=await supabase.from("products").select("id,name,description,category,price,currency,image_url").eq("store_id",store.id).eq("is_active",true).order("created_at",{ascending:false});
   if(productError)throw productError;products=(list||[]).map(p=>({...p,emoji:"📦"}));
   document.title=store.store_name+" | Mini Store DZ";
+  const pageDescription=[store.store_name,store.seller_bio,"تصفح المنتجات والتقييمات واطلب بسهولة عبر WhatsApp."].filter(Boolean).join(" — ");
+  const descriptionMeta=document.querySelector('meta[name="description"]');if(descriptionMeta)descriptionMeta.content=pageDescription;
+  const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=store.store_name+" | Mini Store DZ";
+  const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=pageDescription;
  }catch(error){console.error("Store loading error:",error);}
 }
 el("languageSelect").addEventListener("change",e=>{language=e.target.value;activeCategory="all";applyLanguage();});
