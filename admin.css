@@ -19,3 +19,7 @@
 .admin-ad-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .admin-ad-form input[type=file]{width:100%;padding:12px;border:1px dashed var(--line,#cbd5e1);border-radius:10px;background:var(--surface,#fff)}
 .admin-ad-form label small{display:block;margin-top:6px;color:var(--muted,#667085);font-size:12px}
+
+.admin-ad-form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.admin-ad-form-actions [hidden]{display:none!important}
+.admin-action.secondary{background:transparent;color:var(--text,#344054);border:1px solid var(--line,#d0d5dd)}
