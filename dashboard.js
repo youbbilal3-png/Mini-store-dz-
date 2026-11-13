@@ -351,10 +351,12 @@ async function init(){
  initDashboardTheme();
  // Keep subscription plans out of the main dashboard until the merchant opens their sidebar item.
  const subscriptionPanel=$("subscription");
+ // Always keep plans hidden on dashboard load, even if the URL still contains #subscription.
+ if(subscriptionPanel)subscriptionPanel.hidden=true;
  const syncSubscriptionPanel=()=>{
-  if(subscriptionPanel)subscriptionPanel.hidden=location.hash!=="#subscription";
+  if(subscriptionPanel&&location.hash!=="#subscription")subscriptionPanel.hidden=true;
  };
- syncSubscriptionPanel();
+ window.addEventListener("hashchange",syncSubscriptionPanel);
  const subscriptionLink=document.querySelector('.dashboard-sidebar a[href="#subscription"]');
  if(subscriptionLink&&subscriptionPanel){
   subscriptionLink.addEventListener("click",event=>{
@@ -371,7 +373,6 @@ async function init(){
    document.querySelectorAll(".dashboard-sidebar .side-link").forEach(item=>item.classList.toggle("active",item===link));
   });
  });
- window.addEventListener("hashchange",syncSubscriptionPanel);
  // Register controls before waiting for Supabase; slow requests must not disable the dashboard.
  $("saveProfile").addEventListener("click",saveProfile);
  $("avatarUpload").addEventListener("change",uploadAvatar);
