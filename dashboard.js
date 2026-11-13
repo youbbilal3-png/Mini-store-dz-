@@ -239,6 +239,21 @@ async function togglePublish(){
 }
 async function init(){
  initDashboardTheme();
+ const logoutButton=$("logoutButton");
+ if(logoutButton)logoutButton.addEventListener("click",async()=>{
+  logoutButton.disabled=true;
+  logoutButton.textContent="جارٍ تسجيل الخروج...";
+  try{
+   const {error}=await supabase.auth.signOut({scope:"local"});
+   if(error)throw error;
+   location.replace(new URL("index.html?logged_out=1",location.href).href);
+  }catch(error){
+   console.error("Sign out failed:",error);
+   logoutButton.disabled=false;
+   logoutButton.textContent="تسجيل الخروج";
+   alert("تعذر تسجيل الخروج. تحقق من الاتصال ثم حاول مجدداً.");
+  }
+ });
  const {data:{session}}=await supabase.auth.getSession();
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
