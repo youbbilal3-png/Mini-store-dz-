@@ -51,6 +51,7 @@
       <div><span class="eyebrow" data-i18n="collection">تشكيلتنا</span><h2 data-i18n="productsTitle">منتجات مختارة</h2></div>
       <span class="product-count" id="productCount"></span>
     </div>
+    <div class="cart-toolbar"><button type="button" id="viewCartButton" class="view-cart-btn" data-i18n="viewCart" hidden>عرض السلة (0)</button></div>
     <div class="toolbar">
       <div class="search-controls"><input id="searchInput" type="search" placeholder="ابحث عن منتج..." data-i18n-placeholder="searchPlaceholder"><button id="clearSearch" class="clear-search-btn" type="button" data-i18n="clearSearch" hidden>مسح البحث</button></div>
       <div class="category-select-wrap"><select id="categorySelect" class="category-select" aria-label="اختر تصنيفاً"><option value="all">كل التصنيفات</option></select></div>
@@ -85,9 +86,10 @@
     <div><span class="eyebrow" data-i18n="needHelp">هل لديك سؤال؟</span><h2 data-i18n="contactTitle">تواصل معنا</h2><p data-i18n="contactText">نحن هنا لمساعدتك.</p></div>
     <a class="primary-btn" id="contactButton" href="#" target="_blank" rel="noopener" data-i18n="whatsappUs">راسلنا عبر واتساب</a>
   </section>
+  <dialog id="cartDialog" class="cart-dialog"><div class="cart-dialog-card"><button type="button" class="order-close" id="closeCartDialog" aria-label="إغلاق">×</button><span class="eyebrow">MINI STORE DZ · CART</span><h2 data-i18n="cart">سلة المشتريات</h2><div id="cartItemsList" class="cart-items-list"></div><div id="cartDialogTotal" class="order-dialog-total"></div><div class="cart-dialog-actions"><button type="button" class="secondary-btn" id="continueShoppingButton" data-i18n="continueShopping">متابعة التسوق</button><button type="button" class="primary-btn" id="checkoutCartButton" data-i18n="checkout">إتمام الطلب</button></div><p id="cartFeedback" class="cart-feedback" role="status"></p></div></dialog>
   <dialog id="orderDialog" class="order-dialog"><form id="customerOrderForm" class="order-dialog-card">
 <button type="button" class="order-close" id="closeOrderDialog" aria-label="إغلاق">×</button><span class="eyebrow">MINI STORE DZ · ORDER</span><h2 id="orderDialogTitle">إتمام الطلب</h2><p id="orderProductSummary"></p>
-<div class="order-form-fields"><label>الاسم الكامل<input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل"></label><label>رقم الهاتف<input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..."></label><label>الكمية<input id="customerQuantity" required type="number" min="1" max="99" value="1"></label><label>ملاحظات (اختياري)<textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
+<div class="order-form-fields"><label>الاسم الكامل<input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل"></label><label>رقم الهاتف<input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..."></label><label>ملاحظات (اختياري)<textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
 <div class="order-dialog-total" id="orderDialogTotal"></div><button class="primary-btn" id="submitCustomerOrder" type="submit">تأكيد الطلب والمتابعة إلى WhatsApp</button><p class="order-dialog-feedback" id="orderDialogFeedback" role="status"></p></form></dialog>
 </main>
 <footer>
