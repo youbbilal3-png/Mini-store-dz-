@@ -272,7 +272,7 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
 
 
 /* About and contact content are revealed only when their toolbar icons are tapped. */
-.header-tools nav .header-icon-link{appearance:none;display:inline-grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #435064;border-radius:9px;background:#1b293b;color:#fff!important;font:700 18px/1 inherit;cursor:pointer;padding:0;text-decoration:none}
+.header-tools nav .header-icon-link{appearance:none;display:inline-grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:1px solid #435064;border-radius:9px;background:#1b293b;color:#fff!important;font-family:inherit;font-size:18px;font-weight:700;line-height:1;cursor:pointer;padding:0;text-decoration:none}
 .header-tools nav .header-icon-link:hover{border-color:var(--lime);color:var(--lime)!important}
 .info-dialog{width:min(92vw,620px);max-width:620px;max-height:85vh;overflow:auto;padding:0;border:0;border-radius:20px;background:transparent;box-shadow:0 24px 80px #10182755}
 .info-dialog::backdrop{background:#101827aa;backdrop-filter:blur(4px)}
