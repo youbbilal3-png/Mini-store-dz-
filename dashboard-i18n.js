@@ -106,7 +106,7 @@
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
-      if (node.parentElement?.closest("script,style,textarea,input,[contenteditable=true]")) continue;
+      if (node.parentElement?.closest("script,style,textarea,input,[contenteditable=true],.store-identity-copy h3,#storeIdentitySeller,#storeIdentityBio,.managed-product-info strong,.product-category-label,.managed-review-head strong,.managed-review-body p,.managed-order-main strong,.managed-order-main > span,.managed-order-main .order-note,.order-product-name")) continue;
       const next = translateText(node.nodeValue);
       if (next !== node.nodeValue) node.nodeValue = next;
     }
