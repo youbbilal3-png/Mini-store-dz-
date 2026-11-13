@@ -280,7 +280,7 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
 .info-dialog-card .about-section,.info-dialog-card .contact-section{display:flex!important;padding:0!important;margin:0!important;flex-direction:column;align-items:stretch;gap:12px;background:transparent!important}
 .info-dialog-card .about-section>div,.info-dialog-card .contact-section>div{max-width:none}
 .info-dialog-card .about-section p,.info-dialog-card .contact-section p{max-width:none}
-.info-dialog-card .order-close{position:absolute;top:12px;right:12px;left:auto;z-index:2}
+.info-dialog-card .order-close{position:absolute;top:12px;left:12px;right:auto;z-index:2}
 html[data-theme="dark"] .info-dialog-card,html[data-theme="system"] .info-dialog-card{background:#172536;color:#edf2f7}
 html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="system"] .info-dialog-card .contact-email a{color:#edf2f7}
 @media(max-width:600px){.header-tools nav .header-icon-link{width:29px;height:29px;flex-basis:29px;font-size:17px}.info-dialog-card{padding:28px 18px 20px}}
@@ -329,11 +329,11 @@ html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="syst
  line-height:1.2!important;white-space:nowrap!important;cursor:pointer!important;
  box-shadow:0 3px 10px #0003!important;transition:transform .18s ease,border-color .18s ease,background .18s ease!important;
 }
-.header-tools nav .header-icon-link .nav-icon{font-size:19px!important;line-height:1;color:#a6e34b!important}
+
 .header-tools nav #openAboutDialog{border-color:#648d37!important}
 .header-tools nav #openContactDialog{border-color:#398ca0!important}
-.header-tools nav #openAboutDialog .nav-icon{color:#b5ed58!important}
-.header-tools nav #openContactDialog .nav-icon{color:#64d8f0!important}
+
+
 .header-tools nav .header-icon-link:hover{transform:translateY(-1px);background:linear-gradient(135deg,#344e67,#1d3045)!important;border-color:#a6e34b!important;color:#fff!important}
 .header-tools .language-picker select{width:112px!important;min-width:112px!important;max-width:112px!important}
 @media(max-width:850px){
