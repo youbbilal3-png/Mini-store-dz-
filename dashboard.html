@@ -64,6 +64,21 @@ window.addEventListener("unhandledrejection",function(event){
 <article class="subscription-card plan-premium"><span class="plan-label">PREMIUM</span><h3>مميز</h3><div class="plan-price"><strong id="premiumPrice">3,000</strong> <small>دج / <span id="pricePeriodPremium">شهرياً</span></small></div><p>للتجار الذين يريدون مساحة أكبر.</p><ul><li>منتجات غير محدودة</li><li>جميع مزايا Pro</li><li>تجربة مجانية لمدة 7 أيام</li></ul><button type="button" class="save-button plan-trial-button" id="startPremiumTrial">ابدأ تجربة Premium المجانية</button></article>
 </div>
 <p class="subscription-note" id="subscriptionNote">الأسعار السنوية: Pro ‏15,000 دج وPremium ‏30,000 دج. الدفع الإلكتروني غير مفعّل حالياً؛ لن يتم خصم أي مبلغ بعد انتهاء التجربة.</p>
+<div class="subscription-payment-box">
+<h3>الدفع اليدوي للاشتراك</h3><p>حوّل قيمة الباقة إلى إحدى وسائل الاستلام أدناه، ثم أرسل بيانات العملية لمراجعتها وتفعيل اشتراكك.</p>
+<div id="merchantPaymentDetails" class="payment-details-view">جارٍ تحميل بيانات الاستلام...</div>
+<form id="subscriptionPaymentForm" class="product-form">
+<label>الباقة<select id="paymentPlan"><option value="pro">Pro — احترافي</option><option value="premium">Premium — مميز</option></select></label>
+<label>مدة الاشتراك<select id="paymentCycle"><option value="monthly">شهري</option><option value="yearly">سنوي</option></select></label>
+<label>طريقة التحويل<select id="paymentMethod"><option value="baridimob">BaridiMob</option><option value="ccp">CCP</option></select></label>
+<label>اسم صاحب التحويل<input id="paymentSender" required maxlength="120" placeholder="الاسم الظاهر في عملية التحويل"></label>
+<label>رقم العملية / المرجع<input id="paymentReference" required minlength="3" maxlength="120" placeholder="رقم العملية كما يظهر في الإيصال"></label>
+<label>رابط إثبات الدفع (اختياري)<input id="paymentProofUrl" type="url" maxlength="500" placeholder="https://..."></label>
+<p class="payment-amount-line">المبلغ المطلوب: <strong id="paymentAmount">1,500 دج</strong></p>
+<button class="save-button" id="submitSubscriptionPayment" type="submit">إرسال طلب مراجعة الدفع</button><p id="paymentRequestFeedback" class="save-feedback" role="status"></p>
+</form>
+<div class="panel-heading"><h3>طلبات الدفع السابقة</h3></div><div id="merchantPaymentHistory" class="managed-reviews"><p class="empty-products">جارٍ تحميل طلبات الدفع...</p></div>
+</div>
 </section>
 <section class="dash-panel" id="profile">
 <div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
