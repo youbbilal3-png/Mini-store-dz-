@@ -85,7 +85,6 @@ function renderReferralRewards(count,rewards){
   panel.appendChild(line);
  });
 }
-}
 function initReferralControls(){
  $("copyReferralLink")?.addEventListener("click",copyReferralUrl);
  $("shareReferralLink")?.addEventListener("click",async()=>{
