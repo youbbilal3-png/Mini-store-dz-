@@ -190,3 +190,12 @@ html[data-theme="dark"] .dashboard-page .managed-product-emoji{
   box-shadow:inset 0 2px 3px rgba(255,255,255,.12),inset 0 -4px 7px rgba(0,0,0,.22),0 5px 10px rgba(0,0,0,.22);
  }
 }
+
+
+/* Dedicated 3D home shortcut in the merchant launcher */
+.dashboard-sidebar .home-dashboard-link{border-color:#9fc56f;background:linear-gradient(145deg,#f7fbed,#e7f2d9);}
+.dashboard-sidebar .home-dashboard-link .home-menu-icon{font-family:Arial,sans-serif;font-size:34px;font-weight:900;color:#477a22;background:linear-gradient(145deg,#ffffff 0%,#d8edbd 48%,#a9d47b 100%);text-shadow:0 1px 0 #fff,0 3px 0 #8bb85b,0 5px 8px #365d254d;box-shadow:inset 0 2px 3px #ffffffcc,inset 0 -4px 7px #679a3d55,0 5px 0 #83ad57,0 8px 13px #29451e35;transform:translateY(-1px);}
+.dashboard-sidebar .home-dashboard-link:hover .home-menu-icon{transform:translateY(-3px);}
+html[data-theme="dark"] .dashboard-sidebar .home-dashboard-link{background:linear-gradient(145deg,#243a2a,#1b3023);border-color:#729b45;}
+html[data-theme="dark"] .dashboard-sidebar .home-dashboard-link .home-menu-icon{color:#d7f3ad;background:linear-gradient(145deg,#46683b,#263f2c);text-shadow:0 1px 0 #9acb79,0 3px 0 #1b321f,0 5px 8px #0009;box-shadow:inset 0 2px 3px #ffffff40,inset 0 -4px 7px #0005,0 5px 0 #192c1c,0 8px 13px #0006;}
+@media(prefers-color-scheme:dark){html[data-theme="system"] .dashboard-sidebar .home-dashboard-link{background:linear-gradient(145deg,#243a2a,#1b3023);border-color:#729b45;}html[data-theme="system"] .dashboard-sidebar .home-dashboard-link .home-menu-icon{color:#d7f3ad;background:linear-gradient(145deg,#46683b,#263f2c);text-shadow:0 1px 0 #9acb79,0 3px 0 #1b321f,0 5px 8px #0009;box-shadow:inset 0 2px 3px #ffffff40,inset 0 -4px 7px #0005,0 5px 0 #192c1c,0 8px 13px #0006;}}
