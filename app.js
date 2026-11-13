@@ -58,13 +58,13 @@ let searchTerm = "";
 const el = id => document.getElementById(id);
 
 function productText(product, field) {
-  if (field === "name") return language === "fr" ? product.fr : language === "en" ? product.en : product.name;
+  if (field === "name") return (language === "fr" ? product.fr : language === "en" ? product.en : product.name) || product.name;
   if (language === "fr") return product[field + "Fr"] || product[field];
   if (language === "en") return product[field + "En"] || product[field];
   return product[field];
 }
 function categoryOf(product) {
-  return language === "fr" ? product.categoryFr : language === "en" ? product.categoryEn : product.category;
+  return (language === "fr" ? product.categoryFr : language === "en" ? product.categoryEn : product.category) || product.category;
 }
 function whatsappLink(product) {
   const name = productText(product, "name");
