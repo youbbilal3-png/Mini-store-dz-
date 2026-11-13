@@ -47,20 +47,20 @@ function productText(p,field){if(field==="name")return (language==="fr"?p.fr:lan
 function categoryOf(p){return (language==="fr"?p.categoryFr:language==="en"?p.categoryEn:language==="es"?p.categoryEs:language==="de"?p.categoryDe:language==="tr"?p.categoryTr:p.category)||p.category||"General";}
 function whatsappLink(p){return "https://wa.me/"+(STORE_SETTINGS.whatsapp||"")+"?text="+encodeURIComponent(translations[language].orderMessage+productText(p,"name"));}
 const standardCategories=[
-{value:"إلكترونيات",ar:"إلكترونيات",fr:"Électronique",en:"Electronics"},
-{value:"هواتف وإكسسوارات",ar:"هواتف وإكسسوارات",fr:"Téléphones et accessoires",en:"Phones & accessories"},
-{value:"ملابس",ar:"ملابس",fr:"Vêtements",en:"Clothing"},
-{value:"أحذية",ar:"أحذية",fr:"Chaussures",en:"Shoes"},
-{value:"حقائب وإكسسوارات",ar:"حقائب وإكسسوارات",fr:"Sacs et accessoires",en:"Bags & accessories"},
-{value:"مستحضرات التجميل",ar:"مستحضرات التجميل",fr:"Cosmétiques",en:"Cosmetics"},
-{value:"العناية الشخصية",ar:"العناية الشخصية",fr:"Soins personnels",en:"Personal care"},
-{value:"المنزل والمطبخ",ar:"المنزل والمطبخ",fr:"Maison et cuisine",en:"Home & kitchen"},
-{value:"الأثاث والديكور",ar:"الأثاث والديكور",fr:"Meubles et décoration",en:"Furniture & decor"},
-{value:"الأطفال والألعاب",ar:"الأطفال والألعاب",fr:"Enfants et jouets",en:"Kids & toys"},
-{value:"الرياضة واللياقة",ar:"الرياضة واللياقة",fr:"Sport et fitness",en:"Sports & fitness"},
-{value:"السيارات",ar:"السيارات",fr:"Automobile",en:"Automotive"},
-{value:"الأغذية والمشروبات",ar:"الأغذية والمشروبات",fr:"Alimentation et boissons",en:"Food & drinks"},
-{value:"الكتب والقرطاسية",ar:"الكتب والقرطاسية",fr:"Livres et papeterie",en:"Books & stationery"}
+{value:"إلكترونيات",ar:"إلكترونيات",fr:"Électronique",en:"Electronics",es:"Electrónica",de:"Elektronik",tr:"Elektronik"},
+{value:"هواتف وإكسسوارات",ar:"هواتف وإكسسوارات",fr:"Téléphones et accessoires",en:"Phones & accessories",es:"Teléfonos y accesorios",de:"Telefone & Zubehör",tr:"Telefonlar ve aksesuarlar"},
+{value:"ملابس",ar:"ملابس",fr:"Vêtements",en:"Clothing",es:"Ropa",de:"Kleidung",tr:"Giyim"},
+{value:"أحذية",ar:"أحذية",fr:"Chaussures",en:"Shoes",es:"Calzado",de:"Schuhe",tr:"Ayakkabı"},
+{value:"حقائب وإكسسوارات",ar:"حقائب وإكسسوارات",fr:"Sacs et accessoires",en:"Bags & accessories",es:"Bolsos y accesorios",de:"Taschen & Accessoires",tr:"Çanta ve aksesuarlar"},
+{value:"مستحضرات التجميل",ar:"مستحضرات التجميل",fr:"Cosmétiques",en:"Cosmetics",es:"Cosméticos",de:"Kosmetik",tr:"Kozmetik"},
+{value:"العناية الشخصية",ar:"العناية الشخصية",fr:"Soins personnels",en:"Personal care",es:"Cuidado personal",de:"Körperpflege",tr:"Kişisel bakım"},
+{value:"المنزل والمطبخ",ar:"المنزل والمطبخ",fr:"Maison et cuisine",en:"Home & kitchen",es:"Hogar y cocina",de:"Wohnen & Küche",tr:"Ev ve mutfak"},
+{value:"الأثاث والديكور",ar:"الأثاث والديكور",fr:"Meubles et décoration",en:"Furniture & decor",es:"Muebles y decoración",de:"Möbel & Dekoration",tr:"Mobilya ve dekorasyon"},
+{value:"الأطفال والألعاب",ar:"الأطفال والألعاب",fr:"Enfants et jouets",en:"Kids & toys",es:"Niños y juguetes",de:"Kinder & Spielzeug",tr:"Çocuk ve oyuncak"},
+{value:"الرياضة واللياقة",ar:"الرياضة واللياقة",fr:"Sport et fitness",en:"Sports & fitness",es:"Deporte y fitness",de:"Sport & Fitness",tr:"Spor ve fitness"},
+{value:"السيارات",ar:"السيارات",fr:"Automobile",en:"Automotive",es:"Automoción",de:"Automobil",tr:"Otomotiv"},
+{value:"الأغذية والمشروبات",ar:"الأغذية والمشروبات",fr:"Alimentation et boissons",en:"Food & drinks",es:"Alimentación y bebidas",de:"Lebensmittel & Getränke",tr:"Yiyecek ve içecek"},
+{value:"الكتب والقرطاسية",ar:"الكتب والقرطاسية",fr:"Livres et papeterie",en:"Books & stationery",es:"Libros y papelería",de:"Bücher & Schreibwaren",tr:"Kitap ve kırtasiye"}
 ];
 function renderFilters(){
  const custom=[...new Set(products.map(p=>String(p.category||"").trim()).filter(Boolean))].filter(category=>!standardCategories.some(item=>item.value===category));
@@ -168,7 +168,7 @@ function renderCart(){
  const list=el("cartItemsList");if(!list)return;
  if(!cartItems.length){list.innerHTML='<p class="cart-empty">'+translations[language].cartEmpty+'</p>';}
  else list.innerHTML=cartItems.map(({product,quantity})=>'<article class="cart-item"><div class="cart-item-info"><strong>'+safe(productText(product,"name"))+'</strong><small>'+Number(product.price||0).toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":language==="es"?"es-ES":language==="de"?"de-DE":language==="tr"?"tr-TR":"en-US")+' '+translations[language].currency+'</small></div><div class="cart-item-controls"><button type="button" data-cart-minus="'+safe(product.id)+'" aria-label="'+translations[language].decrease+'">−</button><span>'+quantity+'</span><button type="button" data-cart-plus="'+safe(product.id)+'" aria-label="'+translations[language].increase+'">+</button><button type="button" class="cart-remove" data-cart-remove="'+safe(product.id)+'">'+translations[language].remove+'</button></div></article>').join("");
- el("cartDialogTotal").textContent=translations[language].cartTotal+": "+cartTotal().toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":"en-US")+" "+translations[language].currency;
+ el("cartDialogTotal").textContent=translations[language].cartTotal+": "+cartTotal().toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":language==="es"?"es-ES":language==="de"?"de-DE":language==="tr"?"tr-TR":"en-US")+" "+translations[language].currency;
  el("checkoutCartButton").disabled=!cartItems.length;updateCartButton();
 }
 function openCart(){renderCart();el("cartDialog").showModal();}
@@ -176,8 +176,8 @@ function openOrderDialog(){
  if(!cartItems.length)return;
  const t=translations[language];
  el("orderDialogTitle").textContent=t.orderFormTitle;
- el("orderProductSummary").textContent=cartItems.map(({product,quantity})=>productText(product,"name")+" × "+quantity).join("، ");
- el("orderDialogTotal").textContent=t.cartTotal+": "+cartTotal().toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":"en-US")+" "+t.currency;
+ el("orderProductSummary").textContent=cartItems.map(({product,quantity})=>productText(product,"name")+" × "+quantity).join(language==="ar"?"، ":", ");
+ el("orderDialogTotal").textContent=t.cartTotal+": "+cartTotal().toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":language==="es"?"es-ES":language==="de"?"de-DE":language==="tr"?"tr-TR":"en-US")+" "+t.currency;
  el("submitCustomerOrder").textContent=t.sendOrder;el("orderDialogFeedback").textContent="";el("orderDialog").showModal();
 }
 async function submitCustomerOrder(event){
