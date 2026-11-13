@@ -75,4 +75,4 @@ html[dir="rtl"] .footer-credit{text-align:start}
 .rating-track{height:7px;border-radius:99px;background:#e8ecdf;overflow:hidden}
 .rating-track>span{display:block;height:100%;border-radius:99px;background:#d69a22;transition:width .25s ease}
 .rating-row small{text-align:end;font-size:10px}
-@media(max-width:760px){.reviews-summary{min-width:100%;max-width:100%}}
+@media(max-width:760px){.reviews-section .section-heading{flex-direction:column;align-items:stretch;gap:14px}.reviews-summary{width:100%;min-width:0;max-width:100%;box-sizing:border-box}.reviews-layout{min-width:0}.reviews-list,.review-form{min-width:0}}
