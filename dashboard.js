@@ -230,7 +230,8 @@ async function init(){
  $("productForm").addEventListener("submit",saveProduct);
  $("productCategory").addEventListener("change",syncCustomCategory);
  $("managedProducts").addEventListener("click",manageProductClick);
- $("managedOrders").addEventListener("change",updateOrderStatus);\n $("managedReviews").addEventListener("click",moderateReview);
+ $("managedOrders").addEventListener("change",updateOrderStatus);
+ $("managedReviews").addEventListener("click",moderateReview);
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
