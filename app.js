@@ -129,18 +129,30 @@ async function loadFeaturedStores(){
  renderFeaturedStores();
 }
 
-let sponsoredAds=[];
+let sponsoredAds=[],sponsoredAdTimers=[];
 function renderSponsoredAds(){
  const section=el("sponsoredAdsSection"),grid=el("sponsoredAdsGrid");
  if(!section||!grid)return;
+ sponsoredAdTimers.forEach(clearInterval);sponsoredAdTimers=[];
  section.hidden=!sponsoredAds.length;
- grid.innerHTML=sponsoredAds.map(ad=>'<a class="sponsored-ad-card" href="'+safe(ad.target_url)+'" target="_blank" rel="noopener noreferrer sponsored" aria-label="'+safe(ad.title)+'"><img src="'+safe(ad.image_url)+'" alt="'+safe(ad.title)+'" loading="lazy"><span class="sponsored-ad-label">'+safe(translations[language].sponsoredEyebrow)+'</span></a>').join("");
+ grid.innerHTML=sponsoredAds.map((ad,index)=>{
+  const images=Array.isArray(ad.image_urls)&&ad.image_urls.length?ad.image_urls:[ad.image_url].filter(Boolean);
+  const slides=images.map((url,i)=>'<img class="sponsored-ad-image'+(i===0?' active':'')+'" src="'+safe(url)+'" alt="'+safe(ad.title)+'" loading="lazy" decoding="async">').join("");
+  return '<a class="sponsored-ad-card" href="'+safe(ad.target_url)+'" target="_blank" rel="noopener noreferrer sponsored" aria-label="'+safe(ad.title)+'"><span class="sponsored-ad-slides">'+slides+'</span><span class="sponsored-ad-label">'+safe(translations[language].sponsoredEyebrow)+'</span>'+(images.length>1?'<span class="sponsored-ad-counter">1 / '+images.length+'</span>':'')+'</a>';
+ }).join("");
+ grid.querySelectorAll(".sponsored-ad-card").forEach(card=>{
+  const slides=[...card.querySelectorAll(".sponsored-ad-image")];if(slides.length<2)return;
+  let current=0;
+  const timer=setInterval(()=>{slides[current].classList.remove("active");current=(current+1)%slides.length;slides[current].classList.add("active");const counter=card.querySelector(".sponsored-ad-counter");if(counter)counter.textContent=(current+1)+" / "+slides.length;},4000);
+  sponsoredAdTimers.push(timer);
+ });
+ grid.querySelectorAll(".sponsored-ad-image").forEach(img=>img.addEventListener("error",()=>{img.classList.add("image-load-failed");img.removeAttribute("src");}));
 }
 async function loadSponsoredAds(){
  if(!el("sponsoredAdsSection"))return;
  try{
   const now=new Date().toISOString();
-  const {data,error}=await supabase.from("sponsored_ads").select("id,title,image_url,target_url,starts_at,ends_at").eq("status","active").eq("payment_status","paid").lte("starts_at",now).gt("ends_at",now).order("starts_at",{ascending:true}).limit(6);
+  const {data,error}=await supabase.from("sponsored_ads").select("id,title,image_url,image_urls,target_url,starts_at,ends_at").eq("status","active").eq("payment_status","paid").lte("starts_at",now).gt("ends_at",now).order("starts_at",{ascending:true}).limit(6);
   if(error)throw error;
   sponsoredAds=data||[];
  }catch(error){console.error("Sponsored ads:",error);sponsoredAds=[];}
