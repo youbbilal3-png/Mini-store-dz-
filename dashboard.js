@@ -277,4 +277,5 @@ async function init(){
  $("copyStoreLink").addEventListener("click",copyStoreLink);
  $("dashYear").textContent=new Date().getFullYear();
 }
+document.addEventListener("msdz-language-changed",()=>{if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();});
 init();
