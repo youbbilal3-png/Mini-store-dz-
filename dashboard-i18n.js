@@ -1,6 +1,7 @@
 (() => {
   const dictionaries = {
     fr: {
+      "الرئيسية":"Accueil",
       "صورة التاجر":"Photo du vendeur",
       "اسم متجرك":"Nom de votre boutique",
       "مثال: سماعات لاسلكية":"Ex. : écouteurs sans fil",
@@ -22,6 +23,7 @@
       "متجرك منشور للعامة":"Votre boutique est publiée","متجرك خاص حتى تنشره":"Votre boutique reste privée jusqu’à sa publication","متجرك غير منشور بعد":"Votre boutique n’est pas encore publiée","تحقق من رقم WhatsApp ورمز الدولة.":"Vérifiez le numéro WhatsApp et l’indicatif du pays.","تم حفظ بيانات متجرك على السحابة.":"Les informations de votre boutique ont été enregistrées dans le cloud.","جارٍ رفع الصورة...":"Téléversement de l’image...","تم رفع صورة التاجر وحفظها على السحابة.":"La photo du vendeur a été téléversée et enregistrée dans le cloud.","تعذر رفع الصورة.":"Impossible de téléverser l’image.","تمت إزالة الصورة.":"L’image a été supprimée.","تم حفظ المنتج على السحابة.":"Le produit a été enregistré dans le cloud.","تم تحديث المنتج على السحابة.":"Le produit a été mis à jour dans le cloud.","تمت إضافة المنتج إلى متجرك.":"Le produit a été ajouté à votre boutique.","تعذر حفظ المنتج.":"Impossible d’enregistrer le produit.","يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.":"Vous pouvez ajouter jusqu’à 5 images par produit.","اختر صورة JPEG أو PNG أو WebP.":"Choisissez une image JPEG, PNG ou WebP.","حجم الصورة أكبر من الحد المسموح.":"L’image dépasse la taille autorisée.","مخزون غير محدود":"Stock illimité","نفد المخزون":"Rupture de stock","مخزون منخفض":"Stock faible","المتوفر":"Disponible","تعديل":"Modifier","حذف":"Supprimer","عام":"Général","هل تريد حذف المنتج:":"Voulez-vous supprimer le produit :","تم حذف المنتج.":"Le produit a été supprimé.","تم نسخ رابط متجرك.":"Le lien de votre boutique a été copié.","يمكنك مشاركته الآن.":"Vous pouvez le partager maintenant.","انشر المتجر أولاً ليتمكن الزوار من مشاهدة المنتجات.":"Publiez d’abord la boutique pour que les visiteurs puissent voir les produits.","تعذر النسخ تلقائياً. استخدم زر عرض المتجر لفتح الرابط ونسخه من شريط العنوان.":"Copie automatique impossible. Ouvrez la boutique et copiez le lien depuis la barre d’adresse.","تم نشر متجرك. يمكنك مشاركة رابط المتجر.":"Votre boutique est publiée. Vous pouvez partager son lien.","تم إلغاء نشر المتجر.":"La publication de votre boutique a été annulée.","تعذر تحديث حالة الطلب:":"Impossible de mettre à jour le statut de la commande :","تعذر تحديث التقييم:":"Impossible de mettre à jour l’avis :","تعذر تحميل بيانات المتجر":"Impossible de charger les données de la boutique","تحقق من الاتصال ثم أعد المحاولة.":"Vérifiez votre connexion puis réessayez.","تعذر تسجيل الخروج. تحقق من الاتصال ثم حاول مجدداً.":"Déconnexion impossible. Vérifiez votre connexion puis réessayez."
     },
     en: {
+      "الرئيسية":"Home",
       "صورة التاجر":"Seller photo",
       "اسم متجرك":"Your store name",
       "مثال: سماعات لاسلكية":"Example: Wireless earbuds",
@@ -131,7 +133,10 @@
   }
 
   const originals = Object.keys(dictionaries.fr);
-  const reverse = { fr: {}, en: {}, es: {}, de: {}, tr: {} };
+  const reverse = { fr: {}, en: {}, es: {
+      "الرئيسية":"Inicio",}, de: {
+      "الرئيسية":"Startseite",}, tr: {
+      "الرئيسية":"Ana sayfa",} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
   Object.assign(reverse.en, {"MERCHANT AREA":"مساحة التاجر","YOUR IDENTITY":"هويتك","YOUR STORE":"متجرك","STORE OVERVIEW":"نظرة عامة على المتجر","STORE SETTINGS":"إعدادات المتجر","PRODUCT MANAGEMENT":"إدارة المنتجات","CUSTOMER FEEDBACK":"آراء العملاء","ORDER MANAGEMENT":"إدارة الطلبات"});
   let lang = "ar";
