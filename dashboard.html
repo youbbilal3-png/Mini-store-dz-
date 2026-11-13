@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8"><meta name="google" content="notranslate"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101827"><meta name="description" content="Mini Store DZ merchant dashboard">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="app-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="app-icon.svg">
 <title>لوحة التاجر | Mini Store DZ</title>
 <link rel="stylesheet" href="styles.css?v=20261113-20"><link rel="stylesheet" href="dashboard.css?v=20261113-9">
 <script>document.documentElement.classList.add("language-loading");try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
@@ -25,6 +28,7 @@ window.addEventListener("unhandledrejection",function(event){
 });
 </script>
 <script type="module" src="dashboard.js?v=20261113-25" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body class="dashboard-page">
 <header class="site-header dashboard-header">
