@@ -1,6 +1,6 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
-let user=null,store=null,products=[];
+let user=null,store=null,products=[],orders=[];
 const message=(id,text)=>$(id).textContent=text;
 const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function makeSlug(name,id){const base=String(name||"store").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,25)||"store";return base+"-"+id.slice(0,7);}
@@ -11,6 +11,26 @@ async function ensureStore(){
  const {data,error:createError}=await supabase.from("stores").insert({owner_id:user.id,slug:makeSlug(fullName,user.id),store_name:"متجري",seller_name:fullName,is_published:false}).select("*").single();
  if(createError)throw createError;return data;
 }
+
+async function loadOrders(){
+ const {data,error}=await supabase.from("orders").select("*").eq("store_id",store.id).order("created_at",{ascending:false});if(error)throw error;orders=data||[];renderOrders();
+}
+function renderOrders(){
+ $("ordersTotal").textContent=orders.length+" طلب";if(!orders.length){$("managedOrders").innerHTML='<p class="empty-products">لا توجد طلبات حتى الآن. ستظهر هنا طلبات الزبائن من متجرك.</p>';return;}
+ const labels={new:"جديد",confirmed:"مؤكد",shipped:"تم الشحن",completed:"مكتمل",cancelled:"ملغى"},states=["new","confirmed","shipped","completed","cancelled"];
+ $("managedOrders").innerHTML=orders.map(o=>{
+  const items=Array.isArray(o.items)?o.items:[],detail=items.map(i=>escapeHtml(i.name)+" × "+Number(i.quantity||1)).join("، ");
+  const opts=states.map(s=>'<option value="'+s+'" '+(o.status===s?"selected":"")+'>'+labels[s]+'</option>').join("");
+  return '<article class="managed-order"><div class="managed-order-main"><strong>'+escapeHtml(o.customer_name)+'</strong><span>'+escapeHtml(o.customer_phone)+'</span><p>'+detail+'</p><small>'+new Date(o.created_at).toLocaleString("ar-DZ")+' · '+Number(o.total||0).toLocaleString("ar-DZ")+' دج</small>'+(o.notes?'<p class="order-note">ملاحظات: '+escapeHtml(o.notes)+'</p>':"")+'</div><div class="managed-order-controls"><span class="order-status order-status-'+o.status+'">'+(labels[o.status]||o.status)+'</span><select data-order-status="'+o.id+'" aria-label="تغيير حالة الطلب">'+opts+'</select></div></article>';
+ }).join("");
+}
+async function updateOrderStatus(event){
+ const select=event.target.closest("[data-order-status]");if(!select)return;
+ const {data,error}=await supabase.from("orders").update({status:select.value}).eq("id",select.dataset.orderStatus).eq("store_id",store.id).select("*").single();
+ if(error){message("profileFeedback","تعذر تحديث حالة الطلب: "+error.message);return;}
+ const index=orders.findIndex(o=>o.id===data.id);if(index>=0)orders[index]=data;renderOrders();
+}
+
 async function loadProducts(){
  const {data,error}=await supabase.from("products").select("*").eq("store_id",store.id).order("created_at",{ascending:false});
  if(error)throw error;products=data||[];renderProducts();
@@ -134,7 +154,7 @@ async function init(){
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
  try{
-  store=await ensureStore();fillSettings();await loadProducts();
+  store=await ensureStore();fillSettings();await loadProducts();await loadOrders();
  }catch(error){
   $("storeStatus").textContent="تعذر تحميل بيانات المتجر";message("profileFeedback",error.message||"تحقق من الاتصال ثم أعد المحاولة.");
  }
@@ -144,6 +164,7 @@ async function init(){
  $("productForm").addEventListener("submit",saveProduct);
  $("productCategory").addEventListener("change",syncCustomCategory);
  $("managedProducts").addEventListener("click",manageProductClick);
+ $("managedOrders").addEventListener("change",updateOrderStatus);
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
