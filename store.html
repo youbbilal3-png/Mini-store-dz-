@@ -10,7 +10,7 @@
 <meta property="og:site_name" content="Mini Store DZ">
 <meta property="og:title" content="اكتشف المتجر على Mini Store DZ">
 <meta property="og:description" content="تصفح المنتجات والتقييمات واطلب بسهولة عبر WhatsApp.">
-<link rel="stylesheet" href="styles.css?v=20261113-17">
+<link rel="stylesheet" href="styles.css?v=20261113-18">
 <script type="module" src="app.js?v=20261113-15"></script>
 </head>
 <body>
@@ -29,18 +29,11 @@
     </label>
     <nav aria-label="Main navigation">
       <a href="#products" data-i18n="navProducts">المنتجات</a>
-      <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span class="nav-icon">ⓘ</span><span data-i18n="navAbout">من نحن</span></button>
-      <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span class="nav-icon">✉</span><span data-i18n="navContact">اتصل بنا</span></button>
+      <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span data-i18n="navAbout">من نحن</span></button>
+      <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span data-i18n="navContact">اتصل بنا</span></button>
       <a href="dashboard.html" id="merchantAccountLink">حساب التاجر</a>
       <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html">أنشئ متجرك</a>
     </nav>
-      <span class="sr-only" data-i18n="languageLabel">اللغة</span>
-      <select id="languageSelect" aria-label="Choose language">
-        <option value="ar">العربية</option>
-        <option value="fr">Français</option>
-        <option value="en">English</option>
-      </select>
-    </label>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button>
   </div>
 </header>
