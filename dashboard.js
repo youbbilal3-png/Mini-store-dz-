@@ -260,9 +260,20 @@ async function init(){
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
  try{
-  store=await ensureStore();fillSettings();await loadProducts();await loadOrders();await loadReviews();
+  store=await ensureStore();
+  fillSettings();
+  renderDailyCharts();
+  const results=await Promise.allSettled([loadProducts(),loadOrders(),loadReviews()]);
+  const failures=[];
+  if(results[0].status==="rejected"){console.error("Products load failed:",results[0].reason);failures.push("المنتجات");}
+  if(results[1].status==="rejected"){console.error("Orders load failed:",results[1].reason);$("managedOrders").innerHTML='<p class="empty-products">تعذر تحميل الطلبات. حدّث الصفحة وحاول مجدداً.</p>';failures.push("الطلبات");}
+  if(results[2].status==="rejected"){console.error("Reviews load failed:",results[2].reason);$("managedReviews").innerHTML='<p class="empty-products">تعذر تحميل التقييمات. حدّث الصفحة وحاول مجدداً.</p>';failures.push("التقييمات");}
+  renderStats();
+  if(failures.length){$("storeStatus").textContent="بعض بيانات المتجر لم تُحمّل";message("profileFeedback","تعذر تحميل: "+failures.join("، ")+" — تحقق من الاتصال ثم حدّث الصفحة.");}
  }catch(error){
-  $("storeStatus").textContent="تعذر تحميل بيانات المتجر";message("profileFeedback",error.message||"تحقق من الاتصال ثم أعد المحاولة.");
+  console.error("Dashboard initialization failed:",error);
+  $("storeStatus").textContent="تعذر تحميل بيانات المتجر";
+  message("profileFeedback",error.message||"تحقق من الاتصال ثم أعد المحاولة.");
  }
  $("saveProfile").addEventListener("click",saveProfile);
  $("avatarUpload").addEventListener("change",uploadAvatar);
