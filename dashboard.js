@@ -348,6 +348,29 @@ async function togglePublish(){
  store=data;fillSettings();message("profileFeedback",next?"تم نشر متجرك. يمكنك مشاركة رابط المتجر.":"تم إلغاء نشر المتجر.");
 }
 
+
+let merchantPaymentSettings=null;
+function updatePaymentAmount(){
+ const plan=$("paymentPlan").value,cycle=$("paymentCycle").value;
+ const amount=plan==="pro"?(cycle==="yearly"?15000:1500):(cycle==="yearly"?30000:3000);
+ $("paymentAmount").textContent=amount.toLocaleString("en-US")+" دج";
+}
+async function loadMerchantPaymentSettings(){
+ const {data,error}=await supabase.from("platform_payment_settings").select("*").eq("id",true).maybeSingle();
+ if(error)throw error;merchantPaymentSettings=data;
+ const box=$("merchantPaymentDetails");
+ if(!data||(!data.baridimob_number&&!data.ccp_number)){box.textContent="لم يتم إعداد بيانات الاستلام بعد. يرجى التواصل مع الدعم قبل إجراء أي تحويل.";return;}
+ box.innerHTML=`<div><strong>صاحب الحساب:</strong> ${escapeHtml(data.beneficiary_name||"—")}</div>${data.baridimob_number?`<div><strong>BaridiMob:</strong> ${escapeHtml(data.baridimob_number)}</div>`:""}${data.ccp_number?`<div><strong>CCP:</strong> ${escapeHtml(data.ccp_number)}</div>`:""}${data.instructions?`<p>${escapeHtml(data.instructions)}</p>`:""}`;
+}
+async function loadMerchantPaymentHistory(){
+ const {data,error}=await supabase.from("subscription_payment_requests").select("id,plan,billing_cycle,amount_dzd,payment_method,status,admin_note,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20);
+ if(error)throw error;
+ const box=$("merchantPaymentHistory");
+ if(!data?.length){box.innerHTML='<p class="empty-products">لا توجد طلبات دفع بعد.</p>';return;}
+ const labels={pending:"بانتظار المراجعة",approved:"تمت الموافقة",rejected:"مرفوض"};
+ box.innerHTML=data.map(item=>`<article class="managed-review"><strong>${item.plan.toUpperCase()} · ${item.billing_cycle==="yearly"?"سنوي":"شهري"} · ${Number(item.amount_dzd).toLocaleString()} دج</strong><p>${item.payment_method==="baridimob"?"BaridiMob":"CCP"} · ${labels[item.status]||item.status}</p><small>${new Date(item.created_at).toLocaleDateString()}</small>${item.admin_note?`<p><b>ملاحظة الإدارة:</b> ${escapeHtml(item.admin_note)}</p>`:""}</article>`).join("");
+}
+
 async function loadMerchantSupportMessages(){
  const {data,error}=await supabase.from("support_messages").select("id,subject,message,status,admin_reply,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20);
  if(error)throw error;
@@ -389,7 +412,31 @@ async function init(){
  $("managedOrders").addEventListener("change",updateOrderStatus);
  $("managedReviews").addEventListener("click",moderateReview);
 
-  $("merchantSupportForm").addEventListener("submit",async event=>{
+  
+  $("paymentPlan").addEventListener("change",updatePaymentAmount);
+  $("paymentCycle").addEventListener("change",updatePaymentAmount);
+  updatePaymentAmount();
+  $("subscriptionPaymentForm").addEventListener("submit",async event=>{
+   event.preventDefault();
+   const method=$("paymentMethod").value;
+   const accountReady=method==="baridimob"?merchantPaymentSettings?.baridimob_number:merchantPaymentSettings?.ccp_number;
+   if(!accountReady){$("paymentRequestFeedback").textContent="بيانات هذه الطريقة غير متاحة حالياً. تواصل مع الدعم.";return;}
+   const button=$("submitSubscriptionPayment");button.disabled=true;$("paymentRequestFeedback").textContent="جارٍ إرسال طلب الدفع...";
+   try{
+    const {error}=await supabase.rpc("create_subscription_payment_request",{
+     p_plan:$("paymentPlan").value,p_billing_cycle:$("paymentCycle").value,p_payment_method:method,
+     p_sender_name:$("paymentSender").value.trim(),p_transaction_reference:$("paymentReference").value.trim(),
+     p_proof_url:$("paymentProofUrl").value.trim()||null
+    });
+    if(error)throw error;
+    $("subscriptionPaymentForm").reset();updatePaymentAmount();
+    $("paymentRequestFeedback").textContent="تم إرسال طلب الدفع. سيظهر الاشتراك بعد مراجعة التحويل.";
+    await loadMerchantPaymentHistory();
+   }catch(error){console.error("Subscription payment request failed:",error);$("paymentRequestFeedback").textContent=error.message||"تعذر إرسال الطلب. تحقق من البيانات وحاول مجدداً.";}
+   finally{button.disabled=false;}
+  });
+
+$("merchantSupportForm").addEventListener("submit",async event=>{
    event.preventDefault();
    const button=$("sendSupportMessage");button.disabled=true;$("supportFeedback").textContent="جارٍ إرسال الرسالة...";
    try{
@@ -437,6 +484,8 @@ async function init(){
  }
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
+  try{await loadMerchantSupportMessages();}catch(error){console.error('Support inbox load failed:',error);}
+  try{await loadMerchantPaymentSettings();await loadMerchantPaymentHistory();}catch(error){console.error('Payment area load failed:',error);}
 
   try{
    const {data:verifiedUser}=await supabase.auth.getUser();
