@@ -357,10 +357,49 @@ function updatePaymentAmount(){
 }
 async function loadMerchantPaymentSettings(){
  const {data,error}=await supabase.from("platform_payment_settings").select("*").eq("id",true).maybeSingle();
- if(error)throw error;merchantPaymentSettings=data;
+ if(error)throw error;merchantPaymentSettings=data;renderFeaturedPaymentDetails();
  const box=$("merchantPaymentDetails");
  if(!data||(!data.baridimob_number&&!data.ccp_number)){box.textContent="لم يتم إعداد بيانات الاستلام بعد. يرجى التواصل مع الدعم قبل إجراء أي تحويل.";return;}
  box.innerHTML=`<div><strong>صاحب الحساب:</strong> ${escapeHtml(data.beneficiary_name||"—")}</div>${data.baridimob_number?`<div><strong>BaridiMob:</strong> ${escapeHtml(data.baridimob_number)}</div>`:""}${data.ccp_number?`<div><strong>CCP:</strong> ${escapeHtml(data.ccp_number)}</div>`:""}${data.instructions?`<p>${escapeHtml(data.instructions)}</p>`:""}`;
+}
+function renderFeaturedPaymentDetails(){
+ const box=$("featuredPaymentDetails"),data=merchantPaymentSettings;if(!box)return;
+ if(!data||(!data.baridimob_number&&!data.ccp_number)){box.textContent="لم يتم إعداد بيانات الاستلام بعد. يرجى التواصل مع الدعم قبل إجراء أي تحويل.";return;}
+ box.innerHTML=`<div><strong>صاحب الحساب:</strong> ${escapeHtml(data.beneficiary_name||"—")}</div>${data.baridimob_number?`<div><strong>BaridiMob:</strong> ${escapeHtml(data.baridimob_number)}</div>`:""}${data.ccp_number?`<div><strong>CCP:</strong> ${escapeHtml(data.ccp_number)}</div>`:""}${data.instructions?`<p>${escapeHtml(data.instructions)}</p>`:""}`;
+}
+async function loadFeaturedRequestHistory(){
+ if(!store)return;
+ const {data,error}=await supabase.from("featured_store_requests").select("id,amount_dzd,duration_days,payment_method,status,admin_note,created_at").eq("store_id",store.id).order("created_at",{ascending:false}).limit(20);
+ if(error)throw error;
+ const box=$("featuredRequestHistory"),labels={pending:"بانتظار المراجعة",approved:"تمت الموافقة",rejected:"مرفوض"};
+ if(!data?.length){box.innerHTML='<p class="empty-products">لا توجد طلبات تمييز بعد.</p>';return;}
+ box.innerHTML=data.map(x=>`<article class="managed-review"><strong>تمييز المتجر · ${Number(x.amount_dzd).toLocaleString()} دج · ${x.duration_days} أيام</strong><p>${x.payment_method==="baridimob"?"BaridiMob":"CCP"} · ${labels[x.status]||x.status}</p><small>${new Date(x.created_at).toLocaleDateString(dashboardLocale())}</small>${x.admin_note?`<p><b>ملاحظة الإدارة:</b> ${escapeHtml(x.admin_note)}</p>`:""}</article>`).join("");
+}
+async function submitFeaturedStoreRequest(event){
+ event.preventDefault();
+ const button=$("submitFeaturedRequest"),method=$("featuredPaymentMethod").value;
+ const ready=method==="baridimob"?merchantPaymentSettings?.baridimob_number:merchantPaymentSettings?.ccp_number;
+ if(!ready){$("featuredRequestFeedback").textContent="بيانات طريقة التحويل غير متاحة حالياً. تواصل مع الدعم.";return;}
+ const file=$("featuredPaymentReceipt").files[0];let path=null;
+ button.disabled=true;$("featuredRequestFeedback").textContent="جارٍ رفع الوصل وإرسال الطلب...";
+ try{
+  if(!file)throw new Error("يرجى إرفاق وصل التحويل.");
+  const types={"image/jpeg":"jpg","image/png":"png","image/webp":"webp","application/pdf":"pdf"},ext=types[file.type];
+  if(!ext)throw new Error("نوع الملف غير مدعوم. استخدم JPG أو PNG أو WebP أو PDF.");
+  if(file.size>5*1024*1024)throw new Error("حجم الوصل أكبر من 5 ميغابايت.");
+  path=user.id+"/"+crypto.randomUUID()+"."+ext;
+  const {error:uploadError}=await supabase.storage.from("subscription-payment-proofs").upload(path,file,{contentType:file.type,upsert:false});
+  if(uploadError)throw uploadError;
+  const {error}=await supabase.from("featured_store_requests").insert({user_id:user.id,store_id:store.id,amount_dzd:500,duration_days:7,payment_method:method,sender_name:$("featuredSenderName").value.trim(),transaction_reference:$("featuredTransactionReference").value.trim(),proof_path:path});
+  if(error)throw error;
+  path=null;$("featuredStoreRequestForm").reset();
+  $("featuredRequestFeedback").textContent="تم إرسال طلب التمييز بنجاح. ستتم مراجعته من الإدارة قبل إبراز متجرك.";
+  await loadFeaturedRequestHistory();
+ }catch(error){
+  if(path){try{await supabase.storage.from("subscription-payment-proofs").remove([path]);}catch(cleanupError){console.warn(cleanupError);}}
+  console.error("Featured store request failed:",error);
+  $("featuredRequestFeedback").textContent=error.code==="23505"?"لديك طلب تمييز قيد المراجعة بالفعل.":"تعذر إرسال الطلب: "+(error.message||"تحقق من البيانات وحاول مجدداً.");
+ }finally{button.disabled=false;}
 }
 async function loadMerchantPaymentHistory(){
  const {data,error}=await supabase.from("subscription_payment_requests").select("id,plan,billing_cycle,amount_dzd,payment_method,status,admin_note,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20);
@@ -411,6 +450,7 @@ async function init(){
  $("managedProducts").addEventListener("click",manageProductClick);
  $("managedOrders").addEventListener("change",updateOrderStatus);
  $("managedReviews").addEventListener("click",moderateReview);
+ $("featuredStoreRequestForm").addEventListener("submit",submitFeaturedStoreRequest);
 
   
   $("paymentPlan").addEventListener("change",updatePaymentAmount);
@@ -513,6 +553,7 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  try{
   store=await ensureStore();
   fillSettings();
+  try{await loadFeaturedRequestHistory();}catch(error){console.error("Featured request history failed:",error);$("featuredRequestHistory").textContent="تعذر تحميل طلبات التمييز.";}
   await loadSubscription();
   renderDailyCharts();
   const results=await Promise.allSettled([loadProducts(),loadOrders(),loadReviews()]);
