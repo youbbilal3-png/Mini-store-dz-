@@ -349,6 +349,19 @@ async function togglePublish(){
 }
 async function init(){
  initDashboardTheme();
+ // Keep subscription plans out of the main dashboard until the merchant opens their sidebar item.
+ const subscriptionPanel=$("subscription");
+ const syncSubscriptionPanel=()=>{
+  if(subscriptionPanel)subscriptionPanel.hidden=location.hash!=="#subscription";
+ };
+ syncSubscriptionPanel();
+ document.querySelectorAll('.dashboard-sidebar .side-link[href^="#"]').forEach(link=>{
+  link.addEventListener("click",()=>{
+   const opensSubscription=link.getAttribute("href")==="#subscription";
+   if(subscriptionPanel)subscriptionPanel.hidden=!opensSubscription;
+  });
+ });
+ window.addEventListener("hashchange",syncSubscriptionPanel);
  // Register controls before waiting for Supabase; slow requests must not disable the dashboard.
  $("saveProfile").addEventListener("click",saveProfile);
  $("avatarUpload").addEventListener("change",uploadAvatar);
