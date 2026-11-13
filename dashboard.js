@@ -1,5 +1,21 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
+function applyDashboardTheme(mode){
+ const selected=mode||"system";document.documentElement.dataset.theme=selected;
+ const icon=$("themeToggleIcon"),label=$("themeToggleLabel"),button=$("themeToggle");
+ if(icon)icon.textContent=selected==="dark"?"☾":selected==="light"?"☀":"◐";
+ if(label)label.textContent=selected==="dark"?"داكن":selected==="light"?"فاتح":"تلقائي";
+ if(button){button.title="المظهر الحالي: "+(label?.textContent||"تلقائي")+" — اضغط للتغيير";button.setAttribute("aria-label",button.title);}
+}
+function initDashboardTheme(){
+ let mode="system";try{mode=localStorage.getItem("msdz-theme")||"system";}catch(error){}
+ applyDashboardTheme(mode);
+ $("themeToggle")?.addEventListener("click",()=>{
+  const current=document.documentElement.dataset.theme||"system",next=current==="system"?"light":current==="light"?"dark":"system";
+  try{localStorage.setItem("msdz-theme",next);}catch(error){}
+  applyDashboardTheme(next);
+ });
+}
 let user=null,store=null,products=[],orders=[],reviews=[];
 const message=(id,text)=>$(id).textContent=text;
 const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -222,6 +238,7 @@ async function togglePublish(){
  store=data;fillSettings();message("profileFeedback",next?"تم نشر متجرك. يمكنك مشاركة رابط المتجر.":"تم إلغاء نشر المتجر.");
 }
 async function init(){
+ initDashboardTheme();
  const {data:{session}}=await supabase.auth.getSession();
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
