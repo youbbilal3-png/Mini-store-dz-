@@ -191,11 +191,19 @@ function renderProducts(){
   $("managedProducts").innerHTML=products.map(p=>{const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;const qty=tracked?Number(p.stock_quantity):null;const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";const stockClass=tracked&&qty<=5?"stock-low":"";return '<article class="managed-product"><div class="managed-product-emoji">'+(p.image_url?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">':escapeHtml(p.emoji||"📦"))+'</div><div class="managed-product-info"><strong>'+escapeHtml(p.name)+'</strong><span><span class="product-category-label">'+escapeHtml(p.category||"عام")+'</span>+' · '+Number(p.price||0).toLocaleString(dashboardLocale())+' دج · <b class="'+stockClass+'">'+stockLabel+'</b></span></div><div class="managed-product-actions"><button type="button" data-edit="'+p.id+'">تعديل</button><button type="button" class="delete-product" data-delete="'+p.id+'">حذف</button></div></article>';}).join("");
 }
 async function saveProduct(event){
- event.preventDefault();const id=$("editingProductId").value;const files=Array.from($("productImage").files||[]);
- const selectedCategory=$("productCategory").value;const category=selectedCategory==="أخرى"?$("customProductCategory").value.trim():selectedCategory;
- const stockValue=$("productStock").value.trim();const item={store_id:store.id,name:$("productName").value.trim(),category,price:Number($("productPrice").value),description:$("productDescription").value.trim(),currency:"DZD",is_active:true,stock_quantity:stockValue===""?null:Number(stockValue)};
- if(!item.name||!item.category||!Number.isFinite(item.price)||item.price<0)return;
- $("productSubmit").disabled=true;message("productFeedback","جارٍ حفظ المنتج...");
+ event.preventDefault();
+ // Never attempt to build an insert payload until the authenticated store is ready.
+ if(!store?.id){message("productFeedback","لم يكتمل تحميل بيانات المتجر بعد. انتظر لحظة ثم حاول الحفظ.");return;}
+ const id=$("editingProductId").value;
+ const files=Array.from($("productImage").files||[]);
+ const selectedCategory=$("productCategory").value;
+ const category=selectedCategory==="أخرى"?$("customProductCategory").value.trim():selectedCategory;
+ const stockValue=$("productStock").value.trim();
+ const item={store_id:store.id,name:$("productName").value.trim(),category,price:Number($("productPrice").value),description:$("productDescription").value.trim(),currency:"DZD",is_active:true,stock_quantity:stockValue===""?null:Number(stockValue)};
+ if(!item.name||!item.category||!Number.isFinite(item.price)||item.price<0){message("productFeedback","يرجى إدخال اسم المنتج والتصنيف والسعر بشكل صحيح.");return;}
+ if(stockValue!==""&&(!Number.isInteger(Number(stockValue))||Number(stockValue)<0)){message("productFeedback","الكمية يجب أن تكون رقماً صحيحاً يساوي صفراً أو أكثر.");return;}
+ $("productSubmit").disabled=true;
+ message("productFeedback","جارٍ حفظ المنتج...");
  try{
   const existingProduct=id?products.find(p=>p.id===id):null;
   const existingImages=existingProduct?(Array.isArray(existingProduct.image_urls)&&existingProduct.image_urls.length?existingProduct.image_urls:[existingProduct.image_url].filter(Boolean)):[];
