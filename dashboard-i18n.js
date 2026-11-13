@@ -60,9 +60,9 @@
       }
     }
     if (lang === "ar") return raw.replace(trimmed, ar);
-    if (lang === "es" || lang === "de" || lang === "tr") lang = "en";
+    const targetLanguage = ["fr","en"].includes(lang) ? lang : (lang === "ar" ? "ar" : "en");
     let out = ar;
-    for (const [source, translated] of Object.entries(dictionaries[lang]).sort((a,b)=>b[0].length-a[0].length)) {
+    for (const [source, translated] of Object.entries(dictionaries[targetLanguage]).sort((a,b)=>b[0].length-a[0].length)) {
       if (out === source) { out = translated; break; }
       if (source.length > 5 && out.includes(source)) out = out.replaceAll(source, translated);
     }
