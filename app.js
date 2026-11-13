@@ -23,6 +23,8 @@ const defaultProducts = [
   {id:4,name:"مصباح مكتبي",fr:"Lampe de bureau",en:"Desk Lamp",category:"المنزل",categoryFr:"Maison",categoryEn:"Home",price:1900,description:"إضاءة مريحة لمكتبك أو غرفتك.",descriptionFr:"Un éclairage agréable pour votre bureau ou votre chambre.",descriptionEn:"Comfortable lighting for your desk or room.",emoji:"💡"}
 ];
 
+let products = savedDemo && Array.isArray(savedDemo.products) ? savedDemo.products : defaultProducts;
+
 const translations = {
   ar:{
     navProducts:"المنتجات",navAbout:"من نحن",navContact:"اتصل بنا",languageLabel:"اللغة",
