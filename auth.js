@@ -15,11 +15,11 @@ $("authForm").addEventListener("submit",async event=>{
   if(mode==="signup"){
    const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:fullName},emailRedirectTo:location.origin+"/index.html"}});
    if(error)throw error;
-   if(data.session){location.href="index.html";return;}
+   if(data.session){location.href=authNext;return;}
    $("authMessage").textContent=authTranslations[authLanguage].confirm;
   }else{
    const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;
-   location.href="index.html";
+   location.href=authNext;
   }
  }catch(error){$("authMessage").textContent=error.message||authTranslations[authLanguage].error;}
  finally{button.disabled=false;}
@@ -57,4 +57,6 @@ function showAuthAd(index){if(!authSlides.length)return;authAdIndex=(index+authS
 authDots.forEach(dot=>dot.addEventListener("click",()=>showAuthAd(Number(dot.dataset.slide))));
 if(authSlides.length){showAuthAd(0);setInterval(()=>showAuthAd(authAdIndex+1),4500);}
 
-supabase.auth.getSession().then(({data})=>{if(data.session)location.replace("index.html");});
+const requestedNext=new URLSearchParams(location.search).get("next");
+const authNext=requestedNext==="dashboard.html"?"dashboard.html":"index.html";
+supabase.auth.getSession().then(({data})=>{if(data.session)location.replace(authNext);});
