@@ -17,11 +17,31 @@ const safe=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt
 function productText(p,field){if(field==="name")return (language==="fr"?p.fr:language==="en"?p.en:p.name)||p.name;if(language==="fr")return p[field+"Fr"]||p[field];if(language==="en")return p[field+"En"]||p[field];return p[field];}
 function categoryOf(p){return (language==="fr"?p.categoryFr:language==="en"?p.categoryEn:p.category)||p.category||"General";}
 function whatsappLink(p){return "https://wa.me/"+(STORE_SETTINGS.whatsapp||"")+"?text="+encodeURIComponent(translations[language].orderMessage+productText(p,"name"));}
-function renderFilters(){const cats=[...new Set(products.map(categoryOf))];const buttons=[{value:"all",label:translations[language].all},...cats.map(category=>({value:category,label:category}))];el("categoryFilters").innerHTML=buttons.map(x=>'<button type="button" class="filter-btn '+(activeCategory===x.value?"active":"")+'" data-category="'+safe(x.value)+'">'+safe(x.label)+'</button>').join("");}
+const standardCategories=[
+{value:"إلكترونيات",ar:"إلكترونيات",fr:"Électronique",en:"Electronics"},
+{value:"هواتف وإكسسوارات",ar:"هواتف وإكسسوارات",fr:"Téléphones et accessoires",en:"Phones & accessories"},
+{value:"ملابس",ar:"ملابس",fr:"Vêtements",en:"Clothing"},
+{value:"أحذية",ar:"أحذية",fr:"Chaussures",en:"Shoes"},
+{value:"حقائب وإكسسوارات",ar:"حقائب وإكسسوارات",fr:"Sacs et accessoires",en:"Bags & accessories"},
+{value:"مستحضرات التجميل",ar:"مستحضرات التجميل",fr:"Cosmétiques",en:"Cosmetics"},
+{value:"العناية الشخصية",ar:"العناية الشخصية",fr:"Soins personnels",en:"Personal care"},
+{value:"المنزل والمطبخ",ar:"المنزل والمطبخ",fr:"Maison et cuisine",en:"Home & kitchen"},
+{value:"الأثاث والديكور",ar:"الأثاث والديكور",fr:"Meubles et décoration",en:"Furniture & decor"},
+{value:"الأطفال والألعاب",ar:"الأطفال والألعاب",fr:"Enfants et jouets",en:"Kids & toys"},
+{value:"الرياضة واللياقة",ar:"الرياضة واللياقة",fr:"Sport et fitness",en:"Sports & fitness"},
+{value:"السيارات",ar:"السيارات",fr:"Automobile",en:"Automotive"},
+{value:"الأغذية والمشروبات",ar:"الأغذية والمشروبات",fr:"Alimentation et boissons",en:"Food & drinks"},
+{value:"الكتب والقرطاسية",ar:"الكتب والقرطاسية",fr:"Livres et papeterie",en:"Books & stationery"}
+];
+function renderFilters(){
+ const custom=[...new Set(products.map(p=>String(p.category||"").trim()).filter(Boolean))].filter(category=>!standardCategories.some(item=>item.value===category));
+ const buttons=[{value:"all",label:translations[language].all},...standardCategories.map(item=>({value:item.value,label:item[language]})),...custom.map(category=>({value:category,label:category}))];
+ el("categoryFilters").innerHTML=buttons.map(x=>'<button type="button" class="filter-btn '+(activeCategory===x.value?"active":"")+'" data-category="'+safe(x.value)+'">'+safe(x.label)+'</button>').join("");
+}
 function normalizeSearchText(value){return String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase();}
 function renderProducts(){
  const term=normalizeSearchText(searchTerm);
- const list=products.filter(p=>{const cat=categoryOf(p),hay=normalizeSearchText([p.name,p.fr,p.en,p.description,p.descriptionFr,p.descriptionEn,p.category,p.categoryFr,p.categoryEn].join(" "));return(activeCategory==="all"||cat===activeCategory)&&hay.includes(term);});
+ const list=products.filter(p=>{const cat=categoryOf(p),hay=normalizeSearchText([p.name,p.fr,p.en,p.description,p.descriptionFr,p.descriptionEn,p.category,p.categoryFr,p.categoryEn].join(" "));return(activeCategory==="all"||p.category===activeCategory||cat===activeCategory)&&hay.includes(term);});
  el("clearSearch").hidden=!searchTerm.trim();
  el("productGrid").innerHTML=list.map(p=>{const name=productText(p,"name"),desc=productText(p,"description");const visual=p.image_url?'<img src="'+safe(p.image_url)+'" alt="'+safe(name)+'" loading="lazy">':safe(p.emoji||"📦");return '<article class="product-card"><div class="product-image">'+visual+'</div><div class="product-info"><span class="product-category">'+safe(categoryOf(p))+'</span><h3>'+safe(name)+'</h3><p>'+safe(desc||"")+'</p><div class="product-bottom"><span class="price">'+Number(p.price||0).toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":"en-US")+' '+translations[language].currency+'</span>'+(currentStoreId?'<button type="button" class="order-btn" data-order="'+safe(p.id)+'">'+translations[language].order+'</button>':'<a class="order-btn" href="'+whatsappLink(p)+'" target="_blank" rel="noopener">'+translations[language].order+'</a>')+'</div></div></article>';}).join("");
  el("emptyState").hidden=list.length>0;el("productCount").textContent=list.length+" "+translations[language].count;
