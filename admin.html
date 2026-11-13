@@ -5,9 +5,9 @@
 <meta name="theme-color" content="#101827"><meta name="robots" content="noindex,nofollow">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <title>لوحة إدارة Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-23"><link rel="stylesheet" href="admin.css?v=20261113-5">
+<link rel="stylesheet" href="styles.css?v=20261113-25"><link rel="stylesheet" href="admin.css?v=20261113-6">
 <script>try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="admin.js?v=20261113-6"></script>
+<script type="module" src="admin.js?v=20261113-7"></script>
 <script defer src="pwa.js?v=20261113-2"></script>
 </head>
 <body class="admin-page">
@@ -32,6 +32,7 @@
 <button data-admin-tab="merchants" type="button">التجار والاشتراكات</button>
 <button data-admin-tab="payments" type="button">طلبات الدفع <b id="paymentBadge">0</b></button>
 <button data-admin-tab="featured" type="button">🏆 المتاجر المميزة</button>
+<button data-admin-tab="ads" type="button">📢 الإعلانات</button>
 <button data-admin-tab="support" type="button">الدعم الفني <b id="supportBadge">0</b></button>
 </nav>
 <section class="admin-panel active" id="admin-overview">
@@ -59,6 +60,19 @@
 <section class="admin-panel" id="admin-featured">
 <div class="admin-panel-heading"><div><h2>🏆 طلبات تمييز المتاجر</h2><p>راجع وصل التحويل ثم وافق لإبراز المتجر لمدة 7 أيام مقابل 500 دج.</p></div></div>
 <div id="featuredRequestsList" class="admin-record-list">جارٍ تحميل طلبات التمييز...</div>
+</section>
+
+<section class="admin-panel" id="admin-ads">
+ <div class="admin-panel-heading"><div><h2>📢 إدارة الإعلانات المدفوعة</h2><p>أنشئ إعلاناً برعاية شركة أو متجر وحدد موعد ظهوره ورابطه.</p></div></div>
+ <form id="sponsoredAdForm" class="admin-ad-form">
+  <label>اسم الإعلان<input id="adTitle" type="text" minlength="3" maxlength="100" required placeholder="مثال: عروض شركة التوصيل"></label>
+  <label>رابط صورة الإعلان (HTTPS)<input id="adImageUrl" type="url" required placeholder="https://example.com/banner.jpg"></label>
+  <label>رابط الوجهة (HTTPS)<input id="adTargetUrl" type="url" required placeholder="https://example.com"></label>
+  <div class="admin-ad-dates"><label>بداية العرض<input id="adStartsAt" type="datetime-local" required></label><label>نهاية العرض<input id="adEndsAt" type="datetime-local" required></label></div>
+  <button class="admin-action" id="saveSponsoredAd" type="submit">إضافة الإعلان</button><small id="adFormFeedback" class="admin-record-meta" role="status"></small>
+ </form>
+ <h3 class="admin-ad-list-title">الإعلانات الحالية والسابقة</h3>
+ <div id="sponsoredAdsAdminList" class="admin-record-list">جارٍ تحميل الإعلانات...</div>
 </section>
 <section class="admin-panel" id="admin-support">
 <div class="admin-panel-heading"><div><h2>مركز الدعم الفني</h2><p>استقبل رسائل التجار وأجب عنها وتابع حالتها.</p></div></div>
