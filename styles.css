@@ -252,3 +252,20 @@ html[data-theme="dark"] .contact-email a,html[data-theme="system"] .contact-emai
 }
 html[data-theme="dark"] .brand-row,html[data-theme="system"] .brand-row{background:#fff}
 html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .brand{color:#101827}
+
+
+/* Compact icon-only links keep the navigation clear without hiding language choices. */
+.header-tools nav .header-icon-link{
+ display:inline-grid;place-items:center;flex:0 0 32px;width:32px;height:32px;
+ border:1px solid #435064;border-radius:9px;background:#1b293b;color:#fff!important;
+ font-size:17px!important;line-height:1;text-decoration:none;
+}
+.header-tools nav .header-icon-link:hover{border-color:var(--lime);color:var(--lime)!important}
+.header-tools .language-picker select{width:112px;max-width:112px;min-width:96px}
+@media(max-width:600px){
+ .header-tools{gap:6px;padding-left:7px;padding-right:7px}
+ .header-tools nav{gap:5px;justify-content:space-around}
+ .header-tools nav a{font-size:10px}
+ .header-tools nav .header-icon-link{width:28px;height:28px;flex-basis:28px;font-size:16px!important}
+ .header-tools .language-picker select{width:96px;min-width:96px;max-width:96px;font-size:11px;padding:5px 4px}
+}
