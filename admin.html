@@ -65,7 +65,9 @@
 <section class="admin-panel" id="admin-ads">
  <div class="admin-panel-heading"><div><h2>📢 إدارة الإعلانات المدفوعة</h2><p>أنشئ إعلاناً برعاية شركة أو متجر وحدد موعد ظهوره ورابطه.</p></div></div>
  <form id="sponsoredAdForm" class="admin-ad-form">
+  <label>اسم الشركة أو المعلن<input id="adAdvertiser" type="text" maxlength="120" required placeholder="اسم الجهة المعلنة"></label>
   <label>اسم الإعلان<input id="adTitle" type="text" minlength="3" maxlength="100" required placeholder="مثال: عروض شركة التوصيل"></label>
+  <label>سعر الإعلان بالدينار الجزائري<input id="adAmount" type="number" min="0" step="1" required value="0" placeholder="المبلغ المتفق عليه بالدج"></label>
   <label>رابط صورة الإعلان (HTTPS)<input id="adImageUrl" type="url" required placeholder="https://example.com/banner.jpg"></label>
   <label>رابط الوجهة (HTTPS)<input id="adTargetUrl" type="url" required placeholder="https://example.com"></label>
   <div class="admin-ad-dates"><label>بداية العرض<input id="adStartsAt" type="datetime-local" required></label><label>نهاية العرض<input id="adEndsAt" type="datetime-local" required></label></div>
