@@ -273,6 +273,8 @@ document.addEventListener("dblclick",e=>{if(e.target.closest("input,textarea,sel
 document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});
 el("year").textContent=new Date().getFullYear();
 initTheme();initHeroShowcase();
+// Apply the saved language immediately, before waiting for store data.
+applyLanguage();
 await loadStore();if(!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"))){products=[];const productSection=el("products");if(productSection)productSection.hidden=true;}applyLanguage();updateCartButton();await loadFeaturedStores();await loadPublicReviews();
 
 
