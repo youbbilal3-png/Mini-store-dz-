@@ -6,7 +6,7 @@ const defaultProducts=[
 {id:"d2",name:"ساعة ذكية",fr:"Montre connectée",en:"Smart Watch",category:"إلكترونيات",categoryFr:"Électronique",categoryEn:"Electronics",price:6200,description:"تابع نشاطك وإشعاراتك بسهولة.",descriptionFr:"Suivez facilement votre activité et vos notifications.",descriptionEn:"Track your activity and notifications.",emoji:"⌚"},
 {id:"d3",name:"حقيبة عصرية",fr:"Sac tendance",en:"Everyday Bag",category:"إكسسوارات",categoryFr:"Accessoires",categoryEn:"Accessories",price:2800,description:"حقيبة عملية بتصميم أنيق.",descriptionFr:"Un sac pratique au design élégant.",descriptionEn:"A practical bag with a modern look.",emoji:"👜"},
 {id:"d4",name:"مصباح مكتبي",fr:"Lampe de bureau",en:"Desk Lamp",category:"المنزل",categoryFr:"Maison",categoryEn:"Home",price:1900,description:"إضاءة مريحة لمكتبك أو غرفتك.",descriptionFr:"Un éclairage agréable pour votre bureau ou votre chambre.",descriptionEn:"Comfortable lighting for your desk or room.",emoji:"💡"}];
-let products=defaultProducts,language="ar",activeCategory="all",searchTerm="",currentStoreId=null,selectedOrderProduct=null;
+let products=defaultProducts,language="ar",activeCategory="all",searchTerm="",currentStoreId=null,selectedOrderProduct=null,publicReviews=[];
 const translations={
 ar:{navProducts:"المنتجات",navAbout:"من نحن",navContact:"اتصل بنا",languageLabel:"اللغة",eyebrow:"متجرك يبدأ من هنا",heroTitle:'اكتشف منتجاتك المفضلة<br><em>بسهولة وثقة</em>',heroText:"تصفح منتجاتنا واختر ما يناسبك. اطلب مباشرة عبر واتساب.",browse:"تصفح المنتجات",sellerLabel:"صاحب المتجر",collection:"تشكيلتنا",productsTitle:"منتجات مختارة",searchPlaceholder:"ابحث عن منتج...",all:"الكل",empty:"لا توجد منتجات مطابقة لبحثك.",whyUs:"لماذا متجرنا؟",aboutTitle:"تجربة شراء سهلة ومباشرة",aboutText:"منتجات مميزة ومعلومات واضحة وطلب سهل عبر واتساب.",needHelp:"هل لديك سؤال؟",contactTitle:"تواصل معنا",contactText:"نحن هنا لمساعدتك في اختيار المنتج المناسب.",whatsappUs:"راسلنا عبر واتساب",rights:"جميع الحقوق محفوظة.",order:"اطلب الآن",orderMessage:"مرحباً، أريد طلب: ",currency:"دج",count:"منتجات",sellerDescription:"متجرك، هويتك.",orderFormTitle:"إتمام الطلب",customerName:"الاسم الكامل",customerPhone:"رقم الهاتف",quantity:"الكمية",sendOrder:"تأكيد الطلب والمتابعة إلى WhatsApp",orderSaved:"تم تسجيل طلبك. أكمل الإرسال عبر WhatsApp.",orderFailed:"تعذر تسجيل الطلب. حاول مرة أخرى."},
 fr:{navProducts:"Produits",navAbout:"À propos",navContact:"Contact",languageLabel:"Langue",eyebrow:"Votre boutique commence ici",heroTitle:'Découvrez vos produits préférés<br><em>en toute simplicité</em>',heroText:"Parcourez nos produits et commandez directement sur WhatsApp.",browse:"Voir les produits",sellerLabel:"Vendeur",collection:"NOTRE COLLECTION",productsTitle:"Produits sélectionnés",searchPlaceholder:"Rechercher un produit...",all:"Tout",empty:"Aucun produit ne correspond à votre recherche.",whyUs:"POURQUOI NOUS CHOISIR",aboutTitle:"Une expérience d’achat simple",aboutText:"Des produits sélectionnés, des informations claires et une commande facile sur WhatsApp.",needHelp:"Une question ?",contactTitle:"Contactez-nous",contactText:"Nous sommes là pour vous aider à choisir.",whatsappUs:"Écrire sur WhatsApp",rights:"Tous droits réservés.",order:"Commander",orderMessage:"Bonjour, je souhaite commander : ",currency:"DZD",count:"produits",sellerDescription:"Votre boutique, votre identité.",orderFormTitle:"Finaliser la commande",customerName:"Nom complet",customerPhone:"Téléphone",quantity:"Quantité",sendOrder:"Confirmer et continuer sur WhatsApp",orderSaved:"Commande enregistrée. Terminez sur WhatsApp.",orderFailed:"Impossible d’enregistrer la commande."},
@@ -46,6 +46,34 @@ async function submitCustomerOrder(event){
  }catch(error){if(popup)popup.close();console.error(error);el("orderDialogFeedback").textContent=translations[language].orderFailed;}finally{el("submitCustomerOrder").disabled=false;}
 }
 
+
+async function loadPublicReviews(){
+ const section=el("reviews");if(!section||!currentStoreId)return;
+ section.hidden=false;
+ const {data,error}=await supabase.from("store_reviews").select("id,customer_name,rating,comment,created_at").eq("store_id",currentStoreId).eq("status","approved").order("created_at",{ascending:false}).limit(20);
+ if(error){console.error("Reviews loading error:",error);return;}
+ publicReviews=data||[];renderPublicReviews();
+}
+function renderPublicReviews(){
+ const count=publicReviews.length,average=count?publicReviews.reduce((sum,r)=>sum+Number(r.rating),0)/count:0;
+ el("reviewsAverage").textContent=count?average.toFixed(1)+"/5":"—";
+ el("reviewsStars").textContent=count?"★".repeat(Math.round(average))+"☆".repeat(5-Math.round(average)):"☆☆☆☆☆";
+ el("reviewsCount").textContent=count+" "+translations[language].reviewCount;
+ el("publicReviews").innerHTML=count?publicReviews.map(r=>'<article class="public-review"><div class="public-review-top"><strong>'+safe(r.customer_name)+'</strong><span class="review-stars">'+("★".repeat(Number(r.rating))+"☆".repeat(5-Number(r.rating)))+'</span></div><p>'+safe(r.comment)+'</p><small>'+new Date(r.created_at).toLocaleDateString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":"en-US")+'</small></article>').join(""):'<p class="empty-state">'+translations[language].noReviews+'</p>';
+}
+async function submitCustomerReview(event){
+ event.preventDefault();if(!currentStoreId)return;
+ const name=el("reviewCustomerName").value.trim(),rating=Number(el("reviewRating").value),comment=el("reviewComment").value.trim();
+ if(name.length<2||comment.length<3||!Number.isInteger(rating)||rating<1||rating>5)return;
+ const button=el("submitReview");button.disabled=true;el("reviewFeedback").textContent="";
+ try{
+  const {error}=await supabase.from("store_reviews").insert({store_id:currentStoreId,customer_name:name,rating,comment});
+  if(error)throw error;
+  el("customerReviewForm").reset();el("reviewFeedback").textContent=translations[language].reviewPending;
+ }catch(error){console.error("Review submission error:",error);el("reviewFeedback").textContent=translations[language].reviewFailed;}
+ finally{button.disabled=false;}
+}
+
 async function loadStore(){
  const slug=new URLSearchParams(location.search).get("store");if(!slug)return;
  try{
@@ -62,6 +90,6 @@ el("searchInput").addEventListener("input",e=>{searchTerm=e.target.value;renderP
 el("categoryFilters").addEventListener("click",e=>{const b=e.target.closest("[data-category]");if(!b)return;activeCategory=b.dataset.category;renderFilters();renderProducts();});
 el("productGrid").addEventListener("click",e=>{const b=e.target.closest("[data-order]");if(b)openOrderDialog(b.dataset.order);});
 el("customerQuantity").addEventListener("input",()=>{if(!selectedOrderProduct)return;const qty=Math.max(1,Math.min(99,Number(el("customerQuantity").value)||1));el("orderDialogTotal").textContent=translations[language].quantity+": "+qty+" · "+(Number(selectedOrderProduct.price||0)*qty).toLocaleString()+" "+translations[language].currency;});
-el("customerOrderForm").addEventListener("submit",submitCustomerOrder);el("closeOrderDialog").addEventListener("click",()=>el("orderDialog").close());
+el("customerOrderForm").addEventListener("submit",submitCustomerOrder);el("customerReviewForm").addEventListener("submit",submitCustomerReview);el("closeOrderDialog").addEventListener("click",()=>el("orderDialog").close());
 el("year").textContent=new Date().getFullYear();
-await loadStore();applyLanguage();
+await loadStore();applyLanguage();await loadPublicReviews();
