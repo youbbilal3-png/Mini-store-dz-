@@ -7,7 +7,7 @@
 <link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg">
 <title>لوحة التاجر | Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-20"><link rel="stylesheet" href="dashboard.css?v=20261113-9">
+<link rel="stylesheet" href="styles.css?v=20261113-20"><link rel="stylesheet" href="dashboard.css?v=20261113-10">
 <script>document.documentElement.classList.add("language-loading");try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="dashboard-i18n.js?v=20261113-11"></script>
 <script>
@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261113-25" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261113-26" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body class="dashboard-page">
@@ -43,6 +43,7 @@ window.addEventListener("unhandledrejection",function(event){
 <div class="dashboard-grid">
 <aside class="dashboard-sidebar">
 <a class="side-link active" href="#profile">🏪 واجهة المتجر</a>
+<a class="side-link" href="#subscription">💎 الاشتراك والباقات</a>
 <a class="side-link" href="#store">🏪 إعدادات المتجر</a>
 <a class="side-link" href="#products">📦 المنتجات</a>
 <a class="side-link" href="#stats">📊 الإحصائيات</a>
@@ -51,6 +52,17 @@ window.addEventListener("unhandledrejection",function(event){
 <div class="sidebar-note"><strong>متجرك على السحابة</strong><p>بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.</p></div>
 </aside>
 <div class="dashboard-content">
+<section class="dash-panel subscription-panel" id="subscription">
+<div class="panel-heading"><div><span class="eyebrow">PLANS & BILLING</span><h2>الاشتراك والباقات</h2><p>اختر الخطة المناسبة لنمو متجرك. جرّب الخطط المدفوعة مجاناً لمدة 7 أيام.</p></div><span class="subscription-status" id="subscriptionStatus">جارٍ تحميل الاشتراك...</span></div>
+<div class="billing-cycle-switch" role="group" aria-label="دورة الاشتراك"><button type="button" class="active" id="billingMonthly">شهري</button><button type="button" id="billingYearly">سنوي — وفر شهرين</button></div>
+<div class="subscription-current" id="subscriptionCurrent">جارٍ تحميل تفاصيل خطتك...</div>
+<div class="subscription-cards">
+<article class="subscription-card"><span class="plan-label">FREE</span><h3>مجاني</h3><div class="plan-price">0 <small>دج / دائماً</small></div><p>للبداية وتجربة البيع عبر الإنترنت.</p><ul><li>حتى 10 منتجات</li><li>إدارة الطلبات</li><li>صفحة متجر عامة</li></ul><span class="plan-current" id="freePlanStatus">الخطة الأساسية</span></article>
+<article class="subscription-card plan-pro"><span class="plan-label">PRO</span><h3>احترافي</h3><div class="plan-price"><strong id="proPrice">1,500</strong> <small>دج / <span id="pricePeriodPro">شهرياً</span></small></div><p>لنشاطك التجاري الذي ينمو.</p><ul><li>حتى 100 منتج</li><li>جميع أدوات الخطة المجانية</li><li>تجربة مجانية لمدة 7 أيام</li></ul><button type="button" class="save-button plan-trial-button" id="startProTrial">ابدأ تجربة Pro المجانية</button></article>
+<article class="subscription-card plan-premium"><span class="plan-label">PREMIUM</span><h3>مميز</h3><div class="plan-price"><strong id="premiumPrice">3,000</strong> <small>دج / <span id="pricePeriodPremium">شهرياً</span></small></div><p>للتجار الذين يريدون مساحة أكبر.</p><ul><li>منتجات غير محدودة</li><li>جميع مزايا Pro</li><li>تجربة مجانية لمدة 7 أيام</li></ul><button type="button" class="save-button plan-trial-button" id="startPremiumTrial">ابدأ تجربة Premium المجانية</button></article>
+</div>
+<p class="subscription-note" id="subscriptionNote">الأسعار السنوية: Pro ‏15,000 دج وPremium ‏30,000 دج. الدفع الإلكتروني غير مفعّل حالياً؛ لن يتم خصم أي مبلغ بعد انتهاء التجربة.</p>
+</section>
 <section class="dash-panel" id="profile">
 <div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
 <div class="store-identity-card"><div class="store-identity-avatar" id="identityAvatar"><span id="identityAvatarFallback">S</span><img id="identityAvatarImage" alt="صورة المتجر" hidden></div><div class="store-identity-copy"><span class="eyebrow">YOUR STORE</span><h3 id="storeIdentityName">متجري</h3><p id="storeIdentitySeller">صاحب المتجر</p><p id="storeIdentityBio">أضف نبذة قصيرة لتعريف الزبائن بمتجرك.</p><span class="identity-publish-status" id="identityPublishStatus">مسودة خاصة</span></div></div><div class="profile-editor">
