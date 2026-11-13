@@ -7,7 +7,24 @@
 <link rel="stylesheet" href="styles.css?v=20261113-19"><link rel="stylesheet" href="dashboard.css?v=20261113-9">
 <script>document.documentElement.classList.add("language-loading");try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="dashboard-i18n.js?v=20261113-10"></script>
-<script type="module" src="dashboard.js?v=20261113-21"></script>
+<script>
+window.addEventListener("error",function(event){
+  if(event.target&&event.target.tagName==="SCRIPT"){
+    const box=document.getElementById("profileFeedback");
+    if(box)box.textContent="تعذر تحميل ملف تشغيل لوحة التاجر. تحقق من الاتصال ثم أعد فتح الصفحة.";
+  }else{
+    const box=document.getElementById("profileFeedback");
+    if(box)box.textContent="حدث خطأ في لوحة التاجر: "+(event.message||"خطأ غير معروف");
+    console.error("Dashboard runtime error:",event.error||event.message);
+  }
+});
+window.addEventListener("unhandledrejection",function(event){
+  const box=document.getElementById("profileFeedback");
+  if(box)box.textContent="تعذر إكمال عملية في لوحة التاجر: "+(event.reason?.message||String(event.reason||"خطأ غير معروف"));
+  console.error("Dashboard unhandled rejection:",event.reason);
+});
+</script>
+<script type="module" src="dashboard.js?v=20261113-22" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 </head>
 <body class="dashboard-page">
 <header class="site-header dashboard-header">
