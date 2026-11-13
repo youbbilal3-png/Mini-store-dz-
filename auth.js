@@ -21,7 +21,7 @@ $("authForm").addEventListener("submit",async event=>{
    const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;
    location.href=authNext;
   }
- }catch(error){$("authMessage").textContent=error.message||authTranslations[authLanguage].error;}
+ }catch(error){console.error("Authentication error:",error);$("authMessage").textContent=authTranslations[authLanguage].error;}
  finally{button.disabled=false;}
 });
 
