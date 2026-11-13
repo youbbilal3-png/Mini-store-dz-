@@ -242,12 +242,12 @@ async function loadStore(){
  const slug=new URLSearchParams(location.search).get("store");if(!slug)return;
  try{
   const {data:store,error}=await supabase.from("stores").select("id,store_name,seller_name,seller_bio,avatar_url,whatsapp,description,slug").eq("slug",slug).eq("is_published",true).maybeSingle();
-  if(error)throw error;if(!store){products=[];STORE_SETTINGS={...DEFAULT_STORE_SETTINGS,sellerName:translations[language].storeUnavailable,sellerDescription:translations[language].storeUnavailableDesc,whatsapp:""};return;}
+  if(error)throw error;if(!store){products=[];STORE_SETTINGS={...DEFAULT_STORE_SETTINGS,sellerName:translations[language].storeUnavailable,sellerDescription:translations[language].storeUnavailableDesc,whatsapp:""};const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=translations[language].storeUnavailableDesc;document.title=translations[language].storeUnavailable+" | Mini Store DZ";return;}
   currentStoreId=store.id;STORE_SETTINGS={whatsapp:store.whatsapp||"",sellerName:store.seller_name||store.store_name,sellerDescription:[store.store_name,store.seller_bio].filter(Boolean).join(" · "),sellerAvatar:store.avatar_url||""};
   const {data:list,error:productError}=await supabase.from("products").select("id,name,description,category,price,currency,image_url,image_urls,stock_quantity").eq("store_id",store.id).eq("is_active",true).order("created_at",{ascending:false});
   if(productError)throw productError;products=(list||[]).map(p=>({...p,emoji:"📦"}));
   document.title=store.store_name+" | Mini Store DZ";
-  const pageDescription=[store.store_name,store.seller_bio,"تصفح المنتجات والتقييمات واطلب بسهولة عبر WhatsApp."].filter(Boolean).join(" — ");
+  const pageDescription=[store.store_name,store.seller_bio,translations[language].storeMetaDesc].filter(Boolean).join(" — ");
   const descriptionMeta=document.querySelector('meta[name="description"]');if(descriptionMeta)descriptionMeta.content=pageDescription;
   const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=store.store_name+" | Mini Store DZ";
   const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=pageDescription;
