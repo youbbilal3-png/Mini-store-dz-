@@ -40,10 +40,11 @@ function applyAuthLanguage(lang){
  const select=$("authLanguageSelect");if(select)select.value=authLanguage;
  const t=authTranslations[authLanguage];
  document.querySelectorAll("[data-auth-text]").forEach(el=>{const key=el.dataset.authText;if(t[key]!==undefined)el.innerHTML=t[key];});
+ document.querySelectorAll("[data-open-auth]").forEach(el=>{el.textContent=el.dataset.openAuth==="signup"?t.signup:t.login;});
  $("showSignup").textContent=t.signup;$("showLogin").textContent=t.login;$("closeAuth").textContent=t.close;
  $("nameField").firstChild.textContent=t.merchant;
- $("email").previousElementSibling.textContent=t.email;$("password").previousElementSibling.textContent=t.password;
- $("fullName").placeholder=t.merchant;$("email").placeholder="name@example.com";
+ $("email").parentElement.firstChild.textContent=t.email;$("password").parentElement.firstChild.textContent=t.password;
+ $("fullName").placeholder=t.merchant;$("email").placeholder="name@example.com";$("password").placeholder=authLanguage==="ar"?"8 أحرف على الأقل":"••••••••";
  $("authFormSection").querySelector(".auth-legal").textContent=t.legal;
  setMode(mode);
 }
