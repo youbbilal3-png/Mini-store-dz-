@@ -50,9 +50,11 @@ function renderProducts(){
 }
 function renderSellerProfile(){const name=STORE_SETTINGS.sellerName||"Store Owner";el("sellerName").textContent=name;el("sellerDescription").textContent=STORE_SETTINGS.sellerDescription||translations[language].sellerDescription;el("sellerInitials").textContent=name.trim().charAt(0).toUpperCase()||"S";const avatar=el("sellerAvatar");if(STORE_SETTINGS.sellerAvatar){avatar.src=STORE_SETTINGS.sellerAvatar;avatar.hidden=false;el("sellerInitials").hidden=true;avatar.onerror=()=>{avatar.hidden=true;el("sellerInitials").hidden=false;};}else{avatar.hidden=true;el("sellerInitials").hidden=false;}}
 function updateStoreShareLinks(){
+ const whatsappShare=el("whatsappStoreShare"),facebookShare=el("facebookStoreShare");
+ if(!whatsappShare||!facebookShare)return;
  const url=location.href,encodedUrl=encodeURIComponent(url);
- el("whatsappStoreShare").href="https://wa.me/?text="+encodeURIComponent(translations[language].shareStore+" — "+url);
- el("facebookStoreShare").href="https://www.facebook.com/sharer/sharer.php?u="+encodedUrl;
+ whatsappShare.href="https://wa.me/?text="+encodeURIComponent(translations[language].shareStore+" — "+url);
+ facebookShare.href="https://www.facebook.com/sharer/sharer.php?u="+encodedUrl;
 }
 async function copyStoreLink(){
  const feedback=el("shareFeedback");
@@ -137,7 +139,7 @@ async function loadStore(){
  }catch(error){console.error("Store loading error:",error);}
 }
 el("languageSelect").addEventListener("change",e=>{language=e.target.value;activeCategory="all";applyLanguage();});
-el("copyStoreLink").addEventListener("click",copyStoreLink);
+if(el("copyStoreLink"))el("copyStoreLink").addEventListener("click",copyStoreLink);
 el("searchInput").addEventListener("input",e=>{searchTerm=e.target.value;renderProducts();});
 el("clearSearch").addEventListener("click",()=>{searchTerm="";el("searchInput").value="";renderProducts();el("searchInput").focus();});
 el("categorySelect").addEventListener("change",e=>{activeCategory=e.target.value;renderProducts();});
