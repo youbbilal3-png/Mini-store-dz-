@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827"><meta name="description" content="Mini Store DZ merchant dashboard">
+<title>لوحة التاجر | Mini Store DZ</title>
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="dashboard.css">
+<script src="dashboard.js" defer></script>
+</head>
+<body class="dashboard-page">
+<header class="site-header dashboard-header">
+<a class="brand" href="index.html"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
+<div class="dashboard-header-actions"><span class="dashboard-tag">Merchant Studio</span><a class="dashboard-back" href="index.html">عرض المتجر ↗</a></div>
+</header>
+<main class="dashboard-main">
+<section class="dashboard-welcome">
+<div><span class="eyebrow">MINI STORE DZ · MERCHANT AREA</span><h1>لوحة تحكم التاجر</h1><p>أدر بيانات متجرك ومنتجاتك من مكان واحد.</p></div>
+<div class="dashboard-status"><span class="status-dot"></span> وضع تجريبي على هذا الجهاز</div>
+</section>
+<div class="dashboard-grid">
+<aside class="dashboard-sidebar">
+<a class="side-link active" href="#profile">👤 الملف الشخصي</a>
+<a class="side-link" href="#store">🏪 إعدادات المتجر</a>
+<a class="side-link" href="#products">📦 المنتجات</a>
+<a class="side-link" href="index.html">🌐 صفحة المتجر</a>
+<div class="sidebar-note"><strong>معلومة</strong><p>التغييرات تحفظ في هذا المتصفح فقط في النسخة التجريبية.</p></div>
+</aside>
+<div class="dashboard-content">
+<section class="dash-panel" id="profile">
+<div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
+<div class="profile-editor">
+<div class="avatar-editor"><div class="avatar-preview" id="avatarPreview"><span id="avatarFallback">S</span><img id="avatarImage" alt="صورة التاجر" hidden></div><label class="upload-button" for="avatarUpload">📷 تغيير الصورة</label><input id="avatarUpload" type="file" accept="image/*" hidden><button class="text-button" id="removeAvatar" type="button">إزالة الصورة</button></div>
+<div class="form-fields">
+<label>اسم التاجر<input id="sellerNameInput" type="text" maxlength="50" placeholder="مثال: Bilal"></label>
+<label>نبذة قصيرة<textarea id="sellerBioInput" rows="3" maxlength="120" placeholder="اكتب نبذة بسيطة عنك أو عن نشاطك"></textarea></label>
+</div>
+</div>
+</section>
+<section class="dash-panel" id="store">
+<div class="panel-heading"><div><span class="eyebrow">STORE SETTINGS</span><h2>إعدادات المتجر</h2><p>خصص اسم المتجر ورقم استقبال الطلبات.</p></div></div>
+<div class="form-fields two-columns">
+<label>اسم المتجر<input id="storeNameInput" type="text" maxlength="60" placeholder="اسم متجرك"></label>
+<label>رقم WhatsApp<input id="whatsappInput" type="tel" inputmode="numeric" placeholder="213XXXXXXXXX"><small>اكتب رمز الدولة ثم الرقم، دون + أو مسافات.</small></label>
+</div>
+<div class="panel-actions"><button class="save-button" id="saveProfile" type="button">حفظ بيانات المتجر</button><span class="save-feedback" id="profileFeedback" role="status"></span></div>
+</section>
+<section class="dash-panel" id="products">
+<div class="panel-heading products-heading"><div><span class="eyebrow">PRODUCT MANAGEMENT</span><h2>إدارة المنتجات</h2><p>أضف منتجاً جديداً أو عدّل المنتجات الموجودة.</p></div><span class="products-total" id="productsTotal">0 منتج</span></div>
+<form id="productForm" class="product-form">
+<input id="editingProductId" type="hidden">
+<div class="form-fields two-columns">
+<label>اسم المنتج<input id="productName" required maxlength="70" placeholder="مثال: سماعات لاسلكية"></label>
+<label>التصنيف<input id="productCategory" required maxlength="40" placeholder="إلكترونيات"></label>
+<label>السعر بالدينار<input id="productPrice" required type="number" min="0" step="1" inputmode="numeric" placeholder="3500"></label>
+<label>رمز تعبيري للمنتج<input id="productEmoji" maxlength="8" value="📦" placeholder="📦"></label>
+<label class="full-field">وصف المنتج<textarea id="productDescription" rows="2" maxlength="180" placeholder="اكتب وصفاً قصيراً للمنتج"></textarea></label>
+</div>
+<div class="panel-actions"><button class="save-button" id="productSubmit" type="submit">＋ إضافة المنتج</button><button class="cancel-button" id="cancelEdit" type="button" hidden>إلغاء التعديل</button><span class="save-feedback" id="productFeedback" role="status"></span></div>
+</form>
+<div class="managed-products" id="managedProducts"></div>
+</section>
+</div>
+</div>
+</main>
+<footer class="dashboard-footer"><strong>Founder of Mini Store DZ — B.YB</strong><span>© <span id="dashYear"></span> Mini Store DZ</span></footer>
+</body></html>
