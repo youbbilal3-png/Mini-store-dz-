@@ -180,7 +180,7 @@ async function saveProduct(event){
  $("productSubmit").disabled=true;message("productFeedback","جارٍ حفظ المنتج...");
  try{
   const existingProduct=id?products.find(p=>p.id===id):null;
-  const existingImages=existingProduct?(existingProduct.image_urls||[existingProduct.image_url].filter(Boolean)):[];
+  const existingImages=existingProduct?(Array.isArray(existingProduct.image_urls)&&existingProduct.image_urls.length?existingProduct.image_urls:[existingProduct.image_url].filter(Boolean)):[];
   if(existingImages.length+files.length>5)throw new Error("يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.");
   const uploadedImages=[];
   for(const file of files)uploadedImages.push(await uploadImage(file,"product-images","products",5*1024*1024));
