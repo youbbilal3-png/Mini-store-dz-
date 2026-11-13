@@ -1,6 +1,6 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
-function dashboardLocale(){const lang=document.documentElement.lang;return lang==="fr"?"fr-DZ":lang==="en"?"en-DZ":dashboardLocale();}
+function dashboardLocale(){const lang=document.documentElement.lang;return lang==="fr"?"fr-FR":lang==="en"?"en-GB":lang==="es"?"es-ES":lang==="de"?"de-DE":lang==="tr"?"tr-TR":"ar-DZ";}
 function applyDashboardTheme(mode){
  const selected=mode||"system";document.documentElement.dataset.theme=selected;
  const icon=$("themeToggleIcon"),label=$("themeToggleLabel"),button=$("themeToggle");
