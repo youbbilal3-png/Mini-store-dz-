@@ -1,6 +1,16 @@
 (() => {
   const dictionaries = {
     fr: {
+      "صورة التاجر":"Photo du vendeur",
+      "اسم متجرك":"Nom de votre boutique",
+      "مثال: سماعات لاسلكية":"Ex. : écouteurs sans fil",
+      "أخرى":"Autre",
+      "حساب التاجر":"Compte vendeur",
+      "طلب":"commande",
+      "منتج":"produit",
+      "قطعة":"pièce",
+      "دج":"DZD",
+      "لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.":"Aucun produit pour le moment. Ajoutez votre premier produit avec le formulaire ci-dessus.",
       "تغيير المظهر":"Changer le thème","تلقائي":"Automatique","فاتح":"Clair","داكن":"Sombre","المظهر الحالي":"Thème actuel","اضغط للتغيير":"Appuyez pour changer",
       "عرض المتجر ↗":"Voir la boutique ↗","تسجيل الخروج":"Déconnexion","جارٍ تسجيل الخروج...":"Déconnexion en cours...","لوحة تحكم التاجر":"Tableau de bord vendeur","أدر بيانات متجرك ومنتجاتك من مكان واحد.":"Gérez votre boutique et vos produits depuis un seul endroit.","متصل بقاعدة البيانات":"Connecté à la base de données",
       "واجهة المتجر":"Profil de la boutique","إعدادات المتجر":"Paramètres de la boutique","المنتجات":"Produits","الإحصائيات":"Statistiques","الطلبات":"Commandes","تقييمات الزبائن":"Avis clients","صفحة المتجر":"Page de la boutique","متجرك على السحابة":"Votre boutique dans le cloud","بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.":"Vos données sont enregistrées dans votre compte et accessibles depuis n’importe quel appareil après connexion.",
@@ -12,6 +22,16 @@
       "متجرك منشور للعامة":"Votre boutique est publiée","متجرك خاص حتى تنشره":"Votre boutique reste privée jusqu’à sa publication","متجرك غير منشور بعد":"Votre boutique n’est pas encore publiée","تحقق من رقم WhatsApp ورمز الدولة.":"Vérifiez le numéro WhatsApp et l’indicatif du pays.","تم حفظ بيانات متجرك على السحابة.":"Les informations de votre boutique ont été enregistrées dans le cloud.","جارٍ رفع الصورة...":"Téléversement de l’image...","تم رفع صورة التاجر وحفظها على السحابة.":"La photo du vendeur a été téléversée et enregistrée dans le cloud.","تعذر رفع الصورة.":"Impossible de téléverser l’image.","تمت إزالة الصورة.":"L’image a été supprimée.","تم حفظ المنتج على السحابة.":"Le produit a été enregistré dans le cloud.","تم تحديث المنتج على السحابة.":"Le produit a été mis à jour dans le cloud.","تمت إضافة المنتج إلى متجرك.":"Le produit a été ajouté à votre boutique.","تعذر حفظ المنتج.":"Impossible d’enregistrer le produit.","يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.":"Vous pouvez ajouter jusqu’à 5 images par produit.","اختر صورة JPEG أو PNG أو WebP.":"Choisissez une image JPEG, PNG ou WebP.","حجم الصورة أكبر من الحد المسموح.":"L’image dépasse la taille autorisée.","مخزون غير محدود":"Stock illimité","نفد المخزون":"Rupture de stock","مخزون منخفض":"Stock faible","المتوفر":"Disponible","تعديل":"Modifier","حذف":"Supprimer","عام":"Général","هل تريد حذف المنتج:":"Voulez-vous supprimer le produit :","تم حذف المنتج.":"Le produit a été supprimé.","تم نسخ رابط متجرك.":"Le lien de votre boutique a été copié.","يمكنك مشاركته الآن.":"Vous pouvez le partager maintenant.","انشر المتجر أولاً ليتمكن الزوار من مشاهدة المنتجات.":"Publiez d’abord la boutique pour que les visiteurs puissent voir les produits.","تعذر النسخ تلقائياً. استخدم زر عرض المتجر لفتح الرابط ونسخه من شريط العنوان.":"Copie automatique impossible. Ouvrez la boutique et copiez le lien depuis la barre d’adresse.","تم نشر متجرك. يمكنك مشاركة رابط المتجر.":"Votre boutique est publiée. Vous pouvez partager son lien.","تم إلغاء نشر المتجر.":"La publication de votre boutique a été annulée.","تعذر تحديث حالة الطلب:":"Impossible de mettre à jour le statut de la commande :","تعذر تحديث التقييم:":"Impossible de mettre à jour l’avis :","تعذر تحميل بيانات المتجر":"Impossible de charger les données de la boutique","تحقق من الاتصال ثم أعد المحاولة.":"Vérifiez votre connexion puis réessayez.","تعذر تسجيل الخروج. تحقق من الاتصال ثم حاول مجدداً.":"Déconnexion impossible. Vérifiez votre connexion puis réessayez."
     },
     en: {
+      "صورة التاجر":"Seller photo",
+      "اسم متجرك":"Your store name",
+      "مثال: سماعات لاسلكية":"Example: Wireless earbuds",
+      "أخرى":"Other",
+      "حساب التاجر":"Merchant account",
+      "طلب":"order",
+      "منتج":"product",
+      "قطعة":"item",
+      "دج":"DZD",
+      "لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.":"No products yet. Add your first product using the form above.",
       "تغيير المظهر":"Change theme","تلقائي":"System","فاتح":"Light","داكن":"Dark","المظهر الحالي":"Current theme","اضغط للتغيير":"Tap to change",
       "عرض المتجر ↗":"View store ↗","تسجيل الخروج":"Log out","جارٍ تسجيل الخروج...":"Logging out...","لوحة تحكم التاجر":"Merchant dashboard","أدر بيانات متجرك ومنتجاتك من مكان واحد.":"Manage your store details and products in one place.","متصل بقاعدة البيانات":"Connected to database",
       "واجهة المتجر":"Store profile","إعدادات المتجر":"Store settings","المنتجات":"Products","الإحصائيات":"Statistics","الطلبات":"Orders","تقييمات الزبائن":"Customer reviews","صفحة المتجر":"Store page","متجرك على السحابة":"Your store in the cloud","بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.":"Your data is saved to your account and available on any device after you sign in.",
@@ -36,7 +56,7 @@
     for (const sourceLang of ["fr", "en"]) {
       for (const [translated, source] of Object.entries(reverse[sourceLang]).sort((a,b)=>b[0].length-a[0].length)) {
         if (ar === translated) { ar = source; break; }
-        if (translated.length > 5 && ar.includes(translated)) ar = ar.replaceAll(translated, source);
+        if (translated.length > 1 && ar.includes(translated)) ar = ar.replaceAll(translated, source);
       }
     }
     if (lang === "ar") return raw.replace(trimmed, ar);
@@ -63,6 +83,7 @@
     lang = ["ar","fr","en"].includes(next) ? next : "ar";
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.title = lang === "fr" ? "Tableau de bord vendeur | Mini Store DZ" : lang === "en" ? "Merchant dashboard | Mini Store DZ" : "لوحة التاجر | Mini Store DZ";
     translateElement(document.body);
     const picker = document.getElementById("dashboardLanguageSelect");
     if (picker) picker.value = lang;
