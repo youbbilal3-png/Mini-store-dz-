@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#101827">
 <meta name="description" content="Mini Store DZ — Simple online stores for everyone.">
 <title>Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-14">
-<script type="module" src="app.js?v=20261113-14"></script>
+<link rel="stylesheet" href="styles.css?v=20261113-15">
+<script type="module" src="app.js?v=20261113-15"></script>
 </head>
 <body>
 <header class="site-header">
@@ -17,7 +17,7 @@
   <div class="header-tools">
     <nav aria-label="Main navigation">
       <a href="#featuredStoresSection" data-i18n="navProducts" id="navProducts">تصفح المتاجر</a>
-      <a class="header-icon-link" href="#about" data-i18n="navAbout" id="navAboutLink" aria-label="من نحن" title="من نحن">ⓘ</a>
+      <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About">ⓘ</button>
       <a class="header-icon-link" href="#contact" data-i18n="navContact" id="navContactLink" aria-label="اتصل بنا" title="اتصل بنا">✉</a>
       <a href="dashboard.html" id="merchantAccountLink">حساب التاجر</a>
       <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html" data-i18n="joinMerchant">أنشئ متجرك</a>
@@ -92,15 +92,15 @@
     </div>
   </section>
 
-  <section class="about-section" id="about">
+  <dialog class="info-dialog" id="aboutDialog"><div class="info-dialog-card"><button type="button" class="order-close" id="closeAboutDialog" aria-label="Close">×</button><section class="about-section" id="about">
     <div><span class="eyebrow" data-i18n="whyUs">لماذا متجرنا؟</span><h2 data-i18n="aboutTitle">تجربة شراء سهلة ومباشرة</h2></div>
     <p data-i18n="aboutText">Mini Store DZ منصة رقمية تساعد التجار على إنشاء متاجرهم الإلكترونية بسهولة، وعرض منتجاتهم بطريقة احترافية، والوصول إلى الزبائن. كما تتيح للمتسوقين اكتشاف المتاجر والمنتجات، والاطلاع على التفاصيل والتقييمات، وإرسال طلباتهم مباشرة إلى البائع عبر واتساب. هدفنا جعل التجارة الإلكترونية أكثر سهولة ووضوحاً للجميع.</p>
-  </section>
+  </section></div></dialog>
 
-  <section class="contact-section" id="contact">
+  <dialog class="info-dialog" id="contactDialog"><div class="info-dialog-card"><button type="button" class="order-close" id="closeContactDialog" aria-label="Close">×</button><section class="contact-section" id="contact">
     <div><span class="eyebrow" data-i18n="needHelp">هل لديك سؤال؟</span><h2 data-i18n="contactTitle">تواصل معنا</h2><p data-i18n="contactText">فريق الدعم جاهز لمساعدتك والإجابة عن استفساراتك.</p><div class="contact-email"><span aria-hidden="true">✉</span><a id="supportEmailLink" href="mailto:support.ministoredz@gmail.com">support.ministoredz@gmail.com</a></div></div>
     <a class="primary-btn" id="contactButton" href="mailto:support.ministoredz@gmail.com?subject=Mini%20Store%20DZ%20Support" data-i18n="emailUs">إرسال رسالة إلى الدعم</a>
-  </section>
+  </section></div></dialog>
   <dialog id="productDetailsDialog" class="product-details-dialog"><div class="product-details-card"><button type="button" class="order-close" id="closeProductDetails" aria-label="إغلاق">×</button><div id="productDetailsContent"></div></div></dialog>
   <dialog id="cartDialog" class="cart-dialog"><div class="cart-dialog-card"><button type="button" class="order-close" id="closeCartDialog" aria-label="إغلاق">×</button><span class="eyebrow">MINI STORE DZ · CART</span><h2 data-i18n="cart">سلة المشتريات</h2><div id="cartItemsList" class="cart-items-list"></div><div id="cartDialogTotal" class="order-dialog-total"></div><div class="cart-dialog-actions"><button type="button" class="secondary-btn" id="continueShoppingButton" data-i18n="continueShopping">متابعة التسوق</button><button type="button" class="primary-btn" id="checkoutCartButton" data-i18n="checkout">إتمام الطلب</button></div><p id="cartFeedback" class="cart-feedback" role="status"></p></div></dialog>
   <dialog id="orderDialog" class="order-dialog"><form id="customerOrderForm" class="order-dialog-card">
