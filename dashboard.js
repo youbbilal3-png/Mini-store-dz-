@@ -19,6 +19,66 @@ function initDashboardTheme(){
  });
 }
 let user=null,store=null,products=[],orders=[],reviews=[];
+let subscription=null,billingCycle="monthly";
+const planConfig={free:{limit:10},pro:{limit:100},premium:{limit:Infinity}};
+function subscriptionDate(value){return value?new Date(value).toLocaleDateString(dashboardLocale(),{year:"numeric",month:"long",day:"numeric"}):"";}
+function updateBillingPrices(){
+ const yearly=billingCycle==="yearly";
+ $("proPrice").textContent=yearly?"15,000":"1,500";
+ $("premiumPrice").textContent=yearly?"30,000":"3,000";
+ $("pricePeriodPro").textContent=yearly?"سنوياً":"شهرياً";
+ $("pricePeriodPremium").textContent=yearly?"سنوياً":"شهرياً";
+ $("billingMonthly").classList.toggle("active",!yearly);
+ $("billingYearly").classList.toggle("active",yearly);
+}
+function renderSubscription(){
+ if(!subscription)return;
+ const now=Date.now(),trialActive=subscription.status==="trialing"&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;
+ const plan=trialActive?subscription.plan:(subscription.status==="active"?subscription.plan:"free");
+ const used=!!subscription.trial_used_at;
+ const status=$("subscriptionStatus"),current=$("subscriptionCurrent");
+ if(trialActive){
+  status.textContent="تجربة مجانية نشطة";
+  current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Premium — مميز")+" · تنتهي التجربة في "+subscriptionDate(subscription.trial_ends_at)+". لن يتم تحصيل أي مبلغ تلقائياً.";
+ }else if(subscription.status==="active"){
+  status.textContent="اشتراك نشط";
+  current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Premium — مميز")+".";
+ }else if(used){
+  status.textContent="الخطة المجانية";
+  current.textContent="انتهت الفترة التجريبية أو تم إيقافها. يمكنك الاستمرار بالخطة المجانية حتى تفعيل الدفع الإلكتروني.";
+ }else{
+  status.textContent="الخطة المجانية";
+  current.textContent="أنت على الخطة المجانية. يمكنك تجربة Pro أو Premium لمدة 7 أيام دون إدخال بيانات دفع.";
+ }
+ $("freePlanStatus").textContent=plan==="free"?"خطتك الحالية":"متاح دائماً";
+ const hasPaid=trialActive||subscription.status==="active";
+ $("startProTrial").disabled=hasPaid||used;
+ $("startPremiumTrial").disabled=hasPaid||used;
+ $("startProTrial").textContent=used?"تم استخدام التجربة المجانية":hasPaid?"لديك خطة مدفوعة":"ابدأ تجربة Pro المجانية";
+ $("startPremiumTrial").textContent=used?"تم استخدام التجربة المجانية":hasPaid?"لديك خطة مدفوعة":"ابدأ تجربة Premium المجانية";
+}
+async function loadSubscription(){
+ const {data,error}=await supabase.from("user_subscriptions").select("*").eq("user_id",user.id).maybeSingle();
+ if(error)throw error;
+ if(!data)throw new Error("تعذر العثور على بيانات الاشتراك.");
+ subscription=data;renderSubscription();
+}
+async function startPlanTrial(plan){
+ const button=$(plan==="pro"?"startProTrial":"startPremiumTrial");
+ if(!subscription||button.disabled)return;
+ button.disabled=true;button.textContent="جارٍ تفعيل التجربة...";
+ try{
+  const {data,error}=await supabase.rpc("start_subscription_trial",{p_plan:plan,p_billing_cycle:billingCycle});
+  if(error)throw error;
+  subscription=data;renderSubscription();
+  message("profileFeedback","تم تفعيل تجربتك المجانية لمدة 7 أيام لخطة "+(plan==="pro"?"Pro":"Premium")+".");
+ }catch(error){
+  console.error("Trial activation failed:",error);
+  message("profileFeedback",error.message||"تعذر تفعيل التجربة المجانية.");
+  button.disabled=false;renderSubscription();
+ }
+}
+
 const message=(id,text)=>$(id).textContent=text;
 const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function makeSlug(name,id){const base=String(name||"store").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,25)||"store";return base+"-"+id.slice(0,7);}
@@ -239,6 +299,11 @@ async function saveProduct(event){
  $("productSubmit").disabled=true;
  message("productFeedback","جارٍ حفظ المنتج...");
  try{
+  if(!id){
+   const {data:allowed,error:limitError}=await supabase.rpc("can_add_store_product",{p_store_id:store.id});
+   if(limitError)throw limitError;
+   if(!allowed)throw new Error("وصلت إلى الحد الأقصى لمنتجات خطتك. اختر Pro أو Premium من قسم الاشتراكات لإضافة المزيد.");
+  }
   const existingProduct=id?products.find(p=>p.id===id):null;
   const existingImages=existingProduct?(Array.isArray(existingProduct.image_urls)&&existingProduct.image_urls.length?existingProduct.image_urls:[existingProduct.image_url].filter(Boolean)):[];
   if(existingImages.length+files.length>5)throw new Error("يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.");
@@ -289,6 +354,11 @@ async function init(){
  $("avatarUpload").addEventListener("change",uploadAvatar);
  $("removeAvatar").addEventListener("click",removeAvatar);
  $("productForm").addEventListener("submit",saveProduct);
+ $("billingMonthly").addEventListener("click",()=>{billingCycle="monthly";updateBillingPrices();});
+ $("billingYearly").addEventListener("click",()=>{billingCycle="yearly";updateBillingPrices();});
+ $("startProTrial").addEventListener("click",()=>startPlanTrial("pro"));
+ $("startPremiumTrial").addEventListener("click",()=>startPlanTrial("premium"));
+ updateBillingPrices();
  $("productCategory").addEventListener("change",syncCustomCategory);
  $("managedProducts").addEventListener("click",manageProductClick);
  $("managedOrders").addEventListener("change",updateOrderStatus);
@@ -331,6 +401,7 @@ async function init(){
  try{
   store=await ensureStore();
   fillSettings();
+  await loadSubscription();
   renderDailyCharts();
   const results=await Promise.allSettled([loadProducts(),loadOrders(),loadReviews()]);
   const failures=[];
@@ -346,5 +417,5 @@ async function init(){
  }
  
 }
-document.addEventListener("msdz-language-changed",()=>{if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();});
+document.addEventListener("msdz-language-changed",()=>{if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();if(subscription)renderSubscription();updateBillingPrices();});
 init();
