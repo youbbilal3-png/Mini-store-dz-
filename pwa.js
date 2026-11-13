@@ -2,7 +2,7 @@
   if (!("serviceWorker" in navigator)) return;
 
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(error => {
+    navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).then(registration => {\n      registration.update().catch(error => console.warn("Mini Store DZ worker update check failed:", error));\n    }).catch(error => {
       console.warn("Mini Store DZ app setup could not be registered:", error);
     });
   });
