@@ -31,31 +31,40 @@ async function ensureStore(){
 }
 
 function renderDailyCharts(){
- const days=[];
- const now=new Date();
- for(let offset=6;offset>=0;offset--){
-  const day=new Date(now);day.setHours(0,0,0,0);day.setDate(day.getDate()-offset);
-  const key=day.getFullYear()+"-"+String(day.getMonth()+1).padStart(2,"0")+"-"+String(day.getDate()).padStart(2,"0");
-  days.push({key,label:day.toLocaleDateString(dashboardLocale(),{weekday:"short",day:"numeric"}),orders:0,sales:0});
+ const ordersChart=$("ordersChart"),salesChart=$("salesChart");
+ if(!ordersChart||!salesChart)return;
+ try{
+  const days=[];
+  const now=new Date();
+  for(let offset=6;offset>=0;offset--){
+   const day=new Date(now);day.setHours(0,0,0,0);day.setDate(day.getDate()-offset);
+   const key=day.getFullYear()+"-"+String(day.getMonth()+1).padStart(2,"0")+"-"+String(day.getDate()).padStart(2,"0");
+   days.push({key,label:day.toLocaleDateString(dashboardLocale(),{weekday:"short",day:"numeric"}),orders:0,sales:0});
+  }
+  const byDate=new Map(days.map(day=>[day.key,day]));
+  orders.forEach(order=>{
+   const date=new Date(order.created_at);
+   if(Number.isNaN(date.getTime()))return;
+   const key=date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0");
+   const day=byDate.get(key);if(!day)return;
+   day.orders++;
+   if(order.status==="completed")day.sales+=Number(order.total||0);
+  });
+  const maxOrders=Math.max(1,...days.map(day=>day.orders));
+  const maxSales=Math.max(1,...days.map(day=>day.sales));
+  const render=(target,field,max,format,kind)=>{
+   target.innerHTML=days.map(day=>{
+    const value=day[field],height=value?Math.max(4,Math.round(value/max*100)):0;
+    return '<div class="daily-chart-item" title="'+escapeHtml(day.label)+': '+escapeHtml(format(value))+'"><span class="daily-chart-value">'+escapeHtml(format(value))+'</span><div class="daily-chart-track"><div class="daily-chart-bar '+kind+'" style="height:'+height+'%"></div></div><span class="daily-chart-day">'+escapeHtml(day.label)+'</span></div>';
+   }).join("");
+  };
+  render(ordersChart,"orders",maxOrders,value=>String(value),"");
+  render(salesChart,"sales",maxSales,value=>Number(value).toLocaleString(dashboardLocale())+" دج","sales");
+ }catch(error){
+  console.error("Dashboard chart rendering failed:",error);
+  ordersChart.innerHTML='<p class="chart-empty">تعذر عرض الرسم البياني حالياً.</p>';
+  salesChart.innerHTML='<p class="chart-empty">تعذر عرض الرسم البياني حالياً.</p>';
  }
- const byDate=new Map(days.map(day=>[day.key,day]));
- orders.forEach(order=>{
-  const date=new Date(order.created_at);
-  const key=date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0");
-  const day=byDate.get(key);if(!day)return;
-  day.orders++;
-  if(order.status==="completed")day.sales+=Number(order.total||0);
- });
- const maxOrders=Math.max(1,...days.map(day=>day.orders));
- const maxSales=Math.max(1,...days.map(day=>day.sales));
- const render=(target,field,max,format,kind)=>{
-  $(target).innerHTML=days.map(day=>{
-   const value=day[field],height=value?Math.max(4,Math.round(value/max*100)):0;
-   return '<div class="daily-chart-item" title="'+escapeHtml(day.label)+': '+escapeHtml(format(value))+'"><span class="daily-chart-value">'+escapeHtml(format(value))+'</span><div class="daily-chart-track"><div class="daily-chart-bar '+kind+'" style="height:'+height+'%"></div></div><span class="daily-chart-day">'+escapeHtml(day.label)+'</span></div>';
-  }).join("");
- };
- render("ordersChart","orders",maxOrders,value=>String(value),"");
- render("salesChart","sales",maxSales,value=>Number(value).toLocaleString(dashboardLocale())+" دج","sales");
 }
 function renderStats(){
  $("statOrders").textContent=orders.length.toLocaleString(dashboardLocale());
@@ -141,6 +150,7 @@ function showAvatar(){
  $("identityAvatarImage").src=src;$("identityAvatarImage").hidden=!src;$("identityAvatarFallback").hidden=!!src;
 }
 async function saveProfile(){
+ if(!store?.id){message("profileFeedback","لم تكتمل تهيئة بيانات المتجر بعد. انتظر لحظة ثم حاول مجدداً.");return;}
  const whatsapp=$("whatsappInput").value.trim().replace(/[\s+()-]/g,"");
  if(whatsapp&&!/^\d{8,15}$/.test(whatsapp)){message("profileFeedback","تحقق من رقم WhatsApp ورمز الدولة.");return;}
  const updates={seller_name:$("sellerNameInput").value.trim()||"Store Owner",seller_bio:$("sellerBioInput").value.trim(),store_name:$("storeNameInput").value.trim()||"متجري",whatsapp:whatsapp||null,updated_at:new Date().toISOString()};
@@ -262,8 +272,7 @@ async function init(){
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
  $("dashYear").textContent=new Date().getFullYear();
- // Render the seven-day chart immediately; it must not wait for auth/store network requests.
- renderDailyCharts();
+ // Bind logout before rendering charts or making any network request.
  const logoutButton=$("logoutButton");
  if(logoutButton)logoutButton.addEventListener("click",async()=>{
   logoutButton.disabled=true;
@@ -279,7 +288,19 @@ async function init(){
    alert(dashboardText("logoutError"));
   }
  });
- const {data:{session}}=await supabase.auth.getSession();
+ // A chart rendering problem must never prevent authentication or other dashboard controls.
+ renderDailyCharts();
+ let session=null;
+ try{
+  const {data,error}=await supabase.auth.getSession();
+  if(error)throw error;
+  session=data?.session||null;
+ }catch(error){
+  console.error("Dashboard session check failed:",error);
+  $("storeStatus").textContent="تعذر التحقق من الجلسة";
+  message("profileFeedback","تعذر الاتصال بخدمة الحساب. تحقق من الإنترنت ثم أعد المحاولة.");
+  return;
+ }
  if(!session){location.replace("auth.html?next=dashboard.html");return;}
  user=session.user;
  try{
