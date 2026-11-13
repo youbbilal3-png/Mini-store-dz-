@@ -3,7 +3,7 @@
 const STORE_SETTINGS = {
   whatsapp: "213000000000",
   sellerName: "Store Owner",
-  sellerDescription: "Your store, your identity.",
+  sellerDescription: "",
   sellerAvatar: "" // Optional public image URL. Leave empty to show the first letter.
 };
 
@@ -47,6 +47,7 @@ let searchTerm = "";
 const el = id => document.getElementById(id);
 
 function productText(product, field) {
+  if (field === "name") return language === "fr" ? product.fr : language === "en" ? product.en : product.name;
   if (language === "fr") return product[field + "Fr"] || product[field];
   if (language === "en") return product[field + "En"] || product[field];
   return product[field];
