@@ -120,6 +120,7 @@
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.title = lang === "fr" ? "Tableau de bord vendeur | Mini Store DZ" : lang === "en" ? "Merchant dashboard | Mini Store DZ" : lang === "es" ? "Panel del vendedor | Mini Store DZ" : lang === "de" ? "Händler-Dashboard | Mini Store DZ" : lang === "tr" ? "Satıcı paneli | Mini Store DZ" : "لوحة التاجر | Mini Store DZ";
     translateElement(document.body);
+    document.documentElement.classList.remove("language-loading");
     const picker = document.getElementById("dashboardLanguageSelect");
     if (picker) picker.value = lang;
     try { localStorage.setItem("msdz-language", lang); } catch (_) {}
