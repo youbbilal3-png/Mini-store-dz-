@@ -18,6 +18,20 @@ function initDashboardTheme(){
   applyDashboardTheme(next);
  });
 }
+const featuredUiTranslations={
+ ar:{menu:"تمييز المتجر",title:"اجعل متجرك مميزاً",description:"اعرض متجرك في قسم المتاجر المميزة أعلى الصفحة الرئيسية ليحظى بظهور أكبر أمام الزوار.",price:"500 دج / 7 أيام",benefit1:"✨ ظهور بارز في الصفحة الرئيسية",benefit2:"🏅 شارة متجر مميز",benefit3:"📅 مدة التمييز 7 أيام",paymentTitle:"بيانات التحويل",paymentDescription:"حوّل 500 دج إلى إحدى وسائل الاستلام التالية، ثم أرفق وصل التحويل لإرسال طلب المراجعة.",methodLabel:"طريقة التحويل",senderLabel:"اسم صاحب التحويل",referenceLabel:"رقم العملية / المرجع",receiptLabel:"إرفاق وصل التحويل",receiptHint:"JPG أو PNG أو WebP أو PDF، بحد أقصى 5 ميغابايت. الوصل خاص ولا يراه إلا أنت والإدارة.",amountLabel:"المبلغ المطلوب:",submitLabel:"إرسال طلب تمييز المتجر",historyTitle:"طلبات التمييز السابقة",senderPlaceholder:"الاسم الظاهر في عملية التحويل",referencePlaceholder:"رقم العملية كما يظهر في الإيصال"},
+ fr:{menu:"Mettre en avant",title:"Mettez votre boutique en avant",description:"Affichez votre boutique dans la section des boutiques à la une sur la page d’accueil.",price:"500 DZD / 7 jours",benefit1:"✨ Visibilité sur la page d’accueil",benefit2:"🏅 Badge boutique à la une",benefit3:"📅 Mise en avant pendant 7 jours",paymentTitle:"Informations de paiement",paymentDescription:"Transférez 500 DZD puis joignez le reçu pour envoyer votre demande.",methodLabel:"Mode de paiement",senderLabel:"Nom de l’expéditeur",referenceLabel:"Référence de transaction",receiptLabel:"Joindre le reçu",receiptHint:"JPG, PNG, WebP ou PDF, 5 Mo maximum. Le reçu reste privé.",amountLabel:"Montant à payer :",submitLabel:"Envoyer la demande",historyTitle:"Demandes précédentes",senderPlaceholder:"Nom indiqué sur le transfert",referencePlaceholder:"Référence figurant sur le reçu"},
+ en:{menu:"Feature store",title:"Feature your store",description:"Show your store in the featured stores section at the top of the homepage for greater visibility.",price:"500 DZD / 7 days",benefit1:"✨ Prominent homepage placement",benefit2:"🏅 Featured store badge",benefit3:"📅 Featured for 7 days",paymentTitle:"Payment details",paymentDescription:"Transfer 500 DZD and attach the receipt to submit your request.",methodLabel:"Payment method",senderLabel:"Sender name",referenceLabel:"Transaction reference",receiptLabel:"Attach payment receipt",receiptHint:"JPG, PNG, WebP or PDF, up to 5 MB. Your receipt is private.",amountLabel:"Amount due:",submitLabel:"Submit feature request",historyTitle:"Previous requests",senderPlaceholder:"Name shown on the transfer",referencePlaceholder:"Reference shown on the receipt"},
+ es:{menu:"Destacar tienda",title:"Destaca tu tienda",description:"Muestra tu tienda en la sección de tiendas destacadas en la parte superior de la página principal.",price:"500 DZD / 7 días",benefit1:"✨ Mayor visibilidad en inicio",benefit2:"🏅 Insignia de tienda destacada",benefit3:"📅 Destacada durante 7 días",paymentTitle:"Datos de pago",paymentDescription:"Transfiere 500 DZD y adjunta el comprobante para enviar tu solicitud.",methodLabel:"Método de pago",senderLabel:"Nombre del remitente",referenceLabel:"Referencia de la operación",receiptLabel:"Adjuntar comprobante",receiptHint:"JPG, PNG, WebP o PDF, máximo 5 MB. El comprobante es privado.",amountLabel:"Importe:",submitLabel:"Enviar solicitud",historyTitle:"Solicitudes anteriores",senderPlaceholder:"Nombre que aparece en la transferencia",referencePlaceholder:"Referencia del comprobante"},
+ de:{menu:"Shop hervorheben",title:"Hebe deinen Shop hervor",description:"Zeige deinen Shop im Bereich der hervorgehobenen Shops oben auf der Startseite.",price:"500 DZD / 7 Tage",benefit1:"✨ Prominente Platzierung auf der Startseite",benefit2:"🏅 Abzeichen für hervorgehobene Shops",benefit3:"📅 7 Tage hervorgehoben",paymentTitle:"Zahlungsdaten",paymentDescription:"Überweise 500 DZD und füge den Beleg deiner Anfrage bei.",methodLabel:"Zahlungsmethode",senderLabel:"Name des Absenders",referenceLabel:"Transaktionsreferenz",receiptLabel:"Zahlungsbeleg anhängen",receiptHint:"JPG, PNG, WebP oder PDF, maximal 5 MB. Der Beleg bleibt privat.",amountLabel:"Zu zahlender Betrag:",submitLabel:"Anfrage senden",historyTitle:"Frühere Anfragen",senderPlaceholder:"Name auf der Überweisung",referencePlaceholder:"Referenz auf dem Beleg"},
+ tr:{menu:"Mağazayı öne çıkar",title:"Mağazanızı öne çıkarın",description:"Mağazanızı ana sayfanın üst kısmındaki öne çıkan mağazalar bölümünde gösterin.",price:"500 DZD / 7 gün",benefit1:"✨ Ana sayfada belirgin görünürlük",benefit2:"🏅 Öne çıkan mağaza rozeti",benefit3:"📅 7 gün boyunca öne çıkarılır",paymentTitle:"Ödeme bilgileri",paymentDescription:"500 DZD gönderin ve talebinizi iletmek için dekontu ekleyin.",methodLabel:"Ödeme yöntemi",senderLabel:"Gönderen adı",referenceLabel:"İşlem referansı",receiptLabel:"Ödeme dekontunu ekle",receiptHint:"JPG, PNG, WebP veya PDF, en fazla 5 MB. Dekontunuz gizlidir.",amountLabel:"Ödenecek tutar:",submitLabel:"Öne çıkarma talebi gönder",historyTitle:"Önceki talepler",senderPlaceholder:"Transferde görünen ad",referencePlaceholder:"Dekontta görünen referans"}
+};
+function applyFeaturedPromotionLanguage(){
+ const lang=document.documentElement.lang||"ar",words=featuredUiTranslations[lang]||featuredUiTranslations.ar;
+ document.querySelectorAll("[data-featured-i18n]").forEach(node=>{const key=node.dataset.featuredI18n;if(words[key])node.textContent=words[key];});
+ document.querySelectorAll("[data-featured-placeholder]").forEach(node=>{const key=node.dataset.featuredPlaceholder+"Placeholder";if(words[key])node.placeholder=words[key];});
+}
+
 let user=null,store=null,products=[],orders=[],reviews=[];
 let subscription=null,billingCycle="monthly";
 const planConfig={free:{limit:10},pro:{limit:100},premium:{limit:Infinity}};
@@ -421,6 +435,7 @@ async function loadMerchantSupportMessages(){
 
 async function init(){
  initDashboardTheme();
+ applyFeaturedPromotionLanguage();
  // Show a clean icon launcher first; each feature opens its own panel.
  const dashboardPanels=[...document.querySelectorAll(".dashboard-content > .dash-panel")];
  dashboardPanels.forEach(panel=>panel.hidden=true);
@@ -570,5 +585,5 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  }
  
 }
-document.addEventListener("msdz-language-changed",()=>{if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();if(subscription)renderSubscription();updateBillingPrices();});
+document.addEventListener("msdz-language-changed",()=>{applyFeaturedPromotionLanguage();if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();if(subscription)renderSubscription();updateBillingPrices();});
 init();
