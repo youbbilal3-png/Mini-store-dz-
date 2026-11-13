@@ -110,6 +110,9 @@ document.addEventListener("click",async event=>{
  const pay=event.target.closest("[data-review-pay]");
  if(pay){const id=pay.dataset.reviewPay,decision=pay.dataset.decision,note=$("paynote-"+id).value;if(decision==="approved"&&!confirm("هل تحققت من التحويل وتريد تفعيل الاشتراك؟"))return;pay.disabled=true;
   try{const {error}=await supabase.rpc("admin_review_payment_request",{p_request_id:id,p_decision:decision,p_admin_note:note||null});if(error)throw error;say(decision==="approved"?"تم تأكيد الدفع وتفعيل الاشتراك.":"تم رفض طلب الدفع.");await refreshAll();}catch(e){say(e.message,true);}finally{pay.disabled=false;}return;}
+ const featured=event.target.closest("[data-review-featured]");
+ if(featured){const id=featured.dataset.reviewFeatured,decision=featured.dataset.decision,note=$("featured-note-"+id).value;if(decision==="approved"&&!confirm("هل تحققت من وصول 500 دج وتريد إبراز هذا المتجر لمدة 7 أيام؟"))return;featured.disabled=true;
+  try{const {error}=await supabase.rpc("admin_review_featured_store_request",{p_request_id:id,p_decision:decision,p_admin_note:note||null});if(error)throw error;say(decision==="approved"?"تمت الموافقة وإبراز المتجر لمدة 7 أيام.":"تم رفض طلب التمييز.");await refreshAll();}catch(e){say(e.message,true);}finally{featured.disabled=false;}return;}
  const msg=event.target.closest("[data-save-support]");
  if(msg){const id=msg.dataset.saveSupport,reply=$("reply-"+id).value,status=$("status-"+id).value;msg.disabled=true;
   try{const {error}=await supabase.from("support_messages").update({admin_reply:reply,status,updated_at:new Date().toISOString()}).eq("id",id);if(error)throw error;say("تم حفظ رد الدعم وتحديث الحالة.");await refreshAll();}catch(e){say(e.message,true);}finally{msg.disabled=false;}}
