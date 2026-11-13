@@ -393,3 +393,7 @@ html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="syst
 html.language-loading body{visibility:hidden}
 
 .contact-section a[aria-disabled="true"]{opacity:.55;pointer-events:none;cursor:not-allowed}
+
+
+/* Homepage: keep the promotional image carousel above the headline on phones */
+@media(max-width:600px){.hero-product-showcase{order:-1}}
