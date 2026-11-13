@@ -60,7 +60,7 @@
       }
     }
     if (lang === "ar") return raw.replace(trimmed, ar);
-    const targetLanguage = ["fr","en"].includes(lang) ? lang : (lang === "ar" ? "ar" : "en");
+    const targetLanguage = lang;
     let out = ar;
     for (const [source, translated] of Object.entries(dictionaries[targetLanguage]).sort((a,b)=>b[0].length-a[0].length)) {
       if (out === source) { out = translated; break; }
