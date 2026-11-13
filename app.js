@@ -195,23 +195,47 @@ function openOrderDialog(){
  el("submitCustomerOrder").textContent=t.sendOrder;el("orderDialogFeedback").textContent="";el("orderDialog").showModal();
 }
 async function submitCustomerOrder(event){
- event.preventDefault();if(!currentStoreId||!cartItems.length)return;
+ event.preventDefault();
+ if(!currentStoreId||!cartItems.length)return;
  const name=el("customerName").value.trim(),phone=el("customerPhone").value.trim(),notes=el("customerNotes").value.trim();
  if(!name||!phone)return;
- const {data:latestProducts,error:stockError}=await supabase.from("products").select("id,stock_quantity,is_active").in("id",cartItems.map(item=>item.product.id));if(stockError){el("orderDialogFeedback").textContent=translations[language].orderFailed;return;}for(const item of cartItems){const latest=latestProducts.find(p=>p.id===item.product.id);if(!latest||!latest.is_active||(latest.stock_quantity!==null&&latest.stock_quantity!==undefined&&Number(latest.stock_quantity)<item.quantity)){el("orderDialogFeedback").textContent=translations[language].stockChanged;return;}}const popup=window.open("about:blank","_blank");
- const items=cartItems.map(({product,quantity})=>({product_id:product.id,name:productText(product,"name"),quantity,unit_price:Number(product.price||0)}));
- const total=cartTotal();
- el("submitCustomerOrder").disabled=true;el("orderDialogFeedback").textContent=translations[language].orderSaving;
+ const storePhone=String(STORE_SETTINGS.whatsapp||"").replace(/\D/g,"");
+ if(!storePhone){el("orderDialogFeedback").textContent=translations[language].whatsappUnavailable;return;}
+ // Open the WhatsApp tab synchronously so mobile browsers do not block it after the network checks.
+ const popup=window.open("about:blank","_blank");
+ const button=el("submitCustomerOrder");
+ button.disabled=true;
+ el("orderDialogFeedback").textContent=translations[language].orderSaving;
  try{
-  const {error}=await supabase.from("orders").insert({store_id:currentStoreId,customer_name:name,customer_phone:phone,items,total,notes:notes||null});if(error)throw error;
+  const {data:latestProducts,error:stockError}=await supabase.from("products").select("id,stock_quantity,is_active").in("id",cartItems.map(item=>item.product.id));
+  if(stockError)throw stockError;
+  for(const item of cartItems){
+   const latest=(latestProducts||[]).find(p=>p.id===item.product.id);
+   if(!latest||!latest.is_active||(latest.stock_quantity!==null&&latest.stock_quantity!==undefined&&Number(latest.stock_quantity)<item.quantity)){
+    if(popup)popup.close();
+    el("orderDialogFeedback").textContent=translations[language].stockChanged;
+    return;
+   }
+  }
+  const items=cartItems.map(({product,quantity})=>({product_id:product.id,name:productText(product,"name"),quantity,unit_price:Number(product.price||0)}));
+  const total=cartTotal();
+  const {error}=await supabase.from("orders").insert({store_id:currentStoreId,customer_name:name,customer_phone:phone,items,total,notes:notes||null});
+  if(error)throw error;
   const details=items.map((item,index)=>(index+1)+". "+item.name+" × "+item.quantity+" = "+(item.unit_price*item.quantity).toLocaleString()+" DZD").join("\n");
   const msg=translations[language].whatsAppGreeting+"\n"+details+"\n"+translations[language].totalLabel+": "+total.toLocaleString()+" DZD\n"+translations[language].customerName+": "+name+"\n"+translations[language].customerPhone+": "+phone+(notes?"\n"+translations[language].orderNotes+": "+notes:"");
-  const target="https://wa.me/"+(STORE_SETTINGS.whatsapp||"")+"?text="+encodeURIComponent(msg);if(popup)popup.location=target;else window.location.href=target;
-  cartItems=[];renderCart();el("customerOrderForm").reset();el("orderDialogFeedback").textContent=translations[language].orderSaved;setTimeout(()=>el("orderDialog").close(),900);
- }catch(error){if(popup)popup.close();console.error(error);el("orderDialogFeedback").textContent=translations[language].orderFailed;}finally{el("submitCustomerOrder").disabled=false;}
+  const target="https://wa.me/"+storePhone+"?text="+encodeURIComponent(msg);
+  if(popup)popup.location=target;else window.location.href=target;
+  cartItems=[];renderCart();el("customerOrderForm").reset();
+  el("orderDialogFeedback").textContent=translations[language].orderSaved;
+  setTimeout(()=>el("orderDialog").close(),900);
+ }catch(error){
+  if(popup)popup.close();
+  console.error("Customer order submission failed:",error);
+  el("orderDialogFeedback").textContent=translations[language].orderFailed;
+ }finally{
+  button.disabled=false;
+ }
 }
-
-
 async function loadPublicReviews(){
  const section=el("reviews");if(!section||!currentStoreId)return;
  section.hidden=false;
