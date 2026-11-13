@@ -12,6 +12,33 @@ async function ensureStore(){
  if(createError)throw createError;return data;
 }
 
+function renderDailyCharts(){
+ const days=[];
+ const now=new Date();
+ for(let offset=6;offset>=0;offset--){
+  const day=new Date(now);day.setHours(0,0,0,0);day.setDate(day.getDate()-offset);
+  const key=day.getFullYear()+"-"+String(day.getMonth()+1).padStart(2,"0")+"-"+String(day.getDate()).padStart(2,"0");
+  days.push({key,label:day.toLocaleDateString("ar-DZ",{weekday:"short",day:"numeric"}),orders:0,sales:0});
+ }
+ const byDate=new Map(days.map(day=>[day.key,day]));
+ orders.forEach(order=>{
+  const date=new Date(order.created_at);
+  const key=date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0");
+  const day=byDate.get(key);if(!day)return;
+  day.orders++;
+  if(order.status==="completed")day.sales+=Number(order.total||0);
+ });
+ const maxOrders=Math.max(1,...days.map(day=>day.orders));
+ const maxSales=Math.max(1,...days.map(day=>day.sales));
+ const render=(target,field,max,format,kind)=>{
+  $(target).innerHTML=days.map(day=>{
+   const value=day[field],height=value?Math.max(4,Math.round(value/max*100)):0;
+   return '<div class="daily-chart-item" title="'+escapeHtml(day.label)+': '+escapeHtml(format(value))+'"><span class="daily-chart-value">'+escapeHtml(format(value))+'</span><div class="daily-chart-track"><div class="daily-chart-bar '+kind+'" style="height:'+height+'%"></div></div><span class="daily-chart-day">'+escapeHtml(day.label)+'</span></div>';
+  }).join("");
+ };
+ render("ordersChart","orders",maxOrders,value=>String(value),"");
+ render("salesChart","sales",maxSales,value=>Number(value).toLocaleString("ar-DZ")+" دج","sales");
+}
 function renderStats(){
  $("statOrders").textContent=orders.length.toLocaleString("ar-DZ");
  $("statNewOrders").textContent=orders.filter(o=>o.status==="new").length.toLocaleString("ar-DZ");
@@ -20,6 +47,7 @@ function renderStats(){
  const completedSales=completed.reduce((sum,o)=>sum+Number(o.total||0),0);
  $("statSales").textContent=completedSales.toLocaleString("ar-DZ")+" دج";
  $("statProducts").textContent=products.length.toLocaleString("ar-DZ");
+ renderDailyCharts();
 }
 async function loadOrders(){
  const {data,error}=await supabase.from("orders").select("*").eq("store_id",store.id).order("created_at",{ascending:false});if(error)throw error;orders=data||[];renderOrders();
