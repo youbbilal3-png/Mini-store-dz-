@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827"><meta name="description" content="Mini Store DZ - متجر إلكتروني بسيط">
+<title>Mini Store DZ</title><link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
+</head>
+<body>
+<header class="site-header"><a class="brand" href="#"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a><nav><a href="#products" data-i18n="navProducts">المنتجات</a><a href="#about" data-i18n="navAbout">من نحن</a><a href="#contact" data-i18n="navContact">اتصل بنا</a></nav><button class="lang-btn" id="languageToggle">EN</button></header>
+<main>
+<section class="hero"><div class="hero-copy"><span class="eyebrow" data-i18n="eyebrow">متجرك يبدأ من هنا</span><h1 data-i18n="heroTitle">اكتشف منتجاتك المفضلة<br><em>بسهولة وثقة</em></h1><p data-i18n="heroText">تصفح منتجاتنا واختر ما يناسبك. اطلب مباشرة عبر واتساب.</p><a class="primary-btn" href="#products" data-i18n="browse">تصفح المنتجات</a></div><div class="hero-art"><div class="art-circle">SHOP<br><strong>SMART</strong></div><span class="spark">✦</span></div></section>
+<section class="section" id="products"><div class="section-heading"><div><span class="eyebrow" data-i18n="collection">تشكيلتنا</span><h2 data-i18n="productsTitle">منتجات مختارة</h2></div><span class="product-count" id="productCount"></span></div><div class="toolbar"><input id="searchInput" type="search" placeholder="ابحث عن منتج..." data-i18n-placeholder="searchPlaceholder"><div class="filters" id="categoryFilters"></div></div><div class="product-grid" id="productGrid"></div><p class="empty-state" id="emptyState" hidden data-i18n="empty">لا توجد منتجات مطابقة.</p></section>
+<section class="about-section" id="about"><div><span class="eyebrow" data-i18n="whyUs">لماذا متجرنا؟</span><h2 data-i18n="aboutTitle">تجربة شراء سهلة ومباشرة</h2></div><p data-i18n="aboutText">منتجات مميزة ومعلومات واضحة وطلب سهل عبر واتساب. عدّل هذا النص ليناسب نشاطك.</p></section>
+<section class="contact-section" id="contact"><div><span class="eyebrow" data-i18n="needHelp">هل لديك سؤال؟</span><h2 data-i18n="contactTitle">تواصل معنا</h2><p data-i18n="contactText">نحن هنا لمساعدتك.</p></div><a class="primary-btn" id="contactButton" href="#" target="_blank" rel="noopener" data-i18n="whatsappUs">راسلنا عبر واتساب</a></section>
+</main><footer><a class="brand" href="#"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a><p>© <span id="year"></span> Mini Store DZ. <span data-i18n="rights">جميع الحقوق محفوظة.</span></p></footer>
+</body></html>
