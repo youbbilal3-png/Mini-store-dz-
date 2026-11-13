@@ -32,6 +32,28 @@ function renderMerchants(){
  $("merchantsBody").innerHTML=rows.length?rows.map(m=>`<tr><td>${esc(m.full_name||"—")}<br><small>${esc(m.email)}</small></td><td>${esc(m.store_name||"لم ينشئ متجراً")}</td><td>${esc(m.plan)}</td><td>${esc(m.subscription_status)}</td><td>${date(m.current_period_ends_at)}</td><td><select data-plan="${m.user_id}"><option value="free">Free</option><option value="pro">Pro</option><option value="premium">Premium</option></select><select data-days="${m.user_id}"><option value="30">30 يوم</option><option value="365">365 يوم</option></select><button class="admin-action" data-save-sub="${m.user_id}">حفظ</button></td></tr>`).join(""):'<tr><td colspan="6">لا توجد نتائج.</td></tr>';
  rows.forEach(m=>{const plan=document.querySelector(`[data-plan="${m.user_id}"]`);if(plan)plan.value=m.plan;});
 }
+
+async function loadPaymentSettings(){
+ const {data,error}=await supabase.from("platform_payment_settings").select("*").eq("id",true).maybeSingle();
+ if(error)throw error;
+ if(data){$("payBeneficiary").value=data.beneficiary_name||"";$("payBaridi").value=data.baridimob_number||"";$("payCcp").value=data.ccp_number||"";$("payInstructions").value=data.instructions||"";}
+}
+async function savePaymentSettings(){
+ const button=$("savePaymentSettings");button.disabled=true;$("paymentSettingsFeedback").textContent="جارٍ الحفظ...";
+ try{
+  const {error}=await supabase.from("platform_payment_settings").update({
+   beneficiary_name:$("payBeneficiary").value.trim(),
+   baridimob_number:$("payBaridi").value.trim(),
+   ccp_number:$("payCcp").value.trim(),
+   instructions:$("payInstructions").value.trim(),
+   updated_at:new Date().toISOString()
+  }).eq("id",true);
+  if(error)throw error;
+  $("paymentSettingsFeedback").textContent="تم حفظ بيانات الاستلام.";
+ }catch(e){$("paymentSettingsFeedback").textContent="تعذر الحفظ: "+e.message;}
+ finally{button.disabled=false;}
+}
+
 async function loadPayments(){
  const {data,error}=await supabase.rpc("admin_list_payment_requests");if(error)throw error;payments=data||[];
  $("paymentsList").innerHTML=payments.length?payments.map(p=>`<article class="admin-record-card"><h3>${esc(p.plan.toUpperCase())} · ${p.billing_cycle==="yearly"?"سنوي":"شهري"} · ${Number(p.amount_dzd).toLocaleString()} دج</h3><p>التاجر: ${esc(p.email)} · طريقة الدفع: ${p.payment_method==="baridimob"?"BaridiMob":"CCP"}</p><p>اسم المحوّل: ${esc(p.sender_name)} · رقم العملية: <b>${esc(p.transaction_reference)}</b></p>${p.proof_url?`<p><a href="${esc(p.proof_url)}" target="_blank" rel="noopener">عرض إثبات الدفع</a></p>`:""}<p class="admin-record-meta">تاريخ الطلب: ${date(p.created_at)} · الحالة: ${esc(p.status)}</p><textarea id="paynote-${p.id}" placeholder="ملاحظة إدارية (اختياري)">${esc(p.admin_note||"")}</textarea>${p.status==="pending"?`<div class="admin-record-actions"><button class="admin-action" data-review-pay="${p.id}" data-decision="approved">تأكيد الدفع وتفعيل الاشتراك</button><button class="admin-action danger" data-review-pay="${p.id}" data-decision="rejected">رفض الطلب</button></div>`:""}</article>`).join(""):'<div class="admin-empty">لا توجد طلبات دفع حتى الآن.</div>';
@@ -43,7 +65,7 @@ async function loadSupport(){
 }
 async function refreshAll(){
  $("refreshAdmin").disabled=true;say("جارٍ تحديث بيانات المنصة...");
- try{await Promise.all([loadStats(),loadMerchants(),loadPayments(),loadSupport()]);say("تم تحديث جميع البيانات.");}
+ try{await Promise.all([loadStats(),loadMerchants(),loadPayments(),loadSupport(),loadPaymentSettings()]);say("تم تحديث جميع البيانات.");}
  catch(e){console.error(e);say("تعذر تحديث بعض البيانات: "+(e.message||"خطأ غير معروف"),true);}
  finally{$("refreshAdmin").disabled=false;}
 }
@@ -53,6 +75,7 @@ document.querySelectorAll("[data-admin-tab]").forEach(btn=>btn.addEventListener(
 }));
 $("merchantSearch").addEventListener("input",renderMerchants);
 $("refreshAdmin").addEventListener("click",refreshAll);
+$("savePaymentSettings").addEventListener("click",savePaymentSettings);
 $("adminLogout").addEventListener("click",async()=>{await supabase.auth.signOut({scope:"local"});location.replace("index.html");});
 document.addEventListener("click",async event=>{
  const save=event.target.closest("[data-save-sub]");
