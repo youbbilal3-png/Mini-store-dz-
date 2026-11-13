@@ -76,6 +76,11 @@ function fillSettings(){
  $("sellerNameInput").value=store.seller_name||"";
  $("sellerBioInput").value=store.seller_bio||"";
  $("storeNameInput").value=store.store_name||"";
+ $("storeIdentityName").textContent=store.store_name||"متجري";
+ $("storeIdentitySeller").textContent=store.seller_name||"صاحب المتجر";
+ $("storeIdentityBio").textContent=store.seller_bio||"أضف نبذة قصيرة لتعريف الزبائن بمتجرك.";
+ $("identityPublishStatus").textContent=store.is_published?"متجرك منشور للعامة":"متجرك غير منشور بعد";
+ $("identityPublishStatus").classList.toggle("is-published",!!store.is_published);
  $("whatsappInput").value=store.whatsapp||"";
  $("accountEmail").textContent=user.email||"حساب التاجر";
  const publicUrl=new URL("index.html?store="+encodeURIComponent(store.slug),location.href).href;
@@ -92,6 +97,8 @@ function showAvatar(){
  const src=store.avatar_url||"";
  $("avatarFallback").textContent=(store.seller_name||"S").trim().charAt(0).toUpperCase();
  $("avatarImage").src=src;$("avatarImage").hidden=!src;$("avatarFallback").hidden=!!src;
+ $("identityAvatarFallback").textContent=(store.store_name||store.seller_name||"S").trim().charAt(0).toUpperCase();
+ $("identityAvatarImage").src=src;$("identityAvatarImage").hidden=!src;$("identityAvatarFallback").hidden=!!src;
 }
 async function saveProfile(){
  const whatsapp=$("whatsappInput").value.trim().replace(/[\s+()-]/g,"");
