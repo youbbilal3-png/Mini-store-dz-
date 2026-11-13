@@ -7,7 +7,7 @@
 <title>لوحة إدارة Mini Store DZ</title>
 <link rel="stylesheet" href="styles.css?v=20261113-25"><link rel="stylesheet" href="admin.css?v=20261113-7">
 <script>try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="admin.js?v=20261113-8"></script>
+<script type="module" src="admin.js?v=20261113-9"></script>
 <script defer src="pwa.js?v=20261113-2"></script>
 </head>
 <body class="admin-page">
@@ -71,7 +71,7 @@
   <label>صور الإعلان (يمكن اختيار عدة صور)<input id="adImageFiles" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple><small>JPG أو PNG أو WebP أو GIF · حتى 8 صور · 5MB لكل صورة</small></label><label>أو رابط صورة مباشر (اختياري)<input id="adImageUrl" type="url" placeholder="https://example.com/banner.jpg"></label>
   <label>رابط الوجهة (HTTPS)<input id="adTargetUrl" type="url" required placeholder="https://example.com"></label>
   <div class="admin-ad-dates"><label>بداية العرض<input id="adStartsAt" type="datetime-local" required></label><label>نهاية العرض<input id="adEndsAt" type="datetime-local" required></label></div>
-  <button class="admin-action" id="saveSponsoredAd" type="submit">إضافة الإعلان</button><small id="adFormFeedback" class="admin-record-meta" role="status"></small>
+  <div class="admin-ad-form-actions"><button class="admin-action" id="saveSponsoredAd" type="submit">إضافة الإعلان</button><button class="admin-action secondary" id="cancelSponsoredAdEdit" type="button" hidden>إلغاء التعديل</button></div><small id="adFormFeedback" class="admin-record-meta" role="status"></small>
  </form>
  <h3 class="admin-ad-list-title">الإعلانات الحالية والسابقة</h3>
  <div id="sponsoredAdsAdminList" class="admin-record-list">جارٍ تحميل الإعلانات...</div>
