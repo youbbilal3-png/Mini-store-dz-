@@ -179,6 +179,7 @@ el("clearSearch").addEventListener("click",()=>{searchTerm="";el("searchInput").
 el("categorySelect").addEventListener("change",e=>{activeCategory=e.target.value;renderProducts();});
 el("productGrid").addEventListener("click",e=>{const b=e.target.closest("[data-add-cart]");if(b)addToCart(b.dataset.addCart);});
 el("viewCartButton").addEventListener("click",openCart);
+el("closeCartDialog").addEventListener("click",()=>el("cartDialog").close());
 el("cartItemsList").addEventListener("click",e=>{const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-cart-remove]");if(plus)changeCartQuantity(plus.dataset.cartPlus,1);if(minus)changeCartQuantity(minus.dataset.cartMinus,-1);if(remove)removeCartItem(remove.dataset.cartRemove);});
 el("continueShoppingButton").addEventListener("click",()=>el("cartDialog").close());
 el("checkoutCartButton").addEventListener("click",()=>{el("cartDialog").close();openOrderDialog();});
