@@ -114,6 +114,22 @@
     dictionaries.es[source] = values[2]; dictionaries.de[source] = values[3]; dictionaries.tr[source] = values[4];
   }
 
+
+  const subscriptionDynamicLabels = {
+    "شهرياً":["par mois","monthly","al mes","monatlich","aylık"],
+    "سنوياً":["par an","yearly","al año","jährlich","yıllık"],
+    "خطتك الحالية:":["Votre forfait actuel :","Your current plan:","Tu plan actual:","Ihr aktueller Tarif:","Mevcut planınız:"],
+    "تنتهي التجربة في":["L’essai se termine le","Trial ends on","La prueba termina el","Test endet am","Deneme bitiş tarihi:"],
+    "لن يتم تحصيل أي مبلغ تلقائياً.":["Aucun paiement automatique ne sera effectué.","No automatic payment will be charged.","No se realizará ningún cobro automático.","Es wird keine automatische Zahlung eingezogen.","Otomatik ödeme alınmayacaktır."],
+    "أنت على الخطة المجانية. يمكنك تجربة Pro أو Premium لمدة 7 أيام دون إدخال بيانات دفع.":["Vous utilisez le forfait gratuit. Essayez Pro ou Premium pendant 7 jours sans saisir de moyen de paiement.","You are on the Free plan. Try Pro or Premium for 7 days without entering payment details.","Estás en el plan Gratis. Prueba Pro o Premium durante 7 días sin introducir datos de pago.","Sie nutzen den kostenlosen Tarif. Testen Sie Pro oder Premium 7 Tage ohne Zahlungsdaten.","Ücretsiz plandasınız. Ödeme bilgisi girmeden Pro veya Premium'u 7 gün deneyin."],
+    "انتهت الفترة التجريبية أو تم إيقافها. يمكنك الاستمرار بالخطة المجانية حتى تفعيل الدفع الإلكتروني.":["La période d’essai est terminée ou arrêtée. Vous pouvez continuer avec le forfait gratuit jusqu’à l’activation du paiement en ligne.","Your trial has ended or was stopped. You can continue on the Free plan until online payments are enabled.","La prueba ha terminado o se ha detenido. Puedes seguir con el plan Gratis hasta que se habiliten los pagos en línea.","Ihre Testphase ist beendet oder wurde gestoppt. Sie können den kostenlosen Tarif weiter nutzen, bis Online-Zahlungen aktiviert sind.","Deneme süreniz sona erdi veya durduruldu. Çevrimiçi ödemeler etkinleşene kadar ücretsiz planı kullanabilirsiniz."],
+    "وصلت إلى الحد الأقصى لمنتجات خطتك. اختر Pro أو Premium من قسم الاشتراكات لإضافة المزيد.":["Vous avez atteint la limite de produits de votre forfait. Choisissez Pro ou Premium dans les abonnements pour en ajouter.","You reached your plan's product limit. Choose Pro or Premium in Subscriptions to add more.","Has alcanzado el límite de productos de tu plan. Elige Pro o Premium en Suscripciones para añadir más.","Sie haben das Produktlimit Ihres Tarifs erreicht. Wählen Sie unter Abonnements Pro oder Premium, um weitere Produkte hinzuzufügen.","Planınızın ürün sınırına ulaştınız. Daha fazla ürün eklemek için Abonelikler bölümünden Pro veya Premium'u seçin."]
+  };
+  for (const [source, values] of Object.entries(subscriptionDynamicLabels)) {
+    dictionaries.fr[source] = values[0]; dictionaries.en[source] = values[1];
+    dictionaries.es[source] = values[2]; dictionaries.de[source] = values[3]; dictionaries.tr[source] = values[4];
+  }
+
   const originals = Object.keys(dictionaries.fr);
   const reverse = { fr: {}, en: {}, es: {}, de: {}, tr: {} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
