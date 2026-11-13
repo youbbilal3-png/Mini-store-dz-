@@ -70,6 +70,20 @@ async function loadPayments(){
   return `<article class="admin-record-card"><h3>${esc(p.plan.toUpperCase())} · ${p.billing_cycle==="yearly"?"سنوي":"شهري"} · ${Number(p.amount_dzd).toLocaleString()} دج</h3><p>التاجر: ${esc(p.email)} · طريقة الدفع: ${p.payment_method==="baridimob"?"BaridiMob":"CCP"}</p><p>اسم المحوّل: ${esc(p.sender_name)} · رقم العملية: <b>${esc(p.transaction_reference)}</b></p><h4>وصل التحويل</h4>${receipt}<p class="admin-record-meta">تاريخ الطلب: ${date(p.created_at)} · الحالة: ${esc(p.status)}</p><textarea id="paynote-${p.id}" placeholder="ملاحظة إدارية (اختياري)">${esc(p.admin_note||"")}</textarea>${p.status==="pending"?`<div class="admin-record-actions"><button class="admin-action" data-review-pay="${p.id}" data-decision="approved">تأكيد الدفع وتفعيل الاشتراك</button><button class="admin-action danger" data-review-pay="${p.id}" data-decision="rejected">رفض الطلب</button></div>`:""}</article>`;
  }).join(""):'<div class="admin-empty">لا توجد طلبات دفع حتى الآن.</div>';
 }
+async function loadFeaturedStoreRequests(){
+ const {data,error}=await supabase.rpc("admin_list_featured_store_requests");if(error)throw error;
+ const rows=data||[];
+ await Promise.all(rows.map(async x=>{
+  x.proofSignedUrl=null;
+  if(x.proof_path){const {data:signed,error:signedError}=await supabase.storage.from("subscription-payment-proofs").createSignedUrl(x.proof_path,600);if(!signedError)x.proofSignedUrl=signed?.signedUrl||null;}
+ }));
+ const box=$("featuredRequestsList");
+ box.innerHTML=rows.length?rows.map(x=>{
+  const url=safeHttps(x.proofSignedUrl||""),pdf=String(x.proof_path||"").toLowerCase().endsWith(".pdf");
+  const proof=url?(pdf?`<p><a href="${esc(url)}" target="_blank" rel="noopener">فتح وصل التحويل (PDF)</a></p>`:`<a class="admin-receipt-preview" href="${esc(url)}" target="_blank" rel="noopener"><img src="${esc(url)}" alt="وصل دفع تمييز المتجر" loading="lazy"></a>`):'<p class="admin-record-meta">تعذر إنشاء رابط آمن للوصل.</p>';
+  return `<article class="admin-record-card"><h3>🏆 ${esc(x.store_name)} · ${Number(x.amount_dzd).toLocaleString()} دج / ${x.duration_days} أيام</h3><p>التاجر: ${esc(x.email)} · طريقة الدفع: ${x.payment_method==="baridimob"?"BaridiMob":"CCP"}</p><p>اسم المحوّل: ${esc(x.sender_name)} · رقم العملية: <b>${esc(x.transaction_reference)}</b></p><h4>وصل التحويل</h4>${proof}<p class="admin-record-meta">تاريخ الطلب: ${date(x.created_at)} · الحالة: ${esc(x.status)}</p><textarea id="featured-note-${x.id}" placeholder="ملاحظة إدارية (اختياري)">${esc(x.admin_note||"")}</textarea>${x.status==="pending"?`<div class="admin-record-actions"><button class="admin-action" data-review-featured="${x.id}" data-decision="approved">الموافقة وإبراز المتجر</button><button class="admin-action danger" data-review-featured="${x.id}" data-decision="rejected">رفض الطلب</button></div>`:""}</article>`;
+ }).join(""):'<div class="admin-empty">لا توجد طلبات تمييز حتى الآن.</div>';
+}
 async function loadSupport(){
  const {data,error}=await supabase.from("support_messages").select("*").order("created_at",{ascending:false});if(error)throw error;support=data||[];
  $("supportList").innerHTML=support.length?support.map(s=>`<article class="admin-record-card"><h3>${esc(s.subject)}</h3><p>${esc(s.message)}</p><p class="admin-record-meta">${esc(s.email)} · ${date(s.created_at)} · ${esc(s.status)}</p><textarea id="reply-${s.id}" placeholder="اكتب ردك للتاجر...">${esc(s.admin_reply||"")}</textarea><div class="admin-record-actions"><select id="status-${s.id}"><option value="open">مفتوحة</option><option value="in_progress">قيد المعالجة</option><option value="resolved">تم الحل</option><option value="closed">مغلقة</option></select><button class="admin-action" data-save-support="${s.id}">حفظ الرد والحالة</button></div></article>`).join(""):'<div class="admin-empty">لا توجد رسائل دعم.</div>';
@@ -77,7 +91,7 @@ async function loadSupport(){
 }
 async function refreshAll(){
  $("refreshAdmin").disabled=true;say("جارٍ تحديث بيانات المنصة...");
- try{await Promise.all([loadStats(),loadMerchants(),loadPayments(),loadSupport(),loadPaymentSettings()]);say("تم تحديث جميع البيانات.");}
+ try{await Promise.all([loadStats(),loadMerchants(),loadPayments(),loadFeaturedStoreRequests(),loadSupport(),loadPaymentSettings()]);say("تم تحديث جميع البيانات.");}
  catch(e){console.error(e);say("تعذر تحديث بعض البيانات: "+(e.message||"خطأ غير معروف"),true);}
  finally{$("refreshAdmin").disabled=false;}
 }
