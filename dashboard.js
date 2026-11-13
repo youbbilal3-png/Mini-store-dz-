@@ -241,6 +241,8 @@ async function togglePublish(){
 }
 async function init(){
  initDashboardTheme();
+ // Render the seven-day chart immediately; it must not wait for auth/store network requests.
+ renderDailyCharts();
  const logoutButton=$("logoutButton");
  if(logoutButton)logoutButton.addEventListener("click",async()=>{
   logoutButton.disabled=true;
