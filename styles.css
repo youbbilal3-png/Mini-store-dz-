@@ -195,3 +195,9 @@ html[data-theme="dark"] .product-details-copy p,html[data-theme="dark"] .cart-it
  html[data-theme="system"] .order-dialog-card input,html[data-theme="system"] .order-dialog-card textarea{background:#101c29;color:#edf2f7;border-color:#34485d}
  html[data-theme="system"] .product-details-copy p,html[data-theme="system"] .cart-item-meta{color:#b6c3d0}
 }
+
+/* Clear merchant entry point in the main navigation */
+.site-header nav .header-merchant-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:11px;background:var(--lime);color:#172231!important;font-weight:850;box-shadow:0 4px 12px #8bbd3430}
+.site-header nav .header-merchant-cta:before{content:"＋";font-size:16px;line-height:1}
+.site-header nav .header-merchant-cta:hover{transform:translateY(-2px);box-shadow:0 7px 16px #8bbd3440}
+@media(max-width:600px){.site-header nav .header-merchant-cta{padding:8px 12px;font-size:12px}}
