@@ -201,3 +201,19 @@ html[data-theme="dark"] .product-details-copy p,html[data-theme="dark"] .cart-it
 .site-header nav .header-merchant-cta:before{content:"＋";font-size:16px;line-height:1}
 .site-header nav .header-merchant-cta:hover{transform:translateY(-2px);box-shadow:0 7px 16px #8bbd3440}
 @media(max-width:600px){.site-header nav .header-merchant-cta{padding:8px 12px;font-size:12px}}
+
+
+/* Keep every navigation label on one line; allow horizontal scrolling on small screens. */
+.site-header nav a{white-space:nowrap;flex-shrink:0}
+.contact-email{display:flex;align-items:center;gap:10px;margin-top:14px;direction:ltr;justify-content:flex-start;font-weight:750}
+.contact-email>span{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--lime);color:#172231;font-size:19px}
+.contact-email a{color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+.contact-email a:hover{text-decoration:underline}
+.contact-section .primary-btn{white-space:nowrap}
+@media(max-width:600px){
+ .site-header nav{justify-content:flex-start;overflow-x:auto;overflow-y:hidden;gap:18px;padding:5px 2px 9px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .site-header nav::-webkit-scrollbar{display:none}
+ .site-header nav a{white-space:nowrap;flex:0 0 auto}
+ .contact-email{max-width:100%;font-size:14px}
+}
+html[data-theme="dark"] .contact-email a,html[data-theme="system"] .contact-email a{color:#edf2f7}
