@@ -22,11 +22,11 @@ function applyTheme(mode){
  if(button){button.title="المظهر الحالي: "+(label?.textContent||"تلقائي")+" — اضغط للتغيير";button.setAttribute("aria-label",button.title);}
 }
 function initTheme(){
- let mode="system";try{mode=localStorage.getItem("msdz-theme")||"system";}catch(error){}
+ let mode="system";try{mode=localStorage.getItem("msdz-theme-shopper")||"system";}catch(error){}
  applyTheme(mode);
  const button=el("themeToggle");if(button)button.addEventListener("click",()=>{
   const current=document.documentElement.dataset.theme||"system",next=current==="system"?"light":current==="light"?"dark":"system";
-  try{localStorage.setItem("msdz-theme",next);}catch(error){}
+  try{localStorage.setItem("msdz-theme-shopper",next);}catch(error){}
   applyTheme(next);
  });
 }
