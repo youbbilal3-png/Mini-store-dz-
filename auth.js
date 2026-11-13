@@ -17,13 +17,13 @@ $("authForm").addEventListener("submit",async event=>{
  const email=$("email").value.trim();const password=$("password").value;const fullName=$("fullName").value.trim();
  try{
   if(mode==="signup"){
-   const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:fullName},emailRedirectTo:location.origin+"/dashboard.html"}});
+   const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:fullName},emailRedirectTo:location.origin+"/index.html"}});
    if(error)throw error;
-   if(data.session){location.href="dashboard.html";return;}
+   if(data.session){location.href="index.html";return;}
    $("authMessage").textContent="تم إنشاء الحساب. تحقق من بريدك الإلكتروني واضغط رابط التأكيد، ثم سجّل الدخول.";
   }else{
    const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;
-   const next=new URLSearchParams(location.search).get("next");location.href=next==="dashboard.html"?"dashboard.html":"dashboard.html";
+   location.href="index.html";
   }
  }catch(error){$("authMessage").textContent=error.message||"حدث خطأ. حاول مجدداً.";}
  finally{button.disabled=false;}
