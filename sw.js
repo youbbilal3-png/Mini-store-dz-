@@ -1,5 +1,5 @@
 const CACHE_NAME = "mini-store-dz-static-v1";
-const STATIC_FILE = /\\.(?:css|js|svg|webmanifest)(?:\\?.*)?$/i;
+const STATIC_FILE = /\.(?:css|js|svg|webmanifest)(?:\?.*)?$/i;
 
 self.addEventListener("install", event => {
   event.waitUntil(
