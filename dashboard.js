@@ -273,7 +273,6 @@ async function init(){
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
- $("logoutButton").addEventListener("click",async()=>{await supabase.auth.signOut();location.href="index.html";});
  $("dashYear").textContent=new Date().getFullYear();
 }
 init();
