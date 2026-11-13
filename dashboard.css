@@ -203,3 +203,13 @@ html[data-theme="dark"] .dashboard-sidebar .home-dashboard-link .home-menu-icon{
 .subscription-payment-box{margin-top:22px;padding:18px;border:1px solid var(--line,#dce4ed);border-radius:16px;background:var(--surface-soft,#f7f9fc)}.subscription-payment-box>h3{margin:0 0 8px}.subscription-payment-box>p{line-height:1.8}.payment-details-view{padding:14px;border-radius:12px;background:rgba(24,110,83,.08);margin:14px 0;line-height:1.9;overflow-wrap:anywhere}.payment-details-view strong{display:inline-block;min-width:110px}.payment-amount-line{font-size:16px;font-weight:700}.payment-amount-line strong{font-size:21px}
 
 .payment-upload-hint{display:block;color:var(--muted,#8492a6);font-size:13px;line-height:1.7;margin-top:-8px}
+
+.featured-promotion-link{background:linear-gradient(110deg,#fff8df,#f4e5b6);color:#6c4a12;border:1px solid #e6c76c;font-weight:850}
+.featured-promotion-panel .panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.featured-promotion-price{white-space:nowrap;padding:10px 14px;border-radius:12px;background:#fff2c7;color:#76520e;font-weight:900}
+.featured-promotion-benefits{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 20px}
+.featured-promotion-benefits span{padding:9px 12px;border-radius:10px;background:#f4f7ed;color:#38551b;font-size:12px;font-weight:750}
+html[data-theme="dark"] .featured-promotion-link{background:linear-gradient(110deg,#4b3a1a,#382d19);color:#ffe5a0;border-color:#8d7138}
+html[data-theme="dark"] .featured-promotion-price{background:#4b3a1a;color:#ffe5a0}
+html[data-theme="dark"] .featured-promotion-benefits span{background:#1d3025;color:#d9f0b0}
+@media(max-width:600px){.featured-promotion-panel .panel-heading{align-items:flex-start;flex-direction:column}.featured-promotion-price{align-self:flex-start}}
