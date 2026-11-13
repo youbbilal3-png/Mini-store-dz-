@@ -152,3 +152,41 @@ html[data-theme="dark"] .dashboard-page .dashboard-sidebar .side-link{background
 html[data-theme="dark"] .dashboard-page .dashboard-sidebar .side-link.active{background:#26394b;color:#d7f3ad;border-color:#729b45}
 html[data-theme="dark"] .dashboard-page .dashboard-menu-icon{background:linear-gradient(145deg,#26394b,#1b2b3b)}
 @media(prefers-color-scheme:dark){html[data-theme="system"] .dashboard-page .dashboard-sidebar .side-link{background:#172536;color:#edf2f7;border-color:#34485d}html[data-theme="system"] .dashboard-page .dashboard-sidebar .side-link.active{background:#26394b;color:#d7f3ad;border-color:#729b45}html[data-theme="system"] .dashboard-page .dashboard-menu-icon{background:linear-gradient(145deg,#26394b,#1b2b3b)}}
+
+
+/* 3D finish for merchant dashboard symbols */
+.dashboard-menu-icon,
+.stat-icon,
+.managed-product-emoji,
+.store-identity-avatar span,
+.avatar-preview span{
+  text-shadow:0 1px 0 rgba(255,255,255,.82),0 2px 0 rgba(28,48,18,.16),0 4px 7px rgba(16,24,39,.2);
+  filter:drop-shadow(0 3px 3px rgba(16,24,39,.15));
+}
+.dashboard-menu-icon{
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.8),inset 0 -5px 8px rgba(49,78,18,.13),0 4px 0 rgba(110,145,66,.2),0 7px 12px rgba(16,24,39,.1);
+  transform:perspective(180px) rotateX(4deg);
+}
+.stat-icon{
+  display:inline-grid;
+  place-items:center;
+  text-shadow:0 1px 0 rgba(255,255,255,.75),0 3px 5px rgba(16,24,39,.2);
+}
+.managed-product-emoji{
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 6px rgba(16,24,39,.08),0 3px 7px rgba(16,24,39,.1);
+}
+.review-stars,
+.reviews-admin-summary>span{
+  text-shadow:0 1px 0 rgba(255,255,255,.65),0 2px 4px rgba(100,65,10,.25);
+  filter:drop-shadow(0 2px 2px rgba(100,65,10,.14));
+}
+html[data-theme="dark"] .dashboard-page .dashboard-menu-icon,
+html[data-theme="dark"] .dashboard-page .managed-product-emoji{
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.12),inset 0 -4px 7px rgba(0,0,0,.22),0 5px 10px rgba(0,0,0,.22);
+}
+@media(prefers-color-scheme:dark){
+ html[data-theme="system"] .dashboard-page .dashboard-menu-icon,
+ html[data-theme="system"] .dashboard-page .managed-product-emoji{
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.12),inset 0 -4px 7px rgba(0,0,0,.22),0 5px 10px rgba(0,0,0,.22);
+ }
+}
