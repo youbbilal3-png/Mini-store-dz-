@@ -73,7 +73,7 @@ window.addEventListener("unhandledrejection",function(event){
 <label>طريقة التحويل<select id="paymentMethod"><option value="baridimob">BaridiMob</option><option value="ccp">CCP</option></select></label>
 <label>اسم صاحب التحويل<input id="paymentSender" required maxlength="120" placeholder="الاسم الظاهر في عملية التحويل"></label>
 <label>رقم العملية / المرجع<input id="paymentReference" required minlength="3" maxlength="120" placeholder="رقم العملية كما يظهر في الإيصال"></label>
-<label>رابط إثبات الدفع (اختياري)<input id="paymentProofUrl" type="url" maxlength="500" placeholder="https://..."></label>
+<label>إرفاق وصل التحويل <input id="paymentReceipt" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label><small class="payment-upload-hint">صورة JPG أو PNG أو WebP أو ملف PDF، بحد أقصى 5 ميغابايت. الوصل خاص ولا يراه إلا أنت والإدارة.</small>
 <p class="payment-amount-line">المبلغ المطلوب: <strong id="paymentAmount">1,500 دج</strong></p>
 <button class="save-button" id="submitSubscriptionPayment" type="submit">إرسال طلب مراجعة الدفع</button><p id="paymentRequestFeedback" class="save-feedback" role="status"></p>
 </form>
