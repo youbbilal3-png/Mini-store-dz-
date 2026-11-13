@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261113-29" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261113-30" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body class="dashboard-page">
@@ -41,15 +41,15 @@ window.addEventListener("unhandledrejection",function(event){
 <div class="dashboard-status"><span class="status-dot"></span> <span id="storeStatus">متصل بقاعدة البيانات</span></div>
 </section>
 <div class="dashboard-grid">
-<aside class="dashboard-sidebar">
-<a class="side-link active" href="#profile">🏪 واجهة المتجر</a>
-<a class="side-link" href="#subscription">💎 الاشتراك والباقات</a>
-<a class="side-link" href="#store">🏪 إعدادات المتجر</a>
-<a class="side-link" href="#products">📦 المنتجات</a>
-<a class="side-link" href="#stats">📊 الإحصائيات</a>
-<a class="side-link" href="#orders">🧾 الطلبات</a><a class="side-link" href="#reviews">⭐ تقييمات الزبائن</a>
-<a class="side-link" id="publicStoreSidebarLink" href="index.html" target="_blank" rel="noopener">🌐 صفحة المتجر</a>
-<div class="sidebar-note"><strong>متجرك على السحابة</strong><p>بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.</p></div>
+<aside class="dashboard-sidebar" aria-label="أقسام لوحة التاجر">
+<a class="side-link" href="#profile"><span class="dashboard-menu-icon">👤</span><span>الملف الشخصي</span></a>
+<a class="side-link" href="#store"><span class="dashboard-menu-icon">🏪</span><span>إعدادات المتجر</span></a>
+<a class="side-link" href="#products"><span class="dashboard-menu-icon">📦</span><span>إدارة المنتجات</span></a>
+<a class="side-link" href="#orders"><span class="dashboard-menu-icon">🧾</span><span>طلبات الزبائن</span></a>
+<a class="side-link" href="#stats"><span class="dashboard-menu-icon">📈</span><span>الإحصائيات</span></a>
+<a class="side-link" href="#reviews"><span class="dashboard-menu-icon">⭐</span><span>تقييمات الزبائن</span></a>
+<a class="side-link" href="#subscription"><span class="dashboard-menu-icon">💎</span><span>الاشتراكات والباقات</span></a>
+<a class="side-link" id="publicStoreSidebarLink" href="index.html" target="_blank" rel="noopener"><span class="dashboard-menu-icon">🌐</span><span>صفحة المتجر</span></a>
 </aside>
 <div class="dashboard-content">
 <section class="dash-panel subscription-panel" id="subscription" hidden>
