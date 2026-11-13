@@ -284,3 +284,32 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
 html[data-theme="dark"] .info-dialog-card,html[data-theme="system"] .info-dialog-card{background:#172536;color:#edf2f7}
 html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="system"] .info-dialog-card .contact-email a{color:#edf2f7}
 @media(max-width:600px){.header-tools nav .header-icon-link{width:29px;height:29px;flex-basis:29px;font-size:17px}.info-dialog-card{padding:28px 18px 20px}}
+
+
+/* Mobile header: keep navigation controls on a clean row, settings below. */
+@media(max-width:600px){
+ .header-tools{
+  display:flex!important;flex-wrap:wrap!important;align-items:center!important;
+  justify-content:space-between!important;row-gap:5px!important;
+  min-height:0!important;padding:7px 10px!important;gap:5px 8px!important;
+ }
+ .header-tools nav{
+  order:1!important;display:flex!important;flex:1 1 100%!important;
+  width:100%!important;min-width:0!important;justify-content:space-between!important;
+  align-items:center!important;gap:3px!important;padding:2px 0!important;
+ }
+ .header-tools nav a{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  flex:0 1 auto!important;min-width:0!important;white-space:nowrap!important;
+  font-size:clamp(8px,2.55vw,10px)!important;letter-spacing:-.35px!important;
+ }
+ .header-tools nav .header-icon-link{
+  display:inline-grid!important;flex:0 0 27px!important;width:27px!important;height:27px!important;
+  min-width:27px!important;margin:0!important;padding:0!important;
+  font-size:16px!important;line-height:1!important;
+ }
+ .header-tools nav .header-merchant-cta{padding:5px 4px!important;font-size:clamp(8px,2.45vw,9px)!important}
+ .header-tools .language-picker{order:2!important;flex:0 0 auto!important;margin-inline-start:auto!important}
+ .header-tools .language-picker select{width:84px!important;min-width:84px!important;max-width:84px!important;font-size:10px!important;padding:5px 4px!important}
+ .header-tools .theme-toggle{order:3!important;flex:0 0 30px!important;width:30px!important;height:30px!important;min-height:30px!important}
+}
