@@ -391,3 +391,5 @@ html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="syst
 
 /* Keep the page hidden until its saved language has been applied. */
 html.language-loading body{visibility:hidden}
+
+.contact-section a[aria-disabled="true"]{opacity:.55;pointer-events:none;cursor:not-allowed}
