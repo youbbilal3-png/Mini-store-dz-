@@ -26,6 +26,7 @@ $("authForm").addEventListener("submit",async event=>{
    $("authMessage").textContent=authTranslations[authLanguage].confirm;
   }else{
    const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;
+   try{localStorage.removeItem("msdz-referral-code");}catch(storageError){}
    location.href=authNext;
   }
  }catch(error){console.error("Authentication error:",error);$("authMessage").textContent=authTranslations[authLanguage].error;}
@@ -68,4 +69,4 @@ if(authSlides.length){showAuthAd(0);setInterval(()=>showAuthAd(authAdIndex+1),45
 
 const requestedNext=new URLSearchParams(location.search).get("next");
 const authNext=requestedNext==="dashboard.html"?"dashboard.html":requestedNext==="admin.html"?"admin.html":"index.html";
-supabase.auth.getSession().then(({data})=>{if(data.session)location.replace(authNext);});
+supabase.auth.getSession().then(({data})=>{if(data.session){try{localStorage.removeItem("msdz-referral-code");}catch(storageError){}location.replace(authNext);}});
