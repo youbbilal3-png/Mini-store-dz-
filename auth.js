@@ -60,5 +60,5 @@ authDots.forEach(dot=>dot.addEventListener("click",()=>showAuthAd(Number(dot.dat
 if(authSlides.length){showAuthAd(0);setInterval(()=>showAuthAd(authAdIndex+1),4500);}
 
 const requestedNext=new URLSearchParams(location.search).get("next");
-const authNext=requestedNext==="dashboard.html"?"dashboard.html":"index.html";
+const authNext=requestedNext==="dashboard.html"?"dashboard.html":requestedNext==="admin.html"?"admin.html":"index.html";
 supabase.auth.getSession().then(({data})=>{if(data.session)location.replace(authNext);});
