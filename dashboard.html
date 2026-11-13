@@ -71,7 +71,7 @@
 <label>السعر بالدينار<input id="productPrice" required type="number" min="0" step="1" inputmode="numeric" placeholder="3500"></label>
 <label>الكمية المتوفرة (اختياري)<input id="productStock" type="number" min="0" step="1" inputmode="numeric" placeholder="اتركها فارغة لمخزون غير محدود"><small>0 تعني أن المنتج نفد من المخزون. اترك الخانة فارغة إذا لم ترد تتبع الكمية.</small></label>
 <label>رمز تعبيري للمنتج<input id="productEmoji" maxlength="8" value="📦" placeholder="📦"></label>
-<label class="full-field">وصف المنتج<textarea id="productDescription" rows="2" maxlength="180" placeholder="اكتب وصفاً قصيراً للمنتج"></textarea></label><label class="full-field">صورة المنتج<input id="productImage" type="file" accept="image/jpeg,image/png,image/webp"><small>JPEG أو PNG أو WebP، حتى 5 ميغابايت.</small></label>
+<label class="full-field">وصف المنتج<textarea id="productDescription" rows="2" maxlength="180" placeholder="اكتب وصفاً قصيراً للمنتج"></textarea></label><label class="full-field">صور المنتج (حتى 5 صور)<input id="productImage" type="file" accept="image/jpeg,image/png,image/webp" multiple><small>JPEG أو PNG أو WebP، حتى 5 ميغابايت لكل صورة. عند تعديل المنتج يمكنك إضافة صور أخرى.</small></label>
 </div>
 <div class="panel-actions"><button class="save-button" id="productSubmit" type="submit">＋ إضافة المنتج</button><button class="cancel-button" id="cancelEdit" type="button" hidden>إلغاء التعديل</button><span class="save-feedback" id="productFeedback" role="status"></span></div>
 </form>
