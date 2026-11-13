@@ -205,10 +205,9 @@ el("productDetailsContent").addEventListener("click",e=>{
  else return;
  const name=el("productDetailsContent").querySelector(".product-details-copy h2")?.textContent||"";
  el("productDetailsContent").querySelector(".product-details-image").outerHTML=renderDetailGallery(name);
- const oldThumbs=el("productDetailsContent").querySelector(".product-gallery-thumbs");
- if(oldThumbs)oldThumbs.remove();
+ el("productDetailsContent").querySelectorAll(".product-gallery-thumbs").forEach(node=>node.remove());
  const gallery=el("productDetailsContent").querySelector(".product-details-image");
- gallery.insertAdjacentHTML("afterend",detailImages.length>1?'<div class="product-gallery-thumbs">'+detailImages.map((url,i)=>'<button type="button" class="product-gallery-thumb '+(i===detailImageIndex?'active':'')+'" data-detail-index="'+i+'"><img src="'+safe(url)+'" alt=""></button>').join("")+'</div>':'');
+ if(detailImages.length>1)gallery.insertAdjacentHTML("afterend",'<div class="product-gallery-thumbs">'+detailImages.map((url,i)=>'<button type="button" class="product-gallery-thumb '+(i===detailImageIndex?'active':'')+'" data-detail-index="'+i+'"><img src="'+safe(url)+'" alt=""></button>').join("")+'</div>');
 });
 el("viewCartButton").addEventListener("click",openCart);
 el("closeCartDialog").addEventListener("click",()=>el("cartDialog").close());
