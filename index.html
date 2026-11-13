@@ -10,7 +10,7 @@
 <link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg">
 <title>Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-28">
+<link rel="stylesheet" href="styles.css?v=20261113-29">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script type="module" src="app.js?v=20261113-33"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
@@ -39,20 +39,7 @@
   </div>
 </header>
 <main>
-  <section class="hero">
-    <div class="hero-copy">
-      <section class="hero-intro-card" aria-label="تعريف بالمنصة">
-        <span class="hero-intro-kicker" data-i18n="homeCardEyebrow">اكتشف Mini Store DZ</span>
-        <h1 data-i18n="homeCardTitle">كل ما تبحث عنه في مكان واحد</h1>
-        <p data-i18n="homeCardText">اكتشف متاجر متنوعة، وتعرّف على منتجاتها، وتواصل مباشرة مع البائع لطلب ما يناسبك.</p>
-        <div class="hero-intro-points">
-          <span><b aria-hidden="true">🏪</b><span data-i18n="homeCardPoint1">متاجر متنوعة</span></span>
-          <span><b aria-hidden="true">🛍️</b><span data-i18n="homeCardPoint2">منتجات مختلفة</span></span>
-          <span><b aria-hidden="true">💬</b><span data-i18n="homeCardPoint3">تواصل مباشر</span></span>
-        </div>
-      </section>
-      <a class="primary-btn" id="browseButton" href="#featuredStoresSection" data-i18n="browse">تصفح المتاجر</a>
-    </div>
+  <section class="hero hero-showcase-only">
     <div class="hero-product-showcase" id="heroShowcase" aria-label="منتجات مختارة تتغير تلقائياً" data-i18n-aria-label="slideAria">
       <div class="showcase-slide active"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85" alt="سماعات لاسلكية" data-i18n-alt="slide1Alt"><span class="showcase-caption"><b data-i18n="heroSlide1Title">اختيارات مميزة</b><small data-i18n="heroSlide1Text">تسوق بسهولة من Mini Store DZ</small></span></div>
       <div class="showcase-slide"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85" alt="ساعة أنيقة" data-i18n-alt="slide2Alt"><span class="showcase-caption"><b data-i18n="heroSlide2Title">اكتشف الجديد</b><small data-i18n="heroSlide2Text">منتجات متنوعة في مكان واحد</small></span></div>
@@ -64,7 +51,20 @@
     </div>
   </section>
 
+  <div class="home-commercial-row">
+      <section class="hero-intro-card" aria-label="تعريف بالمنصة">
+        <span class="hero-intro-kicker" data-i18n="homeCardEyebrow">اكتشف Mini Store DZ</span>
+        <h1 data-i18n="homeCardTitle">كل ما تبحث عنه في مكان واحد</h1>
+        <p data-i18n="homeCardText">اكتشف متاجر متنوعة، وتعرّف على منتجاتها، وتواصل مباشرة مع البائع لطلب ما يناسبك.</p>
+        <div class="hero-intro-points">
+          <span><b aria-hidden="true">🏪</b><span data-i18n="homeCardPoint1">متاجر متنوعة</span></span>
+          <span><b aria-hidden="true">🛍️</b><span data-i18n="homeCardPoint2">منتجات مختلفة</span></span>
+          <span><b aria-hidden="true">💬</b><span data-i18n="homeCardPoint3">تواصل مباشر</span></span>
+        </div>
+      <a class="primary-btn" id="browseButton" href="#featuredStoresSection" data-i18n="browse">تصفح المتاجر</a>
+      </section>
   <section class="sponsored-ads-section" id="sponsoredAdsSection" hidden aria-label="إعلانات برعاية"><div class="sponsored-ads-heading"><span class="eyebrow" data-i18n="sponsoredEyebrow">إعلانات برعاية</span><h2 data-i18n="sponsoredTitle">شركاؤنا</h2></div><div class="sponsored-ads-grid" id="sponsoredAdsGrid"></div></section>
+  </div>
   <div class="home-promos-row">
     <section class="referral-promo-section" id="referralProgramSection">
       <div class="referral-promo-icon" aria-hidden="true">🎁</div>
