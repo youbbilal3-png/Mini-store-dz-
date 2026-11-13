@@ -460,3 +460,15 @@ html.language-loading body{visibility:hidden}
 /* Referral reward ladder */
 .referral-rewards-grid article{align-items:flex-start;flex-direction:column;min-height:118px;justify-content:center;gap:7px}.referral-rewards-grid article small{font-size:11px;color:var(--muted,#667085);font-weight:700}.referral-rewards-grid article.earned{border-color:#9bc76d;background:linear-gradient(135deg,#f2f9e9,#fff)}.referral-rewards-grid article.earned small{color:#47751f}.referral-reward-status{margin-top:12px;padding:0 14px;border-inline-start:3px solid #9bc76d}.referral-reward-status p{margin:7px 0;font-size:13px;font-weight:700;line-height:1.7}
 @media(max-width:650px){.referral-rewards-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.referral-rewards-grid article{min-height:130px}}
+
+/* Sponsored advertising placements */
+.sponsored-ads-section{padding:28px 6vw;background:var(--surface,#fff);color:var(--text,#17251a)}
+.sponsored-ads-heading{display:flex;align-items:baseline;gap:12px;margin-bottom:15px;flex-wrap:wrap}
+.sponsored-ads-heading h2{font-size:clamp(20px,2.5vw,27px);margin:0}
+.sponsored-ads-heading .eyebrow{color:var(--muted,#68766b)}
+.sponsored-ads-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sponsored-ad-card{position:relative;display:block;overflow:hidden;border:1px solid var(--border,#dfe6df);border-radius:16px;background:#f5f7f5;min-height:110px;aspect-ratio:16/5}
+.sponsored-ad-card img{display:block;width:100%;height:100%;min-height:110px;object-fit:cover;transition:transform .25s ease}
+.sponsored-ad-card:hover img{transform:scale(1.025)}
+.sponsored-ad-label{position:absolute;inset-inline-start:10px;top:10px;padding:5px 9px;border-radius:7px;background:#101827d9;color:#fff;font-size:10px;font-weight:800}
+@media(max-width:700px){.sponsored-ads-section{padding:24px 16px}.sponsored-ads-grid{grid-template-columns:1fr}.sponsored-ad-card{aspect-ratio:16/6}}
