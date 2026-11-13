@@ -10,9 +10,9 @@
 <link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg">
 <title>Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-27">
+<link rel="stylesheet" href="styles.css?v=20261113-28">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261113-32"></script>
+<script type="module" src="app.js?v=20261113-33"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body>
@@ -41,9 +41,16 @@
 <main>
   <section class="hero">
     <div class="hero-copy">
-      <span class="eyebrow" data-i18n="eyebrow">متجرك يبدأ من هنا</span>
-      <h1 data-i18n="heroTitle">اكتشف منتجاتك المفضلة<br><em>بسهولة وثقة</em></h1>
-      <p data-i18n="heroText">تصفح منتجاتنا واختر ما يناسبك. اطلب مباشرة عبر واتساب.</p>
+      <section class="hero-intro-card" aria-label="تعريف بالمنصة">
+        <span class="hero-intro-kicker" data-i18n="homeCardEyebrow">اكتشف Mini Store DZ</span>
+        <h1 data-i18n="homeCardTitle">كل ما تبحث عنه في مكان واحد</h1>
+        <p data-i18n="homeCardText">اكتشف متاجر متنوعة، وتعرّف على منتجاتها، وتواصل مباشرة مع البائع لطلب ما يناسبك.</p>
+        <div class="hero-intro-points">
+          <span><b aria-hidden="true">🏪</b><span data-i18n="homeCardPoint1">متاجر متنوعة</span></span>
+          <span><b aria-hidden="true">🛍️</b><span data-i18n="homeCardPoint2">منتجات مختلفة</span></span>
+          <span><b aria-hidden="true">💬</b><span data-i18n="homeCardPoint3">تواصل مباشر</span></span>
+        </div>
+      </section>
       <a class="primary-btn" id="browseButton" href="#featuredStoresSection" data-i18n="browse">تصفح المتاجر</a>
     </div>
     <div class="hero-product-showcase" id="heroShowcase" aria-label="منتجات مختارة تتغير تلقائياً" data-i18n-aria-label="slideAria">
