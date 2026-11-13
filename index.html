@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#101827">
 <meta name="description" content="Mini Store DZ — Simple online stores for everyone.">
 <title>Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-17">
+<link rel="stylesheet" href="styles.css?v=20261113-18">
 <script type="module" src="app.js?v=20261113-15"></script>
 </head>
 <body>
@@ -25,18 +25,11 @@
     </label>
     <nav aria-label="Main navigation">
       <a href="#featuredStoresSection" data-i18n="navProducts" id="navProducts">تصفح المتاجر</a>
-      <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span class="nav-icon">ⓘ</span><span data-i18n="navAbout">من نحن</span></button>
-      <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span class="nav-icon">✉</span><span data-i18n="navContact">اتصل بنا</span></button>
+      <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span data-i18n="navAbout">من نحن</span></button>
+      <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span data-i18n="navContact">اتصل بنا</span></button>
       <a href="dashboard.html" id="merchantAccountLink">حساب التاجر</a>
       <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html" data-i18n="joinMerchant">أنشئ متجرك</a>
     </nav>
-      <span class="sr-only" data-i18n="languageLabel">اللغة</span>
-      <select id="languageSelect" aria-label="Choose language">
-        <option value="ar">العربية</option>
-        <option value="fr">Français</option>
-        <option value="en">English</option>
-      </select>
-    </label>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button>
   </div>
 </header>
