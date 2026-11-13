@@ -70,7 +70,11 @@ async function removeAvatar(){
  store=data;showAvatar();await supabase.from("profiles").update({avatar_url:null}).eq("id",user.id);message("profileFeedback","تمت إزالة الصورة.");
 }
 function resetProductForm(){
- $("productForm").reset();$("editingProductId").value="";$("productEmoji").value="📦";$("productSubmit").textContent="＋ إضافة المنتج";$("cancelEdit").hidden=true;
+ $("productForm").reset();$("editingProductId").value="";$("productEmoji").value="📦";$("productSubmit").textContent="＋ إضافة المنتج";$("cancelEdit").hidden=true;$("customProductCategory").hidden=true;$("customProductCategory").required=false;$("customProductCategory").value="";
+}
+function syncCustomCategory(){
+ const custom=$("productCategory").value==="أخرى";$("customProductCategory").hidden=!custom;$("customProductCategory").required=custom;
+ if(custom)$("customProductCategory").focus();
 }
 function renderProducts(){
  $("productsTotal").textContent=products.length+" منتج";
@@ -79,7 +83,8 @@ function renderProducts(){
 }
 async function saveProduct(event){
  event.preventDefault();const id=$("editingProductId").value;const file=$("productImage").files?.[0];
- const item={store_id:store.id,name:$("productName").value.trim(),category:$("productCategory").value.trim(),price:Number($("productPrice").value),description:$("productDescription").value.trim(),currency:"DZD",is_active:true};
+ const selectedCategory=$("productCategory").value;const category=selectedCategory==="أخرى"?$("customProductCategory").value.trim():selectedCategory;
+ const item={store_id:store.id,name:$("productName").value.trim(),category,price:Number($("productPrice").value),description:$("productDescription").value.trim(),currency:"DZD",is_active:true};
  if(!item.name||!item.category||!Number.isFinite(item.price)||item.price<0)return;
  $("productSubmit").disabled=true;message("productFeedback","جارٍ حفظ المنتج...");
  try{
@@ -99,7 +104,7 @@ async function manageProductClick(event){
  const edit=event.target.closest("[data-edit]"),del=event.target.closest("[data-delete]");
  if(edit){
   const p=products.find(x=>x.id===edit.dataset.edit);if(!p)return;
-  $("editingProductId").value=p.id;$("productName").value=p.name;$("productCategory").value=p.category||"";$("productPrice").value=p.price;$("productDescription").value=p.description||"";$("productEmoji").value="📦";$("productSubmit").textContent="حفظ التعديلات";$("cancelEdit").hidden=false;$("productForm").scrollIntoView({behavior:"smooth",block:"center"});
+  $("editingProductId").value=p.id;$("productName").value=p.name;const knownCategory=Array.from($("productCategory").options).some(o=>o.value===p.category);$("productCategory").value=knownCategory?(p.category||""):"أخرى";$("customProductCategory").value=knownCategory?"":(p.category||"");syncCustomCategory();$("productPrice").value=p.price;$("productDescription").value=p.description||"";$("productEmoji").value="📦";$("productSubmit").textContent="حفظ التعديلات";$("cancelEdit").hidden=false;$("productForm").scrollIntoView({behavior:"smooth",block:"center"});
  }
  if(del){
   const p=products.find(x=>x.id===del.dataset.delete);if(!p||!confirm("هل تريد حذف المنتج: "+p.name+"؟"))return;
@@ -127,6 +132,7 @@ async function init(){
  $("avatarUpload").addEventListener("change",uploadAvatar);
  $("removeAvatar").addEventListener("click",removeAvatar);
  $("productForm").addEventListener("submit",saveProduct);
+ $("productCategory").addEventListener("change",syncCustomCategory);
  $("managedProducts").addEventListener("click",manageProductClick);
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
