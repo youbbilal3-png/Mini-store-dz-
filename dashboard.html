@@ -19,7 +19,7 @@
 </section>
 <div class="dashboard-grid">
 <aside class="dashboard-sidebar">
-<a class="side-link active" href="#profile">👤 الملف الشخصي</a>
+<a class="side-link active" href="#profile">🏪 واجهة المتجر</a>
 <a class="side-link" href="#store">🏪 إعدادات المتجر</a>
 <a class="side-link" href="#products">📦 المنتجات</a>
 <a class="side-link" href="#stats">📊 الإحصائيات</a>
@@ -28,7 +28,16 @@
 <div class="sidebar-note"><strong>متجرك على السحابة</strong><p>بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.</p></div>
 </aside>
 <div class="dashboard-content">
-<section class="dash-panel" id="stats">
+<section class="dash-panel" id="profile">
+<div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
+<div class="store-identity-card"><div class="store-identity-avatar" id="identityAvatar"><span id="identityAvatarFallback">S</span><img id="identityAvatarImage" alt="صورة المتجر" hidden></div><div class="store-identity-copy"><span class="eyebrow">YOUR STORE</span><h3 id="storeIdentityName">متجري</h3><p id="storeIdentitySeller">صاحب المتجر</p><p id="storeIdentityBio">أضف نبذة قصيرة لتعريف الزبائن بمتجرك.</p><span class="identity-publish-status" id="identityPublishStatus">مسودة خاصة</span></div></div><div class="profile-editor">
+<div class="avatar-editor"><div class="avatar-preview" id="avatarPreview"><span id="avatarFallback">S</span><img id="avatarImage" alt="صورة التاجر" hidden></div><label class="upload-button" for="avatarUpload">📷 تغيير الصورة</label><input id="avatarUpload" type="file" accept="image/*" hidden><button class="text-button" id="removeAvatar" type="button">إزالة الصورة</button></div>
+<div class="form-fields">
+<label>اسم التاجر<input id="sellerNameInput" type="text" maxlength="50" placeholder="مثال: Bilal"></label>
+<label>نبذة قصيرة<textarea id="sellerBioInput" rows="3" maxlength="120" placeholder="اكتب نبذة بسيطة عنك أو عن نشاطك"></textarea></label>
+</div>
+</div>
+</section><section class="dash-panel" id="stats">
 <div class="panel-heading"><div><span class="eyebrow">STORE OVERVIEW</span><h2>إحصائيات المتجر</h2><p>ملخص مباشر لأداء متجرك وطلباته.</p></div></div>
 <div class="stats-grid">
 <article class="stat-card"><span class="stat-icon">🧾</span><span class="stat-label">إجمالي الطلبات</span><strong id="statOrders">0</strong></article>
@@ -43,16 +52,7 @@
 <div class="chart-card"><div class="chart-heading"><h3>المبيعات المكتملة</h3><span>بالدينار الجزائري</span></div><div class="daily-chart" id="salesChart"><p class="chart-empty">جارٍ تجهيز الرسم البياني...</p></div></div>
 </div>
 </section>
-<section class="dash-panel" id="profile">
-<div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
-<div class="profile-editor">
-<div class="avatar-editor"><div class="avatar-preview" id="avatarPreview"><span id="avatarFallback">S</span><img id="avatarImage" alt="صورة التاجر" hidden></div><label class="upload-button" for="avatarUpload">📷 تغيير الصورة</label><input id="avatarUpload" type="file" accept="image/*" hidden><button class="text-button" id="removeAvatar" type="button">إزالة الصورة</button></div>
-<div class="form-fields">
-<label>اسم التاجر<input id="sellerNameInput" type="text" maxlength="50" placeholder="مثال: Bilal"></label>
-<label>نبذة قصيرة<textarea id="sellerBioInput" rows="3" maxlength="120" placeholder="اكتب نبذة بسيطة عنك أو عن نشاطك"></textarea></label>
-</div>
-</div>
-</section>
+
 <section class="dash-panel" id="store">
 <div class="panel-heading"><div><span class="eyebrow">STORE SETTINGS</span><h2>إعدادات المتجر</h2><p>خصص اسم المتجر ورقم استقبال الطلبات.</p></div></div>
 <div class="form-fields two-columns">
