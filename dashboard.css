@@ -53,3 +53,13 @@
 .identity-publish-status{display:inline-flex;margin-top:7px;padding:6px 10px;border-radius:20px;background:#fff2d9;color:#8a5a12;font-size:11px;font-weight:800}
 .identity-publish-status.is-published{background:#e8f4e8;color:#3c6d24}
 @media(max-width:560px){.store-identity-card{gap:14px;padding:14px}.store-identity-avatar{width:82px;height:82px;flex-basis:82px;border-radius:18px;font-size:30px}.store-identity-copy h3{font-size:19px}.store-identity-copy p{font-size:11px}}
+
+/* Merchant review moderation */
+.review-admin-summary{display:grid;justify-items:center;gap:2px;padding:8px 13px;background:#f5f8ef;border-radius:12px;min-width:105px}
+.review-admin-summary strong{font-size:20px}.review-admin-summary>span{color:#d69a22;letter-spacing:1px}.review-admin-summary small{font-size:10px;color:#667085}
+.managed-reviews{display:grid;gap:11px}.managed-review{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;border:1px solid #e8ede1;border-radius:13px;padding:14px}
+.managed-review-body{min-width:0;display:grid;gap:6px}.managed-review-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.managed-review-head strong{font-size:13px}.managed-review-body p{margin:0;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.managed-review-body small{font-size:10px;color:#667085}
+.review-stars{color:#d69a22;letter-spacing:1px;font-size:13px}
+.review-state{width:max-content;border-radius:20px;padding:4px 8px;font-size:10px;font-weight:800;background:#fff2d9;color:#8a5a12}.review-state-approved{background:#e8f4e8;color:#3c6d24}.review-state-rejected{background:#fcebea;color:#9b3830}
+.managed-review-actions{display:flex;gap:7px;flex-wrap:wrap}.managed-review-actions button{border:1px solid #dfe5d8;background:#fff;border-radius:8px;padding:7px 10px;font:inherit;font-size:11px;cursor:pointer}.managed-review-actions button:first-child{color:#3c6d24}
+@media(max-width:560px){.managed-review{flex-direction:column}.managed-review-actions{width:100%}.managed-review-actions button{flex:1}}
