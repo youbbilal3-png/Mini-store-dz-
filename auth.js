@@ -1,5 +1,11 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
+let incomingReferralCode="";
+try{
+ const referralFromUrl=new URLSearchParams(location.search).get("ref");
+ if(referralFromUrl&&/^MSDZ[A-F0-9]{8}$/i.test(referralFromUrl)){incomingReferralCode=referralFromUrl.toUpperCase();localStorage.setItem("msdz-referral-code",incomingReferralCode);}
+ else{const saved=localStorage.getItem("msdz-referral-code");if(saved&&/^MSDZ[A-F0-9]{8}$/i.test(saved))incomingReferralCode=saved.toUpperCase();}
+}catch(error){console.warn("Referral code storage unavailable:",error);}
 let mode="signup";
 function setMode(next){mode=next;const signup=mode==="signup";$("showSignup").classList.toggle("active",signup);$("showLogin").classList.toggle("active",!signup);$("nameField").hidden=!signup;$("fullName").required=signup;$("authTitle").textContent=signup?authTranslations[authLanguage].createTitle:authTranslations[authLanguage].loginTitle;$("authIntro").textContent=signup?authTranslations[authLanguage].createDesc:authTranslations[authLanguage].loginDesc;$("submitButton").textContent=signup?authTranslations[authLanguage].createAction:authTranslations[authLanguage].loginAction;$("password").autocomplete=signup?"new-password":"current-password";$("authMessage").textContent="";}
 function openAuth(next){setMode(next);const section=$("authFormSection");section.hidden=false;section.scrollIntoView({behavior:"smooth",block:"start"});}
@@ -13,7 +19,7 @@ $("authForm").addEventListener("submit",async event=>{
  const email=$("email").value.trim();const password=$("password").value;const fullName=$("fullName").value.trim();
  try{
   if(mode==="signup"){
-   const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:fullName},emailRedirectTo:location.origin+"/index.html"}});
+   const signupMetadata={full_name:fullName};if(incomingReferralCode)signupMetadata.referral_code=incomingReferralCode;const {data,error}=await supabase.auth.signUp({email,password,options:{data:signupMetadata,emailRedirectTo:location.origin+"/index.html"}});
    if(error)throw error;
    if(data.session){location.href=authNext;return;}
    $("authMessage").textContent=authTranslations[authLanguage].confirm;
