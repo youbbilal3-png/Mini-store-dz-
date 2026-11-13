@@ -50,6 +50,7 @@ window.addEventListener("unhandledrejection",function(event){
 <a class="side-link" href="#stats"><span class="dashboard-menu-icon">📈</span><span>الإحصائيات</span></a>
 <a class="side-link" href="#reviews"><span class="dashboard-menu-icon">⭐</span><span>تقييمات الزبائن</span></a>
 <a class="side-link" href="#subscription"><span class="dashboard-menu-icon">💎</span><span>الاشتراكات والباقات</span></a>
+<a class="side-link featured-promotion-link" href="#featured-promotion"><span class="dashboard-menu-icon">🏆</span><span>تمييز المتجر</span></a>
 <a class="side-link" href="#support"><span class="dashboard-menu-icon">💬</span><span>الدعم الفني</span></a>
 <a class="side-link" id="publicStoreSidebarLink" href="index.html" target="_blank" rel="noopener"><span class="dashboard-menu-icon">🌐</span><span>صفحة المتجر</span></a>
 </aside>
@@ -79,6 +80,22 @@ window.addEventListener("unhandledrejection",function(event){
 </form>
 <div class="panel-heading"><h3>طلبات الدفع السابقة</h3></div><div id="merchantPaymentHistory" class="managed-reviews"><p class="empty-products">جارٍ تحميل طلبات الدفع...</p></div>
 </div>
+</section>
+<section class="dash-panel featured-promotion-panel" id="featured-promotion">
+<div class="panel-heading"><div><span class="eyebrow">FEATURED STORE</span><h2>🏆 اجعل متجرك مميزاً</h2><p>اعرض متجرك في قسم المتاجر المميزة أعلى الصفحة الرئيسية ليحظى بظهور أكبر أمام الزوار.</p></div><span class="featured-promotion-price">500 دج / 7 أيام</span></div>
+<div class="featured-promotion-benefits"><span>✨ ظهور بارز في الصفحة الرئيسية</span><span>🏅 شارة متجر مميز</span><span>📅 مدة التمييز 7 أيام</span></div>
+<div class="subscription-payment-box"><h3>بيانات التحويل</h3><p>حوّل 500 دج إلى إحدى وسائل الاستلام التالية، ثم أرفق وصل التحويل لإرسال طلب المراجعة.</p>
+<div id="featuredPaymentDetails" class="payment-details-view">جارٍ تحميل بيانات الاستلام...</div>
+<form id="featuredStoreRequestForm" class="product-form">
+<label>طريقة التحويل<select id="featuredPaymentMethod"><option value="baridimob">BaridiMob</option><option value="ccp">CCP</option></select></label>
+<label>اسم صاحب التحويل<input id="featuredSenderName" required maxlength="120" placeholder="الاسم الظاهر في عملية التحويل"></label>
+<label>رقم العملية / المرجع<input id="featuredTransactionReference" required minlength="3" maxlength="120" placeholder="رقم العملية كما يظهر في الإيصال"></label>
+<label>إرفاق وصل التحويل <input id="featuredPaymentReceipt" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required></label>
+<small class="payment-upload-hint">JPG أو PNG أو WebP أو PDF، بحد أقصى 5 ميغابايت. الوصل خاص ولا يراه إلا أنت والإدارة.</small>
+<p class="payment-amount-line">المبلغ المطلوب: <strong>500 دج</strong></p>
+<button class="save-button" id="submitFeaturedRequest" type="submit">إرسال طلب تمييز المتجر</button><p id="featuredRequestFeedback" class="save-feedback" role="status"></p>
+</form></div>
+<div class="panel-heading"><h3>طلبات التمييز السابقة</h3></div><div id="featuredRequestHistory" class="managed-reviews"><p class="empty-products">جارٍ تحميل الطلبات...</p></div>
 </section>
 <section class="dash-panel" id="profile">
 <div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
