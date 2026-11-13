@@ -14,3 +14,14 @@
 .order-dialog-total{text-align:right;line-height:1.7}
 .order-dialog-card .primary-btn{width:100%;min-height:48px;white-space:normal;line-height:1.5}
 .order-dialog-feedback{text-align:center}
+
+
+/* Merchant statistics */
+.stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.stat-card{min-width:0;background:#f8faf5;border:1px solid #e9eee2;border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:8px}
+.stat-icon{font-size:22px}
+.stat-label{font-size:11px;color:#667085;font-weight:700}
+.stat-card strong{font-size:clamp(18px,2vw,25px);color:#101827;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.stats-note{font-size:11px;color:#667085;margin:13px 0 0;line-height:1.7}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-card{padding:12px}.stat-card strong{font-size:20px}}
