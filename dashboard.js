@@ -196,9 +196,32 @@ function syncCustomCategory(){
  if(custom)$("customProductCategory").focus();
 }
 function renderProducts(){
- renderStats();$("productsTotal").textContent=products.length+" منتج";
- if(!products.length){$("managedProducts").innerHTML='<p class="empty-products">لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.</p>';return;}
-  $("managedProducts").innerHTML=products.map(p=>{const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;const qty=tracked?Number(p.stock_quantity):null;const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";const stockClass=tracked&&qty<=5?"stock-low":"";return '<article class="managed-product"><div class="managed-product-emoji">'+(p.image_url?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">':escapeHtml(p.emoji||"📦"))+'</div><div class="managed-product-info"><strong>'+escapeHtml(p.name)+'</strong><span><span class="product-category-label">'+escapeHtml(p.category||"عام")+'</span>+' · '+Number(p.price||0).toLocaleString(dashboardLocale())+' دج · <b class="'+stockClass+'">'+stockLabel+'</b></span></div><div class="managed-product-actions"><button type="button" data-edit="'+p.id+'">تعديل</button><button type="button" class="delete-product" data-delete="'+p.id+'">حذف</button></div></article>';}).join("");
+ renderStats();
+ $("productsTotal").textContent=products.length+" منتج";
+ if(!products.length){
+  $("managedProducts").innerHTML='<p class="empty-products">لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.</p>';
+  return;
+ }
+ $("managedProducts").innerHTML=products.map(p=>{
+  const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;
+  const qty=tracked?Number(p.stock_quantity):null;
+  const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";
+  const stockClass=tracked&&qty<=5?"stock-low":"";
+  const imageMarkup=p.image_url
+   ?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">'
+   :escapeHtml(p.emoji||"📦");
+  return `<article class="managed-product">
+   <div class="managed-product-emoji">${imageMarkup}</div>
+   <div class="managed-product-info">
+    <strong>${escapeHtml(p.name)}</strong>
+    <span><span class="product-category-label">${escapeHtml(p.category||"عام")}</span> · ${Number(p.price||0).toLocaleString(dashboardLocale())} دج · <b class="${stockClass}">${stockLabel}</b></span>
+   </div>
+   <div class="managed-product-actions">
+    <button type="button" data-edit="${p.id}">تعديل</button>
+    <button type="button" class="delete-product" data-delete="${p.id}">حذف</button>
+   </div>
+  </article>`;
+ }).join("");
 }
 async function saveProduct(event){
  event.preventDefault();
