@@ -12,11 +12,20 @@ async function ensureStore(){
  if(createError)throw createError;return data;
 }
 
+function renderStats(){
+ $("statOrders").textContent=orders.length.toLocaleString("ar-DZ");
+ $("statNewOrders").textContent=orders.filter(o=>o.status==="new").length.toLocaleString("ar-DZ");
+ const completed=orders.filter(o=>o.status==="completed");
+ $("statCompletedOrders").textContent=completed.length.toLocaleString("ar-DZ");
+ const completedSales=completed.reduce((sum,o)=>sum+Number(o.total||0),0);
+ $("statSales").textContent=completedSales.toLocaleString("ar-DZ")+" دج";
+ $("statProducts").textContent=products.length.toLocaleString("ar-DZ");
+}
 async function loadOrders(){
  const {data,error}=await supabase.from("orders").select("*").eq("store_id",store.id).order("created_at",{ascending:false});if(error)throw error;orders=data||[];renderOrders();
 }
 function renderOrders(){
- $("ordersTotal").textContent=orders.length+" طلب";if(!orders.length){$("managedOrders").innerHTML='<p class="empty-products">لا توجد طلبات حتى الآن. ستظهر هنا طلبات الزبائن من متجرك.</p>';return;}
+ renderStats();$("ordersTotal").textContent=orders.length+" طلب";if(!orders.length){$("managedOrders").innerHTML='<p class="empty-products">لا توجد طلبات حتى الآن. ستظهر هنا طلبات الزبائن من متجرك.</p>';return;}
  const labels={new:"جديد",confirmed:"مؤكد",shipped:"تم الشحن",completed:"مكتمل",cancelled:"ملغى"},states=["new","confirmed","shipped","completed","cancelled"];
  $("managedOrders").innerHTML=orders.map(o=>{
   const items=Array.isArray(o.items)?o.items:[],detail=items.map(i=>escapeHtml(i.name)+" × "+Number(i.quantity||1)).join("، ");
@@ -102,7 +111,7 @@ function syncCustomCategory(){
  if(custom)$("customProductCategory").focus();
 }
 function renderProducts(){
- $("productsTotal").textContent=products.length+" منتج";
+ renderStats();$("productsTotal").textContent=products.length+" منتج";
  if(!products.length){$("managedProducts").innerHTML='<p class="empty-products">لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.</p>';return;}
  $("managedProducts").innerHTML=products.map(p=>'<article class="managed-product"><div class="managed-product-emoji">'+(p.image_url?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">':escapeHtml(p.emoji||"📦"))+'</div><div class="managed-product-info"><strong>'+escapeHtml(p.name)+'</strong><span>'+escapeHtml(p.category||"عام")+' · '+Number(p.price||0).toLocaleString("ar-DZ")+' دج</span></div><div class="managed-product-actions"><button type="button" data-edit="'+p.id+'">تعديل</button><button type="button" class="delete-product" data-delete="'+p.id+'">حذف</button></div></article>').join("");
 }
