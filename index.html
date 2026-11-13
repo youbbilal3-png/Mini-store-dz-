@@ -59,6 +59,23 @@
     <p class="empty-state" id="emptyState" hidden data-i18n="empty">لا توجد منتجات مطابقة.</p>
   </section>
 
+
+  <section class="reviews-section" id="reviews" hidden>
+    <div class="section-heading"><div><span class="eyebrow" data-i18n="reviewsEyebrow">آراء الزبائن</span><h2 data-i18n="reviewsTitle">ماذا يقول زبائننا؟</h2></div><div class="reviews-summary"><strong id="reviewsAverage">—</strong><span id="reviewsStars">☆☆☆☆☆</span><small id="reviewsCount">0 تقييم</small></div></div>
+    <div class="reviews-layout">
+      <div class="reviews-list" id="publicReviews"><p class="empty-state">لا توجد تقييمات منشورة بعد.</p></div>
+      <form class="review-form" id="customerReviewForm">
+        <h3 data-i18n="writeReview">شاركنا رأيك</h3>
+        <label><span data-i18n="reviewName">اسمك</span><input id="reviewCustomerName" required minlength="2" maxlength="60" placeholder="اسمك"></label>
+        <label><span data-i18n="reviewRating">تقييمك</span><select id="reviewRating" required><option value="5">★★★★★ — 5</option><option value="4">★★★★☆ — 4</option><option value="3">★★★☆☆ — 3</option><option value="2">★★☆☆☆ — 2</option><option value="1">★☆☆☆☆ — 1</option></select></label>
+        <label><span data-i18n="reviewComment">رأيك</span><textarea id="reviewComment" required minlength="3" maxlength="600" rows="4" placeholder="كيف كانت تجربتك مع المتجر؟"></textarea></label>
+        <button class="primary-btn" id="submitReview" type="submit" data-i18n="sendReview">إرسال التقييم</button>
+        <p class="review-feedback" id="reviewFeedback" role="status"></p>
+        <small data-i18n="reviewModeration">سيظهر تقييمك بعد مراجعته من صاحب المتجر.</small>
+      </form>
+    </div>
+  </section>
+
   <section class="about-section" id="about">
     <div><span class="eyebrow" data-i18n="whyUs">لماذا متجرنا؟</span><h2 data-i18n="aboutTitle">تجربة شراء سهلة ومباشرة</h2></div>
     <p data-i18n="aboutText">منتجات مميزة ومعلومات واضحة وطلب سهل عبر واتساب.</p>
