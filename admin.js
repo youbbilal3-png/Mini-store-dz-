@@ -57,7 +57,18 @@ async function savePaymentSettings(){
 
 async function loadPayments(){
  const {data,error}=await supabase.rpc("admin_list_payment_requests");if(error)throw error;payments=data||[];
- $("paymentsList").innerHTML=payments.length?payments.map(p=>`<article class="admin-record-card"><h3>${esc(p.plan.toUpperCase())} · ${p.billing_cycle==="yearly"?"سنوي":"شهري"} · ${Number(p.amount_dzd).toLocaleString()} دج</h3><p>التاجر: ${esc(p.email)} · طريقة الدفع: ${p.payment_method==="baridimob"?"BaridiMob":"CCP"}</p><p>اسم المحوّل: ${esc(p.sender_name)} · رقم العملية: <b>${esc(p.transaction_reference)}</b></p>${safeHttps(p.proof_url)?`<p><a href="${esc(safeHttps(p.proof_url))}" target="_blank" rel="noopener">عرض إثبات الدفع</a></p>`:""}<p class="admin-record-meta">تاريخ الطلب: ${date(p.created_at)} · الحالة: ${esc(p.status)}</p><textarea id="paynote-${p.id}" placeholder="ملاحظة إدارية (اختياري)">${esc(p.admin_note||"")}</textarea>${p.status==="pending"?`<div class="admin-record-actions"><button class="admin-action" data-review-pay="${p.id}" data-decision="approved">تأكيد الدفع وتفعيل الاشتراك</button><button class="admin-action danger" data-review-pay="${p.id}" data-decision="rejected">رفض الطلب</button></div>`:""}</article>`).join(""):'<div class="admin-empty">لا توجد طلبات دفع حتى الآن.</div>';
+ await Promise.all(payments.map(async p=>{
+  p.proofSignedUrl=null;
+  if(!p.proof_url)return;
+  const {data:signed,error:signedError}=await supabase.storage.from("subscription-payment-proofs").createSignedUrl(p.proof_url,600);
+  if(!signedError)p.proofSignedUrl=signed?.signedUrl||null;
+ }));
+ $("paymentsList").innerHTML=payments.length?payments.map(p=>{
+  const receiptUrl=safeHttps(p.proofSignedUrl||"");
+  const isPdf=String(p.proof_url||"").toLowerCase().endsWith(".pdf");
+  const receipt=receiptUrl?(isPdf?`<p><a href="${esc(receiptUrl)}" target="_blank" rel="noopener">فتح وصل التحويل (PDF)</a></p>`:`<a class="admin-receipt-preview" href="${esc(receiptUrl)}" target="_blank" rel="noopener"><img src="${esc(receiptUrl)}" alt="وصل التحويل المرفق" loading="lazy"></a>`):'<p class="admin-record-meta">لم يتوفر رابط آمن لعرض الوصل.</p>';
+  return `<article class="admin-record-card"><h3>${esc(p.plan.toUpperCase())} · ${p.billing_cycle==="yearly"?"سنوي":"شهري"} · ${Number(p.amount_dzd).toLocaleString()} دج</h3><p>التاجر: ${esc(p.email)} · طريقة الدفع: ${p.payment_method==="baridimob"?"BaridiMob":"CCP"}</p><p>اسم المحوّل: ${esc(p.sender_name)} · رقم العملية: <b>${esc(p.transaction_reference)}</b></p><h4>وصل التحويل</h4>${receipt}<p class="admin-record-meta">تاريخ الطلب: ${date(p.created_at)} · الحالة: ${esc(p.status)}</p><textarea id="paynote-${p.id}" placeholder="ملاحظة إدارية (اختياري)">${esc(p.admin_note||"")}</textarea>${p.status==="pending"?`<div class="admin-record-actions"><button class="admin-action" data-review-pay="${p.id}" data-decision="approved">تأكيد الدفع وتفعيل الاشتراك</button><button class="admin-action danger" data-review-pay="${p.id}" data-decision="rejected">رفض الطلب</button></div>`:""}</article>`;
+ }).join(""):'<div class="admin-empty">لا توجد طلبات دفع حتى الآن.</div>';
 }
 async function loadSupport(){
  const {data,error}=await supabase.from("support_messages").select("*").order("created_at",{ascending:false});if(error)throw error;support=data||[];
