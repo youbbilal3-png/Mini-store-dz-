@@ -74,7 +74,7 @@ function renderOrders(){
  renderStats();$("ordersTotal").textContent=orders.length+" طلب";if(!orders.length){$("managedOrders").innerHTML='<p class="empty-products">لا توجد طلبات حتى الآن. ستظهر هنا طلبات الزبائن من متجرك.</p>';return;}
  const labels={new:"جديد",confirmed:"مؤكد",shipped:"تم الشحن",completed:"مكتمل",cancelled:"ملغى"},states=["new","confirmed","shipped","completed","cancelled"];
  $("managedOrders").innerHTML=orders.map(o=>{
-  const items=Array.isArray(o.items)?o.items:[],detail=items.map(i=>escapeHtml(i.name)+" × "+Number(i.quantity||1)).join("، ");
+  const items=Array.isArray(o.items)?o.items:[],detail=items.map(i=>'<span class="order-product-name">'+escapeHtml(i.name)+'</span> × '+Number(i.quantity||1)).join("، ");
   const opts=states.map(s=>'<option value="'+s+'" '+(o.status===s?"selected":"")+'>'+labels[s]+'</option>').join("");
   return '<article class="managed-order"><div class="managed-order-main"><strong>'+escapeHtml(o.customer_name)+'</strong><span>'+escapeHtml(o.customer_phone)+'</span><p>'+detail+'</p><small>'+new Date(o.created_at).toLocaleString(dashboardLocale())+' · '+Number(o.total||0).toLocaleString(dashboardLocale())+' دج</small>'+(o.notes?'<p class="order-note">ملاحظات: '+escapeHtml(o.notes)+'</p>':"")+'</div><div class="managed-order-controls"><span class="order-status order-status-'+o.status+'">'+(labels[o.status]||o.status)+'</span><select data-order-status="'+o.id+'" aria-label="تغيير حالة الطلب">'+opts+'</select></div></article>';
  }).join("");
