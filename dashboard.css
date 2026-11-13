@@ -63,3 +63,6 @@
 .review-state{width:max-content;border-radius:20px;padding:4px 8px;font-size:10px;font-weight:800;background:#fff2d9;color:#8a5a12}.review-state-approved{background:#e8f4e8;color:#3c6d24}.review-state-rejected{background:#fcebea;color:#9b3830}
 .managed-review-actions{display:flex;gap:7px;flex-wrap:wrap}.managed-review-actions button{border:1px solid #dfe5d8;background:#fff;border-radius:8px;padding:7px 10px;font:inherit;font-size:11px;cursor:pointer}.managed-review-actions button:first-child{color:#3c6d24}
 @media(max-width:560px){.managed-review{flex-direction:column}.managed-review-actions{width:100%}.managed-review-actions button{flex:1}}
+
+/* Red warning for low or empty stock in merchant dashboard */
+.stock-low{color:#b91c1c!important;font-weight:850;background:#fee2e2;padding:3px 7px;border-radius:7px;border:1px solid #fca5a5;display:inline-block}
