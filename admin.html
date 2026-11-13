@@ -47,6 +47,12 @@
 </section>
 <section class="admin-panel" id="admin-payments">
 <div class="admin-panel-heading"><div><h2>طلبات دفع الاشتراك</h2><p>راجع بيانات التحويل قبل اعتماد أي طلب.</p></div></div>
+<div class="admin-record-card admin-payment-settings"><h3>بيانات استقبال الاشتراكات</h3><p>أدخل بيانات BaridiMob وCCP التي ستظهر للتجار المسجلين قبل التحويل.</p>
+<label>اسم صاحب الحساب<input id="payBeneficiary" type="text" maxlength="120" placeholder="الاسم الكامل"></label>
+<label>رقم BaridiMob<input id="payBaridi" type="text" maxlength="40" placeholder="رقم الهاتف المرتبط"></label>
+<label>رقم CCP<input id="payCcp" type="text" maxlength="40" placeholder="رقم الحساب البريدي"></label>
+<label>تعليمات إضافية للتحويل<textarea id="payInstructions" maxlength="800" placeholder="مثال: أرسل المبلغ ثم أدخل رقم العملية..."></textarea></label>
+<button id="savePaymentSettings" class="admin-action" type="button">حفظ بيانات الاستلام</button><small id="paymentSettingsFeedback" class="admin-record-meta"></small></div>
 <div id="paymentsList" class="admin-record-list">جارٍ التحميل...</div>
 </section>
 <section class="admin-panel" id="admin-support">
