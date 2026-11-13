@@ -347,6 +347,16 @@ async function togglePublish(){
  if(error){message("profileFeedback",error.message);return;}
  store=data;fillSettings();message("profileFeedback",next?"تم نشر متجرك. يمكنك مشاركة رابط المتجر.":"تم إلغاء نشر المتجر.");
 }
+
+async function loadMerchantSupportMessages(){
+ const {data,error}=await supabase.from("support_messages").select("id,subject,message,status,admin_reply,created_at").eq("user_id",user.id).order("created_at",{ascending:false}).limit(20);
+ if(error)throw error;
+ const box=$("merchantSupportMessages");
+ if(!data?.length){box.innerHTML='<p class="empty-products">لا توجد رسائل دعم بعد.</p>';return;}
+ const statusLabels={open:"مفتوحة",in_progress:"قيد المعالجة",resolved:"تم الحل",closed:"مغلقة"};
+ box.innerHTML=data.map(item=>`<article class="managed-review"><strong>${escapeHtml(item.subject)}</strong><p>${escapeHtml(item.message)}</p><small>الحالة: ${statusLabels[item.status]||item.status} · ${new Date(item.created_at).toLocaleDateString()}</small>${item.admin_reply?`<p><b>رد الدعم:</b> ${escapeHtml(item.admin_reply)}</p>`:""}</article>`).join("");
+}
+
 async function init(){
  initDashboardTheme();
  // Show a clean icon launcher first; each feature opens its own panel.
@@ -378,6 +388,20 @@ async function init(){
  $("managedProducts").addEventListener("click",manageProductClick);
  $("managedOrders").addEventListener("change",updateOrderStatus);
  $("managedReviews").addEventListener("click",moderateReview);
+
+  $("merchantSupportForm").addEventListener("submit",async event=>{
+   event.preventDefault();
+   const button=$("sendSupportMessage");button.disabled=true;$("supportFeedback").textContent="جارٍ إرسال الرسالة...";
+   try{
+    const {error}=await supabase.from("support_messages").insert({user_id:user.id,email:user.email||"",subject:$("supportSubject").value.trim(),message:$("supportMessage").value.trim()});
+    if(error)throw error;
+    $("supportSubject").value="";$("supportMessage").value="";
+    $("supportFeedback").textContent="تم إرسال رسالتك إلى فريق الدعم.";
+    await loadMerchantSupportMessages();
+   }catch(error){console.error("Support message failed:",error);$("supportFeedback").textContent="تعذر إرسال الرسالة. حاول مجدداً.";}
+   finally{button.disabled=false;}
+  });
+
  $("cancelEdit").addEventListener("click",resetProductForm);
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
