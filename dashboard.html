@@ -22,11 +22,23 @@
 <a class="side-link active" href="#profile">👤 الملف الشخصي</a>
 <a class="side-link" href="#store">🏪 إعدادات المتجر</a>
 <a class="side-link" href="#products">📦 المنتجات</a>
+<a class="side-link" href="#stats">📊 الإحصائيات</a>
 <a class="side-link" href="#orders">🧾 الطلبات</a>
 <a class="side-link" id="publicStoreSidebarLink" href="index.html" target="_blank" rel="noopener">🌐 صفحة المتجر</a>
 <div class="sidebar-note"><strong>متجرك على السحابة</strong><p>بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.</p></div>
 </aside>
 <div class="dashboard-content">
+<section class="dash-panel" id="stats">
+<div class="panel-heading"><div><span class="eyebrow">STORE OVERVIEW</span><h2>إحصائيات المتجر</h2><p>ملخص مباشر لأداء متجرك وطلباته.</p></div></div>
+<div class="stats-grid">
+<article class="stat-card"><span class="stat-icon">🧾</span><span class="stat-label">إجمالي الطلبات</span><strong id="statOrders">0</strong></article>
+<article class="stat-card"><span class="stat-icon">🆕</span><span class="stat-label">الطلبات الجديدة</span><strong id="statNewOrders">0</strong></article>
+<article class="stat-card"><span class="stat-icon">✅</span><span class="stat-label">الطلبات المكتملة</span><strong id="statCompletedOrders">0</strong></article>
+<article class="stat-card"><span class="stat-icon">💰</span><span class="stat-label">المبيعات المكتملة</span><strong id="statSales">0 دج</strong></article>
+<article class="stat-card"><span class="stat-icon">📦</span><span class="stat-label">عدد المنتجات</span><strong id="statProducts">0</strong></article>
+</div>
+<p class="stats-note">تُحتسب المبيعات من الطلبات التي حالتها «مكتمل» فقط، ولا تشمل الطلبات الملغاة أو قيد المعالجة.</p>
+</section>
 <section class="dash-panel" id="profile">
 <div class="panel-heading"><div><span class="eyebrow">YOUR IDENTITY</span><h2>الملف الشخصي</h2><p>هذه المعلومات تظهر لزوار متجرك.</p></div></div>
 <div class="profile-editor">
