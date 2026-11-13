@@ -217,3 +217,37 @@ html[data-theme="dark"] .product-details-copy p,html[data-theme="dark"] .cart-it
  .contact-email{max-width:100%;font-size:14px}
 }
 html[data-theme="dark"] .contact-email a,html[data-theme="system"] .contact-email a{color:#edf2f7}
+
+
+/* Two-level header: compact white brand row above the dark navigation toolbar. */
+.site-header{display:block;min-height:0;padding:0;background:var(--white);border-bottom:0}
+.brand-row{min-height:58px;padding:7px 6vw;display:flex;align-items:center;justify-content:center;background:#fff}
+.brand-row .brand{font-size:19px;color:#101827}
+.brand-row .brand-mark{width:34px;height:34px}
+.header-tools{min-height:54px;padding:7px 6vw;display:flex;align-items:center;gap:16px;background:#101827;color:#fff}
+.header-tools nav{display:flex;align-items:center;gap:clamp(12px,2vw,25px);flex:1;min-width:0}
+.header-tools nav a{color:#f4f7fb;font-size:13px;white-space:nowrap;flex:0 0 auto}
+.header-tools .language-picker{flex:0 0 auto}
+.header-tools .language-picker select{background:#1b293b;color:#fff;border-color:#435064}
+.header-tools .theme-toggle{background:#1b293b;color:#fff;border-color:#435064}
+.header-tools nav .header-merchant-cta{background:var(--lime);color:#172231!important;padding:8px 13px}
+@media(max-width:850px){
+ .header-tools{gap:10px;padding-left:4vw;padding-right:4vw}
+ .header-tools nav{gap:13px}
+}
+@media(max-width:600px){
+ .site-header{padding:0}
+ .brand-row{min-height:52px;padding:6px 12px}
+ .brand-row .brand{font-size:17px}
+ .brand-row .brand-mark{width:31px;height:31px}
+ .header-tools{min-height:48px;padding:6px 10px;gap:9px}
+ .header-tools nav{width:auto;flex:1;min-width:0;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;gap:14px;padding:4px 1px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .header-tools nav::-webkit-scrollbar{display:none}
+ .header-tools nav a{font-size:11px}
+ .header-tools nav .header-merchant-cta{padding:7px 10px;font-size:11px}
+ .header-tools .language-picker select{font-size:11px;padding:6px 5px;max-width:66px}
+ .header-tools .theme-toggle{min-height:31px;padding:4px 6px;font-size:9px;gap:3px}
+ .header-tools .theme-toggle-icon{font-size:13px}
+}
+html[data-theme="dark"] .brand-row,html[data-theme="system"] .brand-row{background:#fff}
+html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .brand{color:#101827}
