@@ -355,10 +355,20 @@ async function init(){
   if(subscriptionPanel)subscriptionPanel.hidden=location.hash!=="#subscription";
  };
  syncSubscriptionPanel();
- document.querySelectorAll('.dashboard-sidebar .side-link[href^="#"]').forEach(link=>{
+ const subscriptionLink=document.querySelector('.dashboard-sidebar a[href="#subscription"]');
+ if(subscriptionLink&&subscriptionPanel){
+  subscriptionLink.addEventListener("click",event=>{
+   event.preventDefault();
+   subscriptionPanel.hidden=false;
+   document.querySelectorAll(".dashboard-sidebar .side-link").forEach(link=>link.classList.toggle("active",link===subscriptionLink));
+   if(location.hash!=="#subscription")history.replaceState(null,"","#subscription");
+   requestAnimationFrame(()=>subscriptionPanel.scrollIntoView({behavior:"smooth",block:"start"}));
+  });
+ }
+ document.querySelectorAll('.dashboard-sidebar .side-link[href^="#"]:not([href="#subscription"])').forEach(link=>{
   link.addEventListener("click",()=>{
-   const opensSubscription=link.getAttribute("href")==="#subscription";
-   if(subscriptionPanel)subscriptionPanel.hidden=!opensSubscription;
+   if(subscriptionPanel)subscriptionPanel.hidden=true;
+   document.querySelectorAll(".dashboard-sidebar .side-link").forEach(item=>item.classList.toggle("active",item===link));
   });
  });
  window.addEventListener("hashchange",syncSubscriptionPanel);
