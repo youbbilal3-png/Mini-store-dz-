@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "Mini Store DZ",
+  "short_name": "Mini Store",
+  "description": "اكتشف المتاجر والمنتجات وأنشئ متجرك الإلكتروني بسهولة.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#101827",
+  "theme_color": "#101827",
+  "icons": [
+    {
+      "src": "./app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
