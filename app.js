@@ -35,6 +35,13 @@ Object.assign(translations.es,{whatsappUs:"Contactar con la tienda por WhatsApp"
 Object.assign(translations.de,{whatsappUs:"Shop über WhatsApp kontaktieren",whatsappUnavailable:"Dieser Shop hat noch keine WhatsApp-Nummer hinzugefügt"});
 Object.assign(translations.tr,{whatsappUs:"WhatsApp üzerinden mağazayla iletişime geç",whatsappUnavailable:"Bu mağaza henüz bir WhatsApp numarası eklemedi"});
 
+Object.assign(translations.ar,{referralEyebrow:"شارك واربح",referralTitle:"ادعُ أصدقاءك إلى Mini Store DZ",referralDescription:"شارك رابطك الخاص، واجمع شارات مميزة مع كل تسجيل مؤكد من أصدقائك.",referralCTA:"ابدأ الدعوة"});
+Object.assign(translations.fr,{referralEyebrow:"Partagez et gagnez",referralTitle:"Invitez vos amis sur Mini Store DZ",referralDescription:"Partagez votre lien personnel et gagnez des badges à chaque inscription confirmée.",referralCTA:"Commencer"});
+Object.assign(translations.en,{referralEyebrow:"SHARE & EARN",referralTitle:"Invite friends to Mini Store DZ",referralDescription:"Share your personal link and earn special badges for every confirmed signup.",referralCTA:"Start inviting"});
+Object.assign(translations.es,{referralEyebrow:"Comparte y gana",referralTitle:"Invita a tus amigos a Mini Store DZ",referralDescription:"Comparte tu enlace personal y consigue insignias por cada registro confirmado.",referralCTA:"Empezar"});
+Object.assign(translations.de,{referralEyebrow:"Teilen und verdienen",referralTitle:"Lade Freunde zu Mini Store DZ ein",referralDescription:"Teile deinen persönlichen Link und erhalte Abzeichen für jede bestätigte Registrierung.",referralCTA:"Jetzt einladen"});
+Object.assign(translations.tr,{referralEyebrow:"Paylaş ve kazan",referralTitle:"Arkadaşlarını Mini Store DZ'ye davet et",referralDescription:"Kişisel bağlantını paylaş ve onaylanan her kayıt için özel rozetler kazan.",referralCTA:"Davet etmeye başla"});
+
 const el=id=>document.getElementById(id);
 const isPlatformHome=!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"));
 
