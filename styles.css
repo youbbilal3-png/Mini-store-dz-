@@ -280,7 +280,8 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
 .info-dialog-card .about-section,.info-dialog-card .contact-section{display:flex!important;padding:0!important;margin:0!important;flex-direction:column;align-items:stretch;gap:12px;background:transparent!important}
 .info-dialog-card .about-section>div,.info-dialog-card .contact-section>div{max-width:none}
 .info-dialog-card .about-section p,.info-dialog-card .contact-section p{max-width:none}
-.info-dialog-card .order-close{position:absolute;top:12px;left:12px;right:auto;z-index:2}
+.info-dialog-card{position:relative!important;padding:54px 24px 24px!important}
+.info-dialog-card .order-close{position:absolute!important;top:14px!important;left:14px!important;right:auto!important;inset-inline-start:auto!important;inset-inline-end:auto!important;z-index:5!important;margin:0!important}
 html[data-theme="dark"] .info-dialog-card,html[data-theme="system"] .info-dialog-card{background:#172536;color:#edf2f7}
 html[data-theme="dark"] .info-dialog-card .contact-email a,html[data-theme="system"] .info-dialog-card .contact-email a{color:#edf2f7}
 @media(max-width:600px){.header-tools nav .header-icon-link{width:29px;height:29px;flex-basis:29px;font-size:17px}.info-dialog-card{padding:28px 18px 20px}}
