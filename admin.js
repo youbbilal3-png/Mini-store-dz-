@@ -91,7 +91,7 @@ async function loadSponsoredAds(){
  const rows=data||[],box=$("sponsoredAdsAdminList");
  box.innerHTML=rows.length?rows.map(ad=>{
   const state=ad.status==="active"?"نشط":ad.status==="paused"?"متوقف":"مسودة";
-  return '<article class="admin-record-card"><h3>'+esc(ad.title)+'</h3><p><a href="'+esc(safeHttps(ad.target_url))+'" target="_blank" rel="noopener">فتح رابط الإعلان</a></p><p class="admin-record-meta">من '+date(ad.starts_at)+' إلى '+date(ad.ends_at)+' · الحالة: '+state+'</p><p class="admin-record-meta">رابط الصورة: '+esc(ad.image_url)+'</p><div class="admin-record-actions"><button class="admin-action" data-toggle-ad="'+ad.id+'" data-next-status="'+(ad.status==="active"?"paused":"active")+'">'+(ad.status==="active"?"إيقاف الإعلان":"تفعيل الإعلان")+'</button><button class="admin-action danger" data-delete-ad="'+ad.id+'">حذف</button></div></article>';
+  return '<article class="admin-record-card"><h3>'+esc(ad.title)+'</h3><p>المعلن: '+esc(ad.advertiser_name||"—")+' · السعر: '+Number(ad.amount_dzd||0).toLocaleString()+' دج · الدفع: '+(ad.payment_status==="paid"?"مدفوع":"بانتظار الدفع")+'</p><p><a href="'+esc(safeHttps(ad.target_url))+'" target="_blank" rel="noopener">فتح رابط الإعلان</a></p><p class="admin-record-meta">من '+date(ad.starts_at)+' إلى '+date(ad.ends_at)+' · الحالة: '+state+'</p><p class="admin-record-meta">رابط الصورة: '+esc(ad.image_url)+'</p><div class="admin-record-actions"><button class="admin-action" data-toggle-ad="'+ad.id+'" data-next-status="'+(ad.status==="active"?"paused":"active")+'">'+(ad.status==="active"?"إيقاف الإعلان":"تفعيل الإعلان")+'</button><button class="admin-action" data-toggle-ad-payment="'+ad.id+'" data-next-payment="'+(ad.payment_status==="paid"?"pending":"paid")+'">'+(ad.payment_status==="paid"?"إعادة إلى غير مدفوع":"تأكيد استلام الدفع")+'</button><button class="admin-action danger" data-delete-ad="'+ad.id+'">حذف</button></div></article>';
  }).join(""):'<div class="admin-empty">لا توجد إعلانات بعد. أضف أول إعلان من النموذج أعلاه.</div>';
 }
 async function createSponsoredAd(event){
@@ -104,7 +104,8 @@ async function createSponsoredAd(event){
  button.disabled=true;feedback.textContent="جارٍ حفظ الإعلان...";
  try{
   const {data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;
-  const {error}=await supabase.from("sponsored_ads").insert({title:$("adTitle").value.trim(),image_url:image,target_url:target,starts_at:start.toISOString(),ends_at:end.toISOString(),status:"active",created_by:userData.user.id});
+  const amount=Number($("adAmount").value);if(!Number.isInteger(amount)||amount<0)throw new Error("أدخل سعراً صحيحاً بالدينار الجزائري.");
+  const {error}=await supabase.from("sponsored_ads").insert({advertiser_name:$("adAdvertiser").value.trim(),title:$("adTitle").value.trim(),amount_dzd:amount,image_url:image,target_url:target,starts_at:start.toISOString(),ends_at:end.toISOString(),status:"active",payment_status:"pending",created_by:userData.user.id});
   if(error)throw error;
   $("sponsoredAdForm").reset();feedback.textContent="تمت إضافة الإعلان بنجاح.";await loadSponsoredAds();
  }catch(e){feedback.textContent="تعذر حفظ الإعلان: "+e.message;}
@@ -142,6 +143,8 @@ document.addEventListener("click",async event=>{
   try{const {error}=await supabase.rpc("admin_review_featured_store_request",{p_request_id:id,p_decision:decision,p_admin_note:note||null});if(error)throw error;say(decision==="approved"?"تمت الموافقة وإبراز المتجر لمدة 7 أيام.":"تم رفض طلب التمييز.");await refreshAll();}catch(e){say(e.message,true);}finally{featured.disabled=false;}return;}
  const toggleAd=event.target.closest("[data-toggle-ad]");
  if(toggleAd){toggleAd.disabled=true;try{const {error}=await supabase.from("sponsored_ads").update({status:toggleAd.dataset.nextStatus}).eq("id",toggleAd.dataset.toggleAd);if(error)throw error;say(toggleAd.dataset.nextStatus==="active"?"تم تفعيل الإعلان.":"تم إيقاف الإعلان.");await loadSponsoredAds();}catch(e){say("تعذر تحديث الإعلان: "+e.message,true);}finally{toggleAd.disabled=false;}return;}
+ const paymentAd=event.target.closest("[data-toggle-ad-payment]");
+ if(paymentAd){paymentAd.disabled=true;try{const {error}=await supabase.from("sponsored_ads").update({payment_status:paymentAd.dataset.nextPayment}).eq("id",paymentAd.dataset.toggleAdPayment);if(error)throw error;say(paymentAd.dataset.nextPayment==="paid"?"تم تسجيل استلام قيمة الإعلان.":"تم تحديث حالة الدفع.");await loadSponsoredAds();}catch(e){say("تعذر تحديث الدفع: "+e.message,true);}finally{paymentAd.disabled=false;}return;}
  const deleteAd=event.target.closest("[data-delete-ad]");
  if(deleteAd){if(!confirm("هل تريد حذف هذا الإعلان نهائياً؟"))return;deleteAd.disabled=true;try{const {error}=await supabase.from("sponsored_ads").delete().eq("id",deleteAd.dataset.deleteAd);if(error)throw error;say("تم حذف الإعلان.");await loadSponsoredAds();}catch(e){say("تعذر حذف الإعلان: "+e.message,true);}finally{deleteAd.disabled=false;}return;}
  const msg=event.target.closest("[data-save-support]");
