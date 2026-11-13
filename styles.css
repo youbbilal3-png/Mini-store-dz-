@@ -546,3 +546,33 @@ html.language-loading body{visibility:hidden}
  .home-promos-row .referral-promo-section,
  .home-promos-row .featured-promo-section{min-height:0}
 }
+
+
+/* Homepage hero: concise platform introduction beside the product showcase */
+.hero{align-items:stretch}
+.hero-copy{flex:1 1 0;max-width:560px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.hero-intro-card{padding:24px 26px;border:1px solid #d8e8c7;border-radius:22px;background:linear-gradient(145deg,#ffffff 0%,#f1f8e8 100%);color:#17251a;box-shadow:0 14px 34px #10182712;position:relative;overflow:hidden}
+.hero-intro-card:before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:5px;background:linear-gradient(180deg,#b7e36f,#5f922c)}
+.hero-intro-kicker{display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;background:#e6f3d7;color:#527d25;font-size:11px;font-weight:900;letter-spacing:.02em}
+.hero-intro-card h1{font-size:clamp(24px,3vw,36px);line-height:1.35;margin:12px 0 8px;color:#17251a}
+.hero-intro-card p{margin:0;color:#52614d;font-size:13px;line-height:1.85;max-width:500px}
+.hero-intro-points{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.hero-intro-points>span{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #dce9d0;border-radius:10px;background:#ffffffc9;color:#31452a;font-size:11px;font-weight:800}
+.hero-intro-points b{font-size:15px;font-weight:400}
+.hero-copy>.primary-btn{align-self:flex-start}
+html[dir="ltr"] .hero-copy>.primary-btn{align-self:flex-start}
+html[data-theme="dark"] .hero-intro-card{background:linear-gradient(145deg,#172536,#203328);border-color:#3d5940;color:#edf2f7}
+html[data-theme="dark"] .hero-intro-card h1{color:#edf2f7}
+html[data-theme="dark"] .hero-intro-card p{color:#c0cfbd}
+html[data-theme="dark"] .hero-intro-points>span{background:#1b2b27;border-color:#3d5940;color:#e4efdc}
+html[data-theme="dark"] .hero-intro-kicker{background:#2b432b;color:#c9e89b}
+@media(max-width:760px){
+ .hero{align-items:stretch}
+ .hero-copy{max-width:none;width:100%;gap:12px}
+ .hero-intro-card{padding:17px 18px;border-radius:17px}
+ .hero-intro-card h1{font-size:clamp(22px,5.7vw,30px);margin:8px 0 6px}
+ .hero-intro-card p{font-size:12px;line-height:1.7}
+ .hero-intro-points{gap:6px;margin-top:12px}
+ .hero-intro-points>span{font-size:10px;padding:6px 8px}
+ .hero-copy>.primary-btn{align-self:stretch;text-align:center}
+}
