@@ -241,6 +241,19 @@ async function togglePublish(){
 }
 async function init(){
  initDashboardTheme();
+ // Register controls before waiting for Supabase; slow requests must not disable the dashboard.
+ $("saveProfile").addEventListener("click",saveProfile);
+ $("avatarUpload").addEventListener("change",uploadAvatar);
+ $("removeAvatar").addEventListener("click",removeAvatar);
+ $("productForm").addEventListener("submit",saveProduct);
+ $("productCategory").addEventListener("change",syncCustomCategory);
+ $("managedProducts").addEventListener("click",manageProductClick);
+ $("managedOrders").addEventListener("change",updateOrderStatus);
+ $("managedReviews").addEventListener("click",moderateReview);
+ $("cancelEdit").addEventListener("click",resetProductForm);
+ $("publishStore").addEventListener("click",togglePublish);
+ $("copyStoreLink").addEventListener("click",copyStoreLink);
+ $("dashYear").textContent=new Date().getFullYear();
  // Render the seven-day chart immediately; it must not wait for auth/store network requests.
  renderDailyCharts();
  const logoutButton=$("logoutButton");
@@ -277,18 +290,7 @@ async function init(){
   $("storeStatus").textContent="تعذر تحميل بيانات المتجر";
   message("profileFeedback",error.message||"تحقق من الاتصال ثم أعد المحاولة.");
  }
- $("saveProfile").addEventListener("click",saveProfile);
- $("avatarUpload").addEventListener("change",uploadAvatar);
- $("removeAvatar").addEventListener("click",removeAvatar);
- $("productForm").addEventListener("submit",saveProduct);
- $("productCategory").addEventListener("change",syncCustomCategory);
- $("managedProducts").addEventListener("click",manageProductClick);
- $("managedOrders").addEventListener("change",updateOrderStatus);
- $("managedReviews").addEventListener("click",moderateReview);
- $("cancelEdit").addEventListener("click",resetProductForm);
- $("publishStore").addEventListener("click",togglePublish);
- $("copyStoreLink").addEventListener("click",copyStoreLink);
- $("dashYear").textContent=new Date().getFullYear();
+ 
 }
 document.addEventListener("msdz-language-changed",()=>{if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();});
 init();
