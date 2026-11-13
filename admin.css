@@ -5,3 +5,11 @@
 
 .admin-featured-highlight{border-color:#9a7b35;background:linear-gradient(120deg,#1c2b3e,#2b2a20)}
 .admin-tabs [data-admin-tab="featured"]{border-color:#9a7b35}
+
+.admin-ad-form{display:grid;gap:12px;padding:16px;background:#17243a;border:1px solid #30435e;border-radius:14px;margin-bottom:22px}
+.admin-ad-form label{display:grid;gap:6px;color:#b9c9dc;font-size:13px}
+.admin-ad-form input{width:100%;background:#0b1525;border:1px solid #344760;border-radius:9px;padding:11px;color:#fff;min-width:0}
+.admin-ad-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.admin-ad-form .admin-action{justify-self:start}
+.admin-ad-list-title{margin:20px 0 12px}
+@media(max-width:600px){.admin-ad-dates{grid-template-columns:1fr}}
