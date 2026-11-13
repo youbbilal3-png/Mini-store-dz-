@@ -100,3 +100,34 @@ html[data-theme="dark"] .dashboard-page .theme-toggle{background:#172536;color:#
  html[data-theme="system"] .dashboard-page .text-button{color:#c0cad5}
  html[data-theme="system"] .dashboard-page .theme-toggle{background:#172536;color:#edf2f7;border-color:#34485d}
 }
+
+
+/* Merchant subscription plans */
+.subscription-panel{scroll-margin-top:90px}
+.subscription-status{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:#edf7df;color:#3f6c1b;font-size:12px;font-weight:800}
+.subscription-current{margin:18px 0;padding:14px 16px;border:1px solid #dce8d3;border-radius:14px;background:#f7fbf2;color:#263b1b;font-size:14px;line-height:1.8}
+.billing-cycle-switch{display:flex;gap:7px;width:max-content;max-width:100%;padding:5px;border-radius:12px;background:#f0f3f5;margin:18px 0}
+.billing-cycle-switch button{border:0;border-radius:9px;background:transparent;padding:9px 16px;font:inherit;font-size:13px;font-weight:750;color:#56616c;cursor:pointer}
+.billing-cycle-switch button.active{background:#fff;color:#244e13;box-shadow:0 1px 5px #00000014}
+.subscription-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.subscription-card{border:1px solid #e0e5e9;border-radius:16px;padding:19px;background:#fff;display:flex;flex-direction:column;min-width:0}
+.subscription-card h3{font-size:20px;margin:10px 0}
+.subscription-card p{font-size:13px;color:#687582;min-height:38px;line-height:1.6}
+.subscription-card .plan-label{font-size:11px;letter-spacing:1.5px;font-weight:900;color:#66814b}
+.subscription-card .plan-price{font-size:29px;font-weight:900;margin:8px 0}
+.subscription-card .plan-price small{font-size:12px;font-weight:600;color:#71808b}
+.subscription-card ul{padding-inline-start:20px;line-height:2.1;font-size:13px;flex:1}
+.subscription-card .plan-trial-button{margin-top:14px;width:100%;min-height:44px}
+.subscription-card .plan-current{display:block;margin-top:14px;padding:11px;text-align:center;border-radius:10px;background:#f0f3f5;font-size:12px;font-weight:800}
+.plan-pro{border-color:#a9ce83;box-shadow:0 8px 24px #588d2510}
+.plan-premium{border-color:#d7c58e}
+.subscription-note{font-size:12px;color:#74808b;line-height:1.8;margin-top:15px}
+.plan-trial-button:disabled{opacity:.55;cursor:not-allowed}
+html[data-theme="dark"] .dashboard-page .subscription-card{background:#172536;color:#edf2f7;border-color:#34485d}
+html[data-theme="dark"] .dashboard-page .subscription-card p,html[data-theme="dark"] .dashboard-page .subscription-note{color:#aebdca}
+html[data-theme="dark"] .dashboard-page .subscription-current{background:#1d3024;color:#d9edc6;border-color:#38533a}
+html[data-theme="dark"] .dashboard-page .billing-cycle-switch{background:#0f1a27}
+html[data-theme="dark"] .dashboard-page .billing-cycle-switch button{color:#c6d0da}
+html[data-theme="dark"] .dashboard-page .billing-cycle-switch button.active{background:#26394b;color:#d7f3ad}
+html[data-theme="dark"] .dashboard-page .subscription-card .plan-current{background:#26394b;color:#edf2f7}
+@media(max-width:800px){.subscription-cards{grid-template-columns:1fr}.subscription-card p{min-height:0}.subscription-card{padding:17px}.billing-cycle-switch{width:100%}.billing-cycle-switch button{flex:1;padding-inline:8px}}
