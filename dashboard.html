@@ -5,17 +5,17 @@
 <meta name="theme-color" content="#101827"><meta name="description" content="Mini Store DZ merchant dashboard">
 <title>لوحة التاجر | Mini Store DZ</title>
 <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="dashboard.css">
-<script src="dashboard.js" defer></script>
+<script type="module" src="dashboard.js"></script>
 </head>
 <body class="dashboard-page">
 <header class="site-header dashboard-header">
 <a class="brand" href="index.html"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
-<div class="dashboard-header-actions"><span class="dashboard-tag">Merchant Studio</span><a class="dashboard-back" href="index.html">عرض المتجر ↗</a></div>
+<div class="dashboard-header-actions"><span class="dashboard-tag" id="accountEmail">Merchant Studio</span><a class="dashboard-back" id="storeLink" href="index.html">عرض المتجر ↗</a><button class="text-button" id="logoutButton" type="button">تسجيل الخروج</button></div>
 </header>
 <main class="dashboard-main">
 <section class="dashboard-welcome">
 <div><span class="eyebrow">MINI STORE DZ · MERCHANT AREA</span><h1>لوحة تحكم التاجر</h1><p>أدر بيانات متجرك ومنتجاتك من مكان واحد.</p></div>
-<div class="dashboard-status"><span class="status-dot"></span> وضع تجريبي على هذا الجهاز</div>
+<div class="dashboard-status"><span class="status-dot"></span> <span id="storeStatus">متصل بقاعدة البيانات</span></div>
 </section>
 <div class="dashboard-grid">
 <aside class="dashboard-sidebar">
@@ -23,7 +23,7 @@
 <a class="side-link" href="#store">🏪 إعدادات المتجر</a>
 <a class="side-link" href="#products">📦 المنتجات</a>
 <a class="side-link" href="index.html">🌐 صفحة المتجر</a>
-<div class="sidebar-note"><strong>معلومة</strong><p>التغييرات تحفظ في هذا المتصفح فقط في النسخة التجريبية.</p></div>
+<div class="sidebar-note"><strong>متجرك على السحابة</strong><p>بياناتك محفوظة في حسابك ويمكنك الوصول إليها من أي جهاز بعد تسجيل الدخول.</p></div>
 </aside>
 <div class="dashboard-content">
 <section class="dash-panel" id="profile">
@@ -42,7 +42,7 @@
 <label>اسم المتجر<input id="storeNameInput" type="text" maxlength="60" placeholder="اسم متجرك"></label>
 <label>رقم WhatsApp<input id="whatsappInput" type="tel" inputmode="numeric" placeholder="213XXXXXXXXX"><small>اكتب رمز الدولة ثم الرقم، دون + أو مسافات.</small></label>
 </div>
-<div class="panel-actions"><button class="save-button" id="saveProfile" type="button">حفظ بيانات المتجر</button><span class="save-feedback" id="profileFeedback" role="status"></span></div>
+<div class="panel-actions"><button class="save-button" id="saveProfile" type="button">حفظ بيانات المتجر</button><button class="cancel-button" id="publishStore" type="button">نشر المتجر</button><span class="save-feedback" id="profileFeedback" role="status"></span></div>
 </section>
 <section class="dash-panel" id="products">
 <div class="panel-heading products-heading"><div><span class="eyebrow">PRODUCT MANAGEMENT</span><h2>إدارة المنتجات</h2><p>أضف منتجاً جديداً أو عدّل المنتجات الموجودة.</p></div><span class="products-total" id="productsTotal">0 منتج</span></div>
@@ -53,7 +53,7 @@
 <label>التصنيف<input id="productCategory" required maxlength="40" placeholder="إلكترونيات"></label>
 <label>السعر بالدينار<input id="productPrice" required type="number" min="0" step="1" inputmode="numeric" placeholder="3500"></label>
 <label>رمز تعبيري للمنتج<input id="productEmoji" maxlength="8" value="📦" placeholder="📦"></label>
-<label class="full-field">وصف المنتج<textarea id="productDescription" rows="2" maxlength="180" placeholder="اكتب وصفاً قصيراً للمنتج"></textarea></label>
+<label class="full-field">وصف المنتج<textarea id="productDescription" rows="2" maxlength="180" placeholder="اكتب وصفاً قصيراً للمنتج"></textarea></label><label class="full-field">صورة المنتج<input id="productImage" type="file" accept="image/jpeg,image/png,image/webp"><small>JPEG أو PNG أو WebP، حتى 5 ميغابايت.</small></label>
 </div>
 <div class="panel-actions"><button class="save-button" id="productSubmit" type="submit">＋ إضافة المنتج</button><button class="cancel-button" id="cancelEdit" type="button" hidden>إلغاء التعديل</button><span class="save-feedback" id="productFeedback" role="status"></span></div>
 </form>
