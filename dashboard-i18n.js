@@ -60,6 +60,7 @@
       }
     }
     if (lang === "ar") return raw.replace(trimmed, ar);
+    if (lang === "es" || lang === "de" || lang === "tr") lang = "en";
     let out = ar;
     for (const [source, translated] of Object.entries(dictionaries[lang]).sort((a,b)=>b[0].length-a[0].length)) {
       if (out === source) { out = translated; break; }
@@ -80,22 +81,22 @@
     });
   };
   const apply = (next) => {
-    lang = ["ar","fr","en"].includes(next) ? next : "ar";
+    lang = ["ar","fr","en","es","de","tr"].includes(next) ? next : "ar";
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    document.title = lang === "fr" ? "Tableau de bord vendeur | Mini Store DZ" : lang === "en" ? "Merchant dashboard | Mini Store DZ" : "لوحة التاجر | Mini Store DZ";
+    document.title = lang === "fr" ? "Tableau de bord vendeur | Mini Store DZ" : lang === "en" ? "Merchant dashboard | Mini Store DZ" : lang === "es" ? "Panel del vendedor | Mini Store DZ" : lang === "de" ? "Händler-Dashboard | Mini Store DZ" : lang === "tr" ? "Satıcı paneli | Mini Store DZ" : "لوحة التاجر | Mini Store DZ";
     translateElement(document.body);
     const picker = document.getElementById("dashboardLanguageSelect");
     if (picker) picker.value = lang;
     try { localStorage.setItem("msdz-language", lang); } catch (_) {}
   };
   document.addEventListener("DOMContentLoaded", () => {
-    try { const saved = localStorage.getItem("msdz-language"); lang = ["ar","fr","en"].includes(saved) ? saved : "ar"; } catch (_) {}
+    try { const saved = localStorage.getItem("msdz-language"); lang = ["ar","fr","en","es","de","tr"].includes(saved) ? saved : "ar"; } catch (_) {}
     const actions = document.querySelector(".dashboard-header-actions");
     if (actions && !document.getElementById("dashboardLanguageSelect")) {
       const label = document.createElement("label");
       label.className = "language-picker";
-      label.innerHTML = '<span class="sr-only">Language</span><select id="dashboardLanguageSelect" aria-label="Choose language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option></select>';
+      label.innerHTML = '<span class="sr-only">Language</span><select id="dashboardLanguageSelect" aria-label="Choose language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option><option value="es">Español</option><option value="de">Deutsch</option><option value="tr">Türkçe</option></select>';
       actions.insertBefore(label, actions.firstChild);
       label.querySelector("select").addEventListener("change", e => apply(e.target.value));
     }
