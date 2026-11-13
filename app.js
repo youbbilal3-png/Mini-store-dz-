@@ -197,5 +197,6 @@ el("checkoutCartButton").addEventListener("click",()=>{el("cartDialog").close();
 el("customerOrderForm").addEventListener("submit",submitCustomerOrder);el("customerReviewForm").addEventListener("submit",submitCustomerReview);el("closeOrderDialog").addEventListener("click",()=>el("orderDialog").close());
 
 document.addEventListener("dblclick",e=>{if(e.target.closest("input,textarea,select"))return;e.preventDefault();},{passive:false});
-document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});\nel("year").textContent=new Date().getFullYear();
+document.addEventListener("gesturestart",e=>e.preventDefault(),{passive:false});
+el("year").textContent=new Date().getFullYear();
 await loadStore();applyLanguage();updateCartButton();await loadPublicReviews();
