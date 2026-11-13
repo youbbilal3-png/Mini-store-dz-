@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ar" dir="rtl" translate="no">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827"><meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="app-icon.svg" type="image/svg+xml">
+<title>لوحة إدارة Mini Store DZ</title>
+<link rel="stylesheet" href="styles.css?v=20261113-22"><link rel="stylesheet" href="admin.css?v=20261113-1">
+<script>try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
+<script type="module" src="admin.js?v=20261113-1"></script>
+<script defer src="pwa.js?v=20261113-2"></script>
+</head>
+<body class="admin-page">
+<header class="site-header admin-header">
+<a class="brand" href="index.html"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
+<div class="admin-header-actions"><span class="admin-owner-pill">OWNER CONTROL</span><span id="adminEmail"></span><a class="admin-back" href="dashboard.html">لوحة التاجر</a><button id="adminLogout" class="text-button" type="button">تسجيل الخروج</button></div>
+</header>
+<main class="admin-main">
+<section class="admin-welcome"><div><span class="eyebrow">MINI STORE DZ · ADMINISTRATION</span><h1>لوحة إدارة المنصة</h1><p>إدارة التجار والاشتراكات والدعم من حساب المالك.</p></div><button id="refreshAdmin" class="secondary-btn" type="button">تحديث البيانات ↻</button></section>
+<div id="adminNotice" class="admin-notice" role="status">جارٍ التحقق من صلاحيات المالك...</div>
+<section id="adminApp" hidden>
+<div class="admin-stats" id="adminStats">
+<article><span>👥</span><small>الحسابات</small><strong id="statMerchants">—</strong></article>
+<article><span>🏪</span><small>المتاجر</small><strong id="statStores">—</strong></article>
+<article><span>📦</span><small>المنتجات</small><strong id="statProducts">—</strong></article>
+<article><span>🧾</span><small>الطلبات</small><strong id="statOrders">—</strong></article>
+<article><span>💳</span><small>دفعات معلّقة</small><strong id="statPayments">—</strong></article>
+<article><span>💬</span><small>رسائل دعم مفتوحة</small><strong id="statSupport">—</strong></article>
+</div>
+<nav class="admin-tabs" aria-label="أقسام الإدارة">
+<button class="active" data-admin-tab="overview" type="button">نظرة عامة</button>
+<button data-admin-tab="merchants" type="button">التجار والاشتراكات</button>
+<button data-admin-tab="payments" type="button">طلبات الدفع <b id="paymentBadge">0</b></button>
+<button data-admin-tab="support" type="button">الدعم الفني <b id="supportBadge">0</b></button>
+</nav>
+<section class="admin-panel active" id="admin-overview">
+<div class="admin-panel-heading"><div><h2>ملخص المنصة</h2><p>إحصائيات محدثة من قاعدة البيانات.</p></div></div>
+<div class="admin-overview-grid">
+<article><h3>المتاجر المنشورة</h3><strong id="statPublished">—</strong></article>
+<article><h3>الاشتراكات المدفوعة أو التجريبية</h3><strong id="statSubscriptions">—</strong></article>
+</div>
+<p class="admin-hint">هذه اللوحة مرتبطة بحساب المالك الحالي. لا يستطيع التاجر فتحها بمجرد معرفة رابطها؛ يتم التحقق من الصلاحية داخل قاعدة البيانات أيضاً.</p>
+</section>
+<section class="admin-panel" id="admin-merchants">
+<div class="admin-panel-heading"><div><h2>التجار والاشتراكات</h2><p>عرض حسابات التجار والتحكم في الخطة والمدة.</p></div><input id="merchantSearch" type="search" placeholder="ابحث بالبريد أو اسم المتجر"></div>
+<div class="admin-table-wrap"><table><thead><tr><th>التاجر</th><th>المتجر</th><th>الخطة</th><th>الحالة</th><th>نهاية الاشتراك</th><th>إجراء</th></tr></thead><tbody id="merchantsBody"><tr><td colspan="6">جارٍ التحميل...</td></tr></tbody></table></div>
+</section>
+<section class="admin-panel" id="admin-payments">
+<div class="admin-panel-heading"><div><h2>طلبات دفع الاشتراك</h2><p>راجع بيانات التحويل قبل اعتماد أي طلب.</p></div></div>
+<div id="paymentsList" class="admin-record-list">جارٍ التحميل...</div>
+</section>
+<section class="admin-panel" id="admin-support">
+<div class="admin-panel-heading"><div><h2>مركز الدعم الفني</h2><p>استقبل رسائل التجار وأجب عنها وتابع حالتها.</p></div></div>
+<div id="supportList" class="admin-record-list">جارٍ التحميل...</div>
+</section>
+</section>
+</main>
+<footer class="admin-footer">Mini Store DZ · Owner Administration</footer>
+</body></html>
