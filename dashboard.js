@@ -173,13 +173,19 @@ function renderProducts(){
   $("managedProducts").innerHTML=products.map(p=>{const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;const qty=tracked?Number(p.stock_quantity):null;const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";const stockClass=tracked&&qty<=5?"stock-low":"";return '<article class="managed-product"><div class="managed-product-emoji">'+(p.image_url?'<img src="'+escapeHtml(p.image_url)+'" alt="" loading="lazy">':escapeHtml(p.emoji||"📦"))+'</div><div class="managed-product-info"><strong>'+escapeHtml(p.name)+'</strong><span>'+escapeHtml(p.category||"عام")+' · '+Number(p.price||0).toLocaleString("ar-DZ")+' دج · <b class="'+stockClass+'">'+stockLabel+'</b></span></div><div class="managed-product-actions"><button type="button" data-edit="'+p.id+'">تعديل</button><button type="button" class="delete-product" data-delete="'+p.id+'">حذف</button></div></article>';}).join("");
 }
 async function saveProduct(event){
- event.preventDefault();const id=$("editingProductId").value;const file=$("productImage").files?.[0];
+ event.preventDefault();const id=$("editingProductId").value;const files=Array.from($("productImage").files||[]);
  const selectedCategory=$("productCategory").value;const category=selectedCategory==="أخرى"?$("customProductCategory").value.trim():selectedCategory;
  const stockValue=$("productStock").value.trim();const item={store_id:store.id,name:$("productName").value.trim(),category,price:Number($("productPrice").value),description:$("productDescription").value.trim(),currency:"DZD",is_active:true,stock_quantity:stockValue===""?null:Number(stockValue)};
  if(!item.name||!item.category||!Number.isFinite(item.price)||item.price<0)return;
  $("productSubmit").disabled=true;message("productFeedback","جارٍ حفظ المنتج...");
  try{
-  if(file)item.image_url=await uploadImage(file,"product-images","products",5*1024*1024);
+  const existingProduct=id?products.find(p=>p.id===id):null;
+  const existingImages=existingProduct?(existingProduct.image_urls||[existingProduct.image_url].filter(Boolean)):[];
+  if(existingImages.length+files.length>5)throw new Error("يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.");
+  const uploadedImages=[];
+  for(const file of files)uploadedImages.push(await uploadImage(file,"product-images","products",5*1024*1024));
+  item.image_urls=[...existingImages,...uploadedImages];
+  item.image_url=item.image_urls[0]||null;
   if(id){
    const {error}=await supabase.from("products").update(item).eq("id",id).eq("store_id",store.id);if(error)throw error;
    message("productFeedback","تم تحديث المنتج على السحابة.");
@@ -195,7 +201,7 @@ async function manageProductClick(event){
  const edit=event.target.closest("[data-edit]"),del=event.target.closest("[data-delete]");
  if(edit){
   const p=products.find(x=>x.id===edit.dataset.edit);if(!p)return;
-  $("editingProductId").value=p.id;$("productName").value=p.name;const knownCategory=Array.from($("productCategory").options).some(o=>o.value===p.category);$("productCategory").value=knownCategory?(p.category||""):"أخرى";$("customProductCategory").value=knownCategory?"":(p.category||"");syncCustomCategory();$("productPrice").value=p.price;$("productStock").value=p.stock_quantity??"";$("productDescription").value=p.description||"";$("productEmoji").value="📦";$("productSubmit").textContent="حفظ التعديلات";$("cancelEdit").hidden=false;$("productForm").scrollIntoView({behavior:"smooth",block:"center"});
+  $("editingProductId").value=p.id;$("productName").value=p.name;const knownCategory=Array.from($("productCategory").options).some(o=>o.value===p.category);$("productCategory").value=knownCategory?(p.category||""):"أخرى";$("customProductCategory").value=knownCategory?"":(p.category||"");syncCustomCategory();$("productPrice").value=p.price;$("productStock").value=p.stock_quantity??"";$("productDescription").value=p.description||"";$("productImage").value="";$("productEmoji").value="📦";$("productSubmit").textContent="حفظ التعديلات";$("cancelEdit").hidden=false;$("productForm").scrollIntoView({behavior:"smooth",block:"center"});
  }
  if(del){
   const p=products.find(x=>x.id===del.dataset.delete);if(!p||!confirm("هل تريد حذف المنتج: "+p.name+"؟"))return;
