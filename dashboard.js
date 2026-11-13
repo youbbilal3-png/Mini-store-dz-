@@ -1,5 +1,6 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
+function dashboardText(key){const lang=document.documentElement.lang||"ar";const words={shareStore:{ar:"شاهد متجري على Mini Store DZ: ",fr:"Découvrez ma boutique sur Mini Store DZ : ",en:"View my store on Mini Store DZ: ",es:"Visita mi tienda en Mini Store DZ: ",de:"Besuche meinen Shop auf Mini Store DZ: ",tr:"Mini Store DZ mağazamı ziyaret et: "},confirmDelete:{ar:"هل تريد حذف المنتج: ",fr:"Voulez-vous supprimer le produit : ",en:"Do you want to delete product: ",es:"¿Quieres eliminar el producto: ",de:"Möchtest du das Produkt löschen: ",tr:"Ürünü silmek istiyor musunuz: "},logoutError:{ar:"تعذر تسجيل الخروج. تحقق من الاتصال ثم حاول مجدداً.",fr:"Déconnexion impossible. Vérifiez votre connexion puis réessayez.",en:"Could not log out. Check your connection and try again.",es:"No se pudo cerrar la sesión. Comprueba tu conexión e inténtalo de nuevo.",de:"Abmeldung fehlgeschlagen. Prüfe deine Verbindung und versuche es erneut.",tr:"Çıkış yapılamadı. Bağlantınızı kontrol edip tekrar deneyin."}};return words[key]?.[lang]||words[key]?.ar||"";}
 function dashboardLocale(){const lang=document.documentElement.lang;return lang==="fr"?"fr-FR":lang==="en"?"en-GB":lang==="es"?"es-ES":lang==="de"?"de-DE":lang==="tr"?"tr-TR":"ar-DZ";}
 function applyDashboardTheme(mode){
  const selected=mode||"system";document.documentElement.dataset.theme=selected;
@@ -126,7 +127,7 @@ function fillSettings(){
  $("storeLink").href=publicUrl;
  const openPublicStore=$("openPublicStore");if(openPublicStore)openPublicStore.href=publicUrl;
  $("publicStoreSidebarLink").href=publicUrl;
- $("shareWhatsApp").href="https://wa.me/?text="+encodeURIComponent("شاهد متجري على Mini Store DZ: "+publicUrl);
+ $("shareWhatsApp").href="https://wa.me/?text="+encodeURIComponent(dashboardText("shareStore")+publicUrl);
  $("shareFacebook").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(publicUrl);
  $("publishStore").textContent=store.is_published?"إلغاء نشر المتجر":"نشر المتجر";
  $("storeStatus").textContent=store.is_published?"متجرك منشور للعامة":"متجرك خاص حتى تنشره";
@@ -221,7 +222,7 @@ async function manageProductClick(event){
   $("editingProductId").value=p.id;$("productName").value=p.name;const knownCategory=Array.from($("productCategory").options).some(o=>o.value===p.category);$("productCategory").value=knownCategory?(p.category||""):"أخرى";$("customProductCategory").value=knownCategory?"":(p.category||"");syncCustomCategory();$("productPrice").value=p.price;$("productStock").value=p.stock_quantity??"";$("productDescription").value=p.description||"";$("productImage").value="";$("productEmoji").value="📦";$("productSubmit").textContent="حفظ التعديلات";$("cancelEdit").hidden=false;$("productForm").scrollIntoView({behavior:"smooth",block:"center"});
  }
  if(del){
-  const p=products.find(x=>x.id===del.dataset.delete);if(!p||!confirm("هل تريد حذف المنتج: "+p.name+"؟"))return;
+  const p=products.find(x=>x.id===del.dataset.delete);if(!p||!confirm(dashboardText("confirmDelete")+p.name+"?"))return;
   const {error}=await supabase.from("products").delete().eq("id",p.id).eq("store_id",store.id);
   if(error){message("productFeedback",error.message);return;}
   products=products.filter(x=>x.id!==p.id);renderProducts();message("productFeedback","تم حذف المنتج.");
@@ -252,7 +253,7 @@ async function init(){
    console.error("Sign out failed:",error);
    logoutButton.disabled=false;
    logoutButton.textContent="تسجيل الخروج";
-   alert("تعذر تسجيل الخروج. تحقق من الاتصال ثم حاول مجدداً.");
+   alert(dashboardText("logoutError"));
   }
  });
  const {data:{session}}=await supabase.auth.getSession();
