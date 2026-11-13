@@ -6,17 +6,17 @@
 <meta name="theme-color" content="#101827">
 <meta name="description" content="Mini Store DZ — Simple online stores for everyone.">
 <title>Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-9">
+<link rel="stylesheet" href="styles.css?v=20261113-10">
 <script type="module" src="app.js?v=20261113-10"></script>
 </head>
 <body>
 <header class="site-header">
   <a class="brand" href="#" aria-label="Mini Store DZ home"><span class="brand-mark">M</span><span>Mini Store <b>DZ</b></span></a>
   <nav aria-label="Main navigation">
-    <a href="#featuredStoresSection" data-i18n="navProducts" id="navProducts">المنتجات</a>
+    <a href="#featuredStoresSection" data-i18n="navProducts" id="navProducts">تصفح المتاجر</a>
     <a href="#about" data-i18n="navAbout">من نحن</a>
     <a href="#contact" data-i18n="navContact">اتصل بنا</a>
-    <a href="auth.html">حساب التاجر</a>
+    <a class="header-merchant-cta" href="auth.html" data-i18n="joinMerchant">أنشئ متجرك</a>
   </nav>
   <label class="language-picker">
     <span class="sr-only" data-i18n="languageLabel">اللغة</span>
@@ -34,15 +34,17 @@
       <span class="eyebrow" data-i18n="eyebrow">متجرك يبدأ من هنا</span>
       <h1 data-i18n="heroTitle">اكتشف منتجاتك المفضلة<br><em>بسهولة وثقة</em></h1>
       <p data-i18n="heroText">تصفح منتجاتنا واختر ما يناسبك. اطلب مباشرة عبر واتساب.</p>
-      <a class="primary-btn" href="#products" data-i18n="browse">تصفح المنتجات</a>
+      <a class="primary-btn" id="browseButton" href="#featuredStoresSection" data-i18n="browse">تصفح المتاجر</a>
     </div>
     <div class="hero-product-showcase" id="heroShowcase" aria-label="منتجات مختارة تتغير تلقائياً">
       <div class="showcase-slide active"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85" alt="سماعات لاسلكية"><span class="showcase-caption"><b>اختيارات مميزة</b><small>تسوق بسهولة من Mini Store DZ</small></span></div>
       <div class="showcase-slide"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85" alt="ساعة أنيقة"><span class="showcase-caption"><b>اكتشف الجديد</b><small>منتجات متنوعة في مكان واحد</small></span></div>
       <div class="showcase-slide"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=85" alt="حذاء رياضي"><span class="showcase-caption"><b>تجربة تسوق أسهل</b><small>اعثر على ما يناسبك</small></span></div>
-      <div class="showcase-dots" id="showcaseDots"><button class="active" type="button" aria-label="الصورة الأولى"></button><button type="button" aria-label="الصورة الثانية"></button><button type="button" aria-label="الصورة الثالثة"></button></div>
+      <div class="showcase-slide"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1000&q=85" alt="حاسوب محمول"><span class="showcase-caption"><b>تقنية تلبي احتياجاتك</b><small>اكتشف خيارات متنوعة</small></span></div>
+      <div class="showcase-slide"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1000&q=85" alt="عطر"><span class="showcase-caption"><b>أناقة وتفاصيل جميلة</b><small>تسوق ما تحب بسهولة</small></span></div>
+      <div class="showcase-slide"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1000&q=85" alt="حقيبة"><span class="showcase-caption"><b>كل ما تحتاجه في مكان واحد</b><small>تصفح متاجر Mini Store DZ</small></span></div>
+      <div class="showcase-dots" id="showcaseDots"><button class="active" type="button" aria-label="الصورة الأولى"></button><button type="button" aria-label="الصورة الثانية"></button><button type="button" aria-label="الصورة الثالثة"></button><button type="button" aria-label="الصورة الرابعة"></button><button type="button" aria-label="الصورة الخامسة"></button><button type="button" aria-label="الصورة السادسة"></button></div>
     </div>
-ide>
   </section>
 
   <section class="home-benefits" aria-label="مميزات المنصة">
