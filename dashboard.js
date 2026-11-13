@@ -23,7 +23,7 @@ function fillSettings(){
  $("accountEmail").textContent=user.email||"حساب التاجر";
  const publicUrl=new URL("index.html?store="+encodeURIComponent(store.slug),location.href).href;
  $("storeLink").href=publicUrl;
- $("openPublicStore").href=publicUrl;
+ const openPublicStore=$("openPublicStore");if(openPublicStore)openPublicStore.href=publicUrl;
  $("publicStoreSidebarLink").href=publicUrl;
  $("shareWhatsApp").href="https://wa.me/?text="+encodeURIComponent("شاهد متجري على Mini Store DZ: "+publicUrl);
  $("shareFacebook").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(publicUrl);
