@@ -65,3 +65,14 @@ html[dir="rtl"] .footer-credit{text-align:start}
 .review-form textarea{resize:vertical}.review-form .primary-btn{width:100%;border:0;cursor:pointer}.review-form .primary-btn:disabled{opacity:.6}
 .review-feedback{font-size:12px;color:#527a1d;margin:0;min-height:18px}.review-form>small{font-size:10px;color:var(--muted)}
 @media(max-width:760px){.reviews-section{padding:38px 5vw}.reviews-layout{grid-template-columns:1fr}.reviews-summary{min-width:84px}}
+
+/* Customer rating distribution */
+.reviews-summary{min-width:210px;justify-items:stretch;gap:5px}
+.reviews-summary>strong,.reviews-summary>span,.reviews-summary>small{text-align:center}
+.reviews-breakdown{display:grid;gap:5px;margin-top:7px}
+.rating-row{display:grid;grid-template-columns:42px minmax(65px,1fr) 22px;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+.rating-label{white-space:nowrap;color:#8b6415}
+.rating-track{height:7px;border-radius:99px;background:#e8ecdf;overflow:hidden}
+.rating-track>span{display:block;height:100%;border-radius:99px;background:#d69a22;transition:width .25s ease}
+.rating-row small{text-align:end;font-size:10px}
+@media(max-width:760px){.reviews-summary{min-width:100%;max-width:100%}}
