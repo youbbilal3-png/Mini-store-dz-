@@ -34,12 +34,12 @@ function applyFeaturedPromotionLanguage(){
 
 
 const referralUiTranslations={
- ar:{menu:"ادعُ أصدقاءك",title:"ادعُ أصدقاءك واكسب شارات",description:"شارك رابطك الخاص مع أصدقائك. تُحتسب الدعوة بعد تأكيد الحساب بالبريد الإلكتروني.",confirmed:"دعوة مؤكدة",remaining:"متبقية للشارة التالية",yourLink:"رابط دعوتك الخاص",copy:"نسخ الرابط",share:"مشاركة",badge1:"شارة داعٍ نشيط",badge2:"شارة سفير المنصة",badge3:"شارة نجم Mini Store",progress:"ابدأ بمشاركة رابطك لتجميع الدعوات المؤكدة.",note:"تُحتسب الحسابات الجديدة المؤكدة فقط. لا تُمنح مكافأة عند النقر على الرابط أو إنشاء حسابات مكررة أو ذاتية.",copied:"تم نسخ رابط الدعوة.",failed:"تعذر نسخ الرابط. حاول مرة أخرى.",shareText:"انضم إلى Mini Store DZ عبر رابط دعوتي:"},
- fr:{menu:"Inviter des amis",title:"Invitez vos amis et gagnez des badges",description:"Partagez votre lien personnel. Une invitation est comptée après confirmation de l’e-mail.",confirmed:"inscriptions confirmées",remaining:"avant le prochain badge",yourLink:"Votre lien d’invitation",copy:"Copier le lien",share:"Partager",badge1:"Badge Ambassadeur actif",badge2:"Badge Ambassadeur",badge3:"Badge Star Mini Store",progress:"Partagez votre lien pour commencer à cumuler des invitations confirmées.",note:"Seuls les nouveaux comptes avec e-mail confirmé sont comptés. Les clics, doublons et auto-invitations ne comptent pas.",copied:"Lien copié.",failed:"Impossible de copier le lien.",shareText:"Rejoignez Mini Store DZ avec mon lien :"},
- en:{menu:"Invite friends",title:"Invite friends and earn badges",description:"Share your personal link. An invite counts after the new account confirms its email.",confirmed:"confirmed invites",remaining:"more to the next badge",yourLink:"Your personal invite link",copy:"Copy link",share:"Share",badge1:"Active Inviter badge",badge2:"Platform Ambassador badge",badge3:"Mini Store Star badge",progress:"Share your link to start collecting confirmed invites.",note:"Only new accounts with confirmed email count. Clicks, duplicate accounts and self-referrals do not count.",copied:"Invite link copied.",failed:"Could not copy the link.",shareText:"Join Mini Store DZ using my invite link:"},
- es:{menu:"Invitar amigos",title:"Invita amigos y gana insignias",description:"Comparte tu enlace personal. La invitación cuenta cuando se confirma el correo.",confirmed:"invitaciones confirmadas",remaining:"para la siguiente insignia",yourLink:"Tu enlace personal",copy:"Copiar enlace",share:"Compartir",badge1:"Insignia Invitador activo",badge2:"Insignia Embajador",badge3:"Insignia Estrella Mini Store",progress:"Comparte tu enlace para reunir invitaciones confirmadas.",note:"Solo cuentan las cuentas nuevas con correo confirmado. No cuentan clics, duplicados ni auto-invitaciones.",copied:"Enlace copiado.",failed:"No se pudo copiar el enlace.",shareText:"Únete a Mini Store DZ con mi enlace:"},
- de:{menu:"Freunde einladen",title:"Lade Freunde ein und sammle Abzeichen",description:"Teile deinen persönlichen Link. Eine Einladung zählt nach bestätigter E-Mail.",confirmed:"bestätigte Einladungen",remaining:"bis zum nächsten Abzeichen",yourLink:"Dein persönlicher Einladungslink",copy:"Link kopieren",share:"Teilen",badge1:"Abzeichen Aktiver Einlader",badge2:"Abzeichen Botschafter",badge3:"Mini Store Star-Abzeichen",progress:"Teile deinen Link, um bestätigte Einladungen zu sammeln.",note:"Nur neue Konten mit bestätigter E-Mail zählen. Klicks, Duplikate und Selbsteinladungen zählen nicht.",copied:"Einladungslink kopiert.",failed:"Link konnte nicht kopiert werden.",shareText:"Tritt Mini Store DZ über meinen Einladungslink bei:"},
- tr:{menu:"Arkadaşlarını davet et",title:"Arkadaşlarını davet et, rozet kazan",description:"Kişisel bağlantını paylaş. Davet, yeni hesap e-postasını doğruladığında sayılır.",confirmed:"onaylı davet",remaining:"sonraki rozet için kaldı",yourLink:"Kişisel davet bağlantın",copy:"Bağlantıyı kopyala",share:"Paylaş",badge1:"Aktif Davetçi rozeti",badge2:"Platform Elçisi rozeti",badge3:"Mini Store Yıldızı rozeti",progress:"Onaylı davetler toplamak için bağlantını paylaş.",note:"Yalnızca e-postası doğrulanmış yeni hesaplar sayılır. Tıklamalar, yinelenen hesaplar ve kendini davet etme sayılmaz.",copied:"Davet bağlantısı kopyalandı.",failed:"Bağlantı kopyalanamadı.",shareText:"Davet bağlantımla Mini Store DZ'ye katıl:"}
+ ar:{menu:"ادعُ أصدقاءك",title:"ادعُ أصدقاءك واكسب شارات",description:"شارك رابطك الخاص مع أصدقائك. تُحتسب الدعوة بعد تأكيد الحساب بالبريد الإلكتروني.",confirmed:"دعوة مؤكدة",remaining:"متبقية للشارة التالية",yourLink:"رابط دعوتك الخاص",copy:"نسخ الرابط",share:"مشاركة",badge1:"إبراز المتجر 7 أيام",badge2:"إبراز المتجر 15 يوماً",badge3:"Pro مجاني 7 أيام",badge4:"Pro مجاني 15 يوماً",badge5:"Pro مجاني شهراً",badge6:"Elite مجاني شهراً",progress:"شارك رابطك للوصول إلى المكافأة التالية:",remaining:"دعوة مؤكدة إضافية",allRewards:"🎉 وصلت إلى جميع مستويات المكافآت!",achieved:"تم فتحها",locked:"مقفلة",rewardGranted:"مفعّلة",rewardPending:"بانتظار إنشاء متجرك",featuredReward:"إبراز مجاني للمتجر",proReward:"اشتراك Pro مجاني",eliteReward:"اشتراك Elite (Premium) مجاني",until:"حتى",note:"تُحتسب الحسابات الجديدة المؤكدة فقط. لا تُمنح مكافأة عند النقر على الرابط أو إنشاء حسابات مكررة أو ذاتية.",copied:"تم نسخ رابط الدعوة.",failed:"تعذر نسخ الرابط. حاول مرة أخرى.",shareText:"انضم إلى Mini Store DZ عبر رابط دعوتي:"},
+ fr:{menu:"Inviter des amis",title:"Invitez vos amis et gagnez des badges",description:"Partagez votre lien personnel. Une invitation est comptée après confirmation de l’e-mail.",confirmed:"inscriptions confirmées",remaining:"avant le prochain badge",yourLink:"Votre lien d’invitation",copy:"Copier le lien",share:"Partager",badge1:"Mise en avant 7 jours",badge2:"Mise en avant 15 jours",badge3:"Pro gratuit 7 jours",badge4:"Pro gratuit 15 jours",badge5:"Pro gratuit 1 mois",badge6:"Elite gratuit 1 mois",progress:"Partagez votre lien pour atteindre la prochaine récompense :",remaining:"invitations confirmées",allRewards:"🎉 Tous les niveaux sont débloqués !",achieved:"Débloquée",locked:"Verrouillée",rewardGranted:"Activée",rewardPending:"En attente de votre boutique",featuredReward:"Mise en avant gratuite",proReward:"Abonnement Pro gratuit",eliteReward:"Abonnement Elite (Premium) gratuit",until:"Jusqu’au",note:"Seuls les nouveaux comptes avec e-mail confirmé sont comptés. Les clics, doublons et auto-invitations ne comptent pas.",copied:"Lien copié.",failed:"Impossible de copier le lien.",shareText:"Rejoignez Mini Store DZ avec mon lien :"},
+ en:{menu:"Invite friends",title:"Invite friends and earn badges",description:"Share your personal link. An invite counts after the new account confirms its email.",confirmed:"confirmed invites",remaining:"more to the next badge",yourLink:"Your personal invite link",copy:"Copy link",share:"Share",badge1:"7-day featured store",badge2:"15-day featured store",badge3:"7 days of free Pro",badge4:"15 days of free Pro",badge5:"1 month of free Pro",badge6:"1 month of free Elite",progress:"Share your link to reach the next reward:",remaining:"more confirmed invites",allRewards:"🎉 All reward levels unlocked!",achieved:"Unlocked",locked:"Locked",rewardGranted:"Activated",rewardPending:"Waiting for your store",featuredReward:"Free featured placement",proReward:"Free Pro subscription",eliteReward:"Free Elite (Premium) subscription",until:"Until",note:"Only new accounts with confirmed email count. Clicks, duplicate accounts and self-referrals do not count.",copied:"Invite link copied.",failed:"Could not copy the link.",shareText:"Join Mini Store DZ using my invite link:"},
+ es:{menu:"Invitar amigos",title:"Invita amigos y gana insignias",description:"Comparte tu enlace personal. La invitación cuenta cuando se confirma el correo.",confirmed:"invitaciones confirmadas",remaining:"para la siguiente insignia",yourLink:"Tu enlace personal",copy:"Copiar enlace",share:"Compartir",badge1:"Destacada 7 días",badge2:"Destacada 15 días",badge3:"Pro gratis 7 días",badge4:"Pro gratis 15 días",badge5:"Pro gratis 1 mes",badge6:"Elite gratis 1 mes",progress:"Comparte tu enlace para alcanzar la próxima recompensa:",remaining:"invitaciones confirmadas más",allRewards:"🎉 ¡Todos los niveles desbloqueados!",achieved:"Desbloqueada",locked:"Bloqueada",rewardGranted:"Activada",rewardPending:"Esperando tu tienda",featuredReward:"Promoción gratuita",proReward:"Suscripción Pro gratuita",eliteReward:"Suscripción Elite (Premium) gratuita",until:"Hasta",note:"Solo cuentan las cuentas nuevas con correo confirmado. No cuentan clics, duplicados ni auto-invitaciones.",copied:"Enlace copiado.",failed:"No se pudo copiar el enlace.",shareText:"Únete a Mini Store DZ con mi enlace:"},
+ de:{menu:"Freunde einladen",title:"Lade Freunde ein und sammle Abzeichen",description:"Teile deinen persönlichen Link. Eine Einladung zählt nach bestätigter E-Mail.",confirmed:"bestätigte Einladungen",remaining:"bis zum nächsten Abzeichen",yourLink:"Dein persönlicher Einladungslink",copy:"Link kopieren",share:"Teilen",badge1:"7 Tage hervorgehoben",badge2:"15 Tage hervorgehoben",badge3:"7 Tage Pro gratis",badge4:"15 Tage Pro gratis",badge5:"1 Monat Pro gratis",badge6:"1 Monat Elite gratis",progress:"Teile deinen Link für die nächste Belohnung:",remaining:"bestätigte Einladungen",allRewards:"🎉 Alle Belohnungsstufen erreicht!",achieved:"Freigeschaltet",locked:"Gesperrt",rewardGranted:"Aktiviert",rewardPending:"Wartet auf deinen Shop",featuredReward:"Kostenlose Hervorhebung",proReward:"Kostenloses Pro-Abo",eliteReward:"Kostenloses Elite-(Premium)-Abo",until:"Bis",note:"Nur neue Konten mit bestätigter E-Mail zählen. Klicks, Duplikate und Selbsteinladungen zählen nicht.",copied:"Einladungslink kopiert.",failed:"Link konnte nicht kopiert werden.",shareText:"Tritt Mini Store DZ über meinen Einladungslink bei:"},
+ tr:{menu:"Arkadaşlarını davet et",title:"Arkadaşlarını davet et, rozet kazan",description:"Kişisel bağlantını paylaş. Davet, yeni hesap e-postasını doğruladığında sayılır.",confirmed:"onaylı davet",remaining:"sonraki rozet için kaldı",yourLink:"Kişisel davet bağlantın",copy:"Bağlantıyı kopyala",share:"Paylaş",badge1:"7 gün öne çıkarma",badge2:"15 gün öne çıkarma",badge3:"7 gün ücretsiz Pro",badge4:"15 gün ücretsiz Pro",badge5:"1 ay ücretsiz Pro",badge6:"1 ay ücretsiz Elite",progress:"Sonraki ödüle ulaşmak için bağlantını paylaş:",remaining:"onaylı davet daha",allRewards:"🎉 Tüm ödül seviyeleri açıldı!",achieved:"Açıldı",locked:"Kilitli",rewardGranted:"Etkin",rewardPending:"Mağazanız bekleniyor",featuredReward:"Ücretsiz öne çıkarma",proReward:"Ücretsiz Pro aboneliği",eliteReward:"Ücretsiz Elite (Premium) aboneliği",until:"Bitiş",note:"Yalnızca e-postası doğrulanmış yeni hesaplar sayılır. Tıklamalar, yinelenen hesaplar ve kendini davet etme sayılmaz.",copied:"Davet bağlantısı kopyalandı.",failed:"Bağlantı kopyalanamadı.",shareText:"Davet bağlantımla Mini Store DZ'ye katıl:"}
 };
 function applyReferralLanguage(){
  const lang=document.documentElement.lang||"ar",words=referralUiTranslations[lang]||referralUiTranslations.ar;
@@ -60,11 +60,31 @@ async function loadReferralStats(){
  const inviteUrl=new URL("auth.html",location.href);inviteUrl.searchParams.set("next","dashboard.html");inviteUrl.searchParams.set("ref",code);
  $("referralLink").value=inviteUrl.toString();$("referralCount").textContent=String(count);
  const words=referralUiTranslations[document.documentElement.lang]||referralUiTranslations.ar;
- const milestones=[3,5,10],next=milestones.find(n=>count<n);
- if(count>=10)$("referralProgress").textContent=words.badge3+" ✓";
- else if(count>=5)$("referralProgress").textContent=words.badge2+" ✓ · "+(next-count)+" "+words.remaining;
- else if(count>=3)$("referralProgress").textContent=words.badge1+" ✓ · "+(next-count)+" "+words.remaining;
- else $("referralProgress").textContent=words.progress+" "+(next-count)+" "+words.remaining;
+ const milestones=[3,5,10,20,30,50],next=milestones.find(n=>count<n);
+ $("referralProgress").textContent=next?words.progress+" "+(next-count)+" "+words.remaining:words.allRewards;
+ const {data:rewardRows,error:rewardError}=await supabase.rpc("get_my_referral_rewards");
+ if(rewardError)console.warn("Referral reward history unavailable:",rewardError);
+ renderReferralRewards(count,rewardRows||[]);
+}
+function renderReferralRewards(count,rewards){
+ const panel=$("referralRewardStatus");if(!panel)return;
+ const lang=document.documentElement.lang||"ar",words=referralUiTranslations[lang]||referralUiTranslations.ar;
+ const labels={3:words.badge1,5:words.badge2,10:words.badge3,20:words.badge4,30:words.badge5,50:words.badge6};
+ document.querySelectorAll("[data-referral-milestone]").forEach(card=>{
+  const milestone=Number(card.dataset.referralMilestone),earned=count>=milestone;
+  card.classList.toggle("earned",earned);
+  const state=card.querySelector("small");if(state)state.textContent=earned?words.achieved:words.locked;
+  const label=card.querySelector("span");if(label)label.textContent=labels[milestone];
+ });
+ panel.replaceChildren();
+ rewards.forEach(reward=>{
+  const line=document.createElement("p");
+  const name=reward.reward_type==="featured"?words.featuredReward:reward.reward_type==="premium"?words.eliteReward:words.proReward;
+  const state=reward.status==="applied"?words.rewardGranted:words.rewardPending;
+  line.textContent=reward.milestone+" — "+name+" · "+state+(reward.expires_at?" · "+words.until+" "+subscriptionDate(reward.expires_at):"");
+  panel.appendChild(line);
+ });
+}
 }
 function initReferralControls(){
  $("copyReferralLink")?.addEventListener("click",copyReferralUrl);
@@ -94,10 +114,19 @@ function updateBillingPrices(){
 function renderSubscription(){
  if(!subscription)return;
  const now=Date.now(),trialActive=subscription.status==="trialing"&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;
- const plan=trialActive?subscription.plan:(subscription.status==="active"?subscription.plan:"free");
+ const referralProActive=subscription.referral_pro_starts_at&&new Date(subscription.referral_pro_starts_at).getTime()<=now&&subscription.referral_pro_until&&new Date(subscription.referral_pro_until).getTime()>now;
+ const referralEliteActive=subscription.referral_premium_starts_at&&new Date(subscription.referral_premium_starts_at).getTime()<=now&&subscription.referral_premium_until&&new Date(subscription.referral_premium_until).getTime()>now;
+ const paidPlanActive=trialActive||subscription.status==="active";
+ const paidPlan=paidPlanActive?subscription.plan:"free";
+ const plan=paidPlan==="premium"||referralEliteActive?"premium":paidPlan==="pro"||referralProActive?"pro":"free";
+ const referralRewardActive=!!referralProActive||!!referralEliteActive;
  const used=!!subscription.trial_used_at;
  const status=$("subscriptionStatus"),current=$("subscriptionCurrent");
- if(trialActive){
+ if(referralRewardActive&&!paidPlanActive){
+  const expiry=referralEliteActive?subscription.referral_premium_until:subscription.referral_pro_until;
+  status.textContent="مكافأة دعوات نشطة";
+  current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Elite / Premium — مميز")+" مجاناً عبر الدعوات · تنتهي في "+subscriptionDate(expiry)+".";
+ }else if(trialActive){
   status.textContent="تجربة مجانية نشطة";
   current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Premium — مميز")+" · تنتهي التجربة في "+subscriptionDate(subscription.trial_ends_at)+". لن يتم تحصيل أي مبلغ تلقائياً.";
  }else if(subscription.status==="active"){
@@ -111,7 +140,7 @@ function renderSubscription(){
   current.textContent="أنت على الخطة المجانية. يمكنك تجربة Pro أو Premium لمدة 7 أيام دون إدخال بيانات دفع.";
  }
  $("freePlanStatus").textContent=plan==="free"?"خطتك الحالية":"متاح دائماً";
- const hasPaid=trialActive||subscription.status==="active";
+ const hasPaid=paidPlanActive||referralRewardActive;
  $("startProTrial").disabled=hasPaid||used;
  $("startPremiumTrial").disabled=hasPaid||used;
  $("startProTrial").textContent=used?"تم استخدام التجربة المجانية":hasPaid?"لديك خطة مدفوعة":"ابدأ تجربة Pro المجانية";
