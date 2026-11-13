@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261113-40" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261113-41" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-2"></script>
 </head>
 <body class="dashboard-page">
@@ -59,8 +59,8 @@ window.addEventListener("unhandledrejection",function(event){
 <section class="dash-panel referral-dashboard-panel" id="referrals">
 <div class="panel-heading"><div><span class="eyebrow">INVITE & GROW</span><h2>🎁 <span data-referral-i18n="title">ادعُ أصدقاءك واكسب شارات</span></h2><p data-referral-i18n="description">شارك رابطك الخاص مع أصدقائك. تُحتسب الدعوة بعد تأكيد الحساب بالبريد الإلكتروني.</p></div><span class="referral-count-pill"><strong id="referralCount">—</strong> <span data-referral-i18n="confirmed">دعوة مؤكدة</span></span></div>
 <div class="referral-link-box"><label for="referralLink" data-referral-i18n="yourLink">رابط دعوتك الخاص</label><div class="referral-link-row"><input id="referralLink" type="text" readonly dir="ltr" aria-label="Referral link"><button type="button" class="save-button" id="copyReferralLink" data-referral-i18n="copy">نسخ الرابط</button><button type="button" class="secondary-btn" id="shareReferralLink" data-referral-i18n="share">مشاركة</button></div><p id="referralFeedback" class="save-feedback" role="status"></p></div>
-<div class="referral-rewards-grid"><article><strong>3</strong><span data-referral-i18n="badge1">شارة داعٍ نشيط</span></article><article><strong>5</strong><span data-referral-i18n="badge2">شارة سفير المنصة</span></article><article><strong>10</strong><span data-referral-i18n="badge3">شارة نجم Mini Store</span></article></div>
-<p class="referral-progress" id="referralProgress" data-referral-i18n="progress">ابدأ بمشاركة رابطك لتجميع الدعوات المؤكدة.</p>
+<div class="referral-rewards-grid"><article data-referral-milestone="3"><strong>3</strong><span>إبراز المتجر 7 أيام</span><small>مقفلة</small></article><article data-referral-milestone="5"><strong>5</strong><span>إبراز المتجر 15 يوماً</span><small>مقفلة</small></article><article data-referral-milestone="10"><strong>10</strong><span>Pro مجاني 7 أيام</span><small>مقفلة</small></article><article data-referral-milestone="20"><strong>20</strong><span>Pro مجاني 15 يوماً</span><small>مقفلة</small></article><article data-referral-milestone="30"><strong>30</strong><span>Pro مجاني شهراً</span><small>مقفلة</small></article><article data-referral-milestone="50"><strong>50</strong><span>Elite مجاني شهراً</span><small>مقفلة</small></article></div>
+<p class="referral-progress" id="referralProgress" data-referral-i18n="progress">شارك رابطك للوصول إلى المكافأة التالية.</p><div id="referralRewardStatus" class="referral-reward-status" aria-live="polite"></div>
 <small class="referral-note" data-referral-i18n="note">تُحتسب الحسابات الجديدة المؤكدة فقط. لا تُمنح مكافأة عند النقر على الرابط أو إنشاء حسابات مكررة أو ذاتية.</small>
 </section>
 <section class="dash-panel subscription-panel" id="subscription" hidden>
