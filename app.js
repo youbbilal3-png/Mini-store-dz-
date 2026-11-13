@@ -140,7 +140,7 @@ async function loadSponsoredAds(){
  if(!el("sponsoredAdsSection"))return;
  try{
   const now=new Date().toISOString();
-  const {data,error}=await supabase.from("sponsored_ads").select("id,title,image_url,target_url,starts_at,ends_at").eq("status","active").lte("starts_at",now).gt("ends_at",now).order("starts_at",{ascending:true}).limit(6);
+  const {data,error}=await supabase.from("sponsored_ads").select("id,title,image_url,target_url,starts_at,ends_at").eq("status","active").eq("payment_status","paid").lte("starts_at",now).gt("ends_at",now).order("starts_at",{ascending:true}).limit(6);
   if(error)throw error;
   sponsoredAds=data||[];
  }catch(error){console.error("Sponsored ads:",error);sponsoredAds=[];}
