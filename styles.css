@@ -130,3 +130,7 @@ html,body{overscroll-behavior-y:auto;overscroll-behavior-x:none}
 .product-gallery-thumb{width:58px;height:58px;flex:0 0 58px;padding:2px;border:2px solid #e4e9dd;border-radius:9px;background:#fff;overflow:hidden;cursor:pointer}
 .product-gallery-thumb.active{border-color:#83bd27}
 .product-gallery-thumb img{display:block;width:100%;height:100%;object-fit:cover;border-radius:6px}
+
+/* Keep the product-details close control visible above the gallery */
+.product-details-dialog .product-details-card{position:relative}
+.product-details-dialog #closeProductDetails{position:absolute;top:12px;right:12px;left:auto;z-index:1000;display:grid;place-items:center;width:42px;height:42px;border:2px solid #fff;border-radius:50%;background:#101827;color:#fff;font-size:29px;line-height:1;box-shadow:0 3px 14px #0005;cursor:pointer}
