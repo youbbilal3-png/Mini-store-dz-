@@ -421,18 +421,33 @@ async function init(){
    const method=$("paymentMethod").value;
    const accountReady=method==="baridimob"?merchantPaymentSettings?.baridimob_number:merchantPaymentSettings?.ccp_number;
    if(!accountReady){$("paymentRequestFeedback").textContent="بيانات هذه الطريقة غير متاحة حالياً. تواصل مع الدعم.";return;}
-   const button=$("submitSubscriptionPayment");button.disabled=true;$("paymentRequestFeedback").textContent="جارٍ إرسال طلب الدفع...";
+   const button=$("submitSubscriptionPayment"),file=$("paymentReceipt").files[0];button.disabled=true;
+   let uploadedPath=null;
+   $("paymentRequestFeedback").textContent="جارٍ رفع وصل التحويل وإرسال الطلب...";
    try{
+    if(!file)throw new Error("يرجى إرفاق صورة الوصل أو ملف PDF.");
+    const allowed={"image/jpeg":"jpg","image/png":"png","image/webp":"webp","application/pdf":"pdf"};
+    const extension=allowed[file.type];
+    if(!extension)throw new Error("نوع الملف غير مدعوم. استخدم JPG أو PNG أو WebP أو PDF.");
+    if(file.size>5*1024*1024)throw new Error("حجم الوصل أكبر من 5 ميغابايت.");
+    uploadedPath=user.id+"/"+crypto.randomUUID()+"."+extension;
+    const {error:uploadError}=await supabase.storage.from("subscription-payment-proofs").upload(uploadedPath,file,{contentType:file.type,upsert:false});
+    if(uploadError)throw uploadError;
     const {error}=await supabase.rpc("create_subscription_payment_request",{
      p_plan:$("paymentPlan").value,p_billing_cycle:$("paymentCycle").value,p_payment_method:method,
      p_sender_name:$("paymentSender").value.trim(),p_transaction_reference:$("paymentReference").value.trim(),
-     p_proof_url:$("paymentProofUrl").value.trim()||null
+     p_proof_url:uploadedPath
     });
     if(error)throw error;
+    uploadedPath=null;
     $("subscriptionPaymentForm").reset();updatePaymentAmount();
-    $("paymentRequestFeedback").textContent="تم إرسال طلب الدفع. سيظهر الاشتراك بعد مراجعة التحويل.";
+    $("paymentRequestFeedback").textContent="تم رفع الوصل وإرسال طلب الدفع بنجاح. ستراجعه الإدارة قبل تفعيل الاشتراك.";
     await loadMerchantPaymentHistory();
-   }catch(error){console.error("Subscription payment request failed:",error);$("paymentRequestFeedback").textContent=error.message||"تعذر إرسال الطلب. تحقق من البيانات وحاول مجدداً.";}
+   }catch(error){
+    if(uploadedPath){try{await supabase.storage.from("subscription-payment-proofs").remove([uploadedPath]);}catch(cleanupError){console.warn("Receipt cleanup failed:",cleanupError);}}
+    console.error("Subscription payment request failed:",error);
+    $("paymentRequestFeedback").textContent=error.message||"تعذر إرسال الطلب. تحقق من البيانات وحاول مجدداً.";
+   }
    finally{button.disabled=false;}
   });
 
