@@ -4,6 +4,7 @@ let merchants=[],payments=[],support=[],editingSponsoredAdId=null,sponsoredAdsCa
 const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const say=(msg,error=false)=>{$("adminNotice").textContent=msg;$("adminNotice").classList.toggle("error",error);};
 const safeHttps=value=>{try{const u=new URL(value);return u.protocol==="https:"?u.href:"";}catch{return "";}};
+const isVideoMedia=value=>{try{return /\.(mp4|webm)$/i.test(new URL(value).pathname);}catch{return false;}};
 const date=value=>value?new Date(value).toLocaleDateString(document.documentElement.lang||"ar",{year:"numeric",month:"short",day:"numeric"}):"—";
 async function requireAdmin(){
  let {data,error}=await supabase.auth.getSession();if(error)throw error;
@@ -106,8 +107,8 @@ async function loadSponsoredAds(){
  box.innerHTML=rows.length?rows.map(ad=>{
   const state=ad.status==="active"?"نشط":ad.status==="paused"?"متوقف":"مسودة";
   const images=Array.isArray(ad.image_urls)&&ad.image_urls.length?ad.image_urls:[ad.image_url].filter(Boolean);
-  const previews=images.map((url,i)=>'<a class="admin-ad-thumb" href="'+esc(safeHttps(url))+'" target="_blank" rel="noopener"><img src="'+esc(safeHttps(url))+'" alt="صورة الإعلان '+(i+1)+'" loading="lazy"></a>').join("");
-  return '<article class="admin-record-card"><h3>'+esc(ad.title)+'</h3><p>المعلن: '+esc(ad.advertiser_name||"—")+' · السعر: '+Number(ad.amount_dzd||0).toLocaleString()+' دج · الدفع: '+(ad.payment_status==="paid"?"مدفوع":"بانتظار الدفع")+'</p><p><a href="'+esc(safeHttps(ad.target_url))+'" target="_blank" rel="noopener">فتح رابط الإعلان</a></p><div class="admin-ad-thumbs">'+(previews||"لا توجد صورة محفوظة")+'</div><p class="admin-record-meta">'+images.length+' صورة · من '+date(ad.starts_at)+' إلى '+date(ad.ends_at)+' · الحالة: '+state+'</p><div class="admin-record-actions"><button class="admin-action" data-edit-ad="'+ad.id+'">تعديل الإعلان</button><button class="admin-action" data-toggle-ad="'+ad.id+'" data-next-status="'+(ad.status==="active"?"paused":"active")+'">'+(ad.status==="active"?"إيقاف الإعلان":"تفعيل الإعلان")+'</button><button class="admin-action" data-toggle-ad-payment="'+ad.id+'" data-next-payment="'+(ad.payment_status==="paid"?"pending":"paid")+'">'+(ad.payment_status==="paid"?"إعادة إلى غير مدفوع":"تأكيد استلام الدفع")+'</button><button class="admin-action danger" data-delete-ad="'+ad.id+'">حذف</button></div></article>';
+  const previews=images.map((url,i)=>{const href=esc(safeHttps(url));const media=isVideoMedia(url)?'<video src="'+href+'" muted playsinline preload="metadata"></video>':'<img src="'+href+'" alt="وسيط الإعلان '+(i+1)+'" loading="lazy">';return '<a class="admin-ad-thumb" href="'+href+'" target="_blank" rel="noopener">'+media+'</a>';}).join("");
+  return '<article class="admin-record-card"><h3>'+esc(ad.title)+'</h3><p>المعلن: '+esc(ad.advertiser_name||"—")+' · السعر: '+Number(ad.amount_dzd||0).toLocaleString()+' دج · الدفع: '+(ad.payment_status==="paid"?"مدفوع":"بانتظار الدفع")+'</p><p><a href="'+esc(safeHttps(ad.target_url))+'" target="_blank" rel="noopener">فتح رابط الإعلان</a></p><div class="admin-ad-thumbs">'+(previews||"لا توجد وسائط محفوظة")+'</div><p class="admin-record-meta">'+images.length+' ملف وسائط · من '+date(ad.starts_at)+' إلى '+date(ad.ends_at)+' · الحالة: '+state+'</p><div class="admin-record-actions"><button class="admin-action" data-edit-ad="'+ad.id+'">تعديل الإعلان</button><button class="admin-action" data-toggle-ad="'+ad.id+'" data-next-status="'+(ad.status==="active"?"paused":"active")+'">'+(ad.status==="active"?"إيقاف الإعلان":"تفعيل الإعلان")+'</button><button class="admin-action" data-toggle-ad-payment="'+ad.id+'" data-next-payment="'+(ad.payment_status==="paid"?"pending":"paid")+'">'+(ad.payment_status==="paid"?"إعادة إلى غير مدفوع":"تأكيد استلام الدفع")+'</button><button class="admin-action danger" data-delete-ad="'+ad.id+'">حذف</button></div></article>';
  }).join(""):'<div class="admin-empty">لا توجد إعلانات بعد. أضف أول إعلان من النموذج أعلاه.</div>';
 }
 function localDateTimeValue(value){
@@ -142,12 +143,12 @@ async function createSponsoredAd(event){
  const button=$("saveSponsoredAd"),feedback=$("adFormFeedback"),files=[...($("adImageFiles").files||[])];
  const externalImage=safeHttps($("adImageUrl").value.trim()),target=safeHttps($("adTargetUrl").value.trim());
  const start=new Date($("adStartsAt").value),end=new Date($("adEndsAt").value);
- if(!editingSponsoredAdId&&!files.length&&!externalImage){feedback.textContent="ارفع صورة واحدة على الأقل أو أدخل رابط صورة مباشر يبدأ بـ HTTPS.";return;}
- if(files.length>8){feedback.textContent="يمكنك رفع 8 صور كحد أقصى للإعلان الواحد.";return;}
- if(files.some(file=>!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)||file.size>5242880)){feedback.textContent="الصور المسموحة JPG وPNG وWebP وGIF، بحد أقصى 5MB للصورة.";return;}
+ if(!editingSponsoredAdId&&!files.length&&!externalImage){feedback.textContent="ارفع صورة أو فيديو واحداً على الأقل أو أدخل رابطاً مباشراً يبدأ بـ HTTPS.";return;}
+ if(files.length>8){feedback.textContent="يمكنك رفع 8 ملفات كحد أقصى للإعلان الواحد.";return;}
+ if(files.some(file=>!["image/jpeg","image/png","image/webp","image/gif","video/mp4","video/webm"].includes(file.type)||file.size>5242880)){feedback.textContent="الملفات المسموحة: صور JPG وPNG وWebP وGIF وفيديو MP4 وWebM، بحد أقصى 5MB للملف.";return;}
  if(!target){feedback.textContent="أدخل رابط الوجهة الصحيح الذي يبدأ بـ HTTPS.";return;}
  if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start){feedback.textContent="تحقق من تاريخ البداية والنهاية.";return;}
- button.disabled=true;feedback.textContent=editingSponsoredAdId?"جارٍ حفظ تعديلات الإعلان...":"جارٍ رفع الصور وحفظ الإعلان...";
+ button.disabled=true;feedback.textContent=editingSponsoredAdId?"جارٍ حفظ تعديلات الإعلان...":"جارٍ رفع الصور والفيديوهات وحفظ الإعلان...";
  const uploadedPaths=[];
  try{
   const {data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;
@@ -166,7 +167,7 @@ async function createSponsoredAd(event){
   if(externalImage)imageUrls.push(externalImage);
   const existing=editingSponsoredAdId?sponsoredAdsCache.find(item=>item.id===editingSponsoredAdId):null;
   const finalImages=(files.length||externalImage)?imageUrls:(existing?(Array.isArray(existing.image_urls)&&existing.image_urls.length?existing.image_urls:[existing.image_url].filter(Boolean)):[]);
-  if(!finalImages.length)throw new Error("أضف صورة للإعلان.");
+  if(!finalImages.length)throw new Error("أضف صورة أو فيديو للإعلان.");
   const payload={advertiser_name:$("adAdvertiser").value.trim(),title:$("adTitle").value.trim(),amount_dzd:amount,image_url:finalImages[0],image_urls:finalImages,target_url:target,starts_at:start.toISOString(),ends_at:end.toISOString()};
   let result;
   if(editingSponsoredAdId){
@@ -177,7 +178,7 @@ async function createSponsoredAd(event){
   if(result.error)throw result.error;
   const wasEditing=!!editingSponsoredAdId;
   resetSponsoredAdEditor();
-  feedback.textContent=wasEditing?"تم حفظ تعديلات الإعلان بنجاح.":"تمت إضافة الإعلان ورفع "+finalImages.length+" صورة بنجاح. سيظهر بعد تأكيد الدفع وبدء موعده.";
+  feedback.textContent=wasEditing?"تم حفظ تعديلات الإعلان بنجاح.":"تمت إضافة الإعلان ورفع "+finalImages.length+" ملف وسائط بنجاح. سيظهر بعد تأكيد الدفع وبدء موعده.";
   await loadSponsoredAds();
  }catch(e){
   if(uploadedPaths.length)await supabase.storage.from("sponsored-ad-images").remove(uploadedPaths);
