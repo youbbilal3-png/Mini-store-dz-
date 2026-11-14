@@ -214,3 +214,22 @@ html[data-theme="dark"] .featured-promotion-link{background:linear-gradient(110d
 html[data-theme="dark"] .featured-promotion-price{background:#4b3a1a;color:#ffe5a0}
 html[data-theme="dark"] .featured-promotion-benefits span{background:#1d3025;color:#d9f0b0}
 @media(max-width:600px){.featured-promotion-panel .panel-heading{align-items:flex-start;flex-direction:column}.featured-promotion-price{align-self:flex-start}}
+
+/* Clear, consistent payment request forms */
+.payment-form-organized{display:flex;flex-direction:column;gap:16px}
+.payment-form-section{padding:16px;border:1px solid var(--line,#dce4ed);border-radius:14px;background:var(--surface,#fff)}
+.payment-form-section h4{margin:0 0 6px;font-size:15px;font-weight:850}
+.payment-form-section>p{margin:0 0 14px;color:var(--muted,#8492a6);font-size:13px;line-height:1.7}
+.payment-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.payment-form-grid>label{min-width:0}
+.payment-form-grid>label select,.payment-form-grid>label input{width:100%;box-sizing:border-box}
+.payment-form-grid .payment-file-field{grid-column:1/-1}
+.payment-file-field input[type=file]{display:block;width:100%;margin-top:8px}
+.payment-form-footer{padding:15px;border:1px solid var(--line,#dce4ed);border-radius:14px;background:rgba(24,110,83,.045)}
+.payment-form-footer .payment-amount-line{margin:0 0 12px}
+.payment-form-footer .save-button{width:100%}
+.payment-form-footer .save-feedback{margin-bottom:0}
+.payment-form-organized .payment-upload-hint{margin:8px 0 0}
+html[data-theme="dark"] .payment-form-section{background:var(--surface-soft,#182334);border-color:var(--line,#344256)}
+html[data-theme="dark"] .payment-form-footer{border-color:var(--line,#344256);background:rgba(24,110,83,.12)}
+@media(max-width:600px){.payment-form-grid{grid-template-columns:1fr}.payment-form-grid .payment-file-field{grid-column:auto}.payment-form-section{padding:13px}}
