@@ -797,3 +797,8 @@ html[data-theme="dark"] .sponsored-ads-empty{background:var(--surface);border-co
 /* Preserve every pixel of the sponsored image while filling the square softly */
 .hero-advertising-grid .sponsored-ad-backdrop{z-index:0;display:block!important;filter:blur(16px) brightness(.72);opacity:1;}
 .hero-advertising-grid .sponsored-ad-media{z-index:1;object-fit:contain!important;background:transparent;}
+
+
+/* Clearly identify illustrative homepage sample products and show their full product photos. */
+.demo-product-label{display:inline-flex;align-items:center;width:max-content;padding:6px 11px;border:1px solid #d8e4c5;border-radius:999px;background:#f1f7e8;color:#587b26;font-size:11px;font-weight:800}
+.demo-product-image img{object-fit:contain!important;padding:10px;box-sizing:border-box;background:#f6f8f2}
