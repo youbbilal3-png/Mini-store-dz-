@@ -661,5 +661,5 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  }
  
 }
-document.addEventListener("msdz-language-changed",()=>{applyFeaturedPromotionLanguage();applyReferralLanguage();if(user)loadReferralStats().catch(error=>console.warn("Referral language refresh failed:",error));if(!store)return;renderDailyCharts();renderStats();renderOrders();renderReviews();renderProducts();if(subscription)renderSubscription();updateBillingPrices();});
+document.addEventListener("msdz-language-changed",()=>{applyFeaturedPromotionLanguage();applyReferralLanguage();if(user)loadReferralStats().catch(error=>console.warn("Referral language refresh failed:",error));if(store)renderDailyCharts();if(subscription)renderSubscription();updateBillingPrices();});
 init();
