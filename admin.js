@@ -24,6 +24,20 @@ async function loadStats(){
  for(const [id,key] of [["statMerchants","merchants"],["statStores","stores"],["statProducts","products"],["statOrders","orders"],["statPayments","pending_payments"],["statSupport","open_support"],["statPublished","published_stores"],["statSubscriptions","subscriptions"]])$(id).textContent=Number(d[key]||0).toLocaleString();
  $("paymentBadge").textContent=d.pending_payments||0;$("supportBadge").textContent=d.open_support||0;
 }
+async function loadVisitorStats(){
+ const days=Number($("visitorStatsRange")?.value||7);
+ const {data,error}=await supabase.rpc("admin_visitor_stats",{p_days:days});
+ if(error)throw error;
+ const d=data||{};
+ for(const [id,key] of [["visitorTotalUnique","total_unique_visitors"],["visitorTotalViews","total_page_views"],["visitorTodayUnique","today_unique_visitors"],["visitorTodayViews","today_page_views"]]){
+  $(id).textContent=Number(d[key]||0).toLocaleString();
+ }
+ const rows=Array.isArray(d.daily)?d.daily:[];
+ $("visitorDailyBody").innerHTML=rows.length?rows.slice().reverse().map(row=>{
+  const day=new Date(row.day+"T00:00:00").toLocaleDateString(document.documentElement.lang||"ar",{year:"numeric",month:"short",day:"numeric"});
+  return "<tr><td>"+esc(day)+"</td><td>"+Number(row.visitors||0).toLocaleString()+"</td><td>"+Number(row.page_views||0).toLocaleString()+"</td></tr>";
+ }).join(""):'<tr><td colspan="3">لا توجد زيارات مسجلة في هذه الفترة.</td></tr>';
+}
 async function loadMerchants(){
  const {data,error}=await supabase.rpc("admin_list_merchants");if(error)throw error;merchants=data||[];renderMerchants();
 }
@@ -177,7 +191,7 @@ async function loadSupport(){
 }
 async function refreshAll(){
  $("refreshAdmin").disabled=true;say("جارٍ تحديث بيانات المنصة...");
- try{await Promise.all([loadStats(),loadMerchants(),loadPayments(),loadFeaturedStoreRequests(),loadSponsoredAds(),loadSupport(),loadPaymentSettings()]);say("تم تحديث جميع البيانات.");}
+ try{await Promise.all([loadStats(),loadMerchants(),loadPayments(),loadFeaturedStoreRequests(),loadSponsoredAds(),loadSupport(),loadPaymentSettings(),loadVisitorStats()]);say("تم تحديث جميع البيانات.");}
  catch(e){console.error(e);say("تعذر تحديث بعض البيانات: "+(e.message||"خطأ غير معروف"),true);}
  finally{$("refreshAdmin").disabled=false;}
 }
@@ -187,6 +201,7 @@ document.querySelectorAll("[data-admin-tab]").forEach(btn=>btn.addEventListener(
 }));
 $("merchantSearch").addEventListener("input",renderMerchants);
 $("refreshAdmin").addEventListener("click",refreshAll);
+$("visitorStatsRange").addEventListener("change",()=>loadVisitorStats().catch(e=>say("تعذر تحميل إحصائيات الزوار: "+e.message,true)));
 $("savePaymentSettings").addEventListener("click",savePaymentSettings);
 $("sponsoredAdForm").addEventListener("submit",createSponsoredAd);
 $("cancelSponsoredAdEdit").addEventListener("click",resetSponsoredAdEditor);
