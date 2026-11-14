@@ -287,13 +287,21 @@
   const extraSubscriptionLabels = {"الاشتراكات والباقات":["Abonnements et forfaits","Subscriptions & plans","Suscripciones y planes","Abonnements & Tarife","Abonelikler ve planlar"],"دج / دائماً":["DZD / toujours","DZD / always","DZD / siempre","DZD / immer","DZD / her zaman"],"خطة مجانية":["Forfait gratuit","Free plan","Plan gratuito","Kostenloser Tarif","Ücretsiz plan"],"خطتك الحالية":["Votre forfait actuel","Your current plan","Tu plan actual","Ihr aktueller Tarif","Mevcut planınız"],"متاح دائماً":["Toujours disponible","Always available","Siempre disponible","Immer verfügbar","Her zaman kullanılabilir"],"تم استخدام التجربة المجانية":["Essai gratuit déjà utilisé","Free trial already used","Prueba gratuita ya utilizada","Kostenloser Test bereits genutzt","Ücretsiz deneme kullanıldı"],"لديك خطة مدفوعة":["Vous avez un forfait payant","You have a paid plan","Tienes un plan de pago","Sie haben einen kostenpflichtigen Tarif","Ücretli planınız var"],"ابدأ تجربة Pro المجانية":["Commencer l’essai gratuit Pro","Start free Pro trial","Iniciar prueba gratuita Pro","Kostenlose Pro-Testversion starten","Ücretsiz Pro denemesini başlat"],"ابدأ تجربة Premium المجانية":["Commencer l’essai gratuit Premium","Start free Premium trial","Iniciar prueba gratuita Premium","Kostenlose Premium-Testversion starten","Ücretsiz Premium denemesini başlat"],"شهرياً":["par mois","monthly","al mes","monatlich","aylık"],"سنوياً":["par an","yearly","al año","jährlich","yıllık"]};
   for (const [source, values] of Object.entries(extraSubscriptionLabels)) { langNames.forEach((name, index) => { dictionaries[name][source] = values[index]; }); }
 
+  // Include every label added above in reverse lookup, then sort once instead of
+  // sorting every dictionary for every text node during a language change.
+  for (const name of langNames) {
+    for (const [source, translated] of Object.entries(dictionaries[name])) reverse[name][translated] = source;
+  }
+  const reverseEntries = Object.fromEntries(langNames.map(name => [name, Object.entries(reverse[name]).sort((a,b) => b[0].length-a[0].length)]));
+  const dictionaryEntries = Object.fromEntries(langNames.map(name => [name, Object.entries(dictionaries[name]).sort((a,b) => b[0].length-a[0].length)]));
+
   const translateText = (value) => {
     const raw = value;
     const trimmed = raw.trim();
     if (!trimmed) return raw;
     let ar = trimmed;
     for (const sourceLang of ["fr", "en", "es", "de", "tr"]) {
-      for (const [translated, source] of Object.entries(reverse[sourceLang]).sort((a,b)=>b[0].length-a[0].length)) {
+      for (const [translated, source] of reverseEntries[sourceLang]) {
         if (ar === translated) { ar = source; break; }
         if (translated.length > 1 && ar.includes(translated)) ar = ar.replaceAll(translated, source);
       }
@@ -301,7 +309,7 @@
     if (lang === "ar") return raw.replace(trimmed, ar);
     const targetLanguage = lang;
     let out = ar;
-    for (const [source, translated] of Object.entries(dictionaries[targetLanguage]).sort((a,b)=>b[0].length-a[0].length)) {
+    for (const [source, translated] of dictionaryEntries[targetLanguage]) {
       if (out === source) { out = translated; break; }
       if (source.length > 5 && out.includes(source)) out = out.replaceAll(source, translated);
     }
@@ -323,12 +331,13 @@
     lang = ["ar","fr","en","es","de","tr"].includes(next) ? next : "ar";
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    // Persist immediately, before translating the dashboard DOM.
+    try { localStorage.setItem("msdz-language", lang); } catch (_) {}
     document.title = lang === "fr" ? "Tableau de bord vendeur | Mini Store DZ" : lang === "en" ? "Merchant dashboard | Mini Store DZ" : lang === "es" ? "Panel del vendedor | Mini Store DZ" : lang === "de" ? "Händler-Dashboard | Mini Store DZ" : lang === "tr" ? "Satıcı paneli | Mini Store DZ" : "لوحة التاجر | Mini Store DZ";
     translateElement(document.body);
     document.documentElement.classList.remove("language-loading");
     const picker = document.getElementById("dashboardLanguageSelect");
     if (picker) picker.value = lang;
-    try { localStorage.setItem("msdz-language", lang); } catch (_) {}
     document.dispatchEvent(new CustomEvent("msdz-language-changed", {detail:{language:lang}}));
   };
   document.addEventListener("DOMContentLoaded", () => {
@@ -344,12 +353,9 @@
     apply(lang);
     const observer = new MutationObserver(records => {
       for (const record of records) {
-        if (record.type === "characterData") {
-          const next = translateText(record.target.nodeValue);
-          if (next !== record.target.nodeValue) record.target.nodeValue = next;
-        } else for (const added of record.addedNodes) { if (added.nodeType === Node.ELEMENT_NODE) translateElement(added); else if (added.nodeType === Node.TEXT_NODE) { const next = translateText(added.nodeValue); if (next !== added.nodeValue) added.nodeValue = next; } }
+        for (const added of record.addedNodes) { if (added.nodeType === Node.ELEMENT_NODE) translateElement(added); else if (added.nodeType === Node.TEXT_NODE) { const next = translateText(added.nodeValue); if (next !== added.nodeValue) added.nodeValue = next; } }
       }
     });
-    observer.observe(document.body, {subtree:true,childList:true,characterData:true});
+    observer.observe(document.body, {subtree:true,childList:true});
   });
 })();
