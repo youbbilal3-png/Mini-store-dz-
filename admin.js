@@ -2,6 +2,7 @@ import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
 let merchants=[],payments=[],support=[],editingSponsoredAdId=null,sponsoredAdsCache=[];
 let selectedAdMedia=[];
+let adPreviewObjectUrls=[];
 const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const say=(msg,error=false)=>{$("adminNotice").textContent=msg;$("adminNotice").classList.toggle("error",error);};
 const safeHttps=value=>{try{const u=new URL(value);return u.protocol==="https:"?u.href:"";}catch{return "";}};
@@ -118,13 +119,25 @@ function localDateTimeValue(value){
 }
 function renderAdMediaEditor(){
  const box=$("adMediaEditor");if(!box)return;
- box.hidden=!selectedAdMedia.length;
- box.innerHTML=selectedAdMedia.map((url,index)=>{
-  const href=esc(safeHttps(url));
-  const media=isVideoMedia(url)?'<video src="'+href+'" muted playsinline preload="metadata"></video>':'<img src="'+href+'" alt="وسيط الإعلان الحالي '+(index+1)+'" loading="lazy">';
-  return '<div class="admin-ad-edit-thumb">'+media+'<button type="button" class="admin-ad-remove-media" data-remove-ad-media="'+index+'" aria-label="حذف هذا الوسيط" title="حذف">×</button></div>';
+ adPreviewObjectUrls.forEach(url=>URL.revokeObjectURL(url));adPreviewObjectUrls=[];
+ const saved=selectedAdMedia.map((url,index)=>({url,isVideo:isVideoMedia(url),label:isVideoMedia(url)?"فيديو محفوظ":"صورة محفوظة",kind:"saved",index}));
+ const files=[...($("adImageFiles")?.files||[])].map((file,index)=>{
+  const previewUrl=URL.createObjectURL(file);adPreviewObjectUrls.push(previewUrl);
+  const video=file.type.startsWith("video/")||/\.(mp4|webm|3gp|mov)$/i.test(file.name);
+  return {url:previewUrl,isVideo:video,label:video?"فيديو · جاهز للحفظ":"صورة · جاهزة للحفظ",kind:"new",index};
+ });
+ const items=[...saved,...files];
+ box.hidden=!items.length;
+ box.innerHTML=items.map(item=>{
+  const media=item.isVideo
+   ?'<video src="'+esc(item.url)+'" muted playsinline preload="metadata"></video><span class="admin-ad-media-type">▶ فيديو</span>'
+   :'<img src="'+esc(item.url)+'" alt="'+item.label+'" loading="lazy">';
+  const state=item.kind==="new"?'<small class="admin-ad-media-ready">✓ جاهز للحفظ</small>':'<small class="admin-ad-media-saved">محفوظ</small>';
+  const remove=item.kind==="saved"?'<button type="button" class="admin-ad-remove-media" data-remove-ad-media="'+item.index+'" aria-label="حذف هذا الوسيط" title="حذف">×</button>':"";
+  return '<div class="admin-ad-edit-thumb">'+media+state+remove+'</div>';
  }).join("");
 }
+
 function resetSponsoredAdEditor(){
  editingSponsoredAdId=null;
  selectedAdMedia=[];renderAdMediaEditor();
@@ -220,6 +233,7 @@ $("refreshAdmin").addEventListener("click",refreshAll);
 $("visitorStatsRange").addEventListener("change",()=>loadVisitorStats().catch(e=>say("تعذر تحميل إحصائيات الزوار: "+e.message,true)));
 $("savePaymentSettings").addEventListener("click",savePaymentSettings);
 $("sponsoredAdForm").addEventListener("submit",createSponsoredAd);
+ $("adImageFiles").addEventListener("change",renderAdMediaEditor);
 $("cancelSponsoredAdEdit").addEventListener("click",resetSponsoredAdEditor);
 $("adminLogout").addEventListener("click",async()=>{await supabase.auth.signOut({scope:"local"});location.replace("index.html");});
 document.addEventListener("click",async event=>{
