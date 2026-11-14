@@ -18,9 +18,9 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261114-35">
+<link rel="stylesheet" href="styles.css?v=20261114-36">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261114-7"></script>
+<script type="module" src="app.js?v=20261114-8"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body>
@@ -64,20 +64,12 @@
     <div class="global-search-input-row"><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
     <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
   </section>
-  <div class="home-commercial-row">
-      <section class="hero-intro-card" aria-label="تعريف بالمنصة">
-        <span class="hero-intro-kicker" data-i18n="homeCardEyebrow">اكتشف MINABYB</span>
-        <h1 data-i18n="homeCardTitle">كل ما تبحث عنه في مكان واحد</h1>
-        <p data-i18n="homeCardText">اكتشف متاجر متنوعة، وتعرّف على منتجاتها، وتواصل مباشرة مع البائع لطلب ما يناسبك.</p>
-        <div class="hero-intro-points">
-          <span><b aria-hidden="true">🏪</b><span data-i18n="homeCardPoint1">متاجر متنوعة</span></span>
-          <span><b aria-hidden="true">🛍️</b><span data-i18n="homeCardPoint2">منتجات مختلفة</span></span>
-          <span><b aria-hidden="true">💬</b><span data-i18n="homeCardPoint3">تواصل مباشر</span></span>
-        </div>
-      <a class="primary-btn" id="browseButton" href="#featuredStoresSection" data-i18n="browse">تصفح المتاجر</a>
-      </section>
-  
-  </div>
+  <section class="sponsored-ads-section sponsored-ads-home" id="sponsoredAdsSection" aria-label="إعلانات برعاية">
+    <div class="sponsored-ads-heading"><span class="eyebrow" data-i18n="sponsoredEyebrow">إعلانات برعاية</span><h2 data-i18n="sponsoredTitle">شركاؤنا</h2></div>
+    <div class="sponsored-ads-grid" id="sponsoredAdsGrid">
+      <div class="sponsored-ads-empty"><span class="sponsored-ads-empty-icon" aria-hidden="true">📢</span><div><strong data-i18n="sponsoredEmptyTitle">مساحتك الإعلانية هنا</strong><p data-i18n="sponsoredEmptyText">اعرض منتجاتك وخدماتك أمام زوار MINABYB.</p></div><a href="mailto:support.ministoredz@gmail.com?subject=MINABYB%20Advertising" data-i18n="sponsoredEmptyCTA">احجز مساحتك الإعلانية</a></div>
+    </div>
+  </section>
   <div class="home-promos-row">
     <section class="referral-promo-section" id="referralProgramSection">
       <div class="referral-promo-icon" aria-hidden="true">🎁</div>
@@ -97,7 +89,7 @@
     <div class="section-heading"><div><span class="eyebrow" data-i18n="featuredEyebrow">اكتشف البائعين</span><h2 data-i18n="featuredTitle">متاجر على MINABYB</h2><p data-i18n="featuredText">تصفح المتاجر المنشورة واكتشف منتجاتها.</p></div><a class="text-link" href="auth.html" data-i18n="joinMerchant">أنشئ متجرك</a></div>
     <div class="featured-stores-grid" id="featuredStoresGrid"><p class="featured-empty" data-i18n="featuredLoading">جارٍ تحميل المتاجر...</p></div>
   </section>
-  <section class="sponsored-ads-section" id="sponsoredAdsSection" hidden aria-label="إعلانات برعاية"><div class="sponsored-ads-heading"><span class="eyebrow" data-i18n="sponsoredEyebrow">إعلانات برعاية</span><h2 data-i18n="sponsoredTitle">شركاؤنا</h2></div><div class="sponsored-ads-grid" id="sponsoredAdsGrid"></div></section>
+
   <section class="section" id="products">
     <div class="section-heading">
       <div><span class="eyebrow" data-i18n="collection">تشكيلتنا</span><h2 data-i18n="productsTitle">منتجات مختارة</h2></div>
