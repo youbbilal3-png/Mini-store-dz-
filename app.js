@@ -490,7 +490,7 @@ async function loadStore(){
   markStorePageNoindex();
  }
 }
-el("languageSelect").addEventListener("change",e=>{language=["ar","fr","en","es","de","tr"].includes(e.target.value)?e.target.value:"ar";try{localStorage.setItem("msdz-language",language);}catch(error){}activeCategory="all";applyLanguage();});
+el("languageSelect").addEventListener("change",e=>{language=["ar","fr","en","es","de","tr"].includes(e.target.value)?e.target.value:"ar";try{localStorage.setItem("msdz-language",language);}catch(error){}activeCategory="all";applyLanguage();refreshMerchantLinks(merchantSession);});
 function openInfoDialog(id){const dialog=el(id);if(dialog&&!dialog.open)dialog.showModal();}
 function closeInfoDialog(id){const dialog=el(id);if(dialog&&dialog.open)dialog.close();}
 el("openAboutDialog")?.addEventListener("click",()=>openInfoDialog("aboutDialog"));
@@ -581,8 +581,11 @@ await loadStore();applyLanguage();updateCartButton();await loadFeaturedStores();
 
 /* Route merchant actions to the dashboard for signed-in users,
    and through the login flow for visitors. */
-async function refreshMerchantLinks(session){
- const target=session?("dashboard.html?lang="+encodeURIComponent(language)):"auth.html?next=dashboard.html";
+let merchantSession=null;
+function refreshMerchantLinks(session){
+ merchantSession=session||null;
+ const selectedLanguage=["ar","fr","en","es","de","tr"].includes(language)?language:"ar";
+ const target=session?("dashboard.html?lang="+encodeURIComponent(selectedLanguage)):("auth.html?next=dashboard.html&lang="+encodeURIComponent(selectedLanguage));
  ["merchantAccountLink","createStoreLink"].forEach(id=>{
   const link=el(id);if(link)link.href=target;
  });
