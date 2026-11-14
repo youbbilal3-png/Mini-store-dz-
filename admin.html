@@ -35,6 +35,7 @@
 <button data-admin-tab="featured" type="button">🏆 المتاجر المميزة</button>
 <button data-admin-tab="ads" type="button">📢 الإعلانات</button>
 <button data-admin-tab="support" type="button">الدعم الفني <b id="supportBadge">0</b></button>
+<button data-admin-tab="visitors" type="button">📊 إحصائيات الزوار</button>
 </nav>
 <section class="admin-panel active" id="admin-overview">
 <div class="admin-panel-heading"><div><h2>ملخص المنصة</h2><p>إحصائيات محدثة من قاعدة البيانات.</p></div></div>
@@ -43,6 +44,17 @@
 <article><h3>الاشتراكات المدفوعة أو التجريبية</h3><strong id="statSubscriptions">—</strong></article>
 </div>
 <p class="admin-hint">هذه اللوحة مرتبطة بحساب المالك الحالي. لا يستطيع التاجر فتحها بمجرد معرفة رابطها؛ يتم التحقق من الصلاحية داخل قاعدة البيانات أيضاً.</p>
+</section>
+<section class="admin-panel" id="admin-visitors">
+<div class="admin-panel-heading"><div><h2>إحصائيات الزوار</h2><p>عدد الزوار الفريدين ومشاهدات الصفحات المسجلة منذ تفعيل الإحصائيات.</p></div><label class="admin-visitor-range">الفترة <select id="visitorStatsRange"><option value="7">آخر 7 أيام</option><option value="30">آخر 30 يوماً</option><option value="90">آخر 90 يوماً</option></select></label></div>
+<div class="admin-stats admin-visitor-stats">
+<article><span>👥</span><small>إجمالي الزوار الفريدين</small><strong id="visitorTotalUnique">—</strong></article>
+<article><span>👁️</span><small>إجمالي مشاهدات الصفحات</small><strong id="visitorTotalViews">—</strong></article>
+<article><span>📅</span><small>زوار اليوم</small><strong id="visitorTodayUnique">—</strong></article>
+<article><span>🔎</span><small>مشاهدات اليوم</small><strong id="visitorTodayViews">—</strong></article>
+</div>
+<div class="admin-visitor-daily"><h3>النشاط اليومي</h3><div class="admin-table-wrap"><table><thead><tr><th>التاريخ</th><th>الزوار الفريدون</th><th>مشاهدات الصفحات</th></tr></thead><tbody id="visitorDailyBody"><tr><td colspan="3">جارٍ تحميل الإحصائيات...</td></tr></tbody></table></div></div>
+<p class="admin-hint">تعتمد الأرقام على معرّف عشوائي محفوظ في المتصفح. قد يُحسب الشخص أكثر من مرة عند تغيير المتصفح أو الجهاز أو حذف بيانات التصفح. لا تُجمع الأسماء أو عناوين IP.</p>
 </section>
 <section class="admin-panel" id="admin-merchants">
 <div class="admin-panel-heading"><div><h2>التجار والاشتراكات</h2><p>عرض حسابات التجار والتحكم في الخطة والمدة.</p></div><input id="merchantSearch" type="search" placeholder="ابحث بالبريد أو اسم المتجر"></div>
