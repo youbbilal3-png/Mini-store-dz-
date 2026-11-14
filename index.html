@@ -20,7 +20,7 @@
 <title>Mini Store DZ | اكتشف المتاجر والمنتجات في الجزائر</title>
 <link rel="stylesheet" href="styles.css?v=20261114-30">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261114-4"></script>
+<script type="module" src="app.js?v=20261114-5"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body>
@@ -60,7 +60,11 @@
     </div>
   </section>
 
-  <div class="home-commercial-row">
+  <section class="global-search-panel" id="globalSearchPanel" hidden>
+    <div class="global-search-input-row"><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
+    <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
+  </section>
+  <div class="home-commercial-row">  <div class="home-commercial-row">
       <section class="hero-intro-card" aria-label="تعريف بالمنصة">
         <span class="hero-intro-kicker" data-i18n="homeCardEyebrow">اكتشف Mini Store DZ</span>
         <h1 data-i18n="homeCardTitle">كل ما تبحث عنه في مكان واحد</h1>
@@ -103,7 +107,6 @@
       <div class="search-controls"><input id="searchInput" type="search" placeholder="ابحث عن منتج..." data-i18n-placeholder="searchPlaceholder"><button id="clearSearch" class="clear-search-btn" type="button" data-i18n="clearSearch" hidden>مسح البحث</button></div>
       <div class="category-select-wrap"><select id="categorySelect" class="category-select" aria-label="اختر تصنيفاً"><option value="all">كل التصنيفات</option></select></div>
     </div>
-    <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
     <div class="product-grid" id="productGrid"></div>
     <p class="empty-state" id="emptyState" hidden data-i18n="empty">لا توجد منتجات مطابقة.</p>
   </section>
