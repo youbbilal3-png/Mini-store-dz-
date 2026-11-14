@@ -140,8 +140,8 @@ function renderAdMediaEditor(){
 
 function resetSponsoredAdEditor(){
  editingSponsoredAdId=null;
- selectedAdMedia=[];renderAdMediaEditor();
  $("sponsoredAdForm").reset();
+ selectedAdMedia=[];renderAdMediaEditor();
  $("saveSponsoredAd").textContent="إضافة الإعلان";
  const cancel=$("cancelSponsoredAdEdit");if(cancel)cancel.hidden=true;
  $("adFormFeedback").textContent="";
