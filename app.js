@@ -218,7 +218,7 @@ function renderSponsoredAds(){
   if(slides[0].tagName==="VIDEO"){const play=slides[0].play();if(play&&typeof play.catch==="function")play.catch(()=>{});}
   if(slides.length<2)return;
   let current=0;
-  const timer=setInterval(()=>{current=(current+1)%slides.length;show(current);},6000);
+  const timer=setInterval(()=>{current=(current+1)%slides.length;show(current);},4000);
   sponsoredAdTimers.push(timer);
  });
  grid.querySelectorAll(".sponsored-ad-image").forEach(img=>img.addEventListener("error",()=>{img.classList.add("image-load-failed");img.removeAttribute("src");}));
