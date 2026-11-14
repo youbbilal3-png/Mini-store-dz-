@@ -18,9 +18,9 @@
 <link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg">
 <title>Mini Store DZ | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261113-29">
+<link rel="stylesheet" href="styles.css?v=20261114-30">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261114-3"></script>
+<script type="module" src="app.js?v=20261114-4"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body>
@@ -30,6 +30,7 @@
     <div class="brand-share-wrap"><button type="button" class="share-platform-btn" id="sharePlatformButton" aria-label="شارك Mini Store DZ" title="شارك Mini Store DZ"><span aria-hidden="true">↗</span><span data-i18n="sharePlatformLabel">شارك الموقع</span></button><span class="share-platform-feedback" id="sharePlatformFeedback" role="status" aria-live="polite"></span></div>
   </div>
   <div class="header-tools">
+    <button type="button" class="global-search-toggle" id="globalSearchToggle" aria-label="بحث" title="بحث"><span aria-hidden="true">⌕</span><span data-i18n="searchSiteLabel">بحث</span></button>
     <label class="language-picker">
       <span class="sr-only" data-i18n="languageLabel">اللغة</span>
       <select id="languageSelect" aria-label="Choose language">
@@ -102,6 +103,7 @@
       <div class="search-controls"><input id="searchInput" type="search" placeholder="ابحث عن منتج..." data-i18n-placeholder="searchPlaceholder"><button id="clearSearch" class="clear-search-btn" type="button" data-i18n="clearSearch" hidden>مسح البحث</button></div>
       <div class="category-select-wrap"><select id="categorySelect" class="category-select" aria-label="اختر تصنيفاً"><option value="all">كل التصنيفات</option></select></div>
     </div>
+    <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
     <div class="product-grid" id="productGrid"></div>
     <p class="empty-state" id="emptyState" hidden data-i18n="empty">لا توجد منتجات مطابقة.</p>
   </section>
