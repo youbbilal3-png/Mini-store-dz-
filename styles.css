@@ -802,3 +802,9 @@ html[data-theme="dark"] .sponsored-ads-empty{background:var(--surface);border-co
 /* Clearly identify illustrative homepage sample products and show their full product photos. */
 .demo-product-label{display:inline-flex;align-items:center;width:max-content;padding:6px 11px;border:1px solid #d8e4c5;border-radius:999px;background:#f1f7e8;color:#587b26;font-size:11px;font-weight:800}
 .demo-product-image img{object-fit:contain!important;padding:10px;box-sizing:border-box;background:#f6f8f2}
+
+
+/* Prominent homepage guide link beside the language selector. */
+.header-tools .how-it-works-nav-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:12px;background:var(--lime);color:#172231!important;text-decoration:none;font-size:15px;font-weight:900;white-space:nowrap;box-shadow:0 4px 12px #8bbd3430;flex:0 0 auto}
+.header-tools .how-it-works-nav-link:hover{transform:translateY(-2px);box-shadow:0 7px 16px #8bbd3440}
+@media(max-width:600px){.header-tools .how-it-works-nav-link{min-height:38px;padding:8px 12px;font-size:13px;border-radius:10px}}
