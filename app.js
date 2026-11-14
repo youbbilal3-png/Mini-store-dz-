@@ -48,6 +48,14 @@ Object.assign(translations.en,{sponsoredEyebrow:"SPONSORED",sponsoredTitle:"Our 
 Object.assign(translations.es,{sponsoredEyebrow:"Publicidad patrocinada",sponsoredTitle:"Nuestros socios"});
 Object.assign(translations.de,{sponsoredEyebrow:"Gesponsert",sponsoredTitle:"Unsere Partner"});
 Object.assign(translations.tr,{sponsoredEyebrow:"Sponsorlu",sponsoredTitle:"İş ortaklarımız"});
+const SEARCH_UI_TEXT={
+ ar:{label:"بحث",placeholder:"ابحث عن متجر أو منتج...",stores:"المتاجر",products:"المنتجات",visit:"زيارة المتجر",inStore:"في",noResults:"لم نعثر على متاجر أو منتجات مطابقة.",loading:"جارٍ البحث...",error:"تعذر إتمام البحث حالياً. حاول مرة أخرى."},
+ fr:{label:"Recherche",placeholder:"Rechercher une boutique ou un produit...",stores:"Boutiques",products:"Produits",visit:"Visiter la boutique",inStore:"chez",noResults:"Aucune boutique ou aucun produit correspondant.",loading:"Recherche en cours...",error:"Recherche impossible pour le moment. Réessayez."},
+ en:{label:"Search",placeholder:"Search stores or products...",stores:"Stores",products:"Products",visit:"Visit store",inStore:"at",noResults:"No matching stores or products found.",loading:"Searching...",error:"Search is unavailable right now. Please try again."},
+ es:{label:"Buscar",placeholder:"Buscar tiendas o productos...",stores:"Tiendas",products:"Productos",visit:"Visitar tienda",inStore:"en",noResults:"No se encontraron tiendas ni productos coincidentes.",loading:"Buscando...",error:"No se puede realizar la búsqueda ahora. Inténtalo de nuevo."},
+ de:{label:"Suche",placeholder:"Shops oder Produkte suchen...",stores:"Shops",products:"Produkte",visit:"Shop besuchen",inStore:"bei",noResults:"Keine passenden Shops oder Produkte gefunden.",loading:"Suche läuft...",error:"Die Suche ist derzeit nicht verfügbar. Bitte erneut versuchen."},
+ tr:{label:"Ara",placeholder:"Mağaza veya ürün ara...",stores:"Mağazalar",products:"Ürünler",visit:"Mağazayı ziyaret et",inStore:"mağazasında",noResults:"Eşleşen mağaza veya ürün bulunamadı.",loading:"Aranıyor...",error:"Arama şu anda kullanılamıyor. Lütfen tekrar deneyin."}
+};
 const el=id=>document.getElementById(id);
 const isPlatformHome=!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"));
 
@@ -106,7 +114,7 @@ function renderProducts(){
 }
 function renderSellerProfile(){if(!el("sellerName"))return;const name=STORE_SETTINGS.sellerName||"Store Owner";el("sellerName").textContent=name;el("sellerDescription").textContent=STORE_SETTINGS.sellerDescription||translations[language].sellerDescription;el("sellerInitials").textContent=name.trim().charAt(0).toUpperCase()||"S";const avatar=el("sellerAvatar");if(STORE_SETTINGS.sellerAvatar){avatar.src=STORE_SETTINGS.sellerAvatar;avatar.hidden=false;el("sellerInitials").hidden=true;avatar.onerror=()=>{avatar.hidden=true;el("sellerInitials").hidden=false;};}else{avatar.hidden=true;el("sellerInitials").hidden=false;}}
 
-let featuredStores=[],regularStores=[];
+let featuredStores=[],regularStores=[],globalSearchProducts=null,globalSearchPromise=null;
 function featuredStoreCard(store){
  const avatar=store.avatar_url?'<img src="'+safe(store.avatar_url)+'" alt="" loading="lazy">':'<span class="featured-store-icon">🏪</span>';
  const badge=store.is_featured&&store.featured_until&&new Date(store.featured_until).getTime()>Date.now()?'<em class="featured-store-badge">🏆 '+translations[language].featuredBadge+'</em>':'';
@@ -120,13 +128,55 @@ function renderFeaturedStores(){
 async function loadFeaturedStores(){
  if(!el("featuredStoresGrid")&&!el("featuredPaidStoresGrid"))return;
  try{
-  const {data,error}=await supabase.from("stores").select("store_name,seller_name,avatar_url,slug,is_featured,featured_until,created_at").eq("is_published",true).order("created_at",{ascending:false});
+  const {data,error}=await supabase.from("stores").select("id,store_name,seller_name,avatar_url,slug,is_featured,featured_until,created_at").eq("is_published",true).order("created_at",{ascending:false});
   if(error)throw error;
   const now=Date.now(),all=data||[];
   featuredStores=all.filter(x=>x.is_featured&&x.featured_until&&new Date(x.featured_until).getTime()>now);
   regularStores=all.filter(x=>!featuredStores.some(y=>y.id===x.id||y.slug===x.slug));
  }catch(error){console.error("Featured stores:",error);featuredStores=[];regularStores=[];}
  renderFeaturedStores();
+}
+
+
+function searchText(value){return String(value??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().trim();}
+async function loadGlobalSearchProducts(){
+ if(globalSearchProducts)return globalSearchProducts;
+ if(globalSearchPromise)return globalSearchPromise;
+ globalSearchPromise=(async()=>{
+  const publishedStores=[...featuredStores,...regularStores],ids=publishedStores.map(store=>store.id).filter(Boolean);
+  if(!ids.length){globalSearchProducts=[];return globalSearchProducts;}
+  const {data,error}=await supabase.from("products").select("id,name,description,category,price,image_url,store_id").in("store_id",ids).eq("is_active",true).limit(1000);
+  if(error)throw error;
+  const storeById=new Map(publishedStores.map(store=>[store.id,store]));
+  globalSearchProducts=(data||[]).map(product=>({...product,store:storeById.get(product.store_id)})).filter(product=>product.store?.slug);
+  return globalSearchProducts;
+ })();
+ try{return await globalSearchPromise;}finally{globalSearchPromise=null;}
+}
+function renderGlobalSearch(value){
+ const box=el("globalSearchResults"),grid=el("productGrid"),empty=el("emptyState"),term=searchText(value),words=SEARCH_UI_TEXT[language]||SEARCH_UI_TEXT.ar;
+ if(!box||!grid)return;
+ if(!term){box.hidden=true;box.innerHTML="";grid.hidden=false;if(empty)empty.hidden=true;return;}
+ box.hidden=false;grid.hidden=true;if(empty)empty.hidden=true;
+ box.innerHTML='<p class="global-search-status">'+safe(words.loading)+'</p>';
+ (async()=>{
+  try{
+   if(!regularStores.length&&!featuredStores.length)await loadFeaturedStores();
+   const allStores=[...featuredStores,...regularStores];
+   const matchedStores=allStores.filter(store=>searchText([store.store_name,store.seller_name,store.slug].join(" ")).includes(term));
+   const allProducts=await loadGlobalSearchProducts();
+   const matchedProducts=allProducts.filter(product=>searchText([product.name,product.description,product.category,product.store?.store_name,product.store?.seller_name].join(" ")).includes(term));
+   if(searchText(el("searchInput")?.value)!==term)return;
+   const storeCards=matchedStores.map(store=>'<a class="global-search-store" href="store.html?store='+encodeURIComponent(store.slug)+'">'+(store.avatar_url?'<img src="'+safe(store.avatar_url)+'" alt="" loading="lazy">':'<span class="global-search-store-icon">🏪</span>')+'<span><b>'+safe(store.store_name||store.seller_name||"Mini Store")+'</b><small>'+safe(store.seller_name||"")+'</small><em>'+safe(words.visit)+' ↗</em></span></a>').join("");
+   const productCards=matchedProducts.map(product=>{
+    const store=product.store,href="store.html?store="+encodeURIComponent(store.slug)+"&search="+encodeURIComponent(product.name);
+    return '<a class="global-search-product" href="'+safe(href)+'">'+(product.image_url?'<img src="'+safe(product.image_url)+'" alt="" loading="lazy">':'<span class="global-search-product-icon">📦</span>')+'<span><b>'+safe(product.name)+'</b><small>'+safe(words.inStore)+" "+safe(store.store_name||"")+'</small><em>'+Number(product.price||0).toLocaleString(language==="ar"?"ar-DZ":language==="fr"?"fr-FR":language==="es"?"es-ES":language==="de"?"de-DE":language==="tr"?"tr-TR":"en-US")+' '+safe(translations[language].currency)+'</em></span></a>';
+   }).join("");
+   box.innerHTML=(matchedStores.length?'<h3>'+safe(words.stores)+' ('+matchedStores.length+')</h3><div class="global-search-store-list">'+storeCards+'</div>':"")+
+    (matchedProducts.length?'<h3>'+safe(words.products)+' ('+matchedProducts.length+')</h3><div class="global-search-product-list">'+productCards+'</div>':"")+
+    (!matchedStores.length&&!matchedProducts.length?'<p class="global-search-status">'+safe(words.noResults)+'</p>':"");
+  }catch(error){console.error("Global catalog search failed:",error);if(searchText(el("searchInput")?.value)===term)box.innerHTML='<p class="global-search-status">'+safe(words.error)+'</p>';}
+ })();
 }
 
 let sponsoredAds=[],sponsoredAdTimers=[];
@@ -207,7 +257,7 @@ async function sharePlatformLink(){
  }catch(error){console.error("Platform link sharing failed:",error);if(feedback)feedback.textContent=t.sharePlatformError;}
 }
 
-function applyLanguage(){const languagePicker=el("languageSelect");if(languagePicker)languagePicker.value=language;document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";if(!new URLSearchParams(location.search).has("store"))STORE_SETTINGS.sellerDescription=translations[language].sellerDescription;const metaDescription=document.querySelector('meta[name="description"]');if(metaDescription)metaDescription.content=currentStoreId?[STORE_SETTINGS.sellerDescription,translations[language].storeMetaDesc].filter(Boolean).join(" — "):translations[language].metaDescription;const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=metaDescription?.content||translations[language].metaDescription;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.dataset.i18n;if(translations[language][k])n.innerHTML=translations[language][k];});document.querySelectorAll("[data-i18n-placeholder]").forEach(n=>n.placeholder=translations[language][n.dataset.i18nPlaceholder]);document.querySelectorAll("[data-i18n-aria-label]").forEach(n=>n.setAttribute("aria-label",translations[language][n.dataset.i18nAriaLabel]||n.getAttribute("aria-label")));document.querySelectorAll("[data-i18n-alt]").forEach(n=>n.alt=translations[language][n.dataset.i18nAlt]||n.alt);applyTheme(document.documentElement.dataset.theme||"system");const browseLink=el("browseButton");if(browseLink){browseLink.href=isPlatformHome?"#featuredStoresSection":"#products";if(isPlatformHome)browseLink.textContent=translations[language].browseStores;}const productsNav=el("navProducts");if(productsNav&&isPlatformHome){productsNav.href="#featuredStoresSection";productsNav.textContent=translations[language].navStores;}renderSellerProfile();renderFilters();renderProducts();renderCart();renderFeaturedStores();renderSponsoredAds();if(currentStoreId&&el("reviews"))renderPublicReviews();const contactButton=el("contactButton");if(contactButton){if(currentStoreId){const storePhone=String(STORE_SETTINGS.whatsapp||"").replace(/\D/g,"");if(storePhone){contactButton.href="https://wa.me/"+storePhone;contactButton.target="_blank";contactButton.rel="noopener";contactButton.removeAttribute("aria-disabled");}else{contactButton.href="#";contactButton.removeAttribute("target");contactButton.setAttribute("aria-disabled","true");contactButton.textContent=translations[language].whatsappUnavailable;}}else{contactButton.href="mailto:support.ministoredz@gmail.com?subject="+encodeURIComponent(translations[language].supportSubject);contactButton.removeAttribute("target");contactButton.removeAttribute("aria-disabled");}}if(el("supportEmailLink"))el("supportEmailLink").href="mailto:support.ministoredz@gmail.com";updateStoreShareLinks();}
+function applyLanguage(){const languagePicker=el("languageSelect");if(languagePicker)languagePicker.value=language;const searchButton=el("globalSearchToggle");if(searchButton){searchButton.setAttribute("aria-label",SEARCH_UI_TEXT[language].label);searchButton.title=SEARCH_UI_TEXT[language].label;const label=searchButton.querySelector("[data-i18n='searchSiteLabel']");if(label)label.textContent=SEARCH_UI_TEXT[language].label;}const searchField=el("searchInput");if(searchField)searchField.placeholder=SEARCH_UI_TEXT[language].placeholder;document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";if(!new URLSearchParams(location.search).has("store"))STORE_SETTINGS.sellerDescription=translations[language].sellerDescription;const metaDescription=document.querySelector('meta[name="description"]');if(metaDescription)metaDescription.content=currentStoreId?[STORE_SETTINGS.sellerDescription,translations[language].storeMetaDesc].filter(Boolean).join(" — "):translations[language].metaDescription;const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=metaDescription?.content||translations[language].metaDescription;document.querySelectorAll("[data-i18n]").forEach(n=>{const k=n.dataset.i18n;if(translations[language][k])n.innerHTML=translations[language][k];});document.querySelectorAll("[data-i18n-placeholder]").forEach(n=>n.placeholder=translations[language][n.dataset.i18nPlaceholder]);document.querySelectorAll("[data-i18n-aria-label]").forEach(n=>n.setAttribute("aria-label",translations[language][n.dataset.i18nAriaLabel]||n.getAttribute("aria-label")));document.querySelectorAll("[data-i18n-alt]").forEach(n=>n.alt=translations[language][n.dataset.i18nAlt]||n.alt);applyTheme(document.documentElement.dataset.theme||"system");const browseLink=el("browseButton");if(browseLink){browseLink.href=isPlatformHome?"#featuredStoresSection":"#products";if(isPlatformHome)browseLink.textContent=translations[language].browseStores;}const productsNav=el("navProducts");if(productsNav&&isPlatformHome){productsNav.href="#featuredStoresSection";productsNav.textContent=translations[language].navStores;}renderSellerProfile();renderFilters();renderProducts();renderCart();renderFeaturedStores();renderSponsoredAds();if(currentStoreId&&el("reviews"))renderPublicReviews();const contactButton=el("contactButton");if(contactButton){if(currentStoreId){const storePhone=String(STORE_SETTINGS.whatsapp||"").replace(/\D/g,"");if(storePhone){contactButton.href="https://wa.me/"+storePhone;contactButton.target="_blank";contactButton.rel="noopener";contactButton.removeAttribute("aria-disabled");}else{contactButton.href="#";contactButton.removeAttribute("target");contactButton.setAttribute("aria-disabled","true");contactButton.textContent=translations[language].whatsappUnavailable;}}else{contactButton.href="mailto:support.ministoredz@gmail.com?subject="+encodeURIComponent(translations[language].supportSubject);contactButton.removeAttribute("target");contactButton.removeAttribute("aria-disabled");}}if(el("supportEmailLink"))el("supportEmailLink").href="mailto:support.ministoredz@gmail.com";updateStoreShareLinks();}
 
 function renderDetailGallery(name){
  const t=translations[language],multiple=detailImages.length>1,current=detailImages[detailImageIndex];
@@ -397,6 +447,8 @@ async function loadStore(){
   const {data:list,error:productError}=await supabase.from("products").select("id,name,description,category,price,currency,image_url,image_urls,stock_quantity").eq("store_id",store.id).eq("is_active",true).order("created_at",{ascending:false});
   if(productError)throw productError;
   products=(list||[]).map(p=>({...p,emoji:"📦"}));
+  const initialStoreSearch=new URLSearchParams(location.search).get("search");
+  if(initialStoreSearch){searchTerm=initialStoreSearch;if(el("searchInput"))el("searchInput").value=initialStoreSearch;}
   const title=store.store_name+" | Mini Store DZ";
   const pageDescription=String(store.description||store.seller_bio||translations[language].storeMetaDesc).trim().slice(0,300);
   const canonicalUrl=new URL("/store.html",location.origin);
@@ -417,8 +469,9 @@ el("closeAboutDialog")?.addEventListener("click",()=>closeInfoDialog("aboutDialo
 el("closeContactDialog")?.addEventListener("click",()=>closeInfoDialog("contactDialog"));
 ["aboutDialog","contactDialog"].forEach(id=>{const dialog=el(id);dialog?.addEventListener("click",e=>{if(e.target===dialog)dialog.close();});});
 if(el("copyStoreLink"))el("copyStoreLink").addEventListener("click",copyStoreLink);
-el("searchInput").addEventListener("input",e=>{searchTerm=e.target.value;renderProducts();});
-el("clearSearch").addEventListener("click",()=>{searchTerm="";el("searchInput").value="";renderProducts();el("searchInput").focus();});
+el("globalSearchToggle")?.addEventListener("click",()=>{el("products")?.scrollIntoView({behavior:"smooth",block:"start"});window.setTimeout(()=>el("searchInput")?.focus(),250);});
+el("searchInput").addEventListener("input",e=>{if(isPlatformHome)renderGlobalSearch(e.target.value);else{searchTerm=e.target.value;renderProducts();}});
+el("clearSearch").addEventListener("click",()=>{searchTerm="";el("searchInput").value="";if(isPlatformHome)renderGlobalSearch("");else renderProducts();el("searchInput").focus();});
 el("categorySelect").addEventListener("change",e=>{activeCategory=e.target.value;renderProducts();});
 el("productGrid").addEventListener("click",e=>{const detail=e.target.closest("[data-product-details]");if(detail){openProductDetails(detail.dataset.productDetails);return;}const b=e.target.closest("[data-add-cart]");if(b)addToCart(b.dataset.addCart);});
 el("closeProductDetails").addEventListener("click",()=>el("productDetailsDialog").close());
