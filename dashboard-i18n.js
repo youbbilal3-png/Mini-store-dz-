@@ -209,6 +209,9 @@
 
   const subscriptionDynamicLabels = {
     "شهرياً":["par mois","monthly","al mes","monatlich","aylık"],
+ "اشتراك نشط":["Abonnement actif","Active subscription","Suscripción activa","Aktives Abonnement","Etkin abonelik"],
+ "مكافأة دعوات نشطة":["Récompense d’invitation active","Active referral reward","Recompensa por invitación activa","Aktive Empfehlungsprämie","Etkin davet ödülü"],
+ "دج /":["DZD /","DZD /","DZD /","DZD /","DZD /"],
     "سنوياً":["par an","yearly","al año","jährlich","yıllık"],
     "خطتك الحالية:":["Votre forfait actuel :","Your current plan:","Tu plan actual:","Ihr aktueller Tarif:","Mevcut planınız:"],
     "تنتهي التجربة في":["L’essai se termine le","Trial ends on","La prueba termina el","Test endet am","Deneme bitiş tarihi:"],
