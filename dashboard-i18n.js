@@ -361,7 +361,7 @@
     document.dispatchEvent(new CustomEvent("msdz-language-changed", {detail:{language:lang}}));
   };
   document.addEventListener("DOMContentLoaded", () => {
-    try { const saved = localStorage.getItem("msdz-language"); lang = ["ar","fr","en","es","de","tr"].includes(saved) ? saved : "ar"; } catch (_) {}
+    try { const requested = new URLSearchParams(location.search).get("lang"); const saved = localStorage.getItem("msdz-language"); const preferred = ["ar","fr","en","es","de","tr"].includes(requested) ? requested : saved; lang = ["ar","fr","en","es","de","tr"].includes(preferred) ? preferred : "ar"; } catch (_) {}
     const actions = document.querySelector(".dashboard-header-actions");
     if (actions && !document.getElementById("dashboardLanguageSelect")) {
       const label = document.createElement("label");
