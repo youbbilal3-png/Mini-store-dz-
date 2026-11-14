@@ -1,4 +1,21 @@
 import { supabase } from "./supabase-client.js";
+
+// Privacy-conscious public page analytics: random browser ID, no names, emails or IP storage.
+(function trackPublicPageVisit(){
+  try {
+    let visitorId=localStorage.getItem("minabyb-visitor-id");
+    if(!visitorId){
+      visitorId=crypto.randomUUID();
+      localStorage.setItem("minabyb-visitor-id",visitorId);
+    }
+    const pagePath=(location.pathname||"/").replace(/[^a-zA-Z0-9/_-]/g,"").slice(0,120)||"/";
+    supabase.rpc("record_site_visit",{p_visitor_id:visitorId,p_page_path:pagePath})
+      .then(({error})=>{if(error)console.warn("MINABYB visit tracking unavailable:",error.message);})
+      .catch(()=>{});
+  } catch(error) {
+    console.warn("MINABYB visit tracking unavailable.",error);
+  }
+})();
 const DEFAULT_STORE_SETTINGS={whatsapp:"213000000000",sellerName:"MINABYB",sellerDescription:"متجرك، هويتك.",sellerAvatar:""};
 let STORE_SETTINGS={...DEFAULT_STORE_SETTINGS};
 const defaultProducts=[
