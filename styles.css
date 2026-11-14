@@ -620,3 +620,33 @@ html[data-theme="dark"] .hero-intro-kicker{background:#2b432b;color:#c9e89b}
 .auth-brand .brand-name{font-size:20px}
 .auth-brand .brand-tagline{font-size:7px;color:#a9bacd}
 @media(max-width:600px){.brand-symbol{width:36px;height:36px}.brand-name{font-size:16px;letter-spacing:-.45px}.brand-tagline{font-size:6px;letter-spacing:1px}.auth-brand .brand-symbol{width:36px;height:36px}.auth-brand .brand-name{font-size:15px}}
+
+
+/* MINABYB: integrate the brand into the existing dark site header */
+.brand-row{
+  min-height:58px;
+  padding:7px 6vw;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#101827;
+  border-bottom:1px solid #263648;
+}
+.brand-row .brand{color:#f4f7fb}
+.brand-row .brand-symbol{width:42px;height:42px}
+.brand-row .brand-name{font-size:21px}
+.brand-row .brand-tagline{color:#aab8c8}
+.brand-share-wrap{inset-inline-start:6vw}
+.share-platform-btn{background:#1b293b;border-color:#435064;color:#fff}
+.share-platform-feedback{color:#c8f36a}
+html[data-theme="dark"] .brand-row,html[data-theme="system"] .brand-row{background:#101827}
+html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .brand{color:#f4f7fb}
+@media(max-width:600px){
+ .brand-row{min-height:52px;padding:6px 12px;background:#101827}
+ .brand-row .brand{font-size:17px}
+ .brand-row .brand-symbol{width:36px;height:36px}
+ .brand-row .brand-name{font-size:17px;letter-spacing:-.45px}
+ .brand-row .brand-tagline{font-size:6px;letter-spacing:1px;color:#aab8c8}
+ .brand-share-wrap{inset-inline-start:10px;max-width:34%;gap:3px}
+ .share-platform-btn{min-height:30px;padding:4px 7px;font-size:10px;gap:4px;background:#1b293b}
+}
