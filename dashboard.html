@@ -7,9 +7,9 @@
 <link rel="icon" href="app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg">
 <title>لوحة التاجر | Mini Store DZ</title>
-<link rel="stylesheet" href="styles.css?v=20261113-25"><link rel="stylesheet" href="dashboard.css?v=20261113-18">
+<link rel="stylesheet" href="styles.css?v=20261113-25"><link rel="stylesheet" href="dashboard.css?v=20261114-2">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script src="dashboard-i18n.js?v=20261114-4"></script>
+<script src="dashboard-i18n.js?v=20261114-5"></script>
 <script>
 window.addEventListener("error",function(event){
   if(event.target&&event.target.tagName==="SCRIPT"){
@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261114-3" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261114-4" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-2"></script>
 </head>
 <body class="dashboard-page">
@@ -140,6 +140,7 @@ window.addEventListener("unhandledrejection",function(event){
 </section>
 <section class="dash-panel" id="products">
 <div class="panel-heading products-heading"><div><span class="eyebrow">PRODUCT MANAGEMENT</span><h2>إدارة المنتجات</h2><p>أضف منتجاً جديداً أو عدّل المنتجات الموجودة.</p></div><span class="products-total" id="productsTotal">0 منتج</span></div>
+<div class="dashboard-search-row"><input id="merchantProductSearch" type="search" placeholder="ابحث في منتجات متجرك..." aria-label="ابحث في منتجات متجرك"></div>
 <form id="productForm" class="product-form">
 <input id="editingProductId" type="hidden">
 <div class="form-fields two-columns">
@@ -154,7 +155,7 @@ window.addEventListener("unhandledrejection",function(event){
 </form>
 <div class="managed-products" id="managedProducts"></div>
 </section>
-<section class="dash-panel" id="reviews"><div class="panel-heading products-heading"><div><span class="eyebrow">CUSTOMER FEEDBACK</span><h2>تقييمات الزبائن</h2><p>راجع آراء الزبائن وانشر التقييمات المناسبة.</p></div><div class="review-admin-summary"><strong id="reviewsAdminAverage">—</strong><span id="reviewsAdminStars">☆☆☆☆☆</span><small id="reviewsAdminCount">0 تقييم منشور</small></div></div><div class="managed-reviews" id="managedReviews"><p class="empty-products">جارٍ تحميل التقييمات...</p></div></section><section class="dash-panel" id="orders"><div class="panel-heading products-heading"><div><span class="eyebrow">ORDER MANAGEMENT</span><h2>طلبات الزبائن</h2><p>تابع الطلبات الجديدة وحدّث حالتها من مكان واحد.</p></div><span class="products-total" id="ordersTotal">0 طلب</span></div><div class="managed-orders" id="managedOrders"><p class="empty-products">جارٍ تحميل الطلبات...</p></div></section>
+<section class="dash-panel" id="reviews"><div class="panel-heading products-heading"><div><span class="eyebrow">CUSTOMER FEEDBACK</span><h2>تقييمات الزبائن</h2><p>راجع آراء الزبائن وانشر التقييمات المناسبة.</p></div><div class="review-admin-summary"><strong id="reviewsAdminAverage">—</strong><span id="reviewsAdminStars">☆☆☆☆☆</span><small id="reviewsAdminCount">0 تقييم منشور</small></div></div><div class="managed-reviews" id="managedReviews"><p class="empty-products">جارٍ تحميل التقييمات...</p></div></section><section class="dash-panel" id="orders"><div class="panel-heading products-heading"><div><span class="eyebrow">ORDER MANAGEMENT</span><h2>طلبات الزبائن</h2><p>تابع الطلبات الجديدة وحدّث حالتها من مكان واحد.</p></div><span class="products-total" id="ordersTotal">0 طلب</span></div><div class="dashboard-search-row"><input id="merchantOrderSearch" type="search" placeholder="ابحث في طلبات الزبائن..." aria-label="ابحث في طلبات الزبائن"></div><div class="managed-orders" id="managedOrders"><p class="empty-products">جارٍ تحميل الطلبات...</p></div></section>
 <section class="dash-panel" id="support">
 <div class="panel-heading"><div><span class="eyebrow">HELP CENTER</span><h2>الدعم الفني</h2><p>أرسل رسالتك وسيتمكن فريق Mini Store DZ من متابعتها والرد عليك.</p></div></div>
 <form id="merchantSupportForm" class="product-form">
