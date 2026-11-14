@@ -607,3 +607,16 @@ html[data-theme="dark"] .hero-intro-kicker{background:#2b432b;color:#c9e89b}
  .global-search-panel{padding-top:12px;padding-bottom:12px}
  .global-search-input-row input{min-height:48px;font-size:16px}
 }
+
+
+/* MINABYB brand identity */
+.brand{direction:ltr;gap:10px;align-items:center}
+.brand-symbol{width:44px;height:44px;flex:0 0 auto;object-fit:contain;filter:drop-shadow(0 4px 7px rgba(0,0,0,.22))}
+.brand-name{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:0;direction:ltr;line-height:1;white-space:nowrap;font-size:clamp(17px,2vw,22px);font-weight:950;letter-spacing:-.7px}
+.brand-byb{color:#ef4444}
+.brand-mina{color:#25b96a}
+.brand-tagline{grid-column:1 / -1;margin-top:4px;text-align:center;font-size:7px;line-height:1.1;letter-spacing:1.55px;font-weight:800;color:var(--muted);white-space:nowrap}
+.auth-brand .brand-symbol{width:46px;height:46px}
+.auth-brand .brand-name{font-size:20px}
+.auth-brand .brand-tagline{font-size:7px;color:#a9bacd}
+@media(max-width:600px){.brand-symbol{width:36px;height:36px}.brand-name{font-size:16px;letter-spacing:-.45px}.brand-tagline{font-size:6px;letter-spacing:1px}.auth-brand .brand-symbol{width:36px;height:36px}.auth-brand .brand-name{font-size:15px}}
