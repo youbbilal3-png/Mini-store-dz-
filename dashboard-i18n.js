@@ -295,7 +295,7 @@
   Object.assign(dictionaries.de,{"بحث":"Suchen"});
   Object.assign(dictionaries.tr,{"بحث":"Ara"});
 
-  const originals = Object.keys(dictionaries.fr);  const originals = Object.keys(dictionaries.fr);
+  const originals = Object.keys(dictionaries.fr);
   const reverse = { fr: {}, en: {}, es: {}, de: {}, tr: {} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
   Object.assign(reverse.en, {"MERCHANT AREA":"مساحة التاجر","YOUR IDENTITY":"هويتك","YOUR STORE":"متجرك","STORE OVERVIEW":"نظرة عامة على المتجر","STORE SETTINGS":"إعدادات المتجر","PRODUCT MANAGEMENT":"إدارة المنتجات","CUSTOMER FEEDBACK":"آراء العملاء","ORDER MANAGEMENT":"إدارة الطلبات"});
