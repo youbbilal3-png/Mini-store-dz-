@@ -650,3 +650,25 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
  .brand-share-wrap{inset-inline-start:10px;max-width:34%;gap:3px}
  .share-platform-btn{min-height:30px;padding:4px 7px;font-size:10px;gap:4px;background:#1b293b}
 }
+
+
+/* MINABYB visibility refinement: slightly larger logo and tagline */
+.brand-row{min-height:66px;padding:8px 6vw}
+.brand-row .brand{gap:12px}
+.brand-row .brand-symbol{width:50px;height:50px}
+.brand-row .brand-name{font-size:25px;letter-spacing:-.55px}
+.brand-row .brand-tagline{font-size:9px;letter-spacing:1.8px;margin-top:5px}
+.auth-brand .brand-symbol{width:54px;height:54px}
+.auth-brand .brand-name{font-size:24px}
+.auth-brand .brand-tagline{font-size:9px;letter-spacing:1.7px}
+@media(max-width:600px){
+ .brand-row{min-height:62px;padding:7px 10px}
+ .brand-row .brand{gap:9px}
+ .brand-row .brand-symbol{width:46px;height:46px}
+ .brand-row .brand-name{font-size:21px;letter-spacing:-.35px}
+ .brand-row .brand-tagline{font-size:8px;letter-spacing:1.35px;margin-top:5px}
+ .brand-share-wrap{max-width:32%}
+ .auth-brand .brand-symbol{width:46px;height:46px}
+ .auth-brand .brand-name{font-size:20px}
+ .auth-brand .brand-tagline{font-size:8px;letter-spacing:1.3px}
+}
