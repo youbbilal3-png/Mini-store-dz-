@@ -1,7 +1,7 @@
 (() => {
   const languages = ["fr","en","es","de","tr"];
   const rows = {
-    "لوحة إدارة Mini Store DZ":["Administration Mini Store DZ","Mini Store DZ Admin","Administración Mini Store DZ","Mini Store DZ Verwaltung","Mini Store DZ Yönetim"],
+    "لوحة إدارة MINABYB":["Administration MINABYB","MINABYB Admin","Administración MINABYB","MINABYB Verwaltung","MINABYB Yönetim"],
     "لوحة إدارة المنصة":["Administration de la plateforme","Platform administration","Administración de la plataforma","Plattformverwaltung","Platform yönetimi"],
     "إدارة التجار والاشتراكات والدعم من حساب المالك.":["Gérez les vendeurs, abonnements et demandes d’assistance depuis le compte propriétaire.","Manage merchants, subscriptions and support from the owner account.","Gestiona vendedores, suscripciones y soporte desde la cuenta del propietario.","Verwalten Sie Händler, Abonnements und Support über das Inhaberkonto.","Satıcıları, abonelikleri ve desteği sahip hesabından yönetin."],
     "جارٍ التحقق من صلاحيات المالك...":["Vérification des autorisations du propriétaire...","Verifying owner permissions...","Verificando los permisos del propietario...","Berechtigungen des Inhabers werden überprüft...","Sahip izinleri doğrulanıyor..."],
@@ -98,7 +98,7 @@
     current=["ar",...languages].includes(lang)?lang:"ar";
     document.documentElement.lang=current;document.documentElement.dir=current==="ar"?"rtl":"ltr";
     try{localStorage.setItem("msdz-language",current);}catch(_){}
-    document.title=translate("لوحة إدارة Mini Store DZ");
+    document.title=translate("لوحة إدارة MINABYB");
     translateRoot(document.body);
     const picker=document.getElementById("adminLanguageSelect");if(picker)picker.value=current;
   }
