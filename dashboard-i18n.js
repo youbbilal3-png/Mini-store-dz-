@@ -368,7 +368,11 @@
       label.className = "language-picker";
       label.innerHTML = '<span class="sr-only">Language</span><select id="dashboardLanguageSelect" aria-label="Choose language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option><option value="es">Español</option><option value="de">Deutsch</option><option value="tr">Türkçe</option></select>';
       actions.insertBefore(label, actions.firstChild);
-      label.querySelector("select").addEventListener("change", e => apply(e.target.value));
+    }
+    const picker = document.getElementById("dashboardLanguageSelect");
+    if (picker && !picker.dataset.languageBound) {
+      picker.addEventListener("change", e => apply(e.target.value));
+      picker.dataset.languageBound = "true";
     }
     apply(lang);
     const observer = new MutationObserver(records => {
