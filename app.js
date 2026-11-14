@@ -184,7 +184,11 @@ function renderSponsoredAds(){
  const section=el("sponsoredAdsSection"),grid=el("sponsoredAdsGrid");
  if(!section||!grid)return;
  sponsoredAdTimers.forEach(clearInterval);sponsoredAdTimers=[];
- section.hidden=!sponsoredAds.length;
+ section.hidden=false;
+ if(!sponsoredAds.length){
+  grid.innerHTML='<div class="sponsored-ads-empty"><span class="sponsored-ads-empty-icon" aria-hidden="true">📢</span><div><strong>'+safe(translations[language].sponsoredEmptyTitle)+'</strong><p>'+safe(translations[language].sponsoredEmptyText)+'</p></div><a href="mailto:support.ministoredz@gmail.com?subject=MINABYB%20Advertising">'+safe(translations[language].sponsoredEmptyCTA)+'</a></div>';
+  return;
+ }
  grid.innerHTML=sponsoredAds.map((ad,index)=>{
   const images=Array.isArray(ad.image_urls)&&ad.image_urls.length?ad.image_urls:[ad.image_url].filter(Boolean);
   const slides=images.map((url,i)=>'<img class="sponsored-ad-image'+(i===0?' active':'')+'" src="'+safe(url)+'" alt="'+safe(ad.title)+'" loading="lazy" decoding="async">').join("");
@@ -523,6 +527,14 @@ Object.assign(translations.en,{homeCardEyebrow:"Discover MINABYB",homeCardTitle:
 Object.assign(translations.es,{homeCardEyebrow:"Descubre MINABYB",homeCardTitle:"Todo lo que buscas en un solo lugar",homeCardText:"Descubre distintas tiendas, explora sus productos y contacta directamente con los vendedores para hacer tu pedido.",homeCardPoint1:"Tiendas variadas",homeCardPoint2:"Productos diversos",homeCardPoint3:"Contacto directo"});
 Object.assign(translations.de,{homeCardEyebrow:"Entdecke MINABYB",homeCardTitle:"Alles, was du suchst, an einem Ort",homeCardText:"Entdecke verschiedene Shops und ihre Produkte und kontaktiere Verkäufer direkt, um zu bestellen.",homeCardPoint1:"Vielfältige Shops",homeCardPoint2:"Verschiedene Produkte",homeCardPoint3:"Direkter Kontakt"});
 Object.assign(translations.tr,{homeCardEyebrow:"MINABYB'yi keşfet",homeCardTitle:"Aradığın her şey tek bir yerde",homeCardText:"Farklı mağazaları keşfet, ürünlerini incele ve sipariş vermek için satıcılarla doğrudan iletişime geç.",homeCardPoint1:"Çeşitli mağazalar",homeCardPoint2:"Farklı ürünler",homeCardPoint3:"Doğrudan iletişim"});
+
+// Homepage advertising empty-state copy in all supported languages.
+Object.assign(translations.ar,{sponsoredEmptyTitle:"مساحتك الإعلانية هنا",sponsoredEmptyText:"اعرض منتجاتك وخدماتك أمام زوار MINABYB.",sponsoredEmptyCTA:"احجز مساحتك الإعلانية"});
+Object.assign(translations.fr,{sponsoredEmptyTitle:"Votre espace publicitaire est ici",sponsoredEmptyText:"Présentez vos produits et services aux visiteurs de MINABYB.",sponsoredEmptyCTA:"Réservez votre espace publicitaire"});
+Object.assign(translations.en,{sponsoredEmptyTitle:"Your advertising space is here",sponsoredEmptyText:"Showcase your products and services to MINABYB visitors.",sponsoredEmptyCTA:"Book your advertising space"});
+Object.assign(translations.es,{sponsoredEmptyTitle:"Tu espacio publicitario está aquí",sponsoredEmptyText:"Muestra tus productos y servicios a los visitantes de MINABYB.",sponsoredEmptyCTA:"Reserva tu espacio publicitario"});
+Object.assign(translations.de,{sponsoredEmptyTitle:"Hier ist Ihr Werbeplatz",sponsoredEmptyText:"Präsentieren Sie Ihre Produkte und Dienstleistungen den Besuchern von MINABYB.",sponsoredEmptyCTA:"Werbeplatz reservieren"});
+Object.assign(translations.tr,{sponsoredEmptyTitle:"Reklam alanınız burada",sponsoredEmptyText:"Ürün ve hizmetlerinizi MINABYB ziyaretçilerine tanıtın.",sponsoredEmptyCTA:"Reklam alanınızı ayırtın"});
 
 // Keep featured-store copy inside each active language dictionary.
 Object.assign(translations.ar,{"featuredBadge":"متجر مميز","featuredSectionTitle":"المتاجر المميزة","featuredSectionText":"اكتشف المتاجر التي اختارت الظهور في الواجهة الأولى.","featuredCTA":"اجعل متجرك مميزاً","featuredNoStores":"لا توجد متاجر مميزة حالياً. كن أول من يظهر هنا!"});
