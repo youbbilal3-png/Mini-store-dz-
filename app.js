@@ -556,7 +556,7 @@ await loadStore();if(!new URLSearchParams(location.search).has("store")&&(locati
 /* Route merchant actions to the dashboard for signed-in users,
    and through the login flow for visitors. */
 async function refreshMerchantLinks(session){
- const target=session?"dashboard.html":"auth.html?next=dashboard.html";
+ const target=session?("dashboard.html?lang="+encodeURIComponent(language)):"auth.html?next=dashboard.html";
  ["merchantAccountLink","createStoreLink"].forEach(id=>{
   const link=el(id);if(link)link.href=target;
  });
