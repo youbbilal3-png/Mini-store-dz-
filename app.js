@@ -344,20 +344,69 @@ async function submitCustomerReview(event){
  finally{button.disabled=false;}
 }
 
+function setStoreSeoMeta({title,description,url,image}){
+ document.title=title;
+ const setMeta=(selector,attribute,value)=>{
+  if(!value)return;
+  let tag=document.querySelector(selector);
+  if(!tag){tag=document.createElement("meta");tag.setAttribute(attribute.split("=")[0],attribute.split("=")[1]);document.head.appendChild(tag);}
+  tag.content=value;
+ };
+ setMeta('meta[name="description"]','name=description',description);
+ setMeta('meta[property="og:type"]','property=og:type',"website");
+ setMeta('meta[property="og:site_name"]','property=og:site_name',"Mini Store DZ");
+ setMeta('meta[property="og:title"]','property=og:title',title);
+ setMeta('meta[property="og:description"]','property=og:description',description);
+ setMeta('meta[property="og:url"]','property=og:url',url);
+ setMeta('meta[name="twitter:card"]','name=twitter:card',image?"summary_large_image":"summary");
+ setMeta('meta[name="twitter:title"]','name=twitter:title',title);
+ setMeta('meta[name="twitter:description"]','name=twitter:description',description);
+ if(image){
+  setMeta('meta[property="og:image"]','property=og:image',image);
+  setMeta('meta[name="twitter:image"]','name=twitter:image',image);
+ }
+ let canonical=document.querySelector('link[rel="canonical"]');
+ if(!canonical){canonical=document.createElement("link");canonical.rel="canonical";document.head.appendChild(canonical);}
+ canonical.href=url;
+ const robots=document.querySelector('meta[name="robots"]');
+ if(robots)robots.remove();
+}
+function markStorePageNoindex(){
+ let robots=document.querySelector('meta[name="robots"]');
+ if(!robots){robots=document.createElement("meta");robots.name="robots";document.head.appendChild(robots);}
+ robots.content="noindex,follow";
+ const canonical=document.querySelector('link[rel="canonical"]');
+ if(canonical)canonical.remove();
+}
 async function loadStore(){
- const slug=new URLSearchParams(location.search).get("store");if(!slug)return;
+ const slug=new URLSearchParams(location.search).get("store");
+ if(!slug){markStorePageNoindex();return;}
  try{
   const {data:store,error}=await supabase.from("stores").select("id,store_name,seller_name,seller_bio,avatar_url,whatsapp,description,slug").eq("slug",slug).eq("is_published",true).maybeSingle();
-  if(error)throw error;if(!store){products=[];STORE_SETTINGS={...DEFAULT_STORE_SETTINGS,sellerName:translations[language].storeUnavailable,sellerDescription:translations[language].storeUnavailableDesc,whatsapp:""};const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=translations[language].storeUnavailableDesc;document.title=translations[language].storeUnavailable+" | Mini Store DZ";return;}
-  currentStoreId=store.id;STORE_SETTINGS={whatsapp:store.whatsapp||"",sellerName:store.seller_name||store.store_name,sellerDescription:[store.store_name,store.seller_bio].filter(Boolean).join(" · "),sellerAvatar:store.avatar_url||""};
+  if(error)throw error;
+  if(!store){
+   products=[];
+   STORE_SETTINGS={...DEFAULT_STORE_SETTINGS,sellerName:translations[language].storeUnavailable,sellerDescription:translations[language].storeUnavailableDesc,whatsapp:""};
+   const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=translations[language].storeUnavailableDesc;
+   document.title=translations[language].storeUnavailable+" | Mini Store DZ";
+   markStorePageNoindex();
+   return;
+  }
+  currentStoreId=store.id;
+  STORE_SETTINGS={whatsapp:store.whatsapp||"",sellerName:store.seller_name||store.store_name,sellerDescription:[store.store_name,store.seller_bio].filter(Boolean).join(" · "),sellerAvatar:store.avatar_url||""};
   const {data:list,error:productError}=await supabase.from("products").select("id,name,description,category,price,currency,image_url,image_urls,stock_quantity").eq("store_id",store.id).eq("is_active",true).order("created_at",{ascending:false});
-  if(productError)throw productError;products=(list||[]).map(p=>({...p,emoji:"📦"}));
-  document.title=store.store_name+" | Mini Store DZ";
-  const pageDescription=[store.store_name,store.seller_bio,translations[language].storeMetaDesc].filter(Boolean).join(" — ");
-  const descriptionMeta=document.querySelector('meta[name="description"]');if(descriptionMeta)descriptionMeta.content=pageDescription;
-  const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=store.store_name+" | Mini Store DZ";
-  const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=pageDescription;
- }catch(error){console.error("Store loading error:",error);}
+  if(productError)throw productError;
+  products=(list||[]).map(p=>({...p,emoji:"📦"}));
+  const title=store.store_name+" | Mini Store DZ";
+  const pageDescription=String(store.description||store.seller_bio||translations[language].storeMetaDesc).trim().slice(0,300);
+  const canonicalUrl=new URL("/store.html",location.origin);
+  canonicalUrl.searchParams.set("store",store.slug);
+  const storeImage=store.avatar_url&&/^https?:\/\//i.test(store.avatar_url)?store.avatar_url:null;
+  setStoreSeoMeta({title,description:pageDescription,url:canonicalUrl.toString(),image:storeImage});
+ }catch(error){
+  console.error("Store loading error:",error);
+  markStorePageNoindex();
+ }
 }
 el("languageSelect").addEventListener("change",e=>{language=["ar","fr","en","es","de","tr"].includes(e.target.value)?e.target.value:"ar";try{localStorage.setItem("msdz-language",language);}catch(error){}activeCategory="all";applyLanguage();});
 function openInfoDialog(id){const dialog=el(id);if(dialog&&!dialog.open)dialog.showModal();}
