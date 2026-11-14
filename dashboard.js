@@ -346,7 +346,7 @@ function syncCustomCategory(){
  const custom=$("productCategory").value==="أخرى";$("customProductCategory").hidden=!custom;$("customProductCategory").required=custom;
  if(custom)$("customProductCategory").focus();
 }
-function normalizeDashboardSearch(value){return String(value??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().trim();}
+function normalizeDashboardSearch(value){return String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase().trim();}
 function renderProducts(){
  renderStats();
  $("productsTotal").textContent=products.length+" منتج";
