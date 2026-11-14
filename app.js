@@ -288,11 +288,15 @@ async function submitCustomerOrder(event){
     return;
    }
   }
-  const items=cartItems.map(({product,quantity})=>({product_id:product.id,name:productText(product,"name"),quantity,unit_price:Number(product.price||0)}));
-  const total=cartTotal();
-  const {error}=await supabase.from("orders").insert({store_id:currentStoreId,customer_name:name,customer_phone:phone,items,total,notes:notes||null});
+  const requestedItems=cartItems.map(({product,quantity})=>({product_id:product.id,quantity}));
+  const {data:createdOrder,error}=await supabase.rpc("create_store_order",{
+   p_store_id:currentStoreId,p_customer_name:name,p_customer_phone:phone,p_items:requestedItems,p_notes:notes||null
+  });
   if(error)throw error;
-  const details=items.map((item,index)=>(index+1)+". "+item.name+" × "+item.quantity+" = "+(item.unit_price*item.quantity).toLocaleString()+" DZD").join("\n");
+  const order=Array.isArray(createdOrder)?createdOrder[0]:createdOrder;
+  if(!order||!Array.isArray(order.items))throw new Error("تعذر تأكيد بيانات الطلب المحفوظ.");
+  const items=order.items,total=Number(order.total||0);
+  const details=items.map((item,index)=>(index+1)+". "+item.name+" × "+item.quantity+" = "+(Number(item.unit_price)*Number(item.quantity)).toLocaleString()+" DZD").join("\n");
   const msg=translations[language].whatsAppGreeting+"\n"+details+"\n"+translations[language].totalLabel+": "+total.toLocaleString()+" DZD\n"+translations[language].customerName+": "+name+"\n"+translations[language].customerPhone+": "+phone+(notes?"\n"+translations[language].orderNotes+": "+notes:"");
   const target="https://wa.me/"+storePhone+"?text="+encodeURIComponent(msg);
   if(popup)popup.location=target;else window.location.href=target;
