@@ -278,6 +278,11 @@
   Object.assign(reverse.en, {"MERCHANT AREA":"مساحة التاجر","YOUR IDENTITY":"هويتك","YOUR STORE":"متجرك","STORE OVERVIEW":"نظرة عامة على المتجر","STORE SETTINGS":"إعدادات المتجر","PRODUCT MANAGEMENT":"إدارة المنتجات","CUSTOMER FEEDBACK":"آراء العملاء","ORDER MANAGEMENT":"إدارة الطلبات"});
   let lang = "ar";
   const all = Object.assign({}, ...Object.values(dictionaries));
+
+  // Additional subscription labels used by the sidebar and plan cards.
+  const extraSubscriptionLabels = {"الاشتراكات والباقات":["Abonnements et forfaits","Subscriptions & plans","Suscripciones y planes","Abonnements & Tarife","Abonelikler ve planlar"],"دج / دائماً":["DZD / toujours","DZD / always","DZD / siempre","DZD / immer","DZD / her zaman"],"خطة مجانية":["Forfait gratuit","Free plan","Plan gratuito","Kostenloser Tarif","Ücretsiz plan"],"خطتك الحالية":["Votre forfait actuel","Your current plan","Tu plan actual","Ihr aktueller Tarif","Mevcut planınız"],"متاح دائماً":["Toujours disponible","Always available","Siempre disponible","Immer verfügbar","Her zaman kullanılabilir"],"تم استخدام التجربة المجانية":["Essai gratuit déjà utilisé","Free trial already used","Prueba gratuita ya utilizada","Kostenloser Test bereits genutzt","Ücretsiz deneme kullanıldı"],"لديك خطة مدفوعة":["Vous avez un forfait payant","You have a paid plan","Tienes un plan de pago","Sie haben einen kostenpflichtigen Tarif","Ücretli planınız var"],"ابدأ تجربة Pro المجانية":["Commencer l’essai gratuit Pro","Start free Pro trial","Iniciar prueba gratuita Pro","Kostenlose Pro-Testversion starten","Ücretsiz Pro denemesini başlat"],"ابدأ تجربة Premium المجانية":["Commencer l’essai gratuit Premium","Start free Premium trial","Iniciar prueba gratuita Premium","Kostenlose Premium-Testversion starten","Ücretsiz Premium denemesini başlat"],"شهرياً":["par mois","monthly","al mes","monatlich","aylık"],"سنوياً":["par an","yearly","al año","jährlich","yıllık"]};
+  for (const [source, values] of Object.entries(extraSubscriptionLabels)) { langNames.forEach((name, index) => { dictionaries[name][source] = values[index]; }); }
+
   const translateText = (value) => {
     const raw = value;
     const trimmed = raw.trim();
@@ -338,7 +343,7 @@
         if (record.type === "characterData") {
           const next = translateText(record.target.nodeValue);
           if (next !== record.target.nodeValue) record.target.nodeValue = next;
-        } else for (const added of record.addedNodes) if (added.nodeType === Node.ELEMENT_NODE) translateElement(added);
+        } else for (const added of record.addedNodes) { if (added.nodeType === Node.ELEMENT_NODE) translateElement(added); else if (added.nodeType === Node.TEXT_NODE) { const next = translateText(added.nodeValue); if (next !== added.nodeValue) added.nodeValue = next; } }
       }
     });
     observer.observe(document.body, {subtree:true,childList:true,characterData:true});
