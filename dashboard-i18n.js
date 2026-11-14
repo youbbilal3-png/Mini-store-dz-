@@ -275,6 +275,12 @@
   dictionaries.de["الرئيسية"] = "Startseite";
   dictionaries.tr["الرئيسية"] = "Ana sayfa";
 
+  Object.assign(dictionaries.fr,{"ابحث في منتجات متجرك...":"Rechercher dans les produits de votre boutique...","ابحث في طلبات الزبائن...":"Rechercher dans les commandes des clients...","لا توجد نتائج مطابقة.":"Aucun résultat correspondant."});
+  Object.assign(dictionaries.en,{"ابحث في منتجات متجرك...":"Search your store products...","ابحث في طلبات الزبائن...":"Search customer orders...","لا توجد نتائج مطابقة.":"No matching results."});
+  Object.assign(dictionaries.es,{"ابحث في منتجات متجرك...":"Buscar en los productos de tu tienda...","ابحث في طلبات الزبائن...":"Buscar en los pedidos de clientes...","لا توجد نتائج مطابقة.":"No hay resultados coincidentes."});
+  Object.assign(dictionaries.de,{"ابحث في منتجات متجرك...":"Produkte in Ihrem Shop suchen...","ابحث في طلبات الزبائن...":"Kundenbestellungen suchen...","لا توجد نتائج مطابقة.":"Keine passenden Ergebnisse."});
+  Object.assign(dictionaries.tr,{"ابحث في منتجات متجرك...":"Mağazanızdaki ürünlerde ara...","ابحث في طلبات الزبائن...":"Müşteri siparişlerinde ara...","لا توجد نتائج مطابقة.":"Eşleşen sonuç bulunamadı."});
+
   const originals = Object.keys(dictionaries.fr);
   const reverse = { fr: {}, en: {}, es: {}, de: {}, tr: {} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
