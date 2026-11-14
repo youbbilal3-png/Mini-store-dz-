@@ -23,3 +23,10 @@
 .admin-ad-form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .admin-ad-form-actions [hidden]{display:none!important}
 .admin-action.secondary{background:transparent;color:var(--text,#344054);border:1px solid var(--line,#d0d5dd)}
+
+.admin-visitor-range{display:flex;align-items:center;gap:8px;color:#b9c9dc;font-size:13px}
+.admin-visitor-range select{background:#0b1525;color:#edf3fc;border:1px solid #344760;border-radius:9px;padding:9px}
+.admin-visitor-stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:16px 0}
+.admin-visitor-daily{margin-top:20px}
+.admin-visitor-daily h3{margin-bottom:12px}
+@media(max-width:700px){.admin-visitor-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
