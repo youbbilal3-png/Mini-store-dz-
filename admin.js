@@ -127,6 +127,7 @@ function renderAdMediaEditor(){
 }
 function resetSponsoredAdEditor(){
  editingSponsoredAdId=null;
+ selectedAdMedia=[];renderAdMediaEditor();
  $("sponsoredAdForm").reset();
  $("saveSponsoredAd").textContent="إضافة الإعلان";
  const cancel=$("cancelSponsoredAdEdit");if(cancel)cancel.hidden=true;
@@ -140,6 +141,8 @@ function beginSponsoredAdEdit(id){
  $("adAmount").value=Number(ad.amount_dzd||0);
  $("adImageFiles").value="";
  $("adImageUrl").value="";
+ selectedAdMedia=Array.isArray(ad.image_urls)&&ad.image_urls.length?[...ad.image_urls]:[ad.image_url].filter(Boolean);
+ renderAdMediaEditor();
  $("adTargetUrl").value=ad.target_url||"";
  $("adStartsAt").value=localDateTimeValue(ad.starts_at);
  $("adEndsAt").value=localDateTimeValue(ad.ends_at);
@@ -165,7 +168,7 @@ async function createSponsoredAd(event){
  try{
   const {data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;
   const amount=Number($("adAmount").value);if(!Number.isInteger(amount)||amount<0)throw new Error("أدخل سعراً صحيحاً بالدينار الجزائري.");
-  const imageUrls=[];
+  const imageUrls=[...selectedAdMedia];
   for(let i=0;i<files.length;i++){
    const file=files[i],cleanName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_").slice(-90)||"banner";
    const inferredType=file.type||({mp4:"video/mp4",webm:"video/webm", "3gp":"video/3gpp",mov:"video/quicktime",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif"}[cleanName.split(".").pop().toLowerCase()]||"application/octet-stream");
@@ -178,8 +181,7 @@ async function createSponsoredAd(event){
    imageUrls.push(publicData.publicUrl);
   }
   if(externalImage)imageUrls.push(externalImage);
-  const existing=editingSponsoredAdId?sponsoredAdsCache.find(item=>item.id===editingSponsoredAdId):null;
-  const finalImages=(files.length||externalImage)?imageUrls:(existing?(Array.isArray(existing.image_urls)&&existing.image_urls.length?existing.image_urls:[existing.image_url].filter(Boolean)):[]);
+  const finalImages=imageUrls;
   if(!finalImages.length)throw new Error("أضف صورة أو فيديو للإعلان.");
   const payload={advertiser_name:$("adAdvertiser").value.trim(),title:$("adTitle").value.trim(),amount_dzd:amount,image_url:finalImages[0],image_urls:finalImages,target_url:target,starts_at:start.toISOString(),ends_at:end.toISOString()};
   let result;
@@ -230,6 +232,8 @@ document.addEventListener("click",async event=>{
  const featured=event.target.closest("[data-review-featured]");
  if(featured){const id=featured.dataset.reviewFeatured,decision=featured.dataset.decision,note=$("featured-note-"+id).value;if(decision==="approved"&&!confirm("هل تحققت من وصول 500 دج وتريد إبراز هذا المتجر لمدة 7 أيام؟"))return;featured.disabled=true;
   try{const {error}=await supabase.rpc("admin_review_featured_store_request",{p_request_id:id,p_decision:decision,p_admin_note:note||null});if(error)throw error;say(decision==="approved"?"تمت الموافقة وإبراز المتجر لمدة 7 أيام.":"تم رفض طلب التمييز.");await refreshAll();}catch(e){say(e.message,true);}finally{featured.disabled=false;}return;}
+ const removeAdMedia=event.target.closest("[data-remove-ad-media]");
+ if(removeAdMedia){const index=Number(removeAdMedia.dataset.removeAdMedia);if(Number.isInteger(index)&&index>=0&&index<selectedAdMedia.length){selectedAdMedia.splice(index,1);renderAdMediaEditor();}return;}
  const editAd=event.target.closest("[data-edit-ad]");
  if(editAd){beginSponsoredAdEdit(editAd.dataset.editAd);return;}
  const toggleAd=event.target.closest("[data-toggle-ad]");
