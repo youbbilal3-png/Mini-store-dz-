@@ -1,6 +1,7 @@
 import { supabase } from "./supabase-client.js";
 const $=id=>document.getElementById(id);
 let merchants=[],payments=[],support=[],editingSponsoredAdId=null,sponsoredAdsCache=[];
+let selectedAdMedia=[];
 const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const say=(msg,error=false)=>{$("adminNotice").textContent=msg;$("adminNotice").classList.toggle("error",error);};
 const safeHttps=value=>{try{const u=new URL(value);return u.protocol==="https:"?u.href:"";}catch{return "";}};
@@ -114,6 +115,15 @@ async function loadSponsoredAds(){
 function localDateTimeValue(value){
  const d=new Date(value);if(!Number.isFinite(d.getTime()))return "";
  return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+}
+function renderAdMediaEditor(){
+ const box=$("adMediaEditor");if(!box)return;
+ box.hidden=!selectedAdMedia.length;
+ box.innerHTML=selectedAdMedia.map((url,index)=>{
+  const href=esc(safeHttps(url));
+  const media=isVideoMedia(url)?'<video src="'+href+'" muted playsinline preload="metadata"></video>':'<img src="'+href+'" alt="وسيط الإعلان الحالي '+(index+1)+'" loading="lazy">';
+  return '<div class="admin-ad-edit-thumb">'+media+'<button type="button" class="admin-ad-remove-media" data-remove-ad-media="'+index+'" aria-label="حذف هذا الوسيط" title="حذف">×</button></div>';
+ }).join("");
 }
 function resetSponsoredAdEditor(){
  editingSponsoredAdId=null;
