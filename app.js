@@ -197,7 +197,7 @@ function renderGlobalSearch(value){
 }
 
 let sponsoredAds=[],sponsoredAdTimers=[];
-function isSponsoredVideo(url){try{return /\.(mp4|webm)$/i.test(new URL(url).pathname);}catch{return false;}}
+function isSponsoredVideo(url){try{return /\.(mp4|webm|3gp|mov)$/i.test(new URL(url).pathname);}catch{return false;}}
 function renderSponsoredAds(){
  const section=el("sponsoredAdsSection"),grid=el("sponsoredAdsGrid");
  if(!section||!grid)return;
@@ -207,20 +207,21 @@ function renderSponsoredAds(){
   grid.innerHTML='<div class="sponsored-ads-empty"><span class="sponsored-ads-empty-icon" aria-hidden="true">📢</span><div><strong>'+safe(translations[language].sponsoredEmptyTitle)+'</strong><p>'+safe(translations[language].sponsoredEmptyText)+'</p></div><a href="mailto:support.ministoredz@gmail.com?subject=MINABYB%20Advertising">'+safe(translations[language].sponsoredEmptyCTA)+'</a></div>';
   return;
  }
- grid.innerHTML=sponsoredAds.map((ad,index)=>{
-  const images=Array.isArray(ad.image_urls)&&ad.image_urls.length?ad.image_urls:[ad.image_url].filter(Boolean);
-  const slides=images.map((url,i)=>{const active=i===0?" active":"";return isSponsoredVideo(url)?'<video class="sponsored-ad-slide sponsored-ad-video'+active+'" src="'+safe(url)+'" muted playsinline loop preload="metadata" aria-label="'+safe(ad.title)+'"></video>':'<img class="sponsored-ad-slide sponsored-ad-image'+active+'" src="'+safe(url)+'" alt="'+safe(ad.title)+'" loading="lazy" decoding="async">';}).join("");
-  return '<a class="sponsored-ad-card" href="'+safe(ad.target_url)+'" target="_blank" rel="noopener noreferrer sponsored" aria-label="'+safe(ad.title)+'"><span class="sponsored-ad-slides">'+slides+'</span><span class="sponsored-ad-label">'+safe(translations[language].sponsoredEyebrow)+'</span>'+(images.length>1?'<span class="sponsored-ad-counter">1 / '+images.length+'</span>':'')+'</a>';
- }).join("");
- grid.querySelectorAll(".sponsored-ad-card").forEach(card=>{
-  const slides=[...card.querySelectorAll(".sponsored-ad-slide")];if(!slides.length)return;
-  const show=index=>{slides.forEach((slide,i)=>{slide.classList.toggle("active",i===index);if(slide.tagName==="VIDEO"){if(i===index){const play=slide.play();if(play&&typeof play.catch==="function")play.catch(()=>{});}else slide.pause();}});const counter=card.querySelector(".sponsored-ad-counter");if(counter)counter.textContent=(index+1)+" / "+slides.length;};
-  if(slides[0].tagName==="VIDEO"){const play=slides[0].play();if(play&&typeof play.catch==="function")play.catch(()=>{});}
-  if(slides.length<2)return;
-  let current=0;
-  const timer=setInterval(()=>{current=(current+1)%slides.length;show(current);},4000);
-  sponsoredAdTimers.push(timer);
+ const entries=sponsoredAds.flatMap(ad=>{
+  const media=Array.isArray(ad.image_urls)&&ad.image_urls.length?ad.image_urls:[ad.image_url].filter(Boolean);
+  return media.map(url=>({ad,url}));
  });
+ if(!entries.length){grid.innerHTML="";return;}
+ const renderEntry=(entry,index)=>{const ad=entry.ad,url=safe(entry.url),active=index===0?" active":"";
+  const media=isSponsoredVideo(entry.url)?'<video class="sponsored-ad-media sponsored-ad-video" src="'+url+'" muted playsinline loop preload="metadata"></video>':'<img class="sponsored-ad-media sponsored-ad-image" src="'+url+'" alt="'+safe(ad.title)+'" loading="lazy" decoding="async">';
+  const backdrop=isSponsoredVideo(entry.url)?'<video class="sponsored-ad-backdrop" src="'+url+'" muted playsinline loop preload="metadata" aria-hidden="true"></video>':'<img class="sponsored-ad-backdrop" src="'+url+'" alt="" aria-hidden="true">';
+  return '<a class="sponsored-ad-entry'+active+'" href="'+safe(ad.target_url)+'" target="_blank" rel="noopener noreferrer sponsored" aria-label="'+safe(ad.title)+'">'+backdrop+media+'</a>';
+ };
+ grid.innerHTML='<div class="sponsored-ad-card"><div class="sponsored-ad-slides">'+entries.map(renderEntry).join("")+'</div><span class="sponsored-ad-label">'+safe(translations[language].sponsoredEyebrow)+'</span>'+(entries.length>1?'<span class="sponsored-ad-counter">1 / '+entries.length+'</span>':'')+'</div>';
+ const card=grid.querySelector(".sponsored-ad-card"),slides=[...grid.querySelectorAll(".sponsored-ad-entry")];
+ const show=index=>{slides.forEach((slide,i)=>{slide.classList.toggle("active",i===index);slide.querySelectorAll("video").forEach(video=>{if(i===index){const play=video.play();if(play&&typeof play.catch==="function")play.catch(()=>{});}else video.pause();});});const counter=card.querySelector(".sponsored-ad-counter");if(counter)counter.textContent=(index+1)+" / "+slides.length;};
+ if(slides.length)show(0);
+ if(slides.length>1){let current=0;const timer=setInterval(()=>{current=(current+1)%slides.length;show(current);},4000);sponsoredAdTimers.push(timer);}
  grid.querySelectorAll(".sponsored-ad-image").forEach(img=>img.addEventListener("error",()=>{img.classList.add("image-load-failed");img.removeAttribute("src");}));
 }
 async function loadSponsoredAds(){
