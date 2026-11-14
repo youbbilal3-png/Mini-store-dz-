@@ -264,6 +264,14 @@
     "تمت الموافقة": ["Approuvée","Approved","Aprobada","Genehmigt","Onaylandı"],
     "ملاحظة الإدارة:": ["Note de l’administration :","Admin note:","Nota de administración:","Admin-Notiz:","Yönetici notu:"],
     "بيانات هذه الطريقة غير متاحة حالياً. تواصل مع الدعم.": ["Ce mode de paiement n’est pas disponible. Contactez le support.","This payment method is not available. Contact support.","Este método de pago no está disponible. Contacta con soporte.","Diese Zahlungsmethode ist nicht verfügbar. Kontaktieren Sie den Support.","Bu ödeme yöntemi kullanılamıyor. Destekle iletişime geçin."],
+    "تفاصيل الاشتراك": ["Détails de l’abonnement","Subscription details","Detalles de la suscripción","Abonnementdetails","Abonelik ayrıntıları"],
+    "اختر الباقة ومدة الاشتراك وطريقة التحويل المناسبة.": ["Choisissez l’offre, la durée et le mode de transfert.","Choose your plan, subscription term, and transfer method.","Elige tu plan, la duración y el método de transferencia.","Wählen Sie Tarif, Laufzeit und Überweisungsmethode.","Paketinizi, süresini ve transfer yöntemini seçin."],
+    "بيانات عملية الدفع": ["Informations du paiement","Payment transaction details","Datos de la operación de pago","Zahlungsdaten","Ödeme işlem bilgileri"],
+    "أدخل المعلومات كما تظهر في عملية التحويل والإيصال.": ["Saisissez les informations telles qu’elles apparaissent sur le transfert et le reçu.","Enter the details exactly as shown on the transfer and receipt.","Introduce los datos tal como aparecen en la transferencia y el recibo.","Geben Sie die Angaben genau wie auf der Überweisung und dem Beleg ein.","Bilgileri transferde ve makbuzda göründüğü şekilde girin."],
+    "بيانات التحويل": ["Coordonnées du transfert","Transfer details","Datos de transferencia","Überweisungsdaten","Transfer bilgileri"],
+    "اختر طريقة الدفع التي استخدمتها لإرسال مبلغ تمييز المتجر.": ["Choisissez le mode utilisé pour payer la mise en avant de la boutique.","Select the method you used to pay for the featured store placement.","Selecciona el método utilizado para pagar la promoción de la tienda.","Wählen Sie die verwendete Methode für die Hervorhebung des Shops.","Mağaza öne çıkarma ödemesinde kullandığınız yöntemi seçin."],
+    "إثبات الدفع": ["Justificatif de paiement","Proof of payment","Comprobante de pago","Zahlungsnachweis","Ödeme kanıtı"],
+    "أرفق صورة أو ملف الإيصال حتى نتمكن من مراجعة طلبك.": ["Joignez une image ou un fichier du reçu afin que nous puissions examiner votre demande.","Attach an image or file of the receipt so we can review your request.","Adjunta una imagen o archivo del recibo para que podamos revisar tu solicitud.","Fügen Sie ein Bild oder eine Datei des Belegs bei, damit wir Ihre Anfrage prüfen können.","Talebinizi inceleyebilmemiz için makbuzun resmini veya dosyasını ekleyin."],
   };
   for (const [source, values] of Object.entries(subscriptionDynamicLabels)) {
     dictionaries.fr[source] = values[0]; dictionaries.en[source] = values[1];
