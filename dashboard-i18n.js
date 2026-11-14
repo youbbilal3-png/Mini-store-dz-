@@ -281,7 +281,13 @@
   Object.assign(dictionaries.de,{"ابحث في منتجات متجرك...":"Produkte in Ihrem Shop suchen...","ابحث في طلبات الزبائن...":"Kundenbestellungen suchen...","لا توجد نتائج مطابقة.":"Keine passenden Ergebnisse."});
   Object.assign(dictionaries.tr,{"ابحث في منتجات متجرك...":"Mağazanızdaki ürünlerde ara...","ابحث في طلبات الزبائن...":"Müşteri siparişlerinde ara...","لا توجد نتائج مطابقة.":"Eşleşen sonuç bulunamadı."});
 
-  const originals = Object.keys(dictionaries.fr);
+  Object.assign(dictionaries.fr,{"بحث":"Rechercher"});
+  Object.assign(dictionaries.en,{"بحث":"Search"});
+  Object.assign(dictionaries.es,{"بحث":"Buscar"});
+  Object.assign(dictionaries.de,{"بحث":"Suchen"});
+  Object.assign(dictionaries.tr,{"بحث":"Ara"});
+
+  const originals = Object.keys(dictionaries.fr);  const originals = Object.keys(dictionaries.fr);
   const reverse = { fr: {}, en: {}, es: {}, de: {}, tr: {} };
   for (const lang of ["fr", "en", "es", "de", "tr"]) for (const [ar, translated] of Object.entries(dictionaries[lang])) reverse[lang][translated] = ar;
   Object.assign(reverse.en, {"MERCHANT AREA":"مساحة التاجر","YOUR IDENTITY":"هويتك","YOUR STORE":"متجرك","STORE OVERVIEW":"نظرة عامة على المتجر","STORE SETTINGS":"إعدادات المتجر","PRODUCT MANAGEMENT":"إدارة المنتجات","CUSTOMER FEEDBACK":"آراء العملاء","ORDER MANAGEMENT":"إدارة الطلبات"});
