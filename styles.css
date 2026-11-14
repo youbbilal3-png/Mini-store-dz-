@@ -598,3 +598,12 @@ html[data-theme="dark"] .hero-intro-kicker{background:#2b432b;color:#c9e89b}
  .home-commercial-row>.hero-intro-card{min-height:0;padding:18px}
  .home-commercial-row>.hero-intro-card .primary-btn{align-self:stretch;text-align:center}
 }
+
+
+/* Keep the homepage search field comfortably visible while the mobile keyboard is open. */
+.global-search-panel{scroll-margin-block:18px}
+.global-search-input-row input{scroll-margin-block:18px}
+@media(max-width:600px){
+ .global-search-panel{padding-top:12px;padding-bottom:12px}
+ .global-search-input-row input{min-height:48px;font-size:16px}
+}
