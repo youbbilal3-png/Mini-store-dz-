@@ -692,3 +692,22 @@ html[data-theme="dark"] .brand-row .brand,html[data-theme="system"] .brand-row .
  .home-commercial-row>.hero-intro-card .hero-intro-points>span{padding:5px 7px;font-size:10px}
  .home-commercial-row>.hero-intro-card .primary-btn{width:100%;text-align:center;margin-top:9px;padding:9px 12px}
 }
+
+
+/* Permanent homepage advertising slot replacing the former intro card. */
+.sponsored-ads-home{padding:22px 6vw;background:var(--paper);color:var(--text)}
+.sponsored-ads-home .sponsored-ads-heading{margin-bottom:12px}
+.sponsored-ads-home .sponsored-ads-heading .eyebrow{color:var(--accent,#5f922c);font-weight:900}
+.sponsored-ads-home .sponsored-ads-grid{grid-template-columns:minmax(0,1fr)}
+.sponsored-ads-empty{min-height:150px;display:flex;align-items:center;justify-content:center;gap:18px;padding:24px;border:1px dashed var(--border,#b9c8b7);border-radius:18px;background:linear-gradient(120deg,var(--surface,#fff),var(--paper));text-align:start}
+.sponsored-ads-empty-icon{font-size:34px;flex:0 0 auto}
+.sponsored-ads-empty strong{display:block;font-size:clamp(17px,2vw,22px);font-weight:900}
+.sponsored-ads-empty p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.7}
+.sponsored-ads-empty a{margin-inline-start:auto;display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:11px;background:linear-gradient(120deg,#4f8b32,#78a943);color:#fff;text-decoration:none;font-size:12px;font-weight:900;white-space:nowrap}
+@media(max-width:650px){
+ .sponsored-ads-home{padding:18px 16px}
+ .sponsored-ads-empty{min-height:155px;flex-direction:column;gap:9px;text-align:center;padding:20px 16px}
+ .sponsored-ads-empty-icon{font-size:29px}
+ .sponsored-ads-empty a{margin:5px 0 0;width:100%}
+}
+html[data-theme="dark"] .sponsored-ads-empty{background:var(--surface);border-color:var(--border)}
