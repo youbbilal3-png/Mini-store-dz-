@@ -576,7 +576,7 @@ const sharePlatformButton=el("sharePlatformButton");if(sharePlatformButton)share
 // Apply the saved language immediately, before waiting for store data.
 applyLanguage();
 document.documentElement.classList.remove("language-loading");
-await loadStore();if(!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"))){products=[];const productSection=el("products");if(productSection)productSection.hidden=true;}applyLanguage();updateCartButton();await loadFeaturedStores();await loadSponsoredAds();await loadPublicReviews();
+await loadStore();applyLanguage();updateCartButton();await loadFeaturedStores();await loadSponsoredAds();await loadPublicReviews();
 
 
 /* Route merchant actions to the dashboard for signed-in users,
