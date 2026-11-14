@@ -4,7 +4,7 @@ let merchants=[],payments=[],support=[],editingSponsoredAdId=null,sponsoredAdsCa
 const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const say=(msg,error=false)=>{$("adminNotice").textContent=msg;$("adminNotice").classList.toggle("error",error);};
 const safeHttps=value=>{try{const u=new URL(value);return u.protocol==="https:"?u.href:"";}catch{return "";}};
-const isVideoMedia=value=>{try{return /\.(mp4|webm)$/i.test(new URL(value).pathname);}catch{return false;}};
+const isVideoMedia=value=>{try{return /\.(mp4|webm|3gp)$/i.test(new URL(value).pathname);}catch{return false;}};
 const date=value=>value?new Date(value).toLocaleDateString(document.documentElement.lang||"ar",{year:"numeric",month:"short",day:"numeric"}):"—";
 async function requireAdmin(){
  let {data,error}=await supabase.auth.getSession();if(error)throw error;
@@ -145,7 +145,9 @@ async function createSponsoredAd(event){
  const start=new Date($("adStartsAt").value),end=new Date($("adEndsAt").value);
  if(!editingSponsoredAdId&&!files.length&&!externalImage){feedback.textContent="ارفع صورة أو فيديو واحداً على الأقل أو أدخل رابطاً مباشراً يبدأ بـ HTTPS.";return;}
  if(files.length>8){feedback.textContent="يمكنك رفع 8 ملفات كحد أقصى للإعلان الواحد.";return;}
- if(files.some(file=>!["image/jpeg","image/png","image/webp","image/gif","video/mp4","video/webm"].includes(file.type)||file.size>5242880)){feedback.textContent="الملفات المسموحة: صور JPG وPNG وWebP وGIF وفيديو MP4 وWebM، بحد أقصى 5MB للملف.";return;}
+ const allowedExtensions=/\.(jpe?g|png|webp|gif|mp4|webm|3gp)$/i;
+ const validFile=file=>{const extOk=allowedExtensions.test(file.name);const mimeOk=["image/jpeg","image/png","image/webp","image/gif","video/mp4","video/webm","video/3gpp"].includes(file.type);return (mimeOk||(!file.type&&extOk))&&extOk&&file.size<=26214400;};
+ if(files.some(file=>!validFile(file))){feedback.textContent="الملفات المسموحة: صور JPG وPNG وWebP وGIF وفيديو MP4 وWebM و3GP، بحد أقصى 25MB للملف.";return;}
  if(!target){feedback.textContent="أدخل رابط الوجهة الصحيح الذي يبدأ بـ HTTPS.";return;}
  if(!Number.isFinite(start.getTime())||!Number.isFinite(end.getTime())||end<=start){feedback.textContent="تحقق من تاريخ البداية والنهاية.";return;}
  button.disabled=true;feedback.textContent=editingSponsoredAdId?"جارٍ حفظ تعديلات الإعلان...":"جارٍ رفع الصور والفيديوهات وحفظ الإعلان...";
@@ -156,12 +158,13 @@ async function createSponsoredAd(event){
   const imageUrls=[];
   for(let i=0;i<files.length;i++){
    const file=files[i],cleanName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_").slice(-90)||"banner";
+   const inferredType=file.type||({mp4:"video/mp4",webm:"video/webm", "3gp":"video/3gpp",jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp",gif:"image/gif"}[cleanName.split(".").pop().toLowerCase()]||"application/octet-stream");
    const path=userData.user.id+"/"+Date.now()+"-"+i+"-"+cleanName;
-   const {error:uploadError}=await supabase.storage.from("sponsored-ad-images").upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});
+   const {error:uploadError}=await supabase.storage.from("sponsored-ad-images").upload(path,file,{cacheControl:"3600",upsert:false,contentType:inferredType});
    if(uploadError)throw uploadError;
    uploadedPaths.push(path);
    const {data:publicData}=supabase.storage.from("sponsored-ad-images").getPublicUrl(path);
-   if(!publicData?.publicUrl)throw new Error("تعذر إنشاء رابط الصورة المرفوعة.");
+   if(!publicData?.publicUrl)throw new Error("تعذر إنشاء رابط الوسيط المرفوع.");
    imageUrls.push(publicData.publicUrl);
   }
   if(externalImage)imageUrls.push(externalImage);
