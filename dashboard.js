@@ -535,8 +535,14 @@ async function init(){
  $("avatarUpload").addEventListener("change",uploadAvatar);
  $("removeAvatar").addEventListener("click",removeAvatar);
  $("productForm").addEventListener("submit",saveProduct);
- $("merchantProductSearch").addEventListener("input",event=>{productFilterTerm=event.target.value;renderProducts();});
- $("merchantOrderSearch").addEventListener("input",event=>{orderFilterTerm=event.target.value;renderOrders();});
+ const runProductSearch=()=>{productFilterTerm=$("merchantProductSearch").value;renderProducts();};
+ const runOrderSearch=()=>{orderFilterTerm=$("merchantOrderSearch").value;renderOrders();};
+ $("merchantProductSearch").addEventListener("input",runProductSearch);
+ $("merchantOrderSearch").addEventListener("input",runOrderSearch);
+ $("merchantProductSearchButton").addEventListener("click",runProductSearch);
+ $("merchantOrderSearchButton").addEventListener("click",runOrderSearch);
+ $("merchantProductSearch").addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();runProductSearch();}});
+ $("merchantOrderSearch").addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();runOrderSearch();}});
  $("billingMonthly").addEventListener("click",()=>{billingCycle="monthly";updateBillingPrices();});
  $("billingYearly").addEventListener("click",()=>{billingCycle="yearly";updateBillingPrices();});
  $("startProTrial").addEventListener("click",()=>startPlanTrial("pro"));
