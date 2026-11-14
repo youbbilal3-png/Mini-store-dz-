@@ -97,7 +97,7 @@ function initReferralControls(){
  applyReferralLanguage();
 }
 
-let user=null,store=null,products=[],orders=[],reviews=[];
+let user=null,store=null,products=[],orders=[],reviews=[],productFilterTerm="",orderFilterTerm="";
 let subscription=null,billingCycle="monthly";
 const planConfig={free:{limit:10},pro:{limit:100},premium:{limit:Infinity}};
 function subscriptionDate(value){return value?new Date(value).toLocaleDateString(dashboardLocale(),{year:"numeric",month:"long",day:"numeric"}):"";}
@@ -228,9 +228,11 @@ async function loadOrders(){
  const {data,error}=await supabase.from("orders").select("*").eq("store_id",store.id).order("created_at",{ascending:false});if(error)throw error;orders=data||[];renderOrders();
 }
 function renderOrders(){
- renderStats();$("ordersTotal").textContent=orders.length+" طلب";if(!orders.length){$("managedOrders").innerHTML='<p class="empty-products">لا توجد طلبات حتى الآن. ستظهر هنا طلبات الزبائن من متجرك.</p>';return;}
+ renderStats();$("ordersTotal").textContent=orders.length+" طلب";
+ const term=normalizeDashboardSearch(orderFilterTerm),visibleOrders=orders.filter(o=>normalizeDashboardSearch([o.customer_name,o.customer_phone,o.notes,o.status,...(Array.isArray(o.items)?o.items.map(i=>i.name):[])].join(" ")).includes(term));
+ if(!visibleOrders.length){$("managedOrders").innerHTML='<p class="empty-products">'+(orders.length?'لا توجد نتائج مطابقة.':'لا توجد طلبات حتى الآن. ستظهر هنا طلبات الزبائن من متجرك.')+'</p>';return;}
  const labels={new:"جديد",confirmed:"مؤكد",shipped:"تم الشحن",completed:"مكتمل",cancelled:"ملغى"},states=["new","confirmed","shipped","completed","cancelled"];
- $("managedOrders").innerHTML=orders.map(o=>{
+ $("managedOrders").innerHTML=visibleOrders.map(o=>{
   const items=Array.isArray(o.items)?o.items:[],detail=items.map(i=>'<span class="order-product-name">'+escapeHtml(i.name)+'</span> × '+Number(i.quantity||1)).join("، ");
   const opts=states.map(s=>'<option value="'+s+'" '+(o.status===s?"selected":"")+'>'+labels[s]+'</option>').join("");
   return '<article class="managed-order"><div class="managed-order-main"><strong>'+escapeHtml(o.customer_name)+'</strong><span>'+escapeHtml(o.customer_phone)+'</span><p>'+detail+'</p><small>'+new Date(o.created_at).toLocaleString(dashboardLocale())+' · '+Number(o.total||0).toLocaleString(dashboardLocale())+' دج</small>'+(o.notes?'<p class="order-note">ملاحظات: '+escapeHtml(o.notes)+'</p>':"")+'</div><div class="managed-order-controls"><span class="order-status order-status-'+o.status+'">'+(labels[o.status]||o.status)+'</span><select data-order-status="'+o.id+'" aria-label="تغيير حالة الطلب">'+opts+'</select></div></article>';
@@ -344,14 +346,17 @@ function syncCustomCategory(){
  const custom=$("productCategory").value==="أخرى";$("customProductCategory").hidden=!custom;$("customProductCategory").required=custom;
  if(custom)$("customProductCategory").focus();
 }
+function normalizeDashboardSearch(value){return String(value??"").normalize("NFD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().trim();}
 function renderProducts(){
  renderStats();
  $("productsTotal").textContent=products.length+" منتج";
- if(!products.length){
-  $("managedProducts").innerHTML='<p class="empty-products">لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.</p>';
+ const term=normalizeDashboardSearch(productFilterTerm);
+ const visibleProducts=products.filter(p=>normalizeDashboardSearch([p.name,p.category,p.description].join(" ")).includes(term));
+ if(!visibleProducts.length){
+  $("managedProducts").innerHTML='<p class="empty-products">'+(products.length?'لا توجد نتائج مطابقة.':'لا توجد منتجات بعد. أضف أول منتجك من النموذج أعلاه.')+'</p>';
   return;
  }
- $("managedProducts").innerHTML=products.map(p=>{
+ $("managedProducts").innerHTML=visibleProducts.map(p=>{
   const tracked=p.stock_quantity!==null&&p.stock_quantity!==undefined;
   const qty=tracked?Number(p.stock_quantity):null;
   const stockLabel=!tracked?"مخزون غير محدود":qty===0?"نفد المخزون":qty<=5?"مخزون منخفض: "+qty+" قطعة":"المتوفر: "+qty+" قطعة";
@@ -530,6 +535,8 @@ async function init(){
  $("avatarUpload").addEventListener("change",uploadAvatar);
  $("removeAvatar").addEventListener("click",removeAvatar);
  $("productForm").addEventListener("submit",saveProduct);
+ $("merchantProductSearch").addEventListener("input",event=>{productFilterTerm=event.target.value;renderProducts();});
+ $("merchantOrderSearch").addEventListener("input",event=>{orderFilterTerm=event.target.value;renderOrders();});
  $("billingMonthly").addEventListener("click",()=>{billingCycle="monthly";updateBillingPrices();});
  $("billingYearly").addEventListener("click",()=>{billingCycle="yearly";updateBillingPrices();});
  $("startProTrial").addEventListener("click",()=>startPlanTrial("pro"));
