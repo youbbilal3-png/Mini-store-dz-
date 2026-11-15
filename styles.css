@@ -1063,7 +1063,7 @@ html[dir="ltr"] .site-menu-panel{direction:ltr!important;text-align:left!importa
 
 
 /* Logged-out homepage: brand, full 9:16 product imagery and account actions only. */
-body.auth-checking>#publicLanding,body.auth-checking>#authenticatedSite{visibility:hidden!important}
+body.auth-checking{visibility:hidden!important}
 #authenticatedSite[hidden],#publicLanding[hidden]{display:none!important}
 .public-landing{min-height:100svh;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.5vh,24px);padding:clamp(16px,3vh,28px) 16px;background:#0b1220;color:#fff}
 .public-landing-brand{display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;direction:ltr}
