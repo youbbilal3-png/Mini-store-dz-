@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261114-5" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261115-6" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-2"></script>
 </head>
 <body class="dashboard-page">
@@ -35,7 +35,7 @@ window.addEventListener("unhandledrejection",function(event){
 <a class="brand" href="index.html" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
 <div class="dashboard-header-actions"><label class="language-picker"><span class="sr-only">Language</span><select id="dashboardLanguageSelect" aria-label="Choose language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option><option value="es">Español</option><option value="de">Deutsch</option><option value="tr">Türkçe</option></select></label><button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button><span class="dashboard-tag" id="accountEmail">Merchant Studio</span><a class="dashboard-back" id="storeLink" href="index.html">عرض المتجر ↗</a><button class="text-button" id="logoutButton" type="button">تسجيل الخروج</button></div>
 </header>
-<main class="dashboard-main">
+<main class="dashboard-main" id="dashboardMain" hidden>
 <section class="dashboard-welcome">
 <div><span class="eyebrow">MINI STORE DZ · MERCHANT AREA</span><h1>لوحة تحكم التاجر</h1><p>أدر بيانات متجرك ومنتجاتك من مكان واحد.</p></div>
 <div class="dashboard-status"><span class="status-dot"></span> <span id="storeStatus">متصل بقاعدة البيانات</span></div>
