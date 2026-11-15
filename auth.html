@@ -8,36 +8,22 @@
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | مرحباً بك</title>
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=20261115-8"><link rel="stylesheet" href="auth.css?v=20261115-8">
-<script type="module" src="auth.js?v=20261115-16"></script>
+<link rel="stylesheet" href="styles.css?v=20261115-8"><link rel="stylesheet" href="auth.css?v=20261115-9">
+<script type="module" src="auth.js?v=20261115-17"></script>
 <script defer src="pwa.js?v=20261113-1"></script>
 </head>
 <body class="auth-page">
 <header class="site-header auth-header">
 <a class="brand auth-brand" href="auth.html" aria-label="MINABYB"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
 <label class="auth-language-picker" aria-label="Language"><span aria-hidden="true">🌐</span><select id="authLanguageSelect" aria-label="Language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option><option value="es">Español</option><option value="de">Deutsch</option><option value="tr">Türkçe</option></select></label>
-<div class="auth-header-actions">
-<button type="button" class="auth-nav-login" data-open-auth="login" data-auth-text="login">تسجيل الدخول</button>
-<button type="button" class="auth-nav-join" data-open-auth="signup">إنشاء حساب</button>
-</div>
+
 </header>
 <main class="auth-landing">
-<section class="auth-ad-gallery" aria-label="صور إعلانية">
-<div class="auth-ad-main" id="authAdSlider"><div class="auth-ad-slide active"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=max&w=1000&q=88" alt="سماعات لاسلكية" fetchpriority="high"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=max&w=1000&q=88" alt="ساعة يد أنيقة" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=max&w=1000&q=88" alt="حذاء رياضي" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=max&w=1000&q=88" alt="حاسوب محمول" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=max&w=1000&q=88" alt="عطر" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=max&w=1000&q=88" alt="حقيبة يد" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=max&w=1000&q=88" alt="كاميرا رقمية" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=max&w=1000&q=88" alt="أثاث منزلي" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=max&w=1000&q=88" alt="كاميرا تصوير" loading="lazy"></div>
-<div class="auth-ad-slide"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=max&w=1000&q=88" alt="نظارات شمسية" loading="lazy"></div><div class="auth-ad-dots" id="authAdDots"><button type="button" class="active" aria-label="Slide 1" data-slide="0"></button><button type="button" class="" aria-label="Slide 2" data-slide="1"></button><button type="button" class="" aria-label="Slide 3" data-slide="2"></button><button type="button" class="" aria-label="Slide 4" data-slide="3"></button><button type="button" class="" aria-label="Slide 5" data-slide="4"></button><button type="button" class="" aria-label="Slide 6" data-slide="5"></button><button type="button" class="" aria-label="Slide 7" data-slide="6"></button><button type="button" class="" aria-label="Slide 8" data-slide="7"></button><button type="button" class="" aria-label="Slide 9" data-slide="8"></button><button type="button" class="" aria-label="Slide 10" data-slide="9"></button></div></div>
-</section>
 
-<section class="auth-main" id="authFormSection" hidden>
+
+<section class="auth-main" id="authFormSection">
 <section class="auth-card">
-<button type="button" class="auth-form-close" id="closeAuth">إغلاق ✕</button>
+
 <span class="eyebrow">MINI STORE DZ</span>
 <h1 id="authTitle">مرحباً بك في MINABYB</h1>
 <p class="auth-intro" id="authIntro">أنشئ حسابك للبدء.</p>
