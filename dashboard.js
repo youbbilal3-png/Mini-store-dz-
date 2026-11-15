@@ -129,7 +129,7 @@ function renderSubscription(){
  }else if(trialActive){
   status.textContent="تجربة مجانية نشطة";
   current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Elite — مميز")+" · تنتهي التجربة في "+subscriptionDate(subscription.trial_ends_at)+". لن يتم تحصيل أي مبلغ تلقائياً.";
- }else if(subscription.status==="active"){
+ }else if(paidPlanActive){
   status.textContent="اشتراك نشط";
   current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Elite — مميز")+".";
  }else if(used){
