@@ -7,7 +7,7 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>لوحة التاجر | MINABYB</title>
-<link rel="stylesheet" href="styles.css?v=20261114-35"><link rel="stylesheet" href="dashboard.css?v=20261114-4">
+<link rel="stylesheet" href="styles.css?v=20261114-35"><link rel="stylesheet" href="dashboard.css?v=20261115-1">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="dashboard-i18n.js?v=20261114-10"></script>
 <script>
@@ -27,7 +27,7 @@ window.addEventListener("unhandledrejection",function(event){
   console.error("Dashboard unhandled rejection:",event.reason);
 });
 </script>
-<script type="module" src="dashboard.js?v=20261115-7" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
+<script type="module" src="dashboard.js?v=20261115-8" onerror="document.getElementById('profileFeedback').textContent='تعذر تحميل ملف لوحة التاجر. قد يكون الاتصال بمكتبة التشغيل قد فشل.'"></script>
 <script defer src="pwa.js?v=20261113-2"></script>
 </head>
 <body class="dashboard-page">
@@ -70,9 +70,9 @@ window.addEventListener("unhandledrejection",function(event){
 <div class="subscription-cards">
 <article class="subscription-card"><span class="plan-label">FREE</span><h3>مجاني</h3><div class="plan-price">0 <small>دج / دائماً</small></div><p>للبداية وتجربة البيع عبر الإنترنت.</p><ul><li><strong id="freeProductsLimit">7 منتجات منشورة لكل متجر</strong></li><li id="freeStoresLimit">متجر واحد فقط</li><li>إدارة الطلبات</li><li>صفحة متجر عامة</li></ul><span class="plan-current" id="freePlanStatus">الخطة الأساسية</span></article>
 <article class="subscription-card plan-pro"><span class="plan-label">PRO</span><h3>احترافي</h3><div class="plan-price"><strong id="proPrice">1,500</strong> <small>دج / <span id="pricePeriodPro">شهرياً</span></small></div><p>لنشاطك التجاري الذي ينمو.</p><ul><li><strong id="proProductsLimit">25 منتجاً منشوراً لكل متجر</strong></li><li id="proStoresLimit">حتى 5 متاجر</li><li>جميع أدوات الخطة المجانية</li><li>تجربة مجانية لمدة 7 أيام</li></ul><button type="button" class="save-button plan-trial-button" id="startProTrial">ابدأ تجربة Pro المجانية</button></article>
-<article class="subscription-card plan-premium"><span class="plan-label">PREMIUM</span><h3>مميز</h3><div class="plan-price"><strong id="premiumPrice">3,000</strong> <small>دج / <span id="pricePeriodPremium">شهرياً</span></small></div><p>للتجار الذين يريدون مساحة أكبر.</p><ul><li><strong id="premiumProductsLimit">منتجات غير محدودة لكل متجر</strong></li><li id="premiumStoresLimit">متاجر غير محدودة</li><li>جميع مزايا Pro</li><li>تجربة مجانية لمدة 7 أيام</li></ul><button type="button" class="save-button plan-trial-button" id="startPremiumTrial">ابدأ تجربة Premium المجانية</button></article>
+<article class="subscription-card plan-premium"><span class="plan-label">ELITE</span><h3>إليت</h3><div class="plan-price"><strong id="premiumPrice">3,000</strong> <small>دج / <span id="pricePeriodPremium">شهرياً</span></small></div><p>للتجار الذين يريدون مساحة أكبر.</p><ul><li><strong id="premiumProductsLimit">منتجات غير محدودة لكل متجر</strong></li><li id="premiumStoresLimit">متاجر غير محدودة</li><li>جميع مزايا Pro</li><li>تجربة مجانية لمدة 7 أيام</li></ul><button type="button" class="save-button plan-trial-button" id="startPremiumTrial">ابدأ تجربة Elite المجانية</button></article>
 </div>
-<p class="subscription-note" id="subscriptionPlanUsage">حدود الباقات لكل متجر.</p><p class="subscription-note" id="subscriptionNote">الأسعار السنوية: Pro ‏15,000 دج وPremium ‏30,000 دج. الدفع الإلكتروني غير مفعّل حالياً؛ لن يتم خصم أي مبلغ بعد انتهاء التجربة.</p>
+<p class="subscription-note" id="subscriptionPlanUsage">حدود الباقات لكل متجر.</p><p class="subscription-note" id="subscriptionNote">الأسعار السنوية: Pro ‏15,000 دج وElite ‏30,000 دج. الدفع الإلكتروني غير مفعّل حالياً؛ لن يتم خصم أي مبلغ بعد انتهاء التجربة.</p>
 <div class="subscription-payment-box">
 <h3>الدفع اليدوي للاشتراك</h3><p>حوّل قيمة الباقة إلى إحدى وسائل الاستلام أدناه، ثم أرسل بيانات العملية لمراجعتها وتفعيل اشتراكك.</p>
 <div id="merchantPaymentDetails" class="payment-details-view">جارٍ تحميل بيانات الاستلام...</div>
@@ -81,7 +81,7 @@ window.addEventListener("unhandledrejection",function(event){
 <h4>تفاصيل الاشتراك</h4>
 <p>اختر الباقة ومدة الاشتراك وطريقة التحويل المناسبة.</p>
 <div class="payment-form-grid">
-<label>الباقة<select id="paymentPlan"><option value="pro">Pro — احترافي</option><option value="premium">Premium — مميز</option></select></label>
+<label>الباقة<select id="paymentPlan"><option value="pro">Pro — احترافي</option><option value="premium">Elite — مميز</option></select></label>
 <label>مدة الاشتراك<select id="paymentCycle"><option value="monthly">شهري</option><option value="yearly">سنوي</option></select></label>
 <label><span data-featured-i18n="methodLabel">طريقة التحويل</span><select id="paymentMethod"><option value="baridimob">BaridiMob</option><option value="ccp">CCP</option></select></label>
 </div>
