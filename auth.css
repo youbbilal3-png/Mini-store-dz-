@@ -121,3 +121,20 @@
 .password-visibility-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .password-visibility-toggle:hover,.password-visibility-toggle.is-visible{color:#b8f34b;background:#1b2a3e}
 @media(max-width:600px){.auth-ad-main{height:min(52svh,520px)}.auth-landing{min-height:calc(100svh - 130px)}}
+
+
+/* Show only the authentication form after the visitor chooses login or signup. */
+.auth-page.auth-form-open .auth-ad-gallery{display:none!important}
+.auth-page.auth-form-open .auth-landing{
+  min-height:0;
+  flex:1;
+  justify-content:center;
+  padding:16px 14px;
+}
+.auth-page.auth-form-open .auth-main{
+  width:100%;
+  box-sizing:border-box;
+  min-height:0;
+  padding:10px 0 24px;
+  scroll-margin-top:12px;
+}
