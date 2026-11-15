@@ -654,7 +654,7 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
 
  try{
   store=await ensureStore();
-  if(!store){const lang=encodeURIComponent(document.documentElement.lang||"ar");location.replace("create-store.html?lang="+lang);return;}
+  if(!store||!store.setup_completed){const lang=encodeURIComponent(document.documentElement.lang||"ar");location.replace("create-store.html?lang="+lang);return;}
   const dashboardMain=$("dashboardMain");if(dashboardMain)dashboardMain.hidden=false;
   fillSettings();
   try{await loadFeaturedRequestHistory();}catch(error){console.error("Featured request history failed:",error);$("featuredRequestHistory").textContent="تعذر تحميل طلبات التمييز.";}
