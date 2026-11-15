@@ -201,6 +201,42 @@ async function loadFeaturedStores(){
  renderFeaturedStores();
 }
 
+async function loadLatestMerchantProducts(){
+ const section=el("latestMerchantProductsSection"),grid=el("latestMerchantProductsGrid");
+ if(!section||!grid||!isPlatformHome)return;
+ section.hidden=true;
+ grid.innerHTML="";
+ const publishedStores=[...featuredStores,...regularStores];
+ const storeIds=publishedStores.map(store=>store.id).filter(Boolean);
+ if(!storeIds.length)return;
+ try{
+  const {data,error}=await supabase.from("products")
+   .select("id,name,price,currency,image_url,image_urls,store_id,created_at")
+   .in("store_id",storeIds)
+   .eq("is_active",true)
+   .order("created_at",{ascending:false})
+   .limit(8);
+  if(error)throw error;
+  const storeById=new Map(publishedStores.map(store=>[store.id,store]));
+  const latest=(data||[]).map(product=>({...product,store:storeById.get(product.store_id)})).filter(product=>product.store?.slug);
+  if(!latest.length)return;
+  grid.innerHTML=latest.map(product=>{
+   const name=safe(product.name||"");
+   const imageUrl=product.image_url||(Array.isArray(product.image_urls)?product.image_urls[0]:"");
+   const image=imageUrl?'<img src="'+safe(imageUrl)+'" alt="'+name+'" loading="lazy">':'<span class="latest-merchant-product-placeholder" aria-hidden="true">📦</span>';
+   const price=product.price!==null&&product.price!==undefined?Number(product.price).toLocaleString(language)+" "+safe(product.currency||translations[language].currency):"";
+   const storeName=safe(product.store.store_name||product.store.seller_name||"MINABYB");
+   const href="store.html?store="+encodeURIComponent(product.store.slug);
+   return '<a class="latest-merchant-product-card" href="'+href+'"><span class="latest-merchant-product-image">'+image+'</span><span class="latest-merchant-product-info"><strong>'+name+'</strong>'+(price?'<small>'+price+'</small>':'')+'<em>'+storeName+' ↗</em></span></a>';
+  }).join("");
+  section.hidden=false;
+ }catch(error){
+  console.warn("Latest merchant products could not be loaded:",error);
+  section.hidden=true;
+ }
+}
+
+
 
 function searchText(value){return String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase().trim();}
 async function loadGlobalSearchProducts(){
@@ -656,13 +692,21 @@ Object.assign(translations.es,{"featuredBadge":"Tienda destacada","featuredSecti
 Object.assign(translations.de,{"featuredBadge":"Empfohlener Shop","featuredSectionTitle":"Empfohlene Shops","featuredSectionText":"Entdecke Shops, die auf unserer Startseite hervorgehoben werden.","featuredCTA":"Shop hervorheben","featuredNoStores":"Noch keine empfohlenen Shops. Sei der Erste!"});
 Object.assign(translations.tr,{"featuredBadge":"Öne çıkan mağaza","featuredSectionTitle":"Öne çıkan mağazalar","featuredSectionText":"Ana sayfamızda öne çıkarılan mağazaları keşfedin.","featuredCTA":"Mağazamı öne çıkar","featuredNoStores":"Henüz öne çıkan mağaza yok. İlk sen ol!"});
 
+
+Object.assign(translations.ar,{latestMerchantProductsEyebrow:"من متاجر حقيقية",latestMerchantProductsTitle:"أحدث منتجات التجار",latestMerchantProductsText:"اكتشف أحدث المنتجات التي أضافها أصحاب المتاجر على MINABYB."});
+Object.assign(translations.fr,{latestMerchantProductsEyebrow:"Des boutiques réelles",latestMerchantProductsTitle:"Derniers produits des vendeurs",latestMerchantProductsText:"Découvrez les derniers produits ajoutés par les vendeurs sur MINABYB."});
+Object.assign(translations.en,{latestMerchantProductsEyebrow:"FROM REAL STORES",latestMerchantProductsTitle:"Latest seller products",latestMerchantProductsText:"Discover the latest products added by MINABYB store owners."});
+Object.assign(translations.es,{latestMerchantProductsEyebrow:"DE TIENDAS REALES",latestMerchantProductsTitle:"Últimos productos de vendedores",latestMerchantProductsText:"Descubre los últimos productos añadidos por las tiendas de MINABYB."});
+Object.assign(translations.de,{latestMerchantProductsEyebrow:"AUS ECHTEN SHOPS",latestMerchantProductsTitle:"Neueste Verkäuferprodukte",latestMerchantProductsText:"Entdecke die neuesten Produkte der MINABYB-Shopinhaber."});
+Object.assign(translations.tr,{latestMerchantProductsEyebrow:"GERÇEK MAĞAZALARDAN",latestMerchantProductsTitle:"Satıcıların son ürünleri",latestMerchantProductsText:"MINABYB mağaza sahiplerinin eklediği en yeni ürünleri keşfedin."});
+
 el("year").textContent=new Date().getFullYear();
 initTheme();initHeroShowcase();
 const sharePlatformButton=el("sharePlatformButton");if(sharePlatformButton)sharePlatformButton.addEventListener("click",sharePlatformLink);
 // Apply the saved language immediately, before waiting for store data.
 applyLanguage();
 document.documentElement.classList.remove("language-loading");
-await loadStore();applyLanguage();updateCartButton();await loadFeaturedStores();await loadSponsoredAds();await loadPublicReviews();
+await loadStore();applyLanguage();updateCartButton();await loadFeaturedStores();await loadLatestMerchantProducts();await loadSponsoredAds();await loadPublicReviews();
 
 
 /* Route merchant actions to the dashboard for signed-in users,
