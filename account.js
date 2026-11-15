@@ -7,7 +7,7 @@ fr:{title:"Mon compte",intro:"Informations de votre compte MINABYB.",home:"Accue
 en:{title:"My account",intro:"Your MINABYB account information.",home:"Home",name:"Name",email:"Email address",type:"Account type",shopper:"Shopper",merchant:"Merchant",create:"Create your store",dashboard:"Merchant dashboard",logout:"Log out",loading:"Loading your account...",error:"Could not load your account. Please try again.",signedOut:"You have been logged out.",logoutError:"Could not log out. Please try again.",photoAdd:"Add profile picture",photoChange:"Change picture",photoRemove:"Remove picture",photoUploading:"Uploading picture...",photoDeleting:"Removing picture...",photoSaved:"Profile picture updated.",photoDeleted:"Profile picture removed.",photoError:"Could not update the picture. Please try again.",photoType:"Choose a JPG, PNG, or WebP image.",photoSize:"The image must be 2 MB or smaller.",photoConfirm:"Remove your profile picture?"},
 es:{title:"Mi cuenta",intro:"Información de tu cuenta MINABYB.",home:"Inicio",name:"Nombre",email:"Correo electrónico",type:"Tipo de cuenta",shopper:"Comprador",merchant:"Vendedor",create:"Crear tu tienda",dashboard:"Panel del vendedor",logout:"Cerrar sesión",loading:"Cargando tu cuenta...",error:"No se pudo cargar la cuenta. Inténtalo de nuevo.",signedOut:"Has cerrado sesión.",logoutError:"No se pudo cerrar sesión. Inténtalo de nuevo.",photoAdd:"Añadir foto de perfil",photoChange:"Cambiar foto",photoRemove:"Eliminar foto",photoUploading:"Subiendo imagen...",photoDeleting:"Eliminando imagen...",photoSaved:"Foto de perfil actualizada.",photoDeleted:"Foto de perfil eliminada.",photoError:"No se pudo actualizar la foto. Inténtalo de nuevo.",photoType:"Elige una imagen JPG, PNG o WebP.",photoSize:"La imagen debe pesar 2 MB o menos.",photoConfirm:"¿Eliminar tu foto de perfil?"},
 de:{title:"Mein Konto",intro:"Informationen zu Ihrem MINABYB-Konto.",home:"Startseite",name:"Name",email:"E-Mail-Adresse",type:"Kontotyp",shopper:"Käufer",merchant:"Händler",create:"Shop erstellen",dashboard:"Händler-Dashboard",logout:"Abmelden",loading:"Konto wird geladen...",error:"Konto konnte nicht geladen werden. Bitte erneut versuchen.",signedOut:"Sie wurden abgemeldet.",logoutError:"Abmeldung nicht möglich. Bitte erneut versuchen.",photoAdd:"Profilbild hinzufügen",photoChange:"Bild ändern",photoRemove:"Bild entfernen",photoUploading:"Bild wird hochgeladen...",photoDeleting:"Bild wird entfernt...",photoSaved:"Profilbild aktualisiert.",photoDeleted:"Profilbild entfernt.",photoError:"Bild konnte nicht geändert werden. Bitte erneut versuchen.",photoType:"Wählen Sie JPG, PNG oder WebP.",photoSize:"Das Bild darf höchstens 2 MB groß sein.",photoConfirm:"Profilbild entfernen?"},
-tr:{title:"Hesabım",intro:"MINABYB hesap bilgileriniz.",home:"Ana sayfa",name:"Ad",email:"E-posta adresi",type:"Hesap türü",shopper:"Alışverişçi",merchant:"Satıcı",create:"Mağazanı oluştur",dashboard:"Satıcı paneli",logout:"Çıkış yap",loading:"Hesabınız yükleniyor...",error:"Hesap yüklenemedi. Lütfen tekrar deneyin.",signedOut:"Oturum kapatıldı.",logoutError:"Oturum kapatılamadı. Tekrar deneyin."}
+tr:{title:"Hesabım",intro:"MINABYB hesap bilgileriniz.",home:"Ana sayfa",name:"Ad",email:"E-posta adresi",type:"Hesap türü",shopper:"Alışverişçi",merchant:"Satıcı",create:"Mağazanı oluştur",dashboard:"Satıcı paneli",logout:"Çıkış yap",loading:"Hesabınız yükleniyor...",error:"Hesap yüklenemedi. Lütfen tekrar deneyin.",signedOut:"Oturum kapatıldı.",logoutError:"Oturum kapatılamadı. Tekrar deneyin.",photoAdd:"Profil fotoğrafı ekle",photoChange:"Fotoğrafı değiştir",photoRemove:"Fotoğrafı sil",photoUploading:"Fotoğraf yükleniyor...",photoDeleting:"Fotoğraf siliniyor...",photoSaved:"Profil fotoğrafı güncellendi.",photoDeleted:"Profil fotoğrafı silindi.",photoError:"Fotoğraf güncellenemedi. Tekrar deneyin.",photoType:"JPG, PNG veya WebP seçin.",photoSize:"Görsel en fazla 2 MB olmalıdır.",photoConfirm:"Profil fotoğrafınız silinsin mi?"}
 }[language];
 document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";
 $("accountTitle").textContent=t.title;$("accountIntro").textContent=t.intro;$("accountHomeLink").textContent=t.home;
@@ -19,7 +19,9 @@ function syncPhotoButtons(){photoChoose.textContent=currentAvatarUrl?t.photoChan
 function getOwnedAvatarPath(url,userId){
  try{const parsed=new URL(url);const marker="/storage/v1/object/public/store-avatars/";const index=parsed.pathname.indexOf(marker);if(index<0)return "";const path=decodeURIComponent(parsed.pathname.slice(index+marker.length));return path.startsWith(userId+"/")?path:"";}catch(e){return "";}
 }
-\nfunction setAccountAvatar(user){\n currentAvatarUrl=user.user_metadata?.avatar_url||user.user_metadata?.picture||user.user_metadata?.profile_image||user.user_metadata?.photo_url||"";syncPhotoButtons();
+
+function setAccountAvatar(user){
+ currentAvatarUrl=user.user_metadata?.avatar_url||user.user_metadata?.picture||user.user_metadata?.profile_image||user.user_metadata?.photo_url||"";syncPhotoButtons();
  const image=$("accountAvatarImage"),initial=$("accountAvatarInitial");
  const name=user.user_metadata?.full_name||user.user_metadata?.name||user.email?.split("@")[0]||"";
  initial.textContent=Array.from(name.trim())[0]?.toLocaleUpperCase()||"•";
@@ -37,7 +39,7 @@ $("accountNameLabel").textContent=t.name;$("accountEmailLabel").textContent=t.em
 async function init(){
  $("accountFeedback").textContent=t.loading;
  try{
-  const {data:{session,photoAdd:"Profil fotoğrafı ekle",photoChange:"Fotoğrafı değiştir",photoRemove:"Fotoğrafı sil",photoUploading:"Fotoğraf yükleniyor...",photoDeleting:"Fotoğraf siliniyor...",photoSaved:"Profil fotoğrafı güncellendi.",photoDeleted:"Profil fotoğrafı silindi.",photoError:"Fotoğraf güncellenemedi. Tekrar deneyin.",photoType:"JPG, PNG veya WebP seçin.",photoSize:"Görsel en fazla 2 MB olmalıdır.",photoConfirm:"Profil fotoğrafınız silinsin mi?"},error}=await supabase.auth.getSession();if(error)throw error;
+  const {data:{session},error}=await supabase.auth.getSession();if(error)throw error;
   if(!session){location.replace("auth.html?next=account.html&lang="+encodeURIComponent(language));return;}
   const user=session.user;
   setAccountAvatar(user);
@@ -95,4 +97,5 @@ photoRemove.addEventListener("click",async()=>{
  }catch(error){console.error("Profile photo removal failed:",error);$("accountFeedback").textContent=t.photoError;}
  finally{photoChoose.disabled=false;photoRemove.disabled=false;syncPhotoButtons();}
 });
-\ninit();
+
+init();
