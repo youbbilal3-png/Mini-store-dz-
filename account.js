@@ -11,6 +11,21 @@ tr:{title:"Hesabım",intro:"MINABYB hesap bilgileriniz.",home:"Ana sayfa",name:"
 }[language];
 document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";
 $("accountTitle").textContent=t.title;$("accountIntro").textContent=t.intro;$("accountHomeLink").textContent=t.home;
+$("accountAvatar").setAttribute("aria-label",t.title);
+function setAccountAvatar(user){
+ const image=$("accountAvatarImage"),initial=$("accountAvatarInitial");
+ const name=user.user_metadata?.full_name||user.user_metadata?.name||user.email?.split("@")[0]||"";
+ initial.textContent=Array.from(name.trim())[0]?.toLocaleUpperCase()||"•";
+ const candidate=user.user_metadata?.avatar_url||user.user_metadata?.picture||user.user_metadata?.profile_image||user.user_metadata?.photo_url||"";
+ try{
+  const url=new URL(candidate,location.origin);
+  if(candidate&&["https:","http:"].includes(url.protocol)){
+   image.onload=()=>{image.hidden=false;initial.hidden=true;};
+   image.onerror=()=>{image.hidden=true;initial.hidden=false;};
+   image.src=url.href;
+  }else{image.hidden=true;initial.hidden=false;}
+ }catch(error){image.hidden=true;initial.hidden=false;}
+}
 $("accountNameLabel").textContent=t.name;$("accountEmailLabel").textContent=t.email;$("accountTypeLabel").textContent=t.type;$("accountLogoutButton").textContent=t.logout;
 async function init(){
  $("accountFeedback").textContent=t.loading;
@@ -18,6 +33,7 @@ async function init(){
   const {data:{session},error}=await supabase.auth.getSession();if(error)throw error;
   if(!session){location.replace("auth.html?next=account.html&lang="+encodeURIComponent(language));return;}
   const user=session.user;
+  setAccountAvatar(user);
   $("accountName").textContent=user.user_metadata?.full_name||user.user_metadata?.name||user.email?.split("@")[0]||"—";
   $("accountEmail").textContent=user.email||"—";
   const {data:store,error:storeError}=await supabase.from("stores").select("id,setup_completed").eq("owner_id",user.id).eq("setup_completed",true).maybeSingle();
