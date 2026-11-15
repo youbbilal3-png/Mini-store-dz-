@@ -35,7 +35,7 @@ $("createStoreForm").addEventListener("submit",async event=>{
   const {data:existing,error:lookupError}=await supabase.from("stores").select("id,setup_completed").eq("owner_id",currentUser.id).maybeSingle();
   if(lookupError)throw lookupError;
   if(existing?.setup_completed){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
-  const payload={store_name:storeName,seller_name:sellerName,seller_bio:$("newStoreBio").value.trim()||null,whatsapp:whatsapp.replace(/[\\s()+-]/g,"")||null,setup_completed:true};
+  const payload={store_name:storeName,seller_name:sellerName,seller_bio:$("newStoreBio").value.trim()||null,whatsapp:whatsapp.replace(/[\s()+-]/g,"")||null,setup_completed:true};
   let saveResult;
   if(existing){saveResult=await supabase.from("stores").update(payload).eq("id",existing.id).eq("owner_id",currentUser.id);}
   else{saveResult=await supabase.from("stores").insert({...payload,owner_id:currentUser.id,slug:makeSlug(currentUser.id),is_published:false});}
