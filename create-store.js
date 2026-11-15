@@ -14,11 +14,11 @@ Object.assign(translations.en,{"storePhoto":"Store image (required)","choosePhot
 Object.assign(translations.es,{"storePhoto":"Imagen de la tienda (obligatoria)","choosePhoto":"📷 Añadir imagen","removePhoto":"Eliminar imagen","photoHint":"Añade un logotipo o una foto clara. JPEG, PNG o WebP, máximo 2 MB.","photoRequired":"Añade una imagen antes de crear tu tienda.","photoType":"Elige una imagen JPEG, PNG o WebP.","photoSize":"La imagen no debe superar los 2 MB.","uploadingPhoto":"Subiendo imagen..."});
 Object.assign(translations.de,{"storePhoto":"Shopbild (erforderlich)","choosePhoto":"📷 Shopbild hinzufügen","removePhoto":"Bild entfernen","photoHint":"Füge ein klares Shoplogo oder Ladenfoto hinzu. JPEG, PNG oder WebP, maximal 2 MB.","photoRequired":"Füge vor dem Erstellen ein Shopbild hinzu.","photoType":"Wähle ein JPEG-, PNG- oder WebP-Bild.","photoSize":"Das Bild darf höchstens 2 MB groß sein.","uploadingPhoto":"Shopbild wird hochgeladen..."});
 Object.assign(translations.tr,{"storePhoto":"Mağaza görseli (gerekli)","choosePhoto":"📷 Mağaza görseli ekle","removePhoto":"Görseli kaldır","photoHint":"Mağazanızın logosunu veya net bir fotoğrafını ekleyin. JPEG, PNG veya WebP, en fazla 2 MB.","photoRequired":"Mağazanızı oluşturmadan önce görsel ekleyin.","photoType":"JPEG, PNG veya WebP görsel seçin.","photoSize":"Görsel en fazla 2 MB olmalıdır.","uploadingPhoto":"Mağaza görseli yükleniyor..."});
-let lang="ar",words=translations.ar,currentUser=null,selectedStorePhoto=null,existingStorePhotoUrl=null,uploadedPhotoPath=null;
+let lang="ar",words=translations.ar,currentUser=null,selectedStorePhoto=null,existingStorePhotoUrl=null,uploadedPhotoPath=null,existingDraft=null;
 function applyLanguage(next){lang=translations[next]?next:"ar";words=translations[lang];document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-t]").forEach(node=>{const key=node.dataset.t;if(words[key])node.textContent=words[key];});$("createStoreLanguage").value=lang;try{localStorage.setItem("msdz-language",lang);}catch(e){}}
 const requested=new URLSearchParams(location.search).get("lang");let saved="ar";try{saved=localStorage.getItem("msdz-language")||"ar";}catch(e){}applyLanguage(translations[requested]?requested:saved);
 $("createStoreLanguage").addEventListener("change",e=>applyLanguage(e.target.value));
-function makeSlug(userId){return "store-"+String(userId).replace(/-/g,"").slice(0,16).toLowerCase();}
+function makeSlug(userId,storeId){return "store-"+String(storeId).replace(/-/g,"").slice(0,20).toLowerCase();}
 function showStorePhoto(url){const image=$("storePhotoPreviewImage"),fallback=$("storePhotoFallback");if(url){image.src=url;image.hidden=false;fallback.hidden=true;}else{image.removeAttribute("src");image.hidden=true;fallback.hidden=false;}}
 function clearStorePhoto(){selectedStorePhoto=null;existingStorePhotoUrl=null;$("newStorePhoto").value="";showStorePhoto("");}
 $("newStorePhoto").addEventListener("change",event=>{const file=event.target.files?.[0];if(!file)return;if(!["image/jpeg","image/png","image/webp"].includes(file.type)){event.target.value="";selectedStorePhoto=null;showStorePhoto(existingStorePhotoUrl);$("createStoreFeedback").textContent=words.photoType;return;}if(file.size>2*1024*1024){event.target.value="";selectedStorePhoto=null;showStorePhoto(existingStorePhotoUrl);$("createStoreFeedback").textContent=words.photoSize;return;}selectedStorePhoto=file;existingStorePhotoUrl=null;showStorePhoto(URL.createObjectURL(file));});
@@ -31,10 +31,20 @@ async function init(){
  if(error||!data?.user){$("createStoreFeedback").textContent=words.login;setTimeout(()=>location.replace("auth.html?next=create-store.html&lang="+encodeURIComponent(lang)),700);return;}
  currentUser=data.user;
  $("newSellerName").value=currentUser.user_metadata?.full_name||"";
- const {data:existing,error:lookupError}=await supabase.from("stores").select("id,slug,setup_completed,store_name,seller_name,avatar_url").eq("owner_id",currentUser.id).maybeSingle();
+ const {data:stores,error:lookupError}=await supabase.from("stores").select("id,slug,setup_completed,store_name,seller_name,avatar_url").eq("owner_id",currentUser.id).order("created_at",{ascending:false});
  if(lookupError){$("createStoreFeedback").textContent=words.error;return;}
- if(existing?.setup_completed){$("createStoreFeedback").textContent=words.exists;location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
- if(existing){$("newStoreName").value=existing.store_name==="متجري"?"":existing.store_name||"";$("newSellerName").value=existing.seller_name||$("newSellerName").value;existingStorePhotoUrl=existing.avatar_url||null;if(existingStorePhotoUrl)showStorePhoto(existingStorePhotoUrl);}
+ existingDraft=(stores||[]).find(item=>!item.setup_completed)||null;
+ if(existingDraft){
+  $("newStoreName").value=existingDraft.store_name==="متجري"?"":existingDraft.store_name||"";
+  $("newSellerName").value=existingDraft.seller_name||$("newSellerName").value;
+  existingStorePhotoUrl=existingDraft.avatar_url||null;
+  if(existingStorePhotoUrl)showStorePhoto(existingStorePhotoUrl);
+ }else{
+  const {data:allowed,error:limitError}=await supabase.rpc("can_create_store");
+  if(limitError){$("createStoreFeedback").textContent=words.error;return;}
+  if(!allowed){$("createStoreFeedback").textContent=words.limitReached;$("createStoreSubmit").disabled=true;return;}
+  if(stores?.length&&document.querySelector("[data-t=title]"))document.querySelector("[data-t=title]").textContent=lang==="ar"?"أنشئ متجراً إضافياً":lang==="en"?"Create another store":"Créer une autre boutique";
+ }
  $("createStoreFeedback").textContent="";
 }
 $("createStoreForm").addEventListener("submit",async event=>{
@@ -45,28 +55,27 @@ $("createStoreForm").addEventListener("submit",async event=>{
  if(whatsapp&&!/^\d{8,20}$/.test(whatsapp.replace(/[\s()+-]/g,""))){$("createStoreFeedback").textContent=words.badPhone;return;}
  const button=$("createStoreSubmit");button.disabled=true;$("createStoreFeedback").textContent=words.saving;
  try{
-  const {data:existing,error:lookupError}=await supabase.from("stores").select("id,setup_completed,avatar_url").eq("owner_id",currentUser.id).maybeSingle();
-  if(lookupError)throw lookupError;
-  if(existing?.setup_completed){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
+  const {data:allowed,error:limitError}=await supabase.rpc("can_create_store");
+  if(limitError)throw limitError;
+  if(!existingDraft&&!allowed)throw new Error(words.limitReached);
   const payload={store_name:storeName,seller_name:sellerName,seller_bio:$("newStoreBio").value.trim()||null,whatsapp:whatsapp.replace(/[\s()+-]/g,"")||null,setup_completed:false};
   let saveResult;
-  if(existing){saveResult=await supabase.from("stores").update(payload).eq("id",existing.id).eq("owner_id",currentUser.id).select("id").single();}
-  else{saveResult=await supabase.from("stores").insert({...payload,owner_id:currentUser.id,slug:makeSlug(currentUser.id),is_published:false}).select("id").single();}
+  if(existingDraft){saveResult=await supabase.from("stores").update(payload).eq("id",existingDraft.id).eq("owner_id",currentUser.id).select("id").single();}
+  else{const newStoreId=crypto.randomUUID();saveResult=await supabase.from("stores").insert({...payload,id:newStoreId,owner_id:currentUser.id,slug:makeSlug(currentUser.id,newStoreId),is_published:false}).select("id").single();}
   if(saveResult.error)throw saveResult.error;
   const storeId=saveResult.data.id;
-  let avatarUrl=existing?.avatar_url||existingStorePhotoUrl||null;
+  let avatarUrl=existingDraft?.avatar_url||existingStorePhotoUrl||null;
   if(selectedStorePhoto){$("createStoreFeedback").textContent=words.uploadingPhoto;avatarUrl=await uploadStorePhoto(selectedStorePhoto,storeId);}
   if(!avatarUrl)throw new Error("Store image is required.");
   const {error:completeError}=await supabase.from("stores").update({avatar_url:avatarUrl,setup_completed:true}).eq("id",storeId).eq("owner_id",currentUser.id);
   if(completeError)throw completeError;
   uploadedPhotoPath=null;
   $("createStoreFeedback").textContent=words.success;
-  location.replace("dashboard.html?lang="+encodeURIComponent(lang));
+  location.replace("dashboard.html?store="+encodeURIComponent(storeId)+"&lang="+encodeURIComponent(lang));
  }catch(error){
   console.error("Store creation failed:",error);
   if(uploadedPhotoPath){try{await supabase.storage.from("store-avatars").remove([uploadedPhotoPath]);}catch(cleanupError){console.warn("Store photo cleanup failed:",cleanupError);}uploadedPhotoPath=null;}
-  const {data:existing}=await supabase.from("stores").select("id,setup_completed").eq("owner_id",currentUser.id).maybeSingle();
-  if(existing?.setup_completed){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
+  if(error?.code==="23505"){$("createStoreFeedback").textContent="اسم أو رابط المتجر مستخدم بالفعل. حاول مجدداً.";button.disabled=false;return;}
   $("createStoreFeedback").textContent=words.error;
   button.disabled=false;
  }
