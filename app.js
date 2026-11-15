@@ -519,8 +519,23 @@ siteMenuToggle?.addEventListener("click",()=>setSiteMenuOpen(siteMenu?.hidden));
 el("siteMenuClose")?.addEventListener("click",()=>setSiteMenuOpen(false));
 siteMenuBackdrop?.addEventListener("click",()=>setSiteMenuOpen(false));
 siteMenu?.querySelectorAll("a,button").forEach(control=>control.addEventListener("click",event=>{
+ const link=event.target.closest("a");
+ if(link){
+  const href=link.getAttribute("href")||"";
+  if(href&&!href.startsWith("#")&&!href.startsWith("mailto:")&&!href.startsWith("tel:")){
+   try{sessionStorage.setItem("minabyb-reopen-menu-on-back","1");}catch(error){}
+  }
+ }
  setSiteMenuOpen(false);
 }));
+window.addEventListener("pageshow",()=>{
+ try{
+  if(sessionStorage.getItem("minabyb-reopen-menu-on-back")==="1"){
+   sessionStorage.removeItem("minabyb-reopen-menu-on-back");
+   setSiteMenuOpen(true);
+  }
+ }catch(error){}
+});
 document.addEventListener("keydown",event=>{if(event.key==="Escape"&&siteMenu&&!siteMenu.hidden)setSiteMenuOpen(false);});
 
 function openInfoDialog(id){const dialog=el(id);if(dialog&&!dialog.open)dialog.showModal();}
@@ -585,6 +600,14 @@ Object.assign(translations.en,{homeCardEyebrow:"Discover MINABYB",homeCardTitle:
 Object.assign(translations.es,{homeCardEyebrow:"Descubre MINABYB",homeCardTitle:"Todo lo que buscas en un solo lugar",homeCardText:"Descubre distintas tiendas, explora sus productos y contacta directamente con los vendedores para hacer tu pedido.",homeCardPoint1:"Tiendas variadas",homeCardPoint2:"Productos diversos",homeCardPoint3:"Contacto directo"});
 Object.assign(translations.de,{homeCardEyebrow:"Entdecke MINABYB",homeCardTitle:"Alles, was du suchst, an einem Ort",homeCardText:"Entdecke verschiedene Shops und ihre Produkte und kontaktiere Verkäufer direkt, um zu bestellen.",homeCardPoint1:"Vielfältige Shops",homeCardPoint2:"Verschiedene Produkte",homeCardPoint3:"Direkter Kontakt"});
 Object.assign(translations.tr,{homeCardEyebrow:"MINABYB'yi keşfet",homeCardTitle:"Aradığın her şey tek bir yerde",homeCardText:"Farklı mağazaları keşfet, ürünlerini incele ve sipariş vermek için satıcılarla doğrudan iletişime geç.",homeCardPoint1:"Çeşitli mağazalar",homeCardPoint2:"Farklı ürünler",homeCardPoint3:"Doğrudan iletişim"});
+
+// Compact navigation drawer section labels and help link in all supported languages.
+Object.assign(translations.ar,{menuAccountSection:"الحساب",menuStoreSection:"المتجر",menuExploreSection:"التصفح والمساعدة",howItWorks:"كيف يعمل؟"});
+Object.assign(translations.fr,{menuAccountSection:"Compte",menuStoreSection:"Boutique",menuExploreSection:"Explorer et aide",howItWorks:"Comment ça marche ?"});
+Object.assign(translations.en,{menuAccountSection:"Account",menuStoreSection:"Store",menuExploreSection:"Explore & help",howItWorks:"How it works"});
+Object.assign(translations.es,{menuAccountSection:"Cuenta",menuStoreSection:"Tienda",menuExploreSection:"Explorar y ayuda",howItWorks:"Cómo funciona"});
+Object.assign(translations.de,{menuAccountSection:"Konto",menuStoreSection:"Shop",menuExploreSection:"Entdecken & Hilfe",howItWorks:"So funktioniert's"});
+Object.assign(translations.tr,{menuAccountSection:"Hesap",menuStoreSection:"Mağaza",menuExploreSection:"Keşfet ve yardım",howItWorks:"Nasıl çalışır?"});
 
 // Homepage advertising empty-state copy in all supported languages.
 Object.assign(translations.ar,{sponsoredEmptyTitle:"مساحتك الإعلانية هنا",sponsoredEmptyText:"اعرض منتجاتك وخدماتك أمام زوار MINABYB.",sponsoredEmptyCTA:"احجز مساحتك الإعلانية"});
