@@ -97,7 +97,7 @@ function initReferralControls(){
  applyReferralLanguage();
 }
 
-let user=null,store=null,products=[],orders=[],reviews=[],productFilterTerm="",orderFilterTerm="";
+let user=null,store=null,ownedStores=[],products=[],orders=[],reviews=[],productFilterTerm="",orderFilterTerm="";
 let subscription=null,billingCycle="monthly";
 const planConfig={free:{limit:7},pro:{limit:25},premium:{limit:Infinity}};
 function currentProductPlan(){if(!subscription)return 'free';const now=Date.now();const trial=subscription.status==='trialing'&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;const paid=trial||(subscription.status==='active'&&(!subscription.current_period_ends_at||new Date(subscription.current_period_ends_at).getTime()>now));const rp=subscription.referral_pro_starts_at&&new Date(subscription.referral_pro_starts_at).getTime()<=now&&subscription.referral_pro_until&&new Date(subscription.referral_pro_until).getTime()>now;const re=subscription.referral_premium_starts_at&&new Date(subscription.referral_premium_starts_at).getTime()<=now&&subscription.referral_premium_until&&new Date(subscription.referral_premium_until).getTime()>now;const p=paid?subscription.plan:'free';return p==='premium'||re?'premium':p==='pro'||rp?'pro':'free';}
@@ -174,9 +174,15 @@ const message=(id,text)=>$(id).textContent=text;
 const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function makeSlug(name,id){const base=String(name||"store").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,25)||"store";return base+"-"+id.slice(0,7);}
 async function ensureStore(){
- const {data:existing,error}=await supabase.from("stores").select("*").eq("owner_id",user.id).maybeSingle();
+ const {data:owned,error}=await supabase.from("stores").select("*").eq("owner_id",user.id).eq("setup_completed",true).order("created_at",{ascending:false});
  if(error)throw error;
- return existing||null;
+ ownedStores=owned||[];
+ const requested=new URLSearchParams(location.search).get("store");
+ store=ownedStores.find(item=>item.id===requested)||ownedStores[0]||null;
+ const picker=$("storeSwitcher"),add=$("createAnotherStore");
+ if(picker){picker.innerHTML=ownedStores.map(item=>'<option value="'+escapeHtml(item.id)+'">'+escapeHtml(item.store_name||"متجر")+'</option>').join("");picker.value=store?.id||"";picker.hidden=ownedStores.length<2;}
+ if(add){const {data:allowed,error:limitError}=await supabase.rpc("can_create_store");add.hidden=!!limitError||!allowed;}
+ return store;
 }
 
 function renderDailyCharts(){
@@ -622,6 +628,7 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
  $("publishStore").addEventListener("click",togglePublish);
  $("copyStoreLink").addEventListener("click",copyStoreLink);
  $("dashYear").textContent=new Date().getFullYear();
+ $("storeSwitcher")?.addEventListener("change",event=>{const lang=encodeURIComponent(document.documentElement.lang||"ar");location.href="dashboard.html?store="+encodeURIComponent(event.target.value)+"&lang="+lang;});
  initReferralControls();
  // Bind logout before rendering charts or making any network request.
  const logoutButton=$("logoutButton");
