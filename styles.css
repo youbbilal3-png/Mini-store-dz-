@@ -1213,3 +1213,83 @@ body:has(#publicLanding:not([hidden])){
 /* MINABYB public landing brand colors: MINA green, BYB red. */
 #publicLanding .public-landing-name span{color:#25b96a}
 #publicLanding .public-landing-name strong{color:#ef4444}
+
+
+/* MINABYB home menu: premium tactile 3D navigation buttons.
+   Visual-only overrides; preserve the existing order, grid and actions. */
+.site-menu-panel .site-menu-group>.header-login-link,
+.site-menu-panel .site-menu-group>.header-account-link,
+.site-menu-panel .site-menu-group>.header-logout-btn,
+.site-menu-panel .site-menu-group>nav>a,
+.site-menu-panel .site-menu-group>nav>button,
+.site-menu-panel .site-menu-share .share-platform-btn{
+  position:relative!important;
+  border:1px solid #cbdcc3!important;
+  border-radius:13px!important;
+  background:linear-gradient(145deg,#ffffff 0%,#f5f9f0 58%,#eaf2e3 100%)!important;
+  color:#203526!important;
+  -webkit-text-fill-color:#203526!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.96),
+    inset 0 -2px 0 rgba(113,145,91,.10),
+    0 3px 0 #c6d7bd,
+    0 6px 12px rgba(31,55,35,.12)!important;
+  transform:translateY(0)!important;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,filter .16s ease!important;
+}
+.site-menu-panel .site-menu-group>.header-login-link:hover,
+.site-menu-panel .site-menu-group>.header-account-link:hover,
+.site-menu-panel .site-menu-group>.header-logout-btn:hover,
+.site-menu-panel .site-menu-group>nav>a:hover,
+.site-menu-panel .site-menu-group>nav>button:hover,
+.site-menu-panel .site-menu-share .share-platform-btn:hover{
+  border-color:#91b96c!important;
+  background:linear-gradient(145deg,#fbfff6 0%,#edf7e5 100%)!important;
+  box-shadow:inset 0 2px 0 #fff,0 5px 0 #b7ceaa,0 9px 16px rgba(31,55,35,.16)!important;
+  transform:translateY(-2px)!important;
+}
+.site-menu-panel .site-menu-group>.header-login-link:active,
+.site-menu-panel .site-menu-group>.header-account-link:active,
+.site-menu-panel .site-menu-group>.header-logout-btn:active,
+.site-menu-panel .site-menu-group>nav>a:active,
+.site-menu-panel .site-menu-group>nav>button:active,
+.site-menu-panel .site-menu-share .share-platform-btn:active{
+  box-shadow:inset 0 2px 4px rgba(31,55,35,.13),0 1px 0 #b7ceaa,0 2px 5px rgba(31,55,35,.10)!important;
+  transform:translateY(2px)!important;
+}
+.site-menu-panel .site-menu-group>.header-merchant-cta{
+  border-color:#0e5937!important;
+  background:linear-gradient(145deg,#26945d 0%,#176b42 58%,#105332 100%)!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.28),inset 0 -3px 0 rgba(0,0,0,.13),0 4px 0 #0b432b,0 8px 14px rgba(10,72,43,.23)!important;
+}
+.site-menu-panel .site-menu-group>.header-merchant-cta:hover{
+  background:linear-gradient(145deg,#2da96a 0%,#19794a 60%,#105b38 100%)!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.32),0 5px 0 #0b432b,0 11px 18px rgba(10,72,43,.25)!important;
+  transform:translateY(-2px)!important;
+}
+.site-menu-panel .site-menu-group>.header-merchant-cta:active{
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.2),0 1px 0 #0b432b!important;
+  transform:translateY(2px)!important;
+}
+.site-menu-panel .site-menu-group>nav>#navProducts{
+  background:linear-gradient(145deg,#f4fae9 0%,#e5f1d7 100%)!important;
+  border-color:#b9d39e!important;
+  box-shadow:inset 0 2px 0 #fff,0 3px 0 #c4d9ad,0 6px 12px rgba(31,55,35,.12)!important;
+}
+.site-menu-panel .site-menu-group>nav>.header-icon-link{
+  min-height:42px!important;
+}
+.site-menu-panel .site-menu-group>.header-login-link,
+.site-menu-panel .site-menu-group>.header-account-link,
+.site-menu-panel .site-menu-group>.header-logout-btn{
+  min-height:42px!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .site-menu-panel .site-menu-group>.header-login-link,
+ .site-menu-panel .site-menu-group>.header-account-link,
+ .site-menu-panel .site-menu-group>.header-logout-btn,
+ .site-menu-panel .site-menu-group>nav>a,
+ .site-menu-panel .site-menu-group>nav>button,
+ .site-menu-panel .site-menu-share .share-platform-btn{transition:none!important}
+}
