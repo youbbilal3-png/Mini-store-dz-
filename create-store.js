@@ -8,7 +8,7 @@ const translations={
  de:{home:"Startseite",title:"Erstelle deinen Online-Shop",intro:"Gib die Daten deines Shops ein. Du behältst dasselbe Konto und erhältst nach der Erstellung Zugang zum Händler-Dashboard.",storeName:"Shopname",sellerName:"Name des Shopinhabers",bio:"Kurze Beschreibung (optional)",whatsapp:"WhatsApp mit Ländervorwahl (optional)",submit:"Meinen Shop erstellen",note:"Der Shop wird erst nach erfolgreichem Absenden erstellt.",checking:"Konto wird geprüft...",login:"Bitte zuerst anmelden.",exists:"Du hast bereits einen Shop. Dashboard wird geöffnet...",saving:"Shop wird erstellt...",success:"Shop erstellt. Dashboard wird geöffnet...",error:"Shop konnte nicht erstellt werden. Bitte Angaben prüfen.",nameRequired:"Shopname und Inhabername eingeben.",badPhone:"WhatsApp-Nummer prüfen oder leer lassen."},
  tr:{home:"Ana sayfa",title:"Çevrimiçi mağazanızı oluşturun",intro:"Mağaza bilgilerinizi girin. Aynı hesabı kullanmaya devam edeceksiniz; mağaza oluşturulduktan sonra satıcı paneliniz açılır.",storeName:"Mağaza adı",sellerName:"Mağaza sahibi",bio:"Kısa mağaza açıklaması (isteğe bağlı)",whatsapp:"Ülke koduyla WhatsApp (isteğe bağlı)",submit:"Mağazamı oluştur",note:"Mağazanız yalnızca form başarıyla gönderildikten sonra oluşturulur.",checking:"Hesap kontrol ediliyor...",login:"Lütfen önce giriş yapın.",exists:"Zaten bir mağazanız var. Panel açılıyor...",saving:"Mağazanız oluşturuluyor...",success:"Mağazanız oluşturuldu. Panel açılıyor...",error:"Mağaza oluşturulamadı. Bilgileri kontrol edip tekrar deneyin.",nameRequired:"Mağaza ve sahip adını girin.",badPhone:"WhatsApp numarasını kontrol edin veya boş bırakın."}
 };
-let lang="ar",words=translations.ar,currentUser=null,pendingStore=null;
+let lang="ar",words=translations.ar,currentUser=null;
 function applyLanguage(next){lang=translations[next]?next:"ar";words=translations[lang];document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-t]").forEach(node=>{const key=node.dataset.t;if(words[key])node.textContent=words[key];});$("createStoreLanguage").value=lang;try{localStorage.setItem("msdz-language",lang);}catch(e){}}
 const requested=new URLSearchParams(location.search).get("lang");let saved="ar";try{saved=localStorage.getItem("msdz-language")||"ar";}catch(e){}applyLanguage(translations[requested]?requested:saved);
 $("createStoreLanguage").addEventListener("change",e=>applyLanguage(e.target.value));
@@ -22,7 +22,7 @@ async function init(){
  const {data:existing,error:lookupError}=await supabase.from("stores").select("id,slug,setup_completed,store_name,seller_name").eq("owner_id",currentUser.id).maybeSingle();
  if(lookupError){$("createStoreFeedback").textContent=words.error;return;}
  if(existing?.setup_completed){$("createStoreFeedback").textContent=words.exists;location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
- if(existing){pendingStore=existing;$("newStoreName").value=existing.store_name==="متجري"?"":existing.store_name||"";$("newSellerName").value=existing.seller_name||$("newSellerName").value;}
+ if(existing){$("newStoreName").value=existing.store_name==="متجري"?"":existing.store_name||"";$("newSellerName").value=existing.seller_name||$("newSellerName").value;}
  $("createStoreFeedback").textContent="";
 }
 $("createStoreForm").addEventListener("submit",async event=>{
@@ -44,8 +44,8 @@ $("createStoreForm").addEventListener("submit",async event=>{
   location.replace("dashboard.html?lang="+encodeURIComponent(lang));
  }catch(error){
   console.error("Store creation failed:",error);
-  const {data:existing}=await supabase.from("stores").select("id").eq("owner_id",currentUser.id).maybeSingle();
-  if(existing){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
+  const {data:existing}=await supabase.from("stores").select("id,setup_completed").eq("owner_id",currentUser.id).maybeSingle();
+  if(existing?.setup_completed){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
   $("createStoreFeedback").textContent=words.error;
   button.disabled=false;
  }
