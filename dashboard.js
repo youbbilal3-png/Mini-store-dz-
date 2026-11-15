@@ -406,7 +406,7 @@ async function saveProduct(event){
   if(!id||existingProduct?.is_active===false){
    const {data:allowed,error:limitError}=await supabase.rpc("can_add_store_product",{p_store_id:store.id});
    if(limitError)throw limitError;
-   if(!allowed)throw new Error("وصلت إلى الحد الأقصى لمنتجات خطتك. اختر Pro أو Premium من قسم الاشتراكات لإضافة المزيد.");
+   if(!allowed)throw new Error("وصلت إلى الحد الأقصى لمنتجات خطتك. اختر Pro أو Elite من قسم الاشتراكات لإضافة المزيد.");
   }
   const existingImages=existingProduct?(Array.isArray(existingProduct.image_urls)&&existingProduct.image_urls.length?existingProduct.image_urls:[existingProduct.image_url].filter(Boolean)):[];
   if(existingImages.length+files.length>5)throw new Error("يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.");
