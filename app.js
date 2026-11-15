@@ -680,7 +680,7 @@ function refreshMerchantLinks(session){
   return;
  }
  // Check the actual store record; ordinary shopper accounts must go to store setup.
- supabase.from("stores").select("id,setup_completed").eq("owner_id",session.user.id).maybeSingle().then(({data,error})=>{
+ supabase.from("stores").select("id,setup_completed").eq("owner_id",session.user.id).order("created_at",{ascending:false}).limit(1).maybeSingle().then(({data,error})=>{
   const target=!error&&data?.setup_completed?dashboardTarget:setupTarget;
   if(merchantLink)merchantLink.href=target;
   if(createLink)createLink.href=target;
