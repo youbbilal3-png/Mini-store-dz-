@@ -87,7 +87,13 @@ function applyTheme(mode){
  const selected=mode||"system";document.documentElement.dataset.theme=selected;
  const icon=el("themeToggleIcon"),label=el("themeToggleLabel"),button=el("themeToggle");
  if(icon)icon.textContent=selected==="dark"?"☾":selected==="light"?"☀":"◐";
- const t=translations[language]||translations.ar;
+ Object.assign(translations.ar,{login:"تسجيل الدخول"});
+Object.assign(translations.fr,{login:"Connexion"});
+Object.assign(translations.en,{login:"Log in"});
+Object.assign(translations.es,{login:"Iniciar sesión"});
+Object.assign(translations.de,{login:"Anmelden"});
+Object.assign(translations.tr,{login:"Giriş yap"});
+const t=translations[language]||translations.ar;
  if(label)label.textContent=(selected==="dark"?t.themeDark:selected==="light"?t.themeLight:t.themeSystem);
  if(button){button.title=t.themeCurrent+": "+(label?.textContent||t.themeSystem)+" — "+t.themeChange;button.setAttribute("aria-label",button.title);}
 }
@@ -600,9 +606,10 @@ function refreshMerchantLinks(session){
 supabase.auth.getSession().then(({data})=>refreshMerchantLinks(data.session));
 supabase.auth.onAuthStateChange((_event,session)=>refreshMerchantLinks(session));
 function refreshHeaderAccount(session){
- const accountLink=el("headerAccountLink"),logoutButton=el("headerLogoutButton");
+ const accountLink=el("headerAccountLink"),logoutButton=el("headerLogoutButton"),loginLink=el("headerLoginLink");
  if(accountLink)accountLink.hidden=!session;
  if(logoutButton)logoutButton.hidden=!session;
+ if(loginLink){loginLink.hidden=!!session;loginLink.href="auth.html?next=account.html&lang="+encodeURIComponent(language);}
 }
 supabase.auth.getSession().then(({data})=>refreshHeaderAccount(data.session));
 supabase.auth.onAuthStateChange((_event,session)=>refreshHeaderAccount(session));
