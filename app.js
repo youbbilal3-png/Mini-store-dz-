@@ -1,17 +1,24 @@
 import { supabase } from "./supabase-client.js";
 
-// Privacy-conscious public page analytics: random browser ID, no names, emails or IP storage.
-(function trackPublicPageVisit(){
+// Privacy-conscious public page analytics: exclude the authenticated platform owner.
+(async function trackPublicPageVisit(){
   try {
+    // Verify the signed-in account before recording a visit.
+    const {data,error}=await supabase.auth.getUser();
+    if(error){
+      console.warn("MINABYB visit tracking skipped: could not verify the current account.",error.message);
+      return;
+    }
+    if(data.user?.app_metadata?.role==="admin") return;
+
     let visitorId=localStorage.getItem("minabyb-visitor-id");
     if(!visitorId){
       visitorId=crypto.randomUUID();
       localStorage.setItem("minabyb-visitor-id",visitorId);
     }
     const pagePath=(location.pathname||"/").replace(/[^a-zA-Z0-9/_-]/g,"").slice(0,120)||"/";
-    supabase.rpc("record_site_visit",{p_visitor_id:visitorId,p_page_path:pagePath})
-      .then(({error})=>{if(error)console.warn("MINABYB visit tracking unavailable:",error.message);})
-      .catch(()=>{});
+    const {error:visitError}=await supabase.rpc("record_site_visit",{p_visitor_id:visitorId,p_page_path:pagePath});
+    if(visitError) console.warn("MINABYB visit tracking unavailable:",visitError.message);
   } catch(error) {
     console.warn("MINABYB visit tracking unavailable.",error);
   }
