@@ -163,3 +163,14 @@
 .auth-main[hidden]{display:none!important}
 .auth-card{margin:0 auto}
 .auth-form-close,.auth-header-actions{display:none!important}
+
+
+/* Keep the password visibility control above the input and tappable on mobile. */
+.auth-card .password-input-wrap{position:relative}
+.auth-card .password-input-wrap input{position:relative;z-index:1;padding-inline-end:52px}
+.auth-card .password-visibility-toggle{
+  z-index:3;
+  pointer-events:auto;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
