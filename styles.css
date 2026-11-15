@@ -1130,3 +1130,81 @@ body:has(#publicLanding:not([hidden])){min-height:100svh;min-height:100dvh;backg
  #publicLanding .public-landing-actions a{min-height:42px}
 }
 @media(prefers-reduced-motion:reduce){#publicLanding .public-ad-slide{transition:none}}
+
+
+/* Public landing: one edge-to-edge mobile screen with the rotating ad as its full background. */
+html,body{margin:0;min-height:100%}
+body:has(#publicLanding:not([hidden])){
+  width:100%;height:100%;min-height:100svh;min-height:100dvh;
+  overflow:hidden!important;background:#080f1c;
+}
+#publicLanding.public-landing{
+  position:fixed;inset:0;z-index:500;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  width:100%;max-width:none;height:100svh;height:100dvh;min-height:100svh;min-height:100dvh;
+  box-sizing:border-box;margin:0;overflow:hidden;isolation:isolate;
+  gap:12px;
+  padding:calc(env(safe-area-inset-top) + 18px) 16px calc(env(safe-area-inset-bottom) + 18px);
+  border:0;border-radius:0;
+  background:#080f1c;color:#fff;
+}
+#publicLanding.public-landing::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(3,9,17,.78) 0%,rgba(3,9,17,.25) 23%,rgba(3,9,17,.04) 48%,rgba(3,9,17,.18) 68%,rgba(3,9,17,.82) 100%);
+}
+#publicLanding .public-ad-slider{
+  position:absolute;inset:0;z-index:0;
+  width:100%;height:100%;max-width:none;min-height:0;flex:none;
+  aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;
+  overflow:hidden;background:#080f1c;
+}
+#publicLanding .public-ad-slide{position:absolute;inset:0;background:#080f1c}
+#publicLanding .public-ad-slide img{
+  display:block;width:100%;height:100%;object-fit:cover;object-position:center;
+  background:#080f1c;
+}
+#publicLanding .public-landing-brand{
+  position:relative;z-index:2;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;gap:11px;
+  min-height:58px;margin:0;padding:0;
+  filter:drop-shadow(0 3px 12px rgba(0,0,0,.8));
+}
+#publicLanding .public-landing-logo{width:clamp(46px,12vw,62px);height:clamp(46px,12vw,62px);object-fit:contain}
+#publicLanding .public-landing-name{
+  color:#fff;font-size:clamp(31px,8vw,40px);font-weight:950;
+  letter-spacing:-1.2px;line-height:1;
+}
+#publicLanding .public-landing-name strong{color:#b8f34b}
+#publicLanding .public-ad-dots{
+  position:absolute;z-index:3;inset-inline:0;
+  bottom:calc(env(safe-area-inset-bottom) + 88px);
+  display:flex;justify-content:center;align-items:center;gap:7px;
+}
+#publicLanding .public-ad-dots button{
+  width:7px;height:7px;padding:0;border:0;border-radius:50%;
+  background:rgba(255,255,255,.72);box-shadow:0 1px 5px rgba(0,0,0,.65);
+}
+#publicLanding .public-ad-dots button.active{width:22px;border-radius:8px;background:#b8f34b}
+#publicLanding .public-landing-actions{
+  position:relative;z-index:2;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  width:100%;max-width:480px;gap:10px;margin:0;padding:0;
+}
+#publicLanding .public-landing-actions a{
+  display:flex;flex:1;align-items:center;justify-content:center;
+  min-width:0;min-height:50px;padding:10px 12px;
+  border-radius:13px;font-size:14px;font-weight:900;line-height:1.25;
+  text-align:center;text-decoration:none;white-space:nowrap;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
+}
+#publicLanding .public-create-account{background:#b8f34b;color:#14200a;border:1px solid #b8f34b}
+#publicLanding .public-login{background:rgba(12,25,42,.88);color:#fff;border:1px solid rgba(255,255,255,.72)}
+@media(max-height:620px){
+  #publicLanding.public-landing{padding-top:calc(env(safe-area-inset-top) + 8px);padding-bottom:calc(env(safe-area-inset-bottom) + 8px);gap:6px}
+  #publicLanding .public-landing-brand{min-height:42px}
+  #publicLanding .public-landing-logo{width:38px;height:38px}
+  #publicLanding .public-landing-name{font-size:27px}
+  #publicLanding .public-landing-actions a{min-height:42px;padding:8px 10px;font-size:13px}
+  #publicLanding .public-ad-dots{bottom:calc(env(safe-area-inset-bottom) + 68px)}
+}
+@media(prefers-reduced-motion:reduce){#publicLanding .public-ad-slide{transition:none}}
