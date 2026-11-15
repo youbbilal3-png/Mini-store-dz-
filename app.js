@@ -80,6 +80,12 @@ const SEARCH_UI_TEXT={
  de:{label:"Suche",placeholder:"Shops oder Produkte suchen...",stores:"Shops",products:"Produkte",visit:"Shop besuchen",inStore:"bei",noResults:"Keine passenden Shops oder Produkte gefunden.",loading:"Suche läuft...",error:"Die Suche ist derzeit nicht verfügbar. Bitte erneut versuchen."},
  tr:{label:"Ara",placeholder:"Mağaza veya ürün ara...",stores:"Mağazalar",products:"Ürünler",visit:"Mağazayı ziyaret et",inStore:"mağazasında",noResults:"Eşleşen mağaza veya ürün bulunamadı.",loading:"Aranıyor...",error:"Arama şu anda kullanılamıyor. Lütfen tekrar deneyin."}
 };
+Object.assign(translations.ar,{login:"تسجيل الدخول"});
+Object.assign(translations.fr,{login:"Connexion"});
+Object.assign(translations.en,{login:"Log in"});
+Object.assign(translations.es,{login:"Iniciar sesión"});
+Object.assign(translations.de,{login:"Anmelden"});
+Object.assign(translations.tr,{login:"Giriş yap"});
 const el=id=>document.getElementById(id);
 const isPlatformHome=!new URLSearchParams(location.search).has("store")&&(location.pathname==="/"||location.pathname.endsWith("/index.html"));
 
@@ -87,13 +93,7 @@ function applyTheme(mode){
  const selected=mode||"system";document.documentElement.dataset.theme=selected;
  const icon=el("themeToggleIcon"),label=el("themeToggleLabel"),button=el("themeToggle");
  if(icon)icon.textContent=selected==="dark"?"☾":selected==="light"?"☀":"◐";
- Object.assign(translations.ar,{login:"تسجيل الدخول"});
-Object.assign(translations.fr,{login:"Connexion"});
-Object.assign(translations.en,{login:"Log in"});
-Object.assign(translations.es,{login:"Iniciar sesión"});
-Object.assign(translations.de,{login:"Anmelden"});
-Object.assign(translations.tr,{login:"Giriş yap"});
-const t=translations[language]||translations.ar;
+ const t=translations[language]||translations.ar;
  if(label)label.textContent=(selected==="dark"?t.themeDark:selected==="light"?t.themeLight:t.themeSystem);
  if(button){button.title=t.themeCurrent+": "+(label?.textContent||t.themeSystem)+" — "+t.themeChange;button.setAttribute("aria-label",button.title);}
 }
