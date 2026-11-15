@@ -592,7 +592,7 @@ let merchantSession=null;
 function refreshMerchantLinks(session){
  merchantSession=session||null;
  const selectedLanguage=["ar","fr","en","es","de","tr"].includes(language)?language:"ar";
- const target=session?("dashboard.html?lang="+encodeURIComponent(selectedLanguage)):("auth.html?next=dashboard.html&lang="+encodeURIComponent(selectedLanguage));
+ const target=session?("dashboard.html?lang="+encodeURIComponent(selectedLanguage)):("auth.html?next=create-store.html&lang="+encodeURIComponent(selectedLanguage));
  ["merchantAccountLink","createStoreLink"].forEach(id=>{
   const link=el(id);if(link)link.href=target;
  });
