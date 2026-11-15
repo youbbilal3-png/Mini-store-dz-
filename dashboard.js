@@ -137,7 +137,7 @@ function renderSubscription(){
   current.textContent="انتهت الفترة التجريبية أو تم إيقافها. يمكنك الاستمرار بالخطة المجانية حتى تفعيل الدفع الإلكتروني.";
  }else{
   status.textContent="الخطة المجانية";
-  current.textContent="أنت على الخطة المجانية. يمكنك تجربة Pro أو Premium لمدة 7 أيام دون إدخال بيانات دفع.";
+  current.textContent="أنت على الخطة المجانية. يمكنك تجربة Pro أو Elite لمدة 7 أيام دون إدخال بيانات دفع.";
  }
  $("freePlanStatus").textContent=plan==="free"?"خطتك الحالية":"متاح دائماً";
  $("freeProductsLimit").textContent="7 منتجات منشورة لكل متجر";$("proProductsLimit").textContent="25 منتجاً منشوراً لكل متجر";$("premiumProductsLimit").textContent="منتجات غير محدودة لكل متجر";$("freeStoresLimit").textContent="متجر واحد فقط";$("proStoresLimit").textContent="حتى 5 متاجر";$("premiumStoresLimit").textContent="متاجر غير محدودة";
@@ -403,7 +403,8 @@ async function saveProduct(event){
  message("productFeedback","جارٍ حفظ المنتج...");
  try{
   const existingProduct=id?products.find(p=>p.id===id):null;
-  if(!id||existingProduct?.is_active===false){
+  if(existingProduct)item.is_active=existingProduct.is_active;
+  if(!id){
    const {data:allowed,error:limitError}=await supabase.rpc("can_add_store_product",{p_store_id:store.id});
    if(limitError)throw limitError;
    if(!allowed)throw new Error("وصلت إلى الحد الأقصى لمنتجات خطتك. اختر Pro أو Elite من قسم الاشتراكات لإضافة المزيد.");
