@@ -519,7 +519,7 @@ siteMenuToggle?.addEventListener("click",()=>setSiteMenuOpen(siteMenu?.hidden));
 el("siteMenuClose")?.addEventListener("click",()=>setSiteMenuOpen(false));
 siteMenuBackdrop?.addEventListener("click",()=>setSiteMenuOpen(false));
 siteMenu?.querySelectorAll("a,button").forEach(control=>control.addEventListener("click",event=>{
- if(event.currentTarget.id!=="openAboutDialog"&&event.currentTarget.id!=="openContactDialog")setSiteMenuOpen(false);
+ setSiteMenuOpen(false);
 }));
 document.addEventListener("keydown",event=>{if(event.key==="Escape"&&siteMenu&&!siteMenu.hidden)setSiteMenuOpen(false);});
 const shareButtonWrap=document.querySelector(".brand-share-wrap"),shareSlot=el("siteMenuShareSlot");
