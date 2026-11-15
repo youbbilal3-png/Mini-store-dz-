@@ -18,12 +18,23 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261115-7">
+<link rel="stylesheet" href="styles.css?v=20261115-8">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261115-9"></script>
+<script type="module" src="app.js?v=20261115-10"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
-<body>
+<body class="auth-checking">
+<section class="public-landing" id="publicLanding" aria-label="MINABYB" hidden><a class="public-landing-brand" href="index.html" aria-label="MINABYB"><img src="app-icon.svg" alt="" class="public-landing-logo"><span class="public-landing-name" dir="ltr"><span>MINA</span><strong>BYB</strong></span></a><div class="public-ad-slider" id="publicAdSlider" aria-label="صور إعلانية متغيرة"><div class="public-ad-slide active"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=max&w=1000&q=88" alt="سماعات لاسلكية" fetchpriority="high"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=max&w=1000&q=88" alt="ساعة يد أنيقة" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=max&w=1000&q=88" alt="حذاء رياضي" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=max&w=1000&q=88" alt="حاسوب محمول" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=max&w=1000&q=88" alt="عطر" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=max&w=1000&q=88" alt="حقيبة يد" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=max&w=1000&q=88" alt="كاميرا رقمية" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=max&w=1000&q=88" alt="أثاث منزلي" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=max&w=1000&q=88" alt="كاميرا تصوير" loading="lazy"></div>
+<div class="public-ad-slide"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=max&w=1000&q=88" alt="نظارات شمسية" loading="lazy"></div><div class="public-ad-dots" id="publicAdDots"><button type="button" class="active" data-public-slide="0" aria-label="الصورة 1"></button><button type="button" class="" data-public-slide="1" aria-label="الصورة 2"></button><button type="button" class="" data-public-slide="2" aria-label="الصورة 3"></button><button type="button" class="" data-public-slide="3" aria-label="الصورة 4"></button><button type="button" class="" data-public-slide="4" aria-label="الصورة 5"></button><button type="button" class="" data-public-slide="5" aria-label="الصورة 6"></button><button type="button" class="" data-public-slide="6" aria-label="الصورة 7"></button><button type="button" class="" data-public-slide="7" aria-label="الصورة 8"></button><button type="button" class="" data-public-slide="8" aria-label="الصورة 9"></button><button type="button" class="" data-public-slide="9" aria-label="الصورة 10"></button></div></div><div class="public-landing-actions"><a class="public-create-account" href="auth.html?next=index.html">إنشاء حساب</a><a class="public-login" href="auth.html?next=index.html&mode=login">تسجيل الدخول</a></div></section><div id="authenticatedSite" hidden>
+
 <header class="site-header">
   <div class="brand-row">
     <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
@@ -164,6 +175,7 @@
   <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
   <div class="footer-credit"><strong>Founder of MINABYB — B.YB</strong><p>© <span id="year"></span> MINABYB. <span data-i18n="rights">جميع الحقوق محفوظة.</span></p></div>
 </footer>
+</div>
 <script defer src="how-it-works-nav.js?v=20261115-1"></script>
 </body>
 </html>
