@@ -1,5 +1,16 @@
 import { supabase } from "./supabase-client.js";
 
+// Public visitors see only the brand, rotating 9:16 product ads and auth actions.
+const publicLanding=document.getElementById("publicLanding");
+const authenticatedSite=document.getElementById("authenticatedSite");
+function applyAccessView(session){const signedIn=!!session;if(authenticatedSite)authenticatedSite.hidden=!signedIn;if(publicLanding)publicLanding.hidden=signedIn;document.body.classList.toggle("public-locked",!signedIn);document.body.classList.remove("auth-checking");}
+supabase.auth.onAuthStateChange((_event,session)=>applyAccessView(session));
+supabase.auth.getSession().then(({data,error})=>{if(error)console.warn("MINABYB access check could not read the session:",error.message);applyAccessView(data?.session||null);}).catch(error=>{console.warn("MINABYB access check failed; showing the public landing page.",error);applyAccessView(null);});
+const publicAdSlides=[...document.querySelectorAll(".public-ad-slide")],publicAdDots=[...document.querySelectorAll(".public-ad-dots button")];let publicAdIndex=0;
+function showPublicAd(index){if(!publicAdSlides.length)return;publicAdIndex=(index+publicAdSlides.length)%publicAdSlides.length;publicAdSlides.forEach((slide,i)=>slide.classList.toggle("active",i===publicAdIndex));publicAdDots.forEach((dot,i)=>dot.classList.toggle("active",i===publicAdIndex));}
+publicAdDots.forEach(dot=>dot.addEventListener("click",()=>showPublicAd(Number(dot.dataset.publicSlide))));
+if(publicAdSlides.length>1)window.setInterval(()=>showPublicAd(publicAdIndex+1),4500);
+
 // Privacy-conscious public page analytics: exclude the authenticated platform owner.
 (async function trackPublicPageVisit(){
   try {
