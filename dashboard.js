@@ -172,10 +172,8 @@ const escapeHtml=value=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<
 function makeSlug(name,id){const base=String(name||"store").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,25)||"store";return base+"-"+id.slice(0,7);}
 async function ensureStore(){
  const {data:existing,error}=await supabase.from("stores").select("*").eq("owner_id",user.id).maybeSingle();
- if(error)throw error;if(existing)return existing;
- const fullName=user.user_metadata?.full_name||user.email?.split("@")[0]||"Store Owner";
- const {data,error:createError}=await supabase.from("stores").insert({owner_id:user.id,slug:makeSlug(fullName,user.id),store_name:"متجري",seller_name:fullName,is_published:false}).select("*").single();
- if(createError)throw createError;return data;
+ if(error)throw error;
+ return existing||null;
 }
 
 function renderDailyCharts(){
@@ -656,6 +654,8 @@ $("merchantSupportForm").addEventListener("submit",async event=>{
 
  try{
   store=await ensureStore();
+  if(!store){const lang=encodeURIComponent(document.documentElement.lang||"ar");location.replace("create-store.html?lang="+lang);return;}
+  const dashboardMain=$("dashboardMain");if(dashboardMain)dashboardMain.hidden=false;
   fillSettings();
   try{await loadFeaturedRequestHistory();}catch(error){console.error("Featured request history failed:",error);$("featuredRequestHistory").textContent="تعذر تحميل طلبات التمييز.";}
   await loadSubscription();
