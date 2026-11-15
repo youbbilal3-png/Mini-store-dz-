@@ -1060,3 +1060,26 @@ html[dir="ltr"] .site-menu-panel{direction:ltr!important;text-align:left!importa
 @media(max-width:600px){
  .site-menu-panel{width:min(88vw,330px)!important;padding:14px!important;gap:10px!important}
 }
+
+
+/* Logged-out homepage: brand, full 9:16 product imagery and account actions only. */
+body.auth-checking>#publicLanding,body.auth-checking>#authenticatedSite{visibility:hidden!important}
+#authenticatedSite[hidden],#publicLanding[hidden]{display:none!important}
+.public-landing{min-height:100svh;width:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.5vh,24px);padding:clamp(16px,3vh,28px) 16px;background:#0b1220;color:#fff}
+.public-landing-brand{display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;direction:ltr}
+.public-landing-logo{width:clamp(48px,7vw,68px);height:clamp(48px,7vw,68px);object-fit:contain}
+.public-landing-name{display:flex;align-items:baseline;font-size:clamp(30px,5vw,44px);font-weight:950;letter-spacing:-1.5px;color:#fff;line-height:1}
+.public-landing-name strong{color:#b8f34b}
+.public-ad-slider{position:relative;isolation:isolate;overflow:hidden;flex:0 0 auto;height:min(55svh,620px);width:auto;aspect-ratio:9/16;max-width:88vw;border:1px solid #ffffff28;border-radius:18px;background:#fff;box-shadow:0 18px 50px #0007}
+.public-ad-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .65s ease,visibility .65s ease;background:#fff}
+.public-ad-slide.active{opacity:1;visibility:visible}
+.public-ad-slide img{display:block;width:100%;height:100%;object-fit:contain;background:#fff}
+.public-ad-dots{position:absolute;z-index:2;inset-inline:0;bottom:10px;display:flex;justify-content:center;gap:6px}
+.public-ad-dots button{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:#17223166;cursor:pointer}
+.public-ad-dots button.active{width:21px;border-radius:8px;background:#176b42}
+.public-landing-actions{display:flex;align-items:center;justify-content:center;gap:10px;width:min(100%,420px)}
+.public-landing-actions a{display:flex;align-items:center;justify-content:center;flex:1;min-height:46px;padding:9px 14px;border-radius:11px;font:inherit;font-size:14px;font-weight:900;text-decoration:none;white-space:nowrap}
+.public-create-account{background:#b8f34b;color:#14200a;border:1px solid #b8f34b}
+.public-login{background:#17263a;color:#fff;border:1px solid #52627a}
+@media(max-width:480px){.public-landing{gap:14px;padding:14px 12px}.public-ad-slider{height:min(54svh,520px)}.public-landing-actions a{min-height:44px;padding:8px 10px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.public-ad-slide{transition:none}}
