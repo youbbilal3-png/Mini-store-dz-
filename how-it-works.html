@@ -19,6 +19,19 @@ a{color:inherit}.top{display:flex;align-items:center;justify-content:space-betwe
 .note{border:1px solid #56633c;background:#1b2b29;border-radius:14px;padding:16px 18px;color:#dce8cf;margin:0 0 35px}.back{display:inline-flex;margin:0 0 42px;color:var(--green);text-decoration:none;font-weight:800}.foot{text-align:center;border-top:1px solid #ffffff18;padding:22px;color:#8491a3;font-size:12px}
 @media(max-width:700px){.steps{grid-template-columns:1fr}.top{padding:11px 4%}.brand-name{font-size:20px}.intro{padding-top:38px}.step{padding:16px}.visual{min-height:160px}}
 </style>
+<script>document.documentElement.classList.add("auth-checking");</script>
+<style>html.auth-checking body{visibility:hidden!important}</style>
+<script type="module">
+import { supabase } from "./supabase-client.js";
+try {
+  const {data,error}=await supabase.auth.getSession();
+  if(error||!data?.session) location.replace("index.html");
+  else document.documentElement.classList.remove("auth-checking");
+} catch(error) {
+  console.warn("MINABYB guide access check failed:",error);
+  location.replace("index.html");
+}
+</script>
 </head>
 <body>
 <header class="top">
