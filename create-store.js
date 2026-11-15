@@ -8,42 +8,63 @@ const translations={
  de:{home:"Startseite",title:"Erstelle deinen Online-Shop",intro:"Gib die Daten deines Shops ein. Du behältst dasselbe Konto und erhältst nach der Erstellung Zugang zum Händler-Dashboard.",storeName:"Shopname",sellerName:"Name des Shopinhabers",bio:"Kurze Beschreibung (optional)",whatsapp:"WhatsApp mit Ländervorwahl (optional)",submit:"Meinen Shop erstellen",note:"Der Shop wird erst nach erfolgreichem Absenden erstellt.",checking:"Konto wird geprüft...",login:"Bitte zuerst anmelden.",exists:"Du hast bereits einen Shop. Dashboard wird geöffnet...",saving:"Shop wird erstellt...",success:"Shop erstellt. Dashboard wird geöffnet...",error:"Shop konnte nicht erstellt werden. Bitte Angaben prüfen.",nameRequired:"Shopname und Inhabername eingeben.",badPhone:"WhatsApp-Nummer prüfen oder leer lassen."},
  tr:{home:"Ana sayfa",title:"Çevrimiçi mağazanızı oluşturun",intro:"Mağaza bilgilerinizi girin. Aynı hesabı kullanmaya devam edeceksiniz; mağaza oluşturulduktan sonra satıcı paneliniz açılır.",storeName:"Mağaza adı",sellerName:"Mağaza sahibi",bio:"Kısa mağaza açıklaması (isteğe bağlı)",whatsapp:"Ülke koduyla WhatsApp (isteğe bağlı)",submit:"Mağazamı oluştur",note:"Mağazanız yalnızca form başarıyla gönderildikten sonra oluşturulur.",checking:"Hesap kontrol ediliyor...",login:"Lütfen önce giriş yapın.",exists:"Zaten bir mağazanız var. Panel açılıyor...",saving:"Mağazanız oluşturuluyor...",success:"Mağazanız oluşturuldu. Panel açılıyor...",error:"Mağaza oluşturulamadı. Bilgileri kontrol edip tekrar deneyin.",nameRequired:"Mağaza ve sahip adını girin.",badPhone:"WhatsApp numarasını kontrol edin veya boş bırakın."}
 };
-let lang="ar",words=translations.ar,currentUser=null;
+Object.assign(translations.ar,{"storePhoto":"صورة المتجر (مطلوبة)","choosePhoto":"📷 إضافة صورة المتجر","removePhoto":"حذف الصورة","photoHint":"صورة واضحة لشعار أو واجهة متجرك، JPEG أو PNG أو WebP، بحد أقصى 2 ميغابايت.","photoRequired":"أضف صورة لمتجرك قبل إنشائه.","photoType":"اختر صورة بصيغة JPEG أو PNG أو WebP فقط.","photoSize":"يجب ألا يتجاوز حجم الصورة 2 ميغابايت.","uploadingPhoto":"جارٍ رفع صورة المتجر..."});
+Object.assign(translations.fr,{"storePhoto":"Image de la boutique (obligatoire)","choosePhoto":"📷 Ajouter une image","removePhoto":"Supprimer l’image","photoHint":"Ajoutez un logo ou une photo claire. JPEG, PNG ou WebP, 2 Mo maximum.","photoRequired":"Ajoutez une image avant de créer votre boutique.","photoType":"Choisissez une image JPEG, PNG ou WebP.","photoSize":"L’image ne doit pas dépasser 2 Mo.","uploadingPhoto":"Téléversement de l’image..."});
+Object.assign(translations.en,{"storePhoto":"Store image (required)","choosePhoto":"📷 Add store image","removePhoto":"Remove image","photoHint":"Add a clear store logo or storefront photo. JPEG, PNG or WebP, up to 2 MB.","photoRequired":"Add a store image before creating your store.","photoType":"Choose a JPEG, PNG or WebP image.","photoSize":"The image must not exceed 2 MB.","uploadingPhoto":"Uploading store image..."});
+Object.assign(translations.es,{"storePhoto":"Imagen de la tienda (obligatoria)","choosePhoto":"📷 Añadir imagen","removePhoto":"Eliminar imagen","photoHint":"Añade un logotipo o una foto clara. JPEG, PNG o WebP, máximo 2 MB.","photoRequired":"Añade una imagen antes de crear tu tienda.","photoType":"Elige una imagen JPEG, PNG o WebP.","photoSize":"La imagen no debe superar los 2 MB.","uploadingPhoto":"Subiendo imagen..."});
+Object.assign(translations.de,{"storePhoto":"Shopbild (erforderlich)","choosePhoto":"📷 Shopbild hinzufügen","removePhoto":"Bild entfernen","photoHint":"Füge ein klares Shoplogo oder Ladenfoto hinzu. JPEG, PNG oder WebP, maximal 2 MB.","photoRequired":"Füge vor dem Erstellen ein Shopbild hinzu.","photoType":"Wähle ein JPEG-, PNG- oder WebP-Bild.","photoSize":"Das Bild darf höchstens 2 MB groß sein.","uploadingPhoto":"Shopbild wird hochgeladen..."});
+Object.assign(translations.tr,{"storePhoto":"Mağaza görseli (gerekli)","choosePhoto":"📷 Mağaza görseli ekle","removePhoto":"Görseli kaldır","photoHint":"Mağazanızın logosunu veya net bir fotoğrafını ekleyin. JPEG, PNG veya WebP, en fazla 2 MB.","photoRequired":"Mağazanızı oluşturmadan önce görsel ekleyin.","photoType":"JPEG, PNG veya WebP görsel seçin.","photoSize":"Görsel en fazla 2 MB olmalıdır.","uploadingPhoto":"Mağaza görseli yükleniyor..."});
+let lang="ar",words=translations.ar,currentUser=null,selectedStorePhoto=null,existingStorePhotoUrl=null,uploadedPhotoPath=null;
 function applyLanguage(next){lang=translations[next]?next:"ar";words=translations[lang];document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-t]").forEach(node=>{const key=node.dataset.t;if(words[key])node.textContent=words[key];});$("createStoreLanguage").value=lang;try{localStorage.setItem("msdz-language",lang);}catch(e){}}
 const requested=new URLSearchParams(location.search).get("lang");let saved="ar";try{saved=localStorage.getItem("msdz-language")||"ar";}catch(e){}applyLanguage(translations[requested]?requested:saved);
 $("createStoreLanguage").addEventListener("change",e=>applyLanguage(e.target.value));
 function makeSlug(userId){return "store-"+String(userId).replace(/-/g,"").slice(0,16).toLowerCase();}
+function showStorePhoto(url){const image=$("storePhotoPreviewImage"),fallback=$("storePhotoFallback");if(url){image.src=url;image.hidden=false;fallback.hidden=true;}else{image.removeAttribute("src");image.hidden=true;fallback.hidden=false;}}
+function clearStorePhoto(){selectedStorePhoto=null;existingStorePhotoUrl=null;$("newStorePhoto").value="";showStorePhoto("");}
+$("newStorePhoto").addEventListener("change",event=>{const file=event.target.files?.[0];if(!file)return;if(!["image/jpeg","image/png","image/webp"].includes(file.type)){event.target.value="";selectedStorePhoto=null;showStorePhoto(existingStorePhotoUrl);$("createStoreFeedback").textContent=words.photoType;return;}if(file.size>2*1024*1024){event.target.value="";selectedStorePhoto=null;showStorePhoto(existingStorePhotoUrl);$("createStoreFeedback").textContent=words.photoSize;return;}selectedStorePhoto=file;existingStorePhotoUrl=null;showStorePhoto(URL.createObjectURL(file));});
+$("removeNewStorePhoto").addEventListener("click",()=>{clearStorePhoto();$("createStoreFeedback").textContent=words.photoRequired;});
+function photoExtension(file){return file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg";}
+async function uploadStorePhoto(file,storeId){const path=currentUser.id+"/"+storeId+"/avatar/"+crypto.randomUUID()+"."+photoExtension(file);const {error}=await supabase.storage.from("store-avatars").upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;uploadedPhotoPath=path;return supabase.storage.from("store-avatars").getPublicUrl(path).data.publicUrl;}
 async function init(){
  $("createStoreFeedback").textContent=words.checking;
  const {data,error}=await supabase.auth.getUser();
  if(error||!data?.user){$("createStoreFeedback").textContent=words.login;setTimeout(()=>location.replace("auth.html?next=create-store.html&lang="+encodeURIComponent(lang)),700);return;}
  currentUser=data.user;
  $("newSellerName").value=currentUser.user_metadata?.full_name||"";
- const {data:existing,error:lookupError}=await supabase.from("stores").select("id,slug,setup_completed,store_name,seller_name").eq("owner_id",currentUser.id).maybeSingle();
+ const {data:existing,error:lookupError}=await supabase.from("stores").select("id,slug,setup_completed,store_name,seller_name,avatar_url").eq("owner_id",currentUser.id).maybeSingle();
  if(lookupError){$("createStoreFeedback").textContent=words.error;return;}
  if(existing?.setup_completed){$("createStoreFeedback").textContent=words.exists;location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
- if(existing){$("newStoreName").value=existing.store_name==="متجري"?"":existing.store_name||"";$("newSellerName").value=existing.seller_name||$("newSellerName").value;}
+ if(existing){$("newStoreName").value=existing.store_name==="متجري"?"":existing.store_name||"";$("newSellerName").value=existing.seller_name||$("newSellerName").value;existingStorePhotoUrl=existing.avatar_url||null;if(existingStorePhotoUrl)showStorePhoto(existingStorePhotoUrl);}
  $("createStoreFeedback").textContent="";
 }
 $("createStoreForm").addEventListener("submit",async event=>{
  event.preventDefault();if(!currentUser)return;
  const storeName=$("newStoreName").value.trim(),sellerName=$("newSellerName").value.trim(),whatsapp=$("newStoreWhatsapp").value.trim();
  if(!storeName||!sellerName){$("createStoreFeedback").textContent=words.nameRequired;return;}
+ if(!selectedStorePhoto&&!existingStorePhotoUrl){$("createStoreFeedback").textContent=words.photoRequired;return;}
  if(whatsapp&&!/^\d{8,20}$/.test(whatsapp.replace(/[\s()+-]/g,""))){$("createStoreFeedback").textContent=words.badPhone;return;}
  const button=$("createStoreSubmit");button.disabled=true;$("createStoreFeedback").textContent=words.saving;
  try{
-  const {data:existing,error:lookupError}=await supabase.from("stores").select("id,setup_completed").eq("owner_id",currentUser.id).maybeSingle();
+  const {data:existing,error:lookupError}=await supabase.from("stores").select("id,setup_completed,avatar_url").eq("owner_id",currentUser.id).maybeSingle();
   if(lookupError)throw lookupError;
   if(existing?.setup_completed){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
-  const payload={store_name:storeName,seller_name:sellerName,seller_bio:$("newStoreBio").value.trim()||null,whatsapp:whatsapp.replace(/[\s()+-]/g,"")||null,setup_completed:true};
+  const payload={store_name:storeName,seller_name:sellerName,seller_bio:$("newStoreBio").value.trim()||null,whatsapp:whatsapp.replace(/[\\s()+-]/g,"")||null,setup_completed:false};
   let saveResult;
   if(existing){saveResult=await supabase.from("stores").update(payload).eq("id",existing.id).eq("owner_id",currentUser.id).select("id").single();}
   else{saveResult=await supabase.from("stores").insert({...payload,owner_id:currentUser.id,slug:makeSlug(currentUser.id),is_published:false}).select("id").single();}
   if(saveResult.error)throw saveResult.error;
+  const storeId=saveResult.data.id;
+  let avatarUrl=existing?.avatar_url||existingStorePhotoUrl||null;
+  if(selectedStorePhoto){$("createStoreFeedback").textContent=words.uploadingPhoto;avatarUrl=await uploadStorePhoto(selectedStorePhoto,storeId);}
+  if(!avatarUrl)throw new Error("Store image is required.");
+  const {error:completeError}=await supabase.from("stores").update({avatar_url:avatarUrl,setup_completed:true}).eq("id",storeId).eq("owner_id",currentUser.id);
+  if(completeError)throw completeError;
+  uploadedPhotoPath=null;
   $("createStoreFeedback").textContent=words.success;
   location.replace("dashboard.html?lang="+encodeURIComponent(lang));
  }catch(error){
   console.error("Store creation failed:",error);
+  if(uploadedPhotoPath){try{await supabase.storage.from("store-avatars").remove([uploadedPhotoPath]);}catch(cleanupError){console.warn("Store photo cleanup failed:",cleanupError);}uploadedPhotoPath=null;}
   const {data:existing}=await supabase.from("stores").select("id,setup_completed").eq("owner_id",currentUser.id).maybeSingle();
   if(existing?.setup_completed){location.replace("dashboard.html?lang="+encodeURIComponent(lang));return;}
   $("createStoreFeedback").textContent=words.error;
