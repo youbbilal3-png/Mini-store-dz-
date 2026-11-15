@@ -138,3 +138,28 @@
   padding:10px 0 24px;
   scroll-margin-top:12px;
 }
+
+
+/* Authentication page: no advertising gallery, show the account form immediately. */
+.auth-ad-gallery{display:none!important}
+.auth-landing{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  max-width:none;
+  min-height:calc(100svh - 112px);
+  box-sizing:border-box;
+  padding:20px 14px;
+}
+.auth-main{
+  display:block;
+  width:100%;
+  min-height:0;
+  box-sizing:border-box;
+  padding:10px 0 24px;
+}
+.auth-main[hidden]{display:none!important}
+.auth-card{margin:0 auto}
+.auth-form-close,.auth-header-actions{display:none!important}
