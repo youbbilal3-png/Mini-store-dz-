@@ -1208,3 +1208,8 @@ body:has(#publicLanding:not([hidden])){
   #publicLanding .public-ad-dots{bottom:calc(env(safe-area-inset-bottom) + 68px)}
 }
 @media(prefers-reduced-motion:reduce){#publicLanding .public-ad-slide{transition:none}}
+
+
+/* MINABYB public landing brand colors: MINA green, BYB red. */
+#publicLanding .public-landing-name span{color:#25b96a}
+#publicLanding .public-landing-name strong{color:#ef4444}
