@@ -504,6 +504,27 @@ async function loadStore(){
  }
 }
 el("languageSelect").addEventListener("change",e=>{language=["ar","fr","en","es","de","tr"].includes(e.target.value)?e.target.value:"ar";try{localStorage.setItem("msdz-language",language);}catch(error){}activeCategory="all";applyLanguage();refreshMerchantLinks(merchantSession);});
+
+// Accessible homepage navigation drawer. Search and theme controls remain outside it.
+const siteMenu=el("siteMenuPanel"),siteMenuToggle=el("siteMenuToggle"),siteMenuBackdrop=el("siteMenuBackdrop");
+function setSiteMenuOpen(open){
+ if(!siteMenu||!siteMenuToggle||!siteMenuBackdrop)return;
+ siteMenu.hidden=!open;siteMenuBackdrop.hidden=!open;
+ siteMenuToggle.setAttribute("aria-expanded",String(open));
+ document.body.classList.toggle("site-menu-open",open);
+ if(open)el("siteMenuClose")?.focus();
+ else siteMenuToggle.focus();
+}
+siteMenuToggle?.addEventListener("click",()=>setSiteMenuOpen(siteMenu?.hidden));
+el("siteMenuClose")?.addEventListener("click",()=>setSiteMenuOpen(false));
+siteMenuBackdrop?.addEventListener("click",()=>setSiteMenuOpen(false));
+siteMenu?.querySelectorAll("a,button").forEach(control=>control.addEventListener("click",event=>{
+ if(event.currentTarget.id!=="openAboutDialog"&&event.currentTarget.id!=="openContactDialog")setSiteMenuOpen(false);
+}));
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&siteMenu&&!siteMenu.hidden)setSiteMenuOpen(false);});
+const shareButtonWrap=document.querySelector(".brand-share-wrap"),shareSlot=el("siteMenuShareSlot");
+if(shareButtonWrap&&shareSlot)shareSlot.append(shareButtonWrap);
+
 function openInfoDialog(id){const dialog=el(id);if(dialog&&!dialog.open)dialog.showModal();}
 function closeInfoDialog(id){const dialog=el(id);if(dialog&&dialog.open)dialog.close();}
 el("openAboutDialog")?.addEventListener("click",()=>openInfoDialog("aboutDialog"));
@@ -598,9 +619,25 @@ let merchantSession=null;
 function refreshMerchantLinks(session){
  merchantSession=session||null;
  const selectedLanguage=["ar","fr","en","es","de","tr"].includes(language)?language:"ar";
- const target=session?("dashboard.html?lang="+encodeURIComponent(selectedLanguage)):("auth.html?next=create-store.html&lang="+encodeURIComponent(selectedLanguage));
- ["merchantAccountLink","createStoreLink"].forEach(id=>{
-  const link=el(id);if(link)link.href=target;
+ const loginTarget="auth.html?next=create-store.html&lang="+encodeURIComponent(selectedLanguage);
+ const dashboardTarget="dashboard.html?lang="+encodeURIComponent(selectedLanguage);
+ const setupTarget="create-store.html?lang="+encodeURIComponent(selectedLanguage);
+ const accountTarget=session?null:loginTarget;
+ const merchantLink=el("merchantAccountLink"),createLink=el("createStoreLink");
+ if(!session){
+  if(merchantLink)merchantLink.href=accountTarget;
+  if(createLink)createLink.href=loginTarget;
+  return;
+ }
+ // Check the actual store record; ordinary shopper accounts must go to store setup.
+ supabase.from("stores").select("id,setup_completed").eq("owner_id",session.user.id).maybeSingle().then(({data,error})=>{
+  const target=!error&&data?.setup_completed?dashboardTarget:setupTarget;
+  if(merchantLink)merchantLink.href=target;
+  if(createLink)createLink.href=target;
+ }).catch(error=>{
+  console.warn("Could not verify merchant store status; routing to store setup.",error);
+  if(merchantLink)merchantLink.href=setupTarget;
+  if(createLink)createLink.href=setupTarget;
  });
 }
 supabase.auth.getSession().then(({data})=>refreshMerchantLinks(data.session));
