@@ -1370,3 +1370,25 @@ body:has(#publicLanding:not([hidden])){
 @media(prefers-reduced-motion:reduce){
   .site-menu-panel #merchantAccountLink{transition:none!important}
 }
+
+
+/* Real merchant products: shown above the seller discovery section on the homepage. */
+.latest-merchant-products-section{padding:42px 6vw;background:#fff}
+.latest-merchant-products-section .section-heading{margin-bottom:18px}
+.latest-merchant-products-section .section-heading p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.latest-merchant-products-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.latest-merchant-product-card{display:grid;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:15px;background:#fff;color:var(--ink);text-decoration:none;box-shadow:0 5px 16px rgba(16,24,39,.06);transition:transform .18s ease,box-shadow .18s ease}
+.latest-merchant-product-card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(16,24,39,.11)}
+.latest-merchant-product-image{display:grid;place-items:center;width:100%;aspect-ratio:1.15/1;overflow:hidden;background:#f3f6ee}
+.latest-merchant-product-image img{display:block;width:100%;height:100%;object-fit:cover}
+.latest-merchant-product-placeholder{font-size:38px;color:#82916e}
+.latest-merchant-product-info{display:grid;gap:6px;min-width:0;padding:12px}
+.latest-merchant-product-info strong{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;font-size:14px;line-height:1.5}
+.latest-merchant-product-info small{font-size:13px;font-weight:900;color:#527a1d}
+.latest-merchant-product-info em{overflow:hidden;color:var(--muted);font-size:11px;font-style:normal;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:850px){.latest-merchant-products-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}}
+@media(max-width:600px){.latest-merchant-products-section{padding:34px 16px}.latest-merchant-products-section .section-heading h2{font-size:22px}.latest-merchant-products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.latest-merchant-product-info{padding:9px}.latest-merchant-product-info strong{font-size:12px}.latest-merchant-product-info small{font-size:12px}.latest-merchant-product-image{aspect-ratio:1/1}}
+html[data-theme="dark"] .latest-merchant-products-section{background:#0f1a27}
+html[data-theme="dark"] .latest-merchant-product-card{background:#172536;color:#edf2f7;border-color:#2b3b4d}
+html[data-theme="dark"] .latest-merchant-product-image{background:#223246}
+html[data-theme="dark"] .latest-merchant-product-info small{color:#b8df76}
