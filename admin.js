@@ -24,7 +24,7 @@ async function requireAdmin(){
 async function loadStats(){
  const {data,error}=await supabase.rpc("admin_dashboard_stats");if(error)throw error;
  const d=data||{};
- for(const [id,key] of [["statMerchants","merchants"],["statStores","stores"],["statProducts","products"],["statOrders","orders"],["statPayments","pending_payments"],["statSupport","open_support"],["statPublished","published_stores"],["statSubscriptions","subscriptions"]])$(id).textContent=Number(d[key]||0).toLocaleString();
+ for(const [id,key] of [["statAccounts","accounts"],["statMerchants","merchants"],["statStores","stores"],["statProducts","products"],["statOrders","orders"],["statPayments","pending_payments"],["statSupport","open_support"],["statPublished","published_stores"],["statSubscriptions","subscriptions"]])$(id).textContent=Number(d[key]||0).toLocaleString();
  $("paymentBadge").textContent=d.pending_payments||0;$("supportBadge").textContent=d.open_support||0;
 }
 async function loadVisitorStats(){
