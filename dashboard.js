@@ -99,7 +99,8 @@ function initReferralControls(){
 
 let user=null,store=null,products=[],orders=[],reviews=[],productFilterTerm="",orderFilterTerm="";
 let subscription=null,billingCycle="monthly";
-const planConfig={free:{limit:10},pro:{limit:100},premium:{limit:Infinity}};
+const planConfig={free:{limit:7},pro:{limit:25},premium:{limit:Infinity}};
+function currentProductPlan(){if(!subscription)return 'free';const now=Date.now();const trial=subscription.status==='trialing'&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;const paid=trial||(subscription.status==='active'&&(!subscription.current_period_ends_at||new Date(subscription.current_period_ends_at).getTime()>now));const rp=subscription.referral_pro_starts_at&&new Date(subscription.referral_pro_starts_at).getTime()<=now&&subscription.referral_pro_until&&new Date(subscription.referral_pro_until).getTime()>now;const re=subscription.referral_premium_starts_at&&new Date(subscription.referral_premium_starts_at).getTime()<=now&&subscription.referral_premium_until&&new Date(subscription.referral_premium_until).getTime()>now;const p=paid?subscription.plan:'free';return p==='premium'||re?'premium':p==='pro'||rp?'pro':'free';}
 function subscriptionDate(value){return value?new Date(value).toLocaleDateString(dashboardLocale(),{year:"numeric",month:"long",day:"numeric"}):"";}
 function updateBillingPrices(){
  const yearly=billingCycle==="yearly";
@@ -139,6 +140,8 @@ function renderSubscription(){
   current.textContent="أنت على الخطة المجانية. يمكنك تجربة Pro أو Premium لمدة 7 أيام دون إدخال بيانات دفع.";
  }
  $("freePlanStatus").textContent=plan==="free"?"خطتك الحالية":"متاح دائماً";
+ $("freeProductsLimit").textContent="7 منتجات منشورة لكل متجر";$("proProductsLimit").textContent="25 منتجاً منشوراً لكل متجر";$("premiumProductsLimit").textContent="منتجات غير محدودة لكل متجر";$("freeStoresLimit").textContent="متجر واحد فقط";$("proStoresLimit").textContent="حتى 5 متاجر";$("premiumStoresLimit").textContent="متاجر غير محدودة";
+ const planUsage=$("subscriptionPlanUsage");if(planUsage)planUsage.textContent="حدود الباقات: "+(plan==="free"?"متجر واحد":plan==="pro"?"حتى 5 متاجر":"متاجر غير محدودة")+" · "+(planConfig[plan].limit===Infinity?"منتجات غير محدودة":planConfig[plan].limit+" منتجات منشورة لكل متجر");
  const hasPaid=paidPlanActive||referralRewardActive;
  $("startProTrial").disabled=hasPaid||used;
  $("startPremiumTrial").disabled=hasPaid||used;
@@ -219,7 +222,7 @@ function renderStats(){
  $("statCompletedOrders").textContent=completed.length.toLocaleString(dashboardLocale());
  const completedSales=completed.reduce((sum,o)=>sum+Number(o.total||0),0);
  $("statSales").textContent=completedSales.toLocaleString(dashboardLocale())+" دج";
- $("statProducts").textContent=products.length.toLocaleString(dashboardLocale());
+ $("statProducts").textContent=products.filter(p=>p.is_active===true).length.toLocaleString(dashboardLocale());
  renderDailyCharts();
 }
 async function loadOrders(){
@@ -347,7 +350,9 @@ function syncCustomCategory(){
 function normalizeDashboardSearch(value){return String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase().trim();}
 function renderProducts(){
  renderStats();
- $("productsTotal").textContent=products.length+" منتج";
+ const activeCount=products.filter(p=>p.is_active===true).length,limit=planConfig[currentProductPlan()].limit;
+ $("productsTotal").textContent=limit===Infinity?activeCount+" منشور":activeCount+" / "+limit+" منشور";
+ const planUsage=$("productPlanUsage");if(planUsage)planUsage.textContent="المنتجات المنشورة: "+activeCount+(limit===Infinity?" · بلا حدود":" من "+limit)+" — المخفية لا تُحسب ضمن الحد.";
  const term=normalizeDashboardSearch(productFilterTerm);
  const visibleProducts=products.filter(p=>normalizeDashboardSearch([p.name,p.category,p.description].join(" ")).includes(term));
  if(!visibleProducts.length){
@@ -365,11 +370,12 @@ function renderProducts(){
   return `<article class="managed-product">
    <div class="managed-product-emoji">${imageMarkup}</div>
    <div class="managed-product-info">
-    <strong>${escapeHtml(p.name)}</strong>
+    <strong>${escapeHtml(p.name)} <small class="${p.is_active===false?"product-hidden-label":"product-visible-label"}">${p.is_active===false?"مخفي":"منشور"}</small></strong>
     <span><span class="product-category-label">${escapeHtml(p.category||"عام")}</span> · ${Number(p.price||0).toLocaleString(dashboardLocale())} دج · <b class="${stockClass}">${stockLabel}</b></span>
    </div>
    <div class="managed-product-actions">
     <button type="button" data-edit="${p.id}">تعديل</button>
+    <button type="button" data-toggle-active="${p.id}">${p.is_active===false?"إظهار":"إخفاء"}</button>
     <button type="button" class="delete-product" data-delete="${p.id}">حذف</button>
    </div>
   </article>`;
@@ -390,12 +396,12 @@ async function saveProduct(event){
  $("productSubmit").disabled=true;
  message("productFeedback","جارٍ حفظ المنتج...");
  try{
-  if(!id){
+  const existingProduct=id?products.find(p=>p.id===id):null;
+  if(!id||existingProduct?.is_active===false){
    const {data:allowed,error:limitError}=await supabase.rpc("can_add_store_product",{p_store_id:store.id});
    if(limitError)throw limitError;
    if(!allowed)throw new Error("وصلت إلى الحد الأقصى لمنتجات خطتك. اختر Pro أو Premium من قسم الاشتراكات لإضافة المزيد.");
   }
-  const existingProduct=id?products.find(p=>p.id===id):null;
   const existingImages=existingProduct?(Array.isArray(existingProduct.image_urls)&&existingProduct.image_urls.length?existingProduct.image_urls:[existingProduct.image_url].filter(Boolean)):[];
   if(existingImages.length+files.length>5)throw new Error("يمكن إضافة 5 صور كحد أقصى للمنتج الواحد.");
   const uploadedImages=[];
@@ -414,7 +420,15 @@ async function saveProduct(event){
  finally{$("productSubmit").disabled=false;}
 }
 async function manageProductClick(event){
- const edit=event.target.closest("[data-edit]"),del=event.target.closest("[data-delete]");
+ const edit=event.target.closest("[data-edit]"),del=event.target.closest("[data-delete]"),toggle=event.target.closest("[data-toggle-active]");
+ if(toggle){
+  const p=products.find(x=>x.id===toggle.dataset.toggleActive);if(!p)return;toggle.disabled=true;
+  try{
+   if(p.is_active===false){const {data:allowed,error}=await supabase.rpc("can_add_store_product",{p_store_id:store.id});if(error)throw error;if(!allowed)throw new Error("وصلت إلى الحد الأقصى للمنتجات المنشورة في باقتك. أخفِ منتجاً آخر أو قم بالترقية.");}
+   const next=p.is_active===false;const {error}=await supabase.from("products").update({is_active:next,updated_at:new Date().toISOString()}).eq("id",p.id).eq("store_id",store.id);if(error)throw error;
+   p.is_active=next;renderProducts();message("productFeedback",next?"تم نشر المنتج مجدداً.":"تم إخفاء المنتج مع الاحتفاظ به في لوحة التحكم.");
+  }catch(error){message("productFeedback",error.message||"تعذر تغيير حالة المنتج.");toggle.disabled=false;}return;
+ }
  if(edit){
   const p=products.find(x=>x.id===edit.dataset.edit);if(!p)return;
   $("editingProductId").value=p.id;$("productName").value=p.name;const knownCategory=Array.from($("productCategory").options).some(o=>o.value===p.category);$("productCategory").value=knownCategory?(p.category||""):"أخرى";$("customProductCategory").value=knownCategory?"":(p.category||"");syncCustomCategory();$("productPrice").value=p.price;$("productStock").value=p.stock_quantity??"";$("productDescription").value=p.description||"";$("productImage").value="";$("productEmoji").value="📦";$("productSubmit").textContent="حفظ التعديلات";$("cancelEdit").hidden=false;$("productForm").scrollIntoView({behavior:"smooth",block:"center"});
