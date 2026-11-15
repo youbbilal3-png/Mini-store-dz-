@@ -13,7 +13,7 @@ document.querySelectorAll("[data-open-auth]").forEach(button=>button.addEventLis
 $("showSignup").addEventListener("click",()=>setMode("signup"));
 $("showLogin").addEventListener("click",()=>setMode("login"));
 
-$("togglePasswordVisibility")?.addEventListener("click",()=>{const field=$("password"),button=$("togglePasswordVisibility");if(!field||!button)return;const show=field.type==="password";field.type=show?"text":"password";const label=authTranslations[authLanguage][show?"hidePassword":"showPassword"];button.setAttribute("aria-label",label);button.title=label;button.classList.toggle("is-visible",show);});
+$("togglePasswordVisibility")?.addEventListener("click",event=>{event.preventDefault();event.stopPropagation();const field=$("password"),button=$("togglePasswordVisibility");if(!field||!button)return;const show=field.getAttribute("type")==="password";field.setAttribute("type",show?"text":"password");const label=authTranslations[authLanguage][show?"hidePassword":"showPassword"];button.setAttribute("aria-label",label);button.title=label;button.classList.toggle("is-visible",show);field.focus({preventScroll:true});});
 $("authYear").textContent=new Date().getFullYear();
 $("authForm").addEventListener("submit",async event=>{
  event.preventDefault();const button=$("submitButton");button.disabled=true;$("authMessage").textContent=authTranslations[authLanguage].connecting;
