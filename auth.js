@@ -8,7 +8,7 @@ try{
 }catch(error){console.warn("Referral code storage unavailable:",error);}
 let mode="signup";
 function setMode(next){mode=next;const signup=mode==="signup";$("showSignup").classList.toggle("active",signup);$("showLogin").classList.toggle("active",!signup);$("nameField").hidden=!signup;$("fullName").required=signup;$("authTitle").textContent=signup?authTranslations[authLanguage].createTitle:authTranslations[authLanguage].loginTitle;$("authIntro").textContent=signup?authTranslations[authLanguage].createDesc:authTranslations[authLanguage].loginDesc;$("submitButton").textContent=signup?authTranslations[authLanguage].createAction:authTranslations[authLanguage].loginAction;$("password").autocomplete=signup?"new-password":"current-password";$("authMessage").textContent="";}
-function openAuth(next){setMode(next);document.body.classList.add("auth-form-open");const section=$("authFormSection");section.hidden=false;section.scrollIntoView({behavior:"smooth",block:"start");}
+function openAuth(next){setMode(next);document.body.classList.add("auth-form-open");const section=$("authFormSection");section.hidden=false;section.scrollIntoView({behavior:"smooth",block:"start"});}
 document.querySelectorAll("[data-open-auth]").forEach(button=>button.addEventListener("click",()=>openAuth(button.dataset.openAuth)));
 $("showSignup").addEventListener("click",()=>setMode("signup"));
 $("showLogin").addEventListener("click",()=>setMode("login"));
