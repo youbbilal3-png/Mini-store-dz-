@@ -100,7 +100,7 @@ function initReferralControls(){
 let user=null,store=null,ownedStores=[],products=[],orders=[],reviews=[],productFilterTerm="",orderFilterTerm="";
 let subscription=null,billingCycle="monthly";
 const planConfig={free:{limit:7},pro:{limit:25},premium:{limit:Infinity}};
-function currentProductPlan(){if(!subscription)return 'free';const now=Date.now();const trial=subscription.status==='trialing'&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;const paid=trial||(subscription.status==='active'&&(!subscription.current_period_ends_at||new Date(subscription.current_period_ends_at).getTime()>now));const rp=subscription.referral_pro_starts_at&&new Date(subscription.referral_pro_starts_at).getTime()<=now&&subscription.referral_pro_until&&new Date(subscription.referral_pro_until).getTime()>now;const re=subscription.referral_premium_starts_at&&new Date(subscription.referral_premium_starts_at).getTime()<=now&&subscription.referral_premium_until&&new Date(subscription.referral_premium_until).getTime()>now;const p=paid?subscription.plan:'free';return p==='premium'||re?'premium':p==='pro'||rp?'pro':'free';}
+function currentProductPlan(){if(!subscription)return 'free';const now=Date.now();const trial=subscription.status==='trialing'&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;const paid=trial||(subscription.status==='active'&&subscription.current_period_ends_at&&new Date(subscription.current_period_ends_at).getTime()>now);const rp=subscription.referral_pro_starts_at&&new Date(subscription.referral_pro_starts_at).getTime()<=now&&subscription.referral_pro_until&&new Date(subscription.referral_pro_until).getTime()>now;const re=subscription.referral_premium_starts_at&&new Date(subscription.referral_premium_starts_at).getTime()<=now&&subscription.referral_premium_until&&new Date(subscription.referral_premium_until).getTime()>now;const p=paid?subscription.plan:'free';return p==='premium'||re?'premium':p==='pro'||rp?'pro':'free';}
 function subscriptionDate(value){return value?new Date(value).toLocaleDateString(dashboardLocale(),{year:"numeric",month:"long",day:"numeric"}):"";}
 function updateBillingPrices(){
  const yearly=billingCycle==="yearly";
@@ -116,7 +116,7 @@ function renderSubscription(){
  const now=Date.now(),trialActive=subscription.status==="trialing"&&subscription.trial_ends_at&&new Date(subscription.trial_ends_at).getTime()>now;
  const referralProActive=subscription.referral_pro_starts_at&&new Date(subscription.referral_pro_starts_at).getTime()<=now&&subscription.referral_pro_until&&new Date(subscription.referral_pro_until).getTime()>now;
  const referralEliteActive=subscription.referral_premium_starts_at&&new Date(subscription.referral_premium_starts_at).getTime()<=now&&subscription.referral_premium_until&&new Date(subscription.referral_premium_until).getTime()>now;
- const paidPlanActive=trialActive||subscription.status==="active";
+ const paidPlanActive=trialActive||(subscription.status==="active"&&subscription.current_period_ends_at&&new Date(subscription.current_period_ends_at).getTime()>now);
  const paidPlan=paidPlanActive?subscription.plan:"free";
  const plan=paidPlan==="premium"||referralEliteActive?"premium":paidPlan==="pro"||referralProActive?"pro":"free";
  const referralRewardActive=!!referralProActive||!!referralEliteActive;
@@ -128,7 +128,7 @@ function renderSubscription(){
   current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Elite / Premium — مميز")+" مجاناً عبر الدعوات · تنتهي في "+subscriptionDate(expiry)+".";
  }else if(trialActive){
   status.textContent="تجربة مجانية نشطة";
-  current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Premium — مميز")+" · تنتهي التجربة في "+subscriptionDate(subscription.trial_ends_at)+". لن يتم تحصيل أي مبلغ تلقائياً.";
+  current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Elite — مميز")+" · تنتهي التجربة في "+subscriptionDate(subscription.trial_ends_at)+". لن يتم تحصيل أي مبلغ تلقائياً.";
  }else if(subscription.status==="active"){
   status.textContent="اشتراك نشط";
   current.textContent="خطتك الحالية: "+(plan==="pro"?"Pro — احترافي":"Premium — مميز")+".";
@@ -162,7 +162,7 @@ async function startPlanTrial(plan){
   const {data,error}=await supabase.rpc("start_subscription_trial",{p_plan:plan,p_billing_cycle:billingCycle});
   if(error)throw error;
   subscription=data;renderSubscription();
-  message("profileFeedback","تم تفعيل تجربتك المجانية لمدة 7 أيام لخطة "+(plan==="pro"?"Pro":"Premium")+".");
+  message("profileFeedback","تم تفعيل تجربتك المجانية لمدة 7 أيام لخطة "+(plan==="pro"?"Pro" :"Elite")+".");
  }catch(error){
   console.error("Trial activation failed:",error);
   message("profileFeedback",error.message||"تعذر تفعيل التجربة المجانية.");
