@@ -1293,3 +1293,38 @@ body:has(#publicLanding:not([hidden])){
  .site-menu-panel .site-menu-group>nav>button,
  .site-menu-panel .site-menu-share .share-platform-btn{transition:none!important}
 }
+
+
+/* Public landing language picker: compact premium 3D control under the MINABYB brand. */
+#publicLanding .public-landing-top{
+  position:relative;z-index:2;flex:0 0 auto;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;width:100%;
+}
+#publicLanding .public-landing-top .public-landing-brand{position:relative;z-index:2}
+#publicLanding .public-language-control{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-width:132px;height:39px;box-sizing:border-box;padding:0 13px;
+  border:1px solid rgba(184,243,75,.72);border-radius:12px;
+  background:linear-gradient(155deg,rgba(42,64,82,.96) 0%,rgba(17,31,47,.98) 58%,rgba(9,19,32,.99) 100%);
+  color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -2px 0 rgba(0,0,0,.22),0 3px 0 #070e18,0 7px 16px rgba(0,0,0,.38);
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+#publicLanding .public-language-control:active{
+  transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 1px 0 #070e18,0 3px 8px rgba(0,0,0,.3);
+}
+#publicLanding .public-language-globe{font-size:17px;line-height:1;color:#b8f34b;text-shadow:0 1px 5px rgba(184,243,75,.35)}
+#publicLanding .public-language-control select{
+  appearance:none;-webkit-appearance:none;min-width:76px;max-width:100px;
+  padding:0 2px;border:0;outline:0;background:transparent;color:#fff;
+  font:700 13px/1.2 inherit;font-family:inherit;font-size:13px;font-weight:800;
+  text-align:center;text-align-last:center;cursor:pointer;
+}
+#publicLanding .public-language-control select option{background:#142338;color:#fff}
+#publicLanding .public-language-chevron{pointer-events:none;color:#b8f34b;font-size:17px;line-height:1;margin-inline-start:1px}
+#publicLanding .public-language-control:focus-within{outline:2px solid rgba(184,243,75,.72);outline-offset:3px}
+@media(max-height:620px){
+  #publicLanding .public-landing-top{gap:4px}
+  #publicLanding .public-language-control{height:34px;min-width:122px;padding:0 10px}
+  #publicLanding .public-language-control select{font-size:12px}
+}
