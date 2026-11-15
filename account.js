@@ -14,6 +14,18 @@ $("accountTitle").textContent=t.title;$("accountIntro").textContent=t.intro;$("a
 $("accountAvatar").setAttribute("aria-label",t.title);
 
 const photoInput=$("accountPhotoInput"),photoChoose=$("accountPhotoChoose"),photoRemove=$("accountPhotoRemove"),photoSave=$("accountPhotoSave");
+const photoPreview=$("accountPhotoPreview"),photoPreviewImage=$("accountPhotoPreviewImage"),photoPreviewClose=$("accountPhotoPreviewClose");
+function closePhotoPreview(){photoPreview.hidden=true;photoPreviewImage.removeAttribute("src");}
+function openPhotoPreview(){
+ const image=$("accountAvatarImage");
+ if(!currentAvatarUrl||image.hidden||!image.src)return;
+ photoPreviewImage.src=image.src;photoPreview.hidden=false;photoPreviewClose.focus();
+}
+$("accountAvatar").addEventListener("click",openPhotoPreview);
+photoPreviewClose.addEventListener("click",closePhotoPreview);
+photoPreview.addEventListener("click",event=>{if(event.target===photoPreview)closePhotoPreview();});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!photoPreview.hidden)closePhotoPreview();});
+
 let currentUser=null,currentAvatarUrl="",pendingPhoto=null;
 function syncPhotoButtons(){photoChoose.textContent=currentAvatarUrl?t.photoChange:t.photoAdd;photoRemove.hidden=!currentAvatarUrl;}
 function getOwnedAvatarPath(url,userId){
@@ -29,11 +41,11 @@ function setAccountAvatar(user){
  try{
   const url=new URL(candidate,location.origin);
   if(candidate&&["https:","http:"].includes(url.protocol)){
-   image.onload=()=>{image.hidden=false;initial.hidden=true;};
-   image.onerror=()=>{image.hidden=true;initial.hidden=false;};
+   image.onload=()=>{image.hidden=false;initial.hidden=true;$("accountAvatar").classList.add("has-photo-preview");};
+   image.onerror=()=>{image.hidden=true;initial.hidden=false;$("accountAvatar").classList.remove("has-photo-preview");};
    image.src=url.href;
-  }else{image.hidden=true;initial.hidden=false;}
- }catch(error){image.hidden=true;initial.hidden=false;}
+  }else{image.hidden=true;initial.hidden=false;$("accountAvatar").classList.remove("has-photo-preview");}
+ }catch(error){image.hidden=true;initial.hidden=false;$("accountAvatar").classList.remove("has-photo-preview");}
 }
 $("accountNameLabel").textContent=t.name;$("accountEmailLabel").textContent=t.email;$("accountTypeLabel").textContent=t.type;$("accountLogoutButton").textContent=t.logout;
 async function init(){
