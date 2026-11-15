@@ -9,3 +9,5 @@
 .account-photo-actions button:disabled{opacity:.6;cursor:wait}
 .account-photo-remove[hidden]{display:none}
 @media(max-width:600px){.account-photo-actions{margin:-4px 0 20px;justify-content:center}.account-photo-actions button{flex:1}}
+
+.account-photo-save{min-height:39px;padding:8px 16px;border:1px solid #b8df78;border-radius:10px;background:#c7f36b;color:#18320b;font:inherit;font-size:12px;font-weight:900;cursor:pointer}.account-photo-save[hidden]{display:none}.account-photo-save:disabled{opacity:.6;cursor:wait}
