@@ -63,7 +63,7 @@ $("createStoreForm").addEventListener("submit",async event=>{
  try{
   const {data:allowed,error:limitError}=await supabase.rpc("can_create_store");
   if(limitError)throw limitError;
-  if(!existingDraft&&!allowed)throw new Error(words.limitReached);
+  if(!existingDraft&&!allowed)throw new Error(words.limitReached||translations.ar.limitReached);
   const payload={store_name:storeName,seller_name:sellerName,seller_bio:$("newStoreBio").value.trim()||null,whatsapp:whatsapp.replace(/[\s()+-]/g,"")||null,setup_completed:false};
   let saveResult;
   if(existingDraft){saveResult=await supabase.from("stores").update(payload).eq("id",existingDraft.id).eq("owner_id",currentUser.id).select("id").single();}
