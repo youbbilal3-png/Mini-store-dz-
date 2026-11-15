@@ -18,37 +18,43 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261115-4">
+<link rel="stylesheet" href="styles.css?v=20261115-5">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261115-7"></script>
+<script type="module" src="app.js?v=20261115-8"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body>
 <header class="site-header">
   <div class="brand-row">
     <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
-    <div class="brand-share-wrap"><button type="button" class="share-platform-btn" id="sharePlatformButton" aria-label="شارك MINABYB" title="شارك MINABYB"><span aria-hidden="true">↗</span><span data-i18n="sharePlatformLabel">شارك الموقع</span></button><span class="share-platform-feedback" id="sharePlatformFeedback" role="status" aria-live="polite"></span></div>
+    
   </div>
   <div class="header-tools">
     <button type="button" class="global-search-toggle" id="globalSearchToggle" aria-label="بحث" title="بحث"><span aria-hidden="true">⌕</span><span data-i18n="searchSiteLabel">بحث</span></button>
-    <label class="language-picker">
-      <span class="sr-only" data-i18n="languageLabel">اللغة</span>
-      <select id="languageSelect" aria-label="Choose language">
-        <option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option><option value="es">Español</option><option value="de">Deutsch</option><option value="tr">Türkçe</option>
-      </select>
-    </label>
-    <a href="auth.html?next=account.html" class="header-login-link" id="headerLoginLink" data-i18n="login" hidden>تسجيل الدخول</a>
-    <a href="account.html" class="header-account-link" id="headerAccountLink" data-i18n="myAccount" hidden>حسابي</a>
-    <button type="button" class="header-logout-btn" id="headerLogoutButton" data-i18n="logout" hidden>تسجيل الخروج</button>
-    <a href="how-it-works.html" class="how-it-works-nav-link" id="howItWorksLink">كيف يعمل؟</a>
-    <nav aria-label="Main navigation">
-      <a href="#featuredStoresSection" data-i18n="navProducts" id="navProducts">تصفح المتاجر</a>
-      <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span data-i18n="navAbout">من نحن</span></button>
-      <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span data-i18n="navContact">اتصل بنا</span></button>
-      <a href="dashboard.html" id="merchantAccountLink" data-i18n="merchantAccount">حساب التاجر</a>
-      <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html" data-i18n="joinMerchant">أنشئ متجرك</a>
-    </nav>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button>
+    <button type="button" class="site-menu-toggle" id="siteMenuToggle" aria-expanded="false" aria-controls="siteMenuPanel"><span aria-hidden="true">☰</span><span data-i18n="menuLabel">القائمة</span></button>
+    <button type="button" class="site-menu-backdrop" id="siteMenuBackdrop" aria-label="إغلاق القائمة" hidden></button>
+    <aside class="site-menu-panel" id="siteMenuPanel" aria-label="القائمة الرئيسية" hidden>
+      <div class="site-menu-heading"><strong data-i18n="menuLabel">القائمة</strong><button type="button" id="siteMenuClose" aria-label="إغلاق القائمة">×</button></div>
+      <label class="language-picker site-menu-language">
+        <span data-i18n="languageLabel">اللغة</span>
+        <select id="languageSelect" aria-label="Choose language">
+          <option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option><option value="es">Español</option><option value="de">Deutsch</option><option value="tr">Türkçe</option>
+        </select>
+      </label>
+      <a href="auth.html?next=account.html" class="header-login-link" id="headerLoginLink" data-i18n="login" hidden>تسجيل الدخول</a>
+      <a href="account.html" class="header-account-link" id="headerAccountLink" data-i18n="myAccount" hidden>حسابي</a>
+      <button type="button" class="header-logout-btn" id="headerLogoutButton" data-i18n="logout" hidden>تسجيل الخروج</button>
+      <a href="how-it-works.html" class="how-it-works-nav-link" id="howItWorksLink">كيف يعمل؟</a>
+      <nav aria-label="Main navigation">
+        <a href="#featuredStoresSection" data-i18n="navProducts" id="navProducts">تصفح المتاجر</a>
+        <button type="button" class="header-icon-link" id="openAboutDialog" aria-label="About" title="About"><span data-i18n="navAbout">من نحن</span></button>
+        <button type="button" class="header-icon-link" id="openContactDialog" aria-label="Contact" title="Contact"><span data-i18n="navContact">اتصل بنا</span></button>
+        <a href="dashboard.html" id="merchantAccountLink" data-i18n="merchantAccount">متجري / لوحة التاجر</a>
+        <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html" data-i18n="joinMerchant">أنشئ متجرك</a>
+      </nav>
+      <div class="site-menu-share" id="siteMenuShareSlot"></div>
+    </aside>
   </div>
 </header>
 <main>
