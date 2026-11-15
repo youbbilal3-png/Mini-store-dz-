@@ -7,6 +7,7 @@
     "جارٍ التحقق من صلاحيات المالك...":["Vérification des autorisations du propriétaire...","Verifying owner permissions...","Verificando los permisos del propietario...","Berechtigungen des Inhabers werden überprüft...","Sahip izinleri doğrulanıyor..."],
     "تحديث البيانات ↻":["Actualiser les données ↻","Refresh data ↻","Actualizar datos ↻","Daten aktualisieren ↻","Verileri yenile ↻"],
     "الحسابات":["Comptes","Accounts","Cuentas","Konten","Hesaplar"],
+    "التجار":["Vendeurs","Merchants","Vendedores","Händler","Satıcılar"],
     "المتاجر":["Boutiques","Stores","Tiendas","Shops","Mağazalar"],
     "المنتجات":["Produits","Products","Productos","Produkte","Ürünler"],
     "الطلبات":["Commandes","Orders","Pedidos","Bestellungen","Siparişler"],
