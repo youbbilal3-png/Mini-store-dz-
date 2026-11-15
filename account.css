@@ -19,3 +19,10 @@
 .account-photo-preview[hidden]{display:none}
 .account-photo-preview img{display:block;max-width:min(88vw,680px);max-height:82vh;width:auto;height:auto;object-fit:contain;border:3px solid #fff;border-radius:16px;box-shadow:0 18px 60px #0008}
 .account-photo-preview-close{position:absolute;top:18px;right:18px;width:44px;height:44px;border:1px solid #ffffff66;border-radius:50%;background:#ffffff20;color:#fff;font-size:30px;line-height:1;cursor:pointer}
+
+
+/* Make the account-page home link a clear, touch-friendly button */
+.account-page .site-header .account-home-link{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 18px;border:1px solid #a8d65d;border-radius:12px;background:#c7f36b;color:#18320b;font-size:13px;font-weight:900;line-height:1.2;text-decoration:none;box-shadow:0 4px 12px #719c2b20;transition:background .18s ease,transform .18s ease,box-shadow .18s ease}
+.account-page .site-header .account-home-link:hover{background:#b8eb54;box-shadow:0 6px 16px #719c2b30;transform:translateY(-1px)}
+.account-page .site-header .account-home-link:focus-visible{outline:3px solid #719c2b;outline-offset:3px}
+@media(max-width:600px){.account-page .site-header .account-home-link{min-height:40px;padding:9px 13px;font-size:12px}}
