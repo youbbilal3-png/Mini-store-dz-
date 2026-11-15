@@ -20,10 +20,21 @@
 .create-store-submit:disabled{opacity:.6;cursor:wait}
 .create-store-feedback{min-height:26px;margin-top:12px;color:var(--muted,#687386);line-height:1.6}
 .create-store-note{font-size:.9rem}
+.create-store-photo-field{grid-column:1/-1;display:flex;flex-direction:column;gap:10px}
+.create-store-photo-preview{width:116px;height:116px;border:2px dashed rgba(21,150,106,.45);border-radius:20px;background:rgba(21,150,106,.07);display:flex;align-items:center;justify-content:center;overflow:hidden;color:#15966a;font-size:42px}
+.create-store-photo-preview img{width:100%;height:100%;object-fit:cover}
+.create-store-photo-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.create-store-photo-button,.create-store-photo-remove{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 14px;border-radius:10px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.create-store-photo-button{background:#15966a;color:#fff;border:1px solid #15966a}
+.create-store-photo-remove{background:transparent;color:#b42318;border:1px solid rgba(180,35,24,.35)}
+.create-store-photo-hint{font-size:12px;color:var(--muted,#687386);font-weight:500}
+.dashboard-header-actions .language-picker select{min-height:40px;padding:8px 32px 8px 12px;border:1px solid #15966a;border-radius:10px;background:#e7f7ef;color:#145b40;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.dashboard-header-actions .dashboard-back{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 16px;border:1px solid #101827;border-radius:10px;background:#101827;color:#fff;text-decoration:none;font-size:13px;font-weight:850;box-shadow:0 3px 10px rgba(16,24,39,.14)}
+.dashboard-header-actions .dashboard-back:hover{background:#24334a}
 @media(max-width:600px){.create-store-fields{grid-template-columns:1fr}.create-store-wide{grid-column:auto}.create-store-main{margin-top:24px}}
 </style>
 <script>try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="create-store.js?v=20261115-3"></script>
+<script type="module" src="create-store.js?v=20261115-4"></script>
 </head>
 <body class="dashboard-page">
 <header class="site-header dashboard-header">
@@ -39,7 +50,7 @@
 <div class="create-store-fields">
 <label><span data-t="storeName">اسم المتجر</span><input id="newStoreName" maxlength="60" required autocomplete="organization" placeholder="مثال: متجر الأناقة"></label>
 <label><span data-t="sellerName">اسم صاحب المتجر</span><input id="newSellerName" maxlength="60" required autocomplete="name"></label>
-<label class="create-store-wide"><span data-t="bio">نبذة قصيرة عن المتجر (اختياري)</span><textarea id="newStoreBio" maxlength="300"></textarea></label>
+<div class="create-store-photo-field"><span data-t="storePhoto">صورة المتجر (مطلوبة)</span><div class="create-store-photo-preview" id="storePhotoPreview"><span id="storePhotoFallback" aria-hidden="true">🏪</span><img id="storePhotoPreviewImage" alt="معاينة صورة المتجر" hidden></div><div class="create-store-photo-actions"><label class="create-store-photo-button" for="newStorePhoto" data-t="choosePhoto">📷 إضافة صورة المتجر</label><input id="newStorePhoto" type="file" accept="image/jpeg,image/png,image/webp" hidden><button class="create-store-photo-remove" id="removeNewStorePhoto" type="button" data-t="removePhoto">حذف الصورة</button></div><span class="create-store-photo-hint" data-t="photoHint">صورة واضحة لشعار أو واجهة متجرك، JPEG أو PNG أو WebP، بحد أقصى 2 ميغابايت.</span></div><label class="create-store-wide"><span data-t="bio">نبذة قصيرة عن المتجر (اختياري)</span><textarea id="newStoreBio" maxlength="300"></textarea></label>
 <label class="create-store-wide"><span data-t="whatsapp">رقم WhatsApp مع رمز الدولة (اختياري)</span><input id="newStoreWhatsapp" type="tel" inputmode="numeric" maxlength="20" placeholder="213XXXXXXXXX"></label>
 </div>
 <button class="create-store-submit" id="createStoreSubmit" type="submit" data-t="submit">إنشاء متجري</button>
