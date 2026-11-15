@@ -842,3 +842,15 @@ html[data-theme="dark"] .sponsored-ads-empty{background:var(--surface);border-co
 @media(max-width:600px){
  .header-tools>#howItWorksLink{order:1!important;min-height:38px!important;padding:7px 10px!important;font-size:12px!important;border-radius:10px!important}
 }
+
+/* Compact signed-in account actions beside the language selector */
+.header-account-link,.header-logout-btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:7px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-size:12px;font-weight:750;text-decoration:none;white-space:nowrap;cursor:pointer}
+.header-account-link:hover,.header-logout-btn:hover{border-color:#9bbd62;background:#f7faef}
+.header-logout-btn:disabled{opacity:.65;cursor:wait}
+.header-account-link[hidden],.header-logout-btn[hidden]{display:none}
+.language-picker select{padding:8px 10px;max-width:118px}
+@media(max-width:600px){
+ .header-tools{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+ .language-picker select{font-size:11px;padding:6px 7px;max-width:105px}
+ .header-account-link,.header-logout-btn{min-height:32px;padding:5px 8px;font-size:11px}
+}
