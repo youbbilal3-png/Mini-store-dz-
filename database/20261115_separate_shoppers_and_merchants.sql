@@ -1,4 +1,15 @@
--- Separate ordinary accounts from actual store owners in admin reporting.
+-- Distinguish actual, intentionally created stores from legacy automatic placeholders.
+alter table public.stores
+  add column if not exists setup_completed boolean not null default false;
+
+-- Preserve the one previously customized/used store; keep untouched auto-created
+-- placeholder stores for their owners to complete later.
+update public.stores s
+set setup_completed = true
+where s.store_name <> 'متجري'
+   or exists (select 1 from public.products p where p.store_id=s.id)
+   or exists (select 1 from public.orders o where o.store_id=s.id);
+
 create or replace function public.admin_dashboard_stats()
 returns jsonb
 language plpgsql
@@ -12,9 +23,9 @@ begin
   end if;
   select jsonb_build_object(
     'accounts', (select count(*) from auth.users),
-    'merchants', (select count(distinct owner_id) from public.stores),
-    'stores', (select count(*) from public.stores),
-    'published_stores', (select count(*) from public.stores where is_published),
+    'merchants', (select count(distinct owner_id) from public.stores where setup_completed),
+    'stores', (select count(*) from public.stores where setup_completed),
+    'published_stores', (select count(*) from public.stores where setup_completed and is_published),
     'products', (select count(*) from public.products),
     'orders', (select count(*) from public.orders),
     'pending_payments', (select count(*) from public.subscription_payment_requests where status='pending'),
@@ -40,7 +51,7 @@ begin
          coalesce(us.plan,'free'), coalesce(us.status,'free'), us.billing_cycle,
          us.current_period_ends_at, u.created_at
   from auth.users u
-  join public.stores s on s.owner_id=u.id
+  join public.stores s on s.owner_id=u.id and s.setup_completed
   left join public.profiles p on p.id=u.id
   left join public.user_subscriptions us on us.user_id=u.id
   order by u.created_at desc;
