@@ -522,8 +522,6 @@ siteMenu?.querySelectorAll("a,button").forEach(control=>control.addEventListener
  setSiteMenuOpen(false);
 }));
 document.addEventListener("keydown",event=>{if(event.key==="Escape"&&siteMenu&&!siteMenu.hidden)setSiteMenuOpen(false);});
-const shareButtonWrap=document.querySelector(".brand-share-wrap"),shareSlot=el("siteMenuShareSlot");
-if(shareButtonWrap&&shareSlot)shareSlot.append(shareButtonWrap);
 
 function openInfoDialog(id){const dialog=el(id);if(dialog&&!dialog.open)dialog.showModal();}
 function closeInfoDialog(id){const dialog=el(id);if(dialog&&dialog.open)dialog.close();}
