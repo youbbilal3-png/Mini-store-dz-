@@ -3,7 +3,7 @@ import { supabase } from "./supabase-client.js";
 // Public visitors see only the brand, rotating 9:16 product ads and auth actions.
 const publicLanding=document.getElementById("publicLanding");
 const authenticatedSite=document.getElementById("authenticatedSite");
-function applyAccessView(session){const signedIn=!!session;if(authenticatedSite)authenticatedSite.hidden=!signedIn;if(publicLanding)publicLanding.hidden=signedIn;document.body.classList.toggle("public-locked",!signedIn);document.body.classList.remove("auth-checking");}
+function applyAccessView(session){const signedIn=!!session;if(!publicLanding&&!authenticatedSite&&!signedIn){location.replace("index.html");return;}if(authenticatedSite)authenticatedSite.hidden=!signedIn;if(publicLanding)publicLanding.hidden=signedIn;document.body.classList.toggle("public-locked",!signedIn);document.body.classList.remove("auth-checking");}
 supabase.auth.onAuthStateChange((_event,session)=>applyAccessView(session));
 supabase.auth.getSession().then(({data,error})=>{if(error)console.warn("MINABYB access check could not read the session:",error.message);applyAccessView(data?.session||null);}).catch(error=>{console.warn("MINABYB access check failed; showing the public landing page.",error);applyAccessView(null);});
 const publicAdSlides=[...document.querySelectorAll(".public-ad-slide")],publicAdDots=[...document.querySelectorAll(".public-ad-dots button")];let publicAdIndex=0;
