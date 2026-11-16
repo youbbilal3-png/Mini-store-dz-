@@ -2541,3 +2541,47 @@ html[data-theme="system"] .info-dialog-card .order-close{
 
 /* Sponsored ad visibility: the active slide must reveal its image in every homepage layout. */
 .sponsored-ad-entry.active .sponsored-ad-image{display:block!important;opacity:1!important;visibility:visible!important;z-index:1;object-fit:contain!important;}
+
+
+/* MINABYB public landing: premium 3D brand lockup refresh */
+#publicLanding .public-landing-brand{
+  gap:14px;
+  padding:7px 12px;
+  border:1px solid rgba(110,220,226,.28);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(27,48,66,.92),rgba(8,20,34,.94));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -3px 0 rgba(0,0,0,.24),0 5px 0 #050b13,0 12px 26px rgba(0,0,0,.34),0 0 24px rgba(37,201,160,.10);
+}
+#publicLanding .public-landing-logo{
+  width:clamp(54px,14vw,68px);
+  height:clamp(54px,14vw,68px);
+  padding:3px;
+  border:1px solid rgba(126,237,224,.48);
+  border-radius:17px;
+  background:linear-gradient(145deg,#1b3b49,#0d202d);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.2),0 4px 0 #07131c,0 8px 18px rgba(0,0,0,.35),0 0 18px rgba(37,201,160,.18);
+}
+#publicLanding .public-landing-name{
+  gap:1px;
+  font-size:clamp(32px,8.5vw,42px);
+  font-weight:1000;
+  letter-spacing:-1.7px;
+  text-shadow:0 2px 0 rgba(0,0,0,.55),0 5px 12px rgba(0,0,0,.34);
+}
+#publicLanding .public-landing-name span{
+  color:#52e6c0!important;
+  background:linear-gradient(180deg,#c4fff0 0%,#55e8c3 38%,#13b995 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(0,83,73,.8));
+}
+#publicLanding .public-landing-name strong{
+  color:#69c5ff!important;
+  background:linear-gradient(180deg,#d9f2ff 0%,#75caff 42%,#2788d0 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(5,49,91,.85));
+}
+@media(max-height:620px){
+  #publicLanding .public-landing-brand{gap:10px;padding:4px 9px}
+  #publicLanding .public-landing-logo{width:48px;height:48px}
+  #publicLanding .public-landing-name{font-size:30px}
+}
