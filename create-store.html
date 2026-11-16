@@ -13,7 +13,7 @@
 .create-store-card>p{line-height:1.8;color:var(--muted,#687386)}
 .create-store-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
 .create-store-fields label{display:flex;flex-direction:column;gap:8px;font-weight:700}
-.create-store-fields input,.create-store-fields textarea{width:100%;border:1px solid rgba(120,140,160,.35);border-radius:12px;padding:13px 14px;background:var(--surface,#fff);color:inherit;font:inherit;box-sizing:border-box}
+.create-store-fields input,.create-store-fields textarea,.create-store-fields select{width:100%;border:1px solid rgba(120,140,160,.35);border-radius:12px;padding:13px 14px;background:var(--surface,#fff);color:inherit;font:inherit;box-sizing:border-box}
 .create-store-fields textarea{min-height:105px;resize:vertical}
 .create-store-wide{grid-column:1/-1}
 .create-store-submit{width:100%;margin-top:22px;border:0;border-radius:13px;padding:15px;background:#15966a;color:#fff;font:inherit;font-weight:800;cursor:pointer}
@@ -34,7 +34,8 @@
 @media(max-width:600px){.create-store-fields{grid-template-columns:1fr}.create-store-wide{grid-column:auto}.create-store-main{margin-top:24px}}
 </style>
 <script>try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="create-store.js?v=20261115-6"></script>
+<script src="location-data.js?v=20261116-1"></script>
+<script type="module" src="create-store.js?v=20261116-1"></script>
 </head>
 <body class="dashboard-page">
 <header class="site-header dashboard-header">
@@ -50,6 +51,9 @@
 <div class="create-store-fields">
 <label><span data-t="storeName">اسم المتجر</span><input id="newStoreName" maxlength="60" required autocomplete="organization" placeholder="مثال: متجر الأناقة"></label>
 <label><span data-t="sellerName">اسم صاحب المتجر</span><input id="newSellerName" maxlength="60" required autocomplete="name"></label>
+<label class="create-store-wide"><span data-t="country">البلد</span><select id="newStoreCountry" required></select></label>
+<label class="create-store-wide" id="newStoreWilayaWrap" hidden><span data-t="wilaya">الولاية</span><select id="newStoreWilaya"></select></label>
+<label class="create-store-wide" id="newStoreRegionWrap" hidden><span data-t="region">المنطقة / الولاية الإدارية (اختياري)</span><input id="newStoreRegion" type="text" maxlength="100" placeholder="State / Region"></label>
 <div class="create-store-photo-field"><span data-t="storePhoto">صورة المتجر (مطلوبة)</span><div class="create-store-photo-preview" id="storePhotoPreview"><span id="storePhotoFallback" aria-hidden="true">🏪</span><img id="storePhotoPreviewImage" alt="معاينة صورة المتجر" hidden></div><div class="create-store-photo-actions"><label class="create-store-photo-button" for="newStorePhoto" data-t="choosePhoto">📷 إضافة صورة المتجر</label><input id="newStorePhoto" type="file" accept="image/jpeg,image/png,image/webp" hidden><button class="create-store-photo-remove" id="removeNewStorePhoto" type="button" data-t="removePhoto">حذف الصورة</button></div><span class="create-store-photo-hint" data-t="photoHint">صورة واضحة لشعار أو واجهة متجرك، JPEG أو PNG أو WebP، بحد أقصى 2 ميغابايت.</span></div><label class="create-store-wide"><span data-t="bio">نبذة قصيرة عن المتجر (اختياري)</span><textarea id="newStoreBio" maxlength="300"></textarea></label>
 <label class="create-store-wide"><span data-t="whatsapp">رقم WhatsApp مع رمز الدولة (اختياري)</span><input id="newStoreWhatsapp" type="tel" inputmode="numeric" maxlength="20" placeholder="213XXXXXXXXX"></label>
 </div>
