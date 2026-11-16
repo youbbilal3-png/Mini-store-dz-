@@ -33,7 +33,7 @@ html[dir="ltr"] .quran-brand-suite{direction:ltr}
 `;
 function mount(){
  if(document.querySelector(".quran-brand-suite"))return;
- const brand=document.querySelector("header .brand-logo-lockup,header .brand,header a.brand");
+ const brand=document.querySelector("header .brand-logo-lockup,header .brand,header a.brand,.dashboard-header .brand,.brand");
  if(!brand||!brand.parentElement)return;
  const suite=document.createElement("div");suite.className="quran-brand-suite";
  brand.parentElement.insertBefore(suite,brand);suite.appendChild(brand);
@@ -46,12 +46,18 @@ function mount(){
   let current=(document.documentElement.lang||"ar").toLowerCase().slice(0,2);
   if(current==="ar"){try{current=(localStorage.getItem("msdz-language")||"ar").toLowerCase().slice(0,2)}catch(e){}}
   const copy=translations[current]||null;
-  const lines=frame.querySelectorAll(".quran-frame-translation");
+  let lines=frame.querySelectorAll(".quran-frame-translation");
   if(copy){
-   if(lines[0])lines[0].textContent=copy.bismillah+" · "+copy.verse;
-   if(lines[1])lines[1].textContent=copy.closing;
-  }
-  frame.querySelector(".quran-frame-kicker").textContent=copy?"✦ "+({fr:"VERSET CORANIQUE",en:"QURANIC VERSE",es:"VERSÍCULO CORÁNICO",de:"KORANVERS",tr:"KUR’AN AYETİ"}[current]||"✦ آية مباركة ✦")+" ✦":"✦ آية مباركة ✦";
+   if(!lines.length){
+    const first=document.createElement("span");first.className="quran-frame-translation";
+    const second=document.createElement("span");second.className="quran-frame-translation";
+    frame.querySelector(".quran-frame-closing").before(first);frame.querySelector(".quran-frame-closing").after(second);
+    lines=frame.querySelectorAll(".quran-frame-translation");
+   }
+   lines[0].textContent=copy.bismillah+" · "+copy.verse;lines[0].lang=current;lines[0].dir="auto";
+   lines[1].textContent=copy.closing;lines[1].lang=current;lines[1].dir="auto";
+  }else{lines.forEach(node=>node.remove());}
+  frame.querySelector(".quran-frame-kicker").textContent=copy?"✦ "+({fr:"VERSET CORANIQUE",en:"QURANIC VERSE",es:"VERSÍCULO CORÁNICO",de:"KORANVERS",tr:"KUR’AN AYETİ"}[current]||"آية مباركة")+" ✦":"✦ آية مباركة ✦";
  }
  new MutationObserver(refreshQuranTranslation).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  document.querySelectorAll("select[id*=Language],select[id*=language]").forEach(select=>select.addEventListener("change",()=>setTimeout(refreshQuranTranslation,0)));
