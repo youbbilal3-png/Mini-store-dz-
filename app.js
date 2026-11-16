@@ -87,12 +87,12 @@ Object.assign(translations.es,{sponsoredEyebrow:"Publicidad patrocinada",sponsor
 Object.assign(translations.de,{sponsoredEyebrow:"Gesponsert",sponsoredTitle:"Unsere Partner"});
 Object.assign(translations.tr,{sponsoredEyebrow:"Sponsorlu",sponsoredTitle:"İş ortaklarımız"});
 const SEARCH_UI_TEXT={
- ar:{label:"بحث",placeholder:"ابحث عن متجر أو منتج...",stores:"المتاجر",products:"المنتجات",visit:"زيارة المتجر",inStore:"في",noResults:"لم نعثر على متاجر أو منتجات مطابقة.",loading:"جارٍ البحث...",error:"تعذر إتمام البحث حالياً. حاول مرة أخرى.",country:"البلد",allCountries:"كل البلدان",wilaya:"الولاية",allWilayas:"كل الولايات"},
- fr:{label:"Recherche",placeholder:"Rechercher une boutique ou un produit...",stores:"Boutiques",products:"Produits",visit:"Visiter la boutique",inStore:"chez",noResults:"Aucune boutique ou aucun produit correspondant.",loading:"Recherche en cours...",error:"Recherche impossible pour le moment. Réessayez.",country:"Pays",allCountries:"Tous les pays",wilaya:"Wilaya",allWilayas:"Toutes les wilayas"},
- en:{label:"Search",placeholder:"Search stores or products...",stores:"Stores",products:"Products",visit:"Visit store",inStore:"at",noResults:"No matching stores or products found.",loading:"Searching...",error:"Search is unavailable right now. Please try again.",country:"Country",allCountries:"All countries",wilaya:"Wilaya",allWilayas:"All wilayas"},
- es:{label:"Buscar",placeholder:"Buscar tiendas o productos...",stores:"Tiendas",products:"Productos",visit:"Visitar tienda",inStore:"en",noResults:"No se encontraron tiendas ni productos coincidentes.",loading:"Buscando...",error:"No se puede realizar la búsqueda ahora. Inténtalo de nuevo.",country:"País",allCountries:"Todos los países",wilaya:"Wilaya",allWilayas:"Todas las wilayas"},
- de:{label:"Suche",placeholder:"Shops oder Produkte suchen...",stores:"Shops",products:"Produkte",visit:"Shop besuchen",inStore:"bei",noResults:"Keine passenden Shops oder Produkte gefunden.",loading:"Suche läuft...",error:"Die Suche ist derzeit nicht verfügbar. Bitte erneut versuchen.",country:"Land",allCountries:"Alle Länder",wilaya:"Wilaya",allWilayas:"Alle Wilayas"},
- tr:{label:"Ara",placeholder:"Mağaza veya ürün ara...",stores:"Mağazalar",products:"Ürünler",visit:"Mağazayı ziyaret et",inStore:"mağazasında",noResults:"Eşleşen mağaza veya ürün bulunamadı.",loading:"Aranıyor...",error:"Arama şu anda kullanılamıyor. Lütfen tekrar deneyin.",country:"Ülke",allCountries:"Tüm ülkeler",wilaya:"Wilaya",allWilayas:"Tüm wilayalar"}
+ ar:{label:"بحث",placeholder:"ابحث عن متجر أو منتج...",stores:"المتاجر",products:"المنتجات",visit:"زيارة المتجر",inStore:"في",noResults:"لم نعثر على متاجر أو منتجات مطابقة.",loading:"جارٍ البحث...",error:"تعذر إتمام البحث حالياً. حاول مرة أخرى.",country:"البلد",allCountries:"كل البلدان",wilaya:"الولاية",allWilayas:"كل الولايات",region:"المنطقة / الولاية الإدارية",regionPlaceholder:"اكتب اسم المنطقة"},
+ fr:{label:"Recherche",placeholder:"Rechercher une boutique ou un produit...",stores:"Boutiques",products:"Produits",visit:"Visiter la boutique",inStore:"chez",noResults:"Aucune boutique ou aucun produit correspondant.",loading:"Recherche en cours...",error:"Recherche impossible pour le moment. Réessayez.",country:"Pays",allCountries:"Tous les pays",wilaya:"Wilaya",allWilayas:"Toutes les wilayas",region:"Région / État",regionPlaceholder:"Saisir une région"},
+ en:{label:"Search",placeholder:"Search stores or products...",stores:"Stores",products:"Products",visit:"Visit store",inStore:"at",noResults:"No matching stores or products found.",loading:"Searching...",error:"Search is unavailable right now. Please try again.",country:"Country",allCountries:"All countries",wilaya:"Wilaya",allWilayas:"All wilayas",region:"State / Region",regionPlaceholder:"Enter a region"},
+ es:{label:"Buscar",placeholder:"Buscar tiendas o productos...",stores:"Tiendas",products:"Productos",visit:"Visitar tienda",inStore:"en",noResults:"No se encontraron tiendas ni productos coincidentes.",loading:"Buscando...",error:"No se puede realizar la búsqueda ahora. Inténtalo de nuevo.",country:"País",allCountries:"Todos los países",wilaya:"Wilaya",allWilayas:"Todas las wilayas",region:"Región / Estado",regionPlaceholder:"Escribe una región"},
+ de:{label:"Suche",placeholder:"Shops oder Produkte suchen...",stores:"Shops",products:"Produkte",visit:"Shop besuchen",inStore:"bei",noResults:"Keine passenden Shops oder Produkte gefunden.",loading:"Suche läuft...",error:"Die Suche ist derzeit nicht verfügbar. Bitte erneut versuchen.",country:"Land",allCountries:"Alle Länder",wilaya:"Wilaya",allWilayas:"Alle Wilayas",region:"Region / Bundesland",regionPlaceholder:"Region eingeben"},
+ tr:{label:"Ara",placeholder:"Mağaza veya ürün ara...",stores:"Mağazalar",products:"Ürünler",visit:"Mağazayı ziyaret et",inStore:"mağazasında",noResults:"Eşleşen mağaza veya ürün bulunamadı.",loading:"Aranıyor...",error:"Arama şu anda kullanılamıyor. Lütfen tekrar deneyin.",country:"Ülke",allCountries:"Tüm ülkeler",wilaya:"Wilaya",allWilayas:"Tüm wilayalar",region:"Bölge / Eyalet",regionPlaceholder:"Bölge girin"}
 };
 Object.assign(translations.ar,{login:"تسجيل الدخول"});
 Object.assign(translations.fr,{login:"Connexion"});
@@ -262,15 +262,20 @@ function refreshGlobalSearchLocationOptions(){
  const isAlgeria=countrySelect.value==="DZ";
  el("globalSearchWilayaWrap").hidden=!isAlgeria;
  geo.populateWilayaSelect(wilayaSelect,{lang:language,selected:isAlgeria?selectedWilaya:"",allLabel:words.allWilayas});
- const countryLabel=el("globalSearchCountryLabel"),wilayaLabel=el("globalSearchWilayaLabel");
+ const regionWrap=el("globalSearchRegionWrap"),regionInput=el("globalSearchRegion");
+ if(regionWrap)regionWrap.hidden=!countrySelect.value||isAlgeria;
+ if(isAlgeria&&regionInput)regionInput.value="";
+ const countryLabel=el("globalSearchCountryLabel"),wilayaLabel=el("globalSearchWilayaLabel"),regionLabel=el("globalSearchRegionLabel");
  if(countryLabel)countryLabel.textContent=words.country;
  if(wilayaLabel)wilayaLabel.textContent=words.wilaya;
+ if(regionLabel)regionLabel.textContent=words.region;
+ if(regionInput)regionInput.placeholder=words.regionPlaceholder;
 }
 function renderGlobalSearch(value){
  const box=el("globalSearchResults"),input=el("globalSearchInput"),term=searchText(value),words=SEARCH_UI_TEXT[language]||SEARCH_UI_TEXT.ar;
  if(!box||!input)return;
- const selectedCountry=el("globalSearchCountry")?.value||"",selectedWilaya=el("globalSearchWilaya")?.value||"";
- const hasLocationFilter=!!selectedCountry||!!selectedWilaya;
+ const selectedCountry=el("globalSearchCountry")?.value||"",selectedWilaya=el("globalSearchWilaya")?.value||"",selectedRegion=searchText(el("globalSearchRegion")?.value||"");
+ const hasLocationFilter=!!selectedCountry||!!selectedWilaya||!!selectedRegion;
  if(!term&&!hasLocationFilter){box.hidden=true;box.innerHTML="";return;}
  box.hidden=false;
  box.innerHTML='<p class="global-search-status">'+safe(words.loading)+'</p>';
@@ -278,11 +283,11 @@ function renderGlobalSearch(value){
   try{
    if(!regularStores.length&&!featuredStores.length)await loadFeaturedStores();
    const allStores=[...featuredStores,...regularStores];
-   const matchesLocation=store=>(!selectedCountry||store.country_code===selectedCountry)&&(!selectedWilaya||store.wilaya_code===selectedWilaya);
+   const matchesLocation=store=>(!selectedCountry||store.country_code===selectedCountry)&&(!selectedWilaya||store.wilaya_code===selectedWilaya)&&(!selectedRegion||searchText(store.region_name||"").includes(selectedRegion));
    const matchedStores=allStores.filter(store=>matchesLocation(store)&&(!term||searchText([store.store_name,store.seller_name,store.slug].join(" ")).includes(term)));
    const allProducts=await loadGlobalSearchProducts();
    const matchedProducts=allProducts.filter(product=>matchesLocation(product.store)&&(!term||searchText([product.name,product.description,product.category,product.store?.store_name,product.store?.seller_name].join(" ")).includes(term)));
-   if(searchText(el("globalSearchInput")?.value)!==term||(el("globalSearchCountry")?.value||"")!==selectedCountry||(el("globalSearchWilaya")?.value||"")!==selectedWilaya)return;
+   if(searchText(el("globalSearchInput")?.value)!==term||(el("globalSearchCountry")?.value||"")!==selectedCountry||(el("globalSearchWilaya")?.value||"")!==selectedWilaya||searchText(el("globalSearchRegion")?.value||"")!==selectedRegion)return;
    const locationLabel=store=>{
     const geo=window.MINABYBLocations;if(!geo)return "";
     const parts=[];
@@ -662,6 +667,7 @@ if(window.visualViewport){
 el("globalSearchClose")?.addEventListener("click",()=>{const field=el("globalSearchInput");if(field)field.value="";renderGlobalSearch("");if(el("globalSearchPanel"))el("globalSearchPanel").hidden=true;});
 el("globalSearchCountry")?.addEventListener("change",()=>{refreshGlobalSearchLocationOptions();renderGlobalSearch(el("globalSearchInput")?.value||"");});
 el("globalSearchWilaya")?.addEventListener("change",()=>renderGlobalSearch(el("globalSearchInput")?.value||""));
+el("globalSearchRegion")?.addEventListener("input",()=>renderGlobalSearch(el("globalSearchInput")?.value||""));
 el("searchInput").addEventListener("input",e=>{if(isPlatformHome)renderGlobalSearch(e.target.value);else{searchTerm=e.target.value;renderProducts();}});
 el("clearSearch").addEventListener("click",()=>{searchTerm="";el("searchInput").value="";if(isPlatformHome)renderGlobalSearch("");else renderProducts();el("searchInput").focus();});
 el("categorySelect").addEventListener("change",e=>{activeCategory=e.target.value;renderProducts();});
