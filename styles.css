@@ -1405,3 +1405,259 @@ html[data-theme="dark"] .latest-merchant-product-info small{color:#b8df76}
 .site-menu-panel #adminDashboardLink[hidden]{display:none!important}
 .site-menu-panel #adminDashboardLink:hover{background:linear-gradient(135deg,#205239,#218052);transform:translateY(-1px)}
 .site-menu-panel #adminDashboardLink:active{transform:translateY(2px);box-shadow:0 2px 0 #0d3925}
+
+
+/* =========================================================
+   MINABYB Visual System v1 — 3D Hybrid
+   Visual-only layer: preserves existing markup and behavior.
+   ========================================================= */
+:root{
+  --ink:#203247;
+  --muted:#718096;
+  --lime:#25C9A0;
+  --paper:#F4F8FF;
+  --line:#E1EAF4;
+  --white:#FFFFFF;
+  --minabyb-mint:#25C9A0;
+  --minabyb-blue:#62B8FF;
+  --minabyb-coral:#FF9B70;
+  --minabyb-ice:#F4F8FF;
+  --minabyb-deep:#183247;
+  --minabyb-shadow:0 12px 28px rgba(37,75,105,.10);
+  --minabyb-shadow-raised:0 5px 0 rgba(20,115,100,.20),0 10px 22px rgba(27,91,116,.16);
+}
+html{background:var(--minabyb-ice)}
+body{
+  background:var(--minabyb-ice);
+  color:var(--ink);
+  font-family:Inter,"Tajawal",system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;
+}
+::selection{background:rgba(37,201,160,.24);color:var(--minabyb-deep)}
+.site-header{background:transparent}
+.brand-row{
+  background:linear-gradient(180deg,#fff 0%,#f8fbff 100%);
+  box-shadow:0 5px 18px rgba(31,70,102,.055);
+}
+.brand-row .brand{color:var(--minabyb-deep)}
+.brand-tagline{letter-spacing:1.7px}
+.site-header nav a{transition:color .18s ease,transform .18s ease}
+.site-header nav a:hover{color:#159D83;transform:translateY(-1px)}
+.section{background:transparent}
+.section-heading h2,.about-section h2,.contact-section h2{
+  color:var(--minabyb-deep);
+  letter-spacing:-.35px;
+}
+.eyebrow{color:#159D83}
+.primary-btn,.order-btn,.view-cart-btn,.featured-promo-cta,
+.referral-promo-cta,.header-tools .header-login-link{
+  position:relative;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:13px;
+  background:linear-gradient(145deg,#54E0BC 0%,#25C9A0 58%,#18AE91 100%);
+  color:#083F37!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),
+             inset 0 -2px 0 rgba(7,104,86,.16),
+             0 4px 0 #128D77,
+             0 8px 17px rgba(21,157,131,.20);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.primary-btn{padding:10px 17px;border-radius:12px}
+.order-btn{padding:8px 12px;border-radius:10px}
+.view-cart-btn{padding:9px 15px}
+.primary-btn:hover,.order-btn:hover,.view-cart-btn:hover,
+.featured-promo-cta:hover,.referral-promo-cta:hover,
+.header-tools .header-login-link:hover{
+  filter:saturate(1.06) brightness(1.025);
+  transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.78),
+             0 5px 0 #128D77,
+             0 12px 22px rgba(21,157,131,.23);
+}
+.primary-btn:active,.order-btn:active,.view-cart-btn:active,
+.featured-promo-cta:active,.referral-promo-cta:active,
+.header-tools .header-login-link:active{
+  transform:translateY(2px);
+  box-shadow:inset 0 2px 4px rgba(5,82,68,.18),0 1px 0 #128D77;
+}
+.primary-btn:focus-visible,.order-btn:focus-visible,.view-cart-btn:focus-visible,
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{
+  outline:3px solid rgba(98,184,255,.7);
+  outline-offset:3px;
+}
+.add-cart-btn,.details-text-btn,.global-search-toggle,.theme-toggle,
+.clear-search-btn,.cart-item-controls button{
+  border-radius:11px;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease;
+}
+.add-cart-btn,.details-text-btn{
+  background:linear-gradient(145deg,#EAF8FF,#DCEFFF);
+  color:#245A83;
+  border:1px solid #B9DDF8;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #B7D7EF,0 6px 12px rgba(64,137,190,.10);
+}
+.global-search-toggle,.theme-toggle{
+  background:linear-gradient(145deg,#fff,#F0F7FF);
+  border-color:#D8E6F3;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #DCE8F2,0 6px 12px rgba(52,94,128,.07);
+}
+.site-menu-toggle{
+  border:1px solid #8FE8D2;
+  background:linear-gradient(145deg,#3ED9B3,#159F87);
+  color:#073D35;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 0 #117D6B,0 8px 16px rgba(21,157,131,.20);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.site-menu-toggle:active{transform:translateY(2px);box-shadow:inset 0 1px 3px #08745f55,0 1px 0 #117D6B}
+.product-card,.latest-merchant-product-card,.featured-store-card,
+.public-review,.review-form,.home-benefits article,.global-search-store,
+.global-search-product,.cart-item{
+  border-color:#E0EAF4;
+  border-radius:18px;
+  box-shadow:0 3px 0 rgba(70,113,147,.045),var(--minabyb-shadow);
+}
+.product-card,.latest-merchant-product-card,.featured-store-card{
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.product-card:hover,.latest-merchant-product-card:hover,.featured-store-card:hover{
+  transform:translateY(-4px);
+  border-color:#B9EDE0;
+  box-shadow:0 6px 0 rgba(37,201,160,.10),0 16px 30px rgba(31,93,120,.13);
+}
+.product-image,.product-image-button,.latest-merchant-product-image{
+  background:linear-gradient(145deg,#EAF8FF,#F6FBFF 58%,#E8F8F3);
+}
+.product-category,.product-stock{
+  background:#E2F8F2;
+  color:#12866F;
+}
+.price,.latest-merchant-product-info small{color:#12866F}
+.featured-store-card>img,.featured-store-icon{border-radius:16px}
+.home-benefits{background:linear-gradient(180deg,#fff,#F4F8FF);border-color:#E1EAF4}
+.home-benefits article{background:linear-gradient(145deg,#fff,#F3FAFF)}
+.hero-product-showcase{
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 8px 0 rgba(14,49,75,.12),0 24px 48px rgba(24,58,87,.22);
+}
+.hero-intro-card{
+  border-color:rgba(98,184,255,.30);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 7px 0 rgba(46,123,166,.08),0 18px 34px rgba(34,88,124,.12);
+}
+.featured-promo-section{
+  background:linear-gradient(135deg,#173E50 0%,#1A6570 52%,#168D83 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.featured-promo-icon,.referral-promo-icon{
+  box-shadow:inset 0 2px 5px rgba(255,255,255,.7),inset 0 -4px 7px rgba(18,82,91,.12),0 7px 15px rgba(15,61,78,.16);
+}
+.referral-promo-section{
+  border-color:#CDEFE5;
+  background:linear-gradient(120deg,#E8FAF5,#F5FAFF 65%,#fff);
+  box-shadow:0 5px 0 rgba(37,201,160,.08),0 14px 28px rgba(36,99,120,.08);
+}
+.sponsored-ad-card,.hero-advertising-grid>.sponsored-ads-section{
+  border-color:#DCE9F4;
+  border-radius:18px;
+  box-shadow:0 5px 0 rgba(49,96,132,.06),0 12px 24px rgba(31,75,108,.10);
+}
+input,select,textarea{
+  accent-color:var(--minabyb-mint);
+}
+#searchInput,.global-search-input-row input,.global-search-location-row select,
+.global-search-location-row input,.category-select,.language-picker select,
+.review-form input,.review-form select,.review-form textarea,
+.order-form-fields input,.order-form-fields textarea{
+  border-color:#D8E5F0;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:inset 0 2px 4px rgba(38,77,108,.035);
+}
+.order-dialog,.cart-dialog,.product-details-dialog{
+  border-radius:24px;
+  box-shadow:0 12px 0 rgba(24,58,87,.10),0 30px 80px rgba(18,45,70,.25);
+}
+.order-dialog-card,.cart-dialog-card,.product-details-card{
+  background:linear-gradient(155deg,#fff 0%,#F8FBFF 100%);
+}
+.order-dialog-total,.reviews-summary{
+  background:linear-gradient(145deg,#E5F9F3,#EEF7FF);
+}
+.site-menu-panel{
+  box-shadow:-12px 0 0 rgba(98,184,255,.08),-24px 0 55px rgba(18,45,70,.20);
+}
+.site-menu-panel>nav>a,.site-menu-panel>nav>button,
+.site-menu-panel>.header-login-link,.site-menu-panel>.header-account-link,
+.site-menu-panel>.header-logout-btn,.site-menu-panel>.how-it-works-nav-link{
+  border-radius:13px!important;
+  border-color:#DCE8F2!important;
+  box-shadow:0 2px 0 rgba(56,104,140,.06)!important;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease!important;
+}
+.site-menu-panel>nav>a:hover,.site-menu-panel>nav>button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 0 rgba(37,201,160,.12)!important;
+}
+.site-menu-panel #merchantAccountLink{
+  background:linear-gradient(145deg,#42D9B5 0%,#159F87 100%)!important;
+  border-color:#9CEBD8!important;
+  color:#073D35!important;-webkit-text-fill-color:#073D35!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.48),0 4px 0 #117D6B,0 9px 18px rgba(21,157,131,.20)!important;
+}
+.site-menu-panel #merchantAccountLink::before{color:#E8FF9C}
+.site-menu-panel #adminDashboardLink{
+  background:linear-gradient(145deg,#4B9DE0,#286DAF)!important;
+  border-color:#9CCFFF!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 4px 0 #20598E,0 8px 16px rgba(40,109,175,.20)!important;
+}
+.brand-symbol{filter:drop-shadow(0 4px 8px rgba(29,104,120,.20))}
+.brand-mina{color:#159F87}
+.brand-byb{color:#398ED0}
+@media(max-width:760px){
+  .section-heading h2,.about-section h2,.contact-section h2{letter-spacing:-.2px}
+  .product-card,.latest-merchant-product-card,.featured-store-card{border-radius:15px}
+  .primary-btn{padding:9px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+/* Preserve readable contrast and the established dark-mode behavior. */
+html[data-theme="dark"] .brand-row{background:linear-gradient(180deg,#172536,#121E2B);box-shadow:0 5px 18px rgba(0,0,0,.18)}
+html[data-theme="dark"] .brand-row .brand{color:#EDF2F7}
+html[data-theme="dark"] .section-heading h2,html[data-theme="dark"] .about-section h2,
+html[data-theme="dark"] .contact-section h2{color:#EDF2F7}
+html[data-theme="dark"] .product-card,html[data-theme="dark"] .latest-merchant-product-card,
+html[data-theme="dark"] .featured-store-card,html[data-theme="dark"] .public-review,
+html[data-theme="dark"] .review-form,html[data-theme="dark"] .home-benefits article{
+  border-color:#2B4054;box-shadow:0 4px 0 rgba(0,0,0,.14),0 12px 26px rgba(0,0,0,.18)
+}
+html[data-theme="dark"] .home-benefits{background:linear-gradient(180deg,#121E2B,#0F1A27)}
+html[data-theme="dark"] .home-benefits article{background:linear-gradient(145deg,#1B2D40,#172536)}
+html[data-theme="dark"] .primary-btn,html[data-theme="dark"] .order-btn,
+html[data-theme="dark"] .view-cart-btn,html[data-theme="dark"] .featured-promo-cta,
+html[data-theme="dark"] .referral-promo-cta{color:#073D35!important}
+html[data-theme="dark"] #searchInput,html[data-theme="dark"] .global-search-input-row input,
+html[data-theme="dark"] .global-search-location-row select,html[data-theme="dark"] .global-search-location-row input,
+html[data-theme="dark"] .category-select,html[data-theme="dark"] .language-picker select,
+html[data-theme="dark"] .review-form input,html[data-theme="dark"] .review-form select,
+html[data-theme="dark"] .review-form textarea,html[data-theme="dark"] .order-form-fields input,
+html[data-theme="dark"] .order-form-fields textarea{
+  background:#101C29;color:#EDF2F7;border-color:#344B60
+}
+html[data-theme="dark"] .order-dialog-card,html[data-theme="dark"] .cart-dialog-card,
+html[data-theme="dark"] .product-details-card{background:linear-gradient(155deg,#1B2D40,#172536)}
+html[data-theme="dark"] .order-dialog-total,html[data-theme="dark"] .reviews-summary{background:linear-gradient(145deg,#1C3C3C,#1C3047)}
+@media(prefers-color-scheme:dark){
+ html[data-theme="system"] .brand-row{background:linear-gradient(180deg,#172536,#121E2B)}
+ html[data-theme="system"] .brand-row .brand{color:#EDF2F7}
+ html[data-theme="system"] .section-heading h2,html[data-theme="system"] .about-section h2,
+ html[data-theme="system"] .contact-section h2{color:#EDF2F7}
+ html[data-theme="system"] .product-card,html[data-theme="system"] .latest-merchant-product-card,
+ html[data-theme="system"] .featured-store-card,html[data-theme="system"] .public-review,
+ html[data-theme="system"] .review-form,html[data-theme="system"] .home-benefits article{
+  border-color:#2B4054;box-shadow:0 4px 0 rgba(0,0,0,.14),0 12px 26px rgba(0,0,0,.18)
+ }
+ html[data-theme="system"] .home-benefits{background:linear-gradient(180deg,#121E2B,#0F1A27)}
+ html[data-theme="system"] .home-benefits article{background:linear-gradient(145deg,#1B2D40,#172536)}
+ html[data-theme="system"] .order-dialog-card,html[data-theme="system"] .cart-dialog-card,
+ html[data-theme="system"] .product-details-card{background:linear-gradient(155deg,#1B2D40,#172536)}
+ html[data-theme="system"] .order-dialog-total,html[data-theme="system"] .reviews-summary{background:linear-gradient(145deg,#1C3C3C,#1C3047)}
+}
