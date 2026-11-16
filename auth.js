@@ -74,5 +74,7 @@ const requestedNext=authParams.get("next");
 const requestedMode=authParams.get("mode");
 if(requestedMode==="login")openAuth("login");
 const requestedLanguage=authTranslations[authParams.get("lang")]?authParams.get("lang"):authLanguage;
-const authNext=requestedNext==="dashboard.html"?("dashboard.html?lang="+encodeURIComponent(requestedLanguage)):requestedNext==="create-store.html"?("create-store.html?lang="+encodeURIComponent(requestedLanguage)):requestedNext==="account.html"?("account.html"):requestedNext==="admin.html"?"admin.html":"index.html";
+const authNextBase=requestedNext==="dashboard.html"?("dashboard.html?lang="+encodeURIComponent(requestedLanguage)):requestedNext==="create-store.html"?("create-store.html?lang="+encodeURIComponent(requestedLanguage)):requestedNext==="account.html"?("account.html"):requestedNext==="admin.html"?"admin.html":"index.html";
+ const requestedDashboardSection=["#referrals","#featured-promotion"].includes(location.hash)?location.hash:"";
+ const authNext=authNextBase+(requestedNext==="dashboard.html"?requestedDashboardSection:"");
 supabase.auth.getSession().then(({data})=>{if(data.session){try{localStorage.removeItem("msdz-referral-code");}catch(storageError){}location.replace(authNext);}});
