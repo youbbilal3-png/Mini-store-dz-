@@ -610,7 +610,7 @@ function setSiteMenuOpen(open){
  siteMenuToggle.setAttribute("aria-expanded",String(open));
  document.body.classList.toggle("site-menu-open",open);
  if(open)el("siteMenuClose")?.focus();
- else siteMenuToggle.focus();
+ else (el("appBottomMenuButton")||siteMenuToggle).focus();
 }
 siteMenuToggle?.addEventListener("click",()=>setSiteMenuOpen(siteMenu?.hidden));
 el("siteMenuClose")?.addEventListener("click",()=>setSiteMenuOpen(false));
@@ -650,7 +650,7 @@ el("globalSearchToggle")?.addEventListener("click",()=>{
   if(!panel.hidden)window.setTimeout(()=>el("globalSearchInput")?.focus(),120);
  }else{el("products")?.scrollIntoView({behavior:"smooth",block:"start"});window.setTimeout(()=>el("searchInput")?.focus(),250);}
 });
-el("appBottomMenuButton")?.addEventListener("click",()=>el("siteMenuToggle")?.click());
+el("appBottomMenuButton")?.addEventListener("click",()=>setSiteMenuOpen(siteMenu?.hidden));
 el("globalSearchInput")?.addEventListener("input",event=>renderGlobalSearch(event.target.value));
 function keepGlobalSearchInputVisible(){
  const input=el("globalSearchInput");
