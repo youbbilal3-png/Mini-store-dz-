@@ -11,10 +11,13 @@ function countryName(code,lang){
  try{return new Intl.DisplayNames([locale(lang)],{type:"region"}).of(code)||row[1];}
  catch{return row[1];}
 }
+const wilayaEnglish={
+"01":"Adrar","02":"Chlef","03":"Laghouat","04":"Oum El Bouaghi","05":"Batna","06":"Bejaia","07":"Biskra","08":"Bechar","09":"Blida","10":"Bouira","11":"Tamanrasset","12":"Tebessa","13":"Tlemcen","14":"Tiaret","15":"Tizi Ouzou","16":"Algiers","17":"Djelfa","18":"Jijel","19":"Setif","20":"Saida","21":"Skikda","22":"Sidi Bel Abbes","23":"Annaba","24":"Guelma","25":"Constantine","26":"Medea","27":"Mostaganem","28":"M'Sila","29":"Mascara","30":"Ouargla","31":"Oran","32":"El Bayadh","33":"Illizi","34":"Bordj Bou Arreridj","35":"Boumerdes","36":"El Tarf","37":"Tindouf","38":"Tissemsilt","39":"El Oued","40":"Khenchela","41":"Souk Ahras","42":"Tipaza","43":"Mila","44":"Ain Defla","45":"Naama","46":"Ain Temouchent","47":"Ghardaia","48":"Relizane","49":"Timimoun","50":"Bordj Badji Mokhtar","51":"Ouled Djellal","52":"Beni Abbes","53":"In Salah","54":"In Guezzam","55":"Touggourt","56":"Djanet","57":"El M'Ghair","58":"El Meniaa","59":"Aflou","60":"Barika","61":"El Kantara","62":"Bir El Ater","63":"El Aricha","64":"Ksar Chellala","65":"Ain Oussera","66":"Messaad","67":"Ksar El Boukhari","68":"Bou Saada","69":"El Abiodh Sidi Cheikh"
+};
 function wilayaName(code,lang){
  const row=wilayaRows.find(item=>item[0]===code);
  if(!row)return code||"";
- return lang==="ar"?row[1]:row[2];
+ return lang==="ar"?row[1]:lang==="fr"?row[2]:(wilayaEnglish[code]||row[2]);
 }
 function populateCountrySelect(select,options){
  if(!select)return;
