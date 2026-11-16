@@ -1,15 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 512 512" role="img" aria-label="MINABYB shopping logo">
 <defs>
-  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b2c24"/><stop offset="1" stop-color="#0b1510"/></linearGradient>
-  <linearGradient id="green" x1="0" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#c8ffda"/><stop offset=".42" stop-color="#36d47a"/><stop offset="1" stop-color="#08713a"/></linearGradient>
-  <linearGradient id="red" x1="0" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#ffd0d0"/><stop offset=".45" stop-color="#f04444"/><stop offset="1" stop-color="#981b27"/></linearGradient>
+ <linearGradient id="bag" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#35D9B0"/><stop offset="1" stop-color="#168BBD"/></linearGradient>
+ <linearGradient id="mint" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#B9FFE9"/><stop offset=".55" stop-color="#25C9A0"/><stop offset="1" stop-color="#087C70"/></linearGradient>
+ <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#BDE6FF"/><stop offset="1" stop-color="#328DD1"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="13" stdDeviation="12" flood-color="#17465B" flood-opacity=".24"/></filter>
 </defs>
-<rect width="512" height="512" rx="112" fill="url(#bg)"/>
-<rect x="22" y="22" width="468" height="468" rx="96" fill="none" stroke="#fff" stroke-opacity=".13" stroke-width="4"/>
-<!-- Interlocked M and B monogram: green M on the left, red B on the right -->
-<path d="M76 390V122h62l75 99 75-99h49v268h-72V246l-52 70-52-70v144z" fill="#064d2b" opacity=".9" transform="translate(8 11)"/>
-<path d="M76 390V122h62l75 99 75-99h49v268h-72V246l-52 70-52-70v144z" fill="url(#green)" stroke="#c8ffda" stroke-opacity=".78" stroke-width="5" stroke-linejoin="round"/>
-<path d="M265 122h77c94 0 111 101 43 134 80 33 60 134-38 134h-82v-69h72c40 0 40-39 0-39h-49v-64h49c38 0 37-35 0-35h-72z" fill="#761923" opacity=".92" transform="translate(8 11)"/>
-<path d="M265 122h77c94 0 111 101 43 134 80 33 60 134-38 134h-82v-69h72c40 0 40-39 0-39h-49v-64h49c38 0 37-35 0-35h-72z" fill="url(#red)" stroke="#ffd0d0" stroke-opacity=".82" stroke-width="5" stroke-linejoin="round"/>
-<path d="M92 139h42l78 99 75-99" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="28" y="28" width="456" height="456" rx="118" fill="#102B36"/>
+<rect x="42" y="42" width="428" height="428" rx="104" fill="none" stroke="#FFFFFF" stroke-opacity=".16" stroke-width="4"/>
+<g filter="url(#shadow)">
+ <path d="M145 191v-28c0-61 43-103 111-103s111 42 111 103v28" fill="none" stroke="url(#bag)" stroke-width="25" stroke-linecap="round"/>
+ <path d="M102 181h308l-22 236H124z" fill="url(#bag)" stroke="#B9FFE9" stroke-opacity=".75" stroke-width="8" stroke-linejoin="round"/>
+ <path d="M159 345V226h28l47 59 47-59h28v119h-37v-62l-38 46-38-46v62z" fill="#123E45" opacity=".5" transform="translate(5 7)"/>
+ <path d="M154 338V219h28l47 59 47-59h28v119h-37v-62l-38 46-38-46v62z" fill="url(#mint)" stroke="#E0FFF4" stroke-width="3" stroke-linejoin="round"/>
+ <path d="M287 219h37c49 0 59 51 22 69 43 19 31 72-22 72h-37v-32h31c20 0 20-23 0-23h-22v-30h22c18 0 18-22 0-22h-31z" fill="url(#blue)" stroke="#E4F5FF" stroke-width="3" stroke-linejoin="round"/>
+</g>
 </svg>
