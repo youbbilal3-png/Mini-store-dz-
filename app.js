@@ -338,7 +338,7 @@ function renderSponsoredAds(){
  });
  if(!entries.length){grid.innerHTML="";return;}
  const renderEntry=(entry,index)=>{const ad=entry.ad,url=safe(entry.url),active=index===0?" active":"";
-  const media=isSponsoredVideo(entry.url)?'<video class="sponsored-ad-media sponsored-ad-video" src="'+url+'" muted playsinline loop preload="metadata"></video>':'<img class="sponsored-ad-backdrop" src="'+url+'" alt="" aria-hidden="true"><img class="sponsored-ad-media sponsored-ad-image" src="'+url+'" alt="'+safe(ad.title)+'" loading="lazy" decoding="async">';
+  const media=isSponsoredVideo(entry.url)?'<video class="sponsored-ad-media sponsored-ad-video" src="'+url+'" muted playsinline loop preload="metadata"></video>':'<img class="sponsored-ad-media sponsored-ad-image" src="'+url+'" alt="'+safe(ad.title)+'" loading="eager" decoding="async">';
   return '<a class="sponsored-ad-entry'+active+'" href="'+safe(ad.target_url)+'" target="_blank" rel="noopener noreferrer sponsored" aria-label="'+safe(ad.title)+'">'+media+'</a>';
  };
  grid.innerHTML='<div class="sponsored-ad-card"><div class="sponsored-ad-slides">'+entries.map(renderEntry).join("")+'</div><span class="sponsored-ad-label">'+safe(translations[language].sponsoredEyebrow)+'</span>'+(entries.length>1?'<span class="sponsored-ad-counter">1 / '+entries.length+'</span>':'')+'</div>';
