@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="styles.css?v=20261116-9">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="location-data.js?v=20261116-4"></script>
-<script type="module" src="app.js?v=20261116-7"></script>
+<script type="module" src="app.js?v=20261116-8"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body class="auth-checking">
@@ -43,6 +43,9 @@
   </div>
   <div class="header-tools">
     <button type="button" class="site-menu-toggle" id="siteMenuToggle" aria-expanded="false" aria-controls="siteMenuPanel"><span aria-hidden="true">☰</span><span data-i18n="menuLabel">القائمة</span></button>
+
+  </div>
+</header>
     <button type="button" class="site-menu-backdrop" id="siteMenuBackdrop" aria-label="إغلاق القائمة" hidden></button>
     <aside class="site-menu-panel" id="siteMenuPanel" aria-label="القائمة الرئيسية" hidden>
       <div class="site-menu-heading"><strong data-i18n="menuLabel">القائمة</strong><button type="button" id="siteMenuClose" aria-label="إغلاق القائمة">×</button></div>
@@ -79,8 +82,6 @@
       </section>
       <div class="site-menu-share" id="siteMenuShareSlot"><div class="brand-share-wrap"><button type="button" class="share-platform-btn" id="sharePlatformButton" aria-label="شارك MINABYB" title="شارك MINABYB"><span aria-hidden="true">↗</span><span data-i18n="sharePlatformLabel">شارك الموقع</span></button><span class="share-platform-feedback" id="sharePlatformFeedback" role="status" aria-live="polite"></span></div></div>
     </aside>
-  </div>
-</header>
 <main id="top">
   <section class="global-search-panel app-search-panel" id="globalSearchPanel" hidden>
     <div class="global-search-input-row"><span class="app-search-symbol" aria-hidden="true">⌕</span><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
