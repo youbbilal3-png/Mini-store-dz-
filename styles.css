@@ -1971,3 +1971,13 @@ html[data-theme="dark"] #authenticatedSite .site-menu-panel .site-menu-quick-too
  #authenticatedSite .referral-promo-cta{grid-column:2!important;justify-self:start!important;margin-top:2px!important}
 }
 @media(max-width:370px){#authenticatedSite .brand-full-logo{width:250px!important}}
+
+/* Restore normal document scrolling and keep the drawer outside the hidden header tools */
+#authenticatedSite{min-height:100vh;overflow:visible}
+#authenticatedSite .site-header>.header-tools{display:none!important}
+#authenticatedSite>.site-menu-backdrop{position:fixed!important;inset:0!important;z-index:1201!important}
+#authenticatedSite>.site-menu-panel{position:fixed!important;inset-block:0!important;inset-inline-end:0!important;z-index:1202!important;width:min(88vw,360px)!important;height:100dvh!important;max-height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important}
+#authenticatedSite>.site-menu-panel[hidden],#authenticatedSite>.site-menu-backdrop[hidden]{display:none!important}
+#authenticatedSite .app-bottom-nav{z-index:1200}
+body.site-menu-open{overflow:hidden!important;touch-action:none}
+body.site-menu-open #authenticatedSite>.site-menu-panel{touch-action:pan-y}
