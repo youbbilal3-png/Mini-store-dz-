@@ -602,15 +602,15 @@ function setSiteLanguage(value){language=["ar","fr","en","es","de","tr"].include
 el("languageSelect")?.addEventListener("change",e=>setSiteLanguage(e.target.value));
 el("publicLanguageSelect")?.addEventListener("change",e=>setSiteLanguage(e.target.value));
 
-// Accessible homepage navigation drawer. Search and theme controls remain outside it.
+// Accessible homepage navigation drawer. Search and theme controls remain inside the drawer.
 const siteMenu=el("siteMenuPanel"),siteMenuToggle=el("siteMenuToggle"),siteMenuBackdrop=el("siteMenuBackdrop");
 function setSiteMenuOpen(open){
- if(!siteMenu||!siteMenuToggle||!siteMenuBackdrop)return;
+ if(!siteMenu||!siteMenuBackdrop)return;
  siteMenu.hidden=!open;siteMenuBackdrop.hidden=!open;
- siteMenuToggle.setAttribute("aria-expanded",String(open));
+ siteMenuToggle?.setAttribute("aria-expanded",String(open));
  document.body.classList.toggle("site-menu-open",open);
  if(open)el("siteMenuClose")?.focus();
- else (el("appBottomMenuButton")||siteMenuToggle).focus();
+ else (el("appBottomMenuButton")||siteMenuToggle)?.focus();
 }
 siteMenuToggle?.addEventListener("click",()=>setSiteMenuOpen(siteMenu?.hidden));
 el("siteMenuClose")?.addEventListener("click",()=>setSiteMenuOpen(false));
