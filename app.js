@@ -73,6 +73,12 @@ Object.assign(translations.es,{whatsappUs:"Contactar con la tienda por WhatsApp"
 Object.assign(translations.de,{whatsappUs:"Shop über WhatsApp kontaktieren",whatsappUnavailable:"Dieser Shop hat noch keine WhatsApp-Nummer hinzugefügt"});
 Object.assign(translations.tr,{whatsappUs:"WhatsApp üzerinden mağazayla iletişime geç",whatsappUnavailable:"Bu mağaza henüz bir WhatsApp numarası eklemedi"});
 
+Object.assign(translations.ar,{homeRewardsButton:"المكافآت"});
+Object.assign(translations.fr,{homeRewardsButton:"Récompenses"});
+Object.assign(translations.en,{homeRewardsButton:"Rewards"});
+Object.assign(translations.es,{homeRewardsButton:"Recompensas"});
+Object.assign(translations.de,{homeRewardsButton:"Belohnungen"});
+Object.assign(translations.tr,{homeRewardsButton:"Ödüller"});
 Object.assign(translations.ar,{referralEyebrow:"شارك واربح",referralTitle:"ادعُ أصدقاءك إلى MINABYB",referralDescription:"شارك رابطك الخاص، واجمع شارات مميزة مع كل تسجيل مؤكد من أصدقائك.",referralCTA:"ابدأ الدعوة"});
 Object.assign(translations.fr,{referralEyebrow:"Partagez et gagnez",referralTitle:"Invitez vos amis sur MINABYB",referralDescription:"Partagez votre lien personnel et gagnez des badges à chaque inscription confirmée.",referralCTA:"Commencer"});
 Object.assign(translations.en,{referralEyebrow:"SHARE & EARN",referralTitle:"Invite friends to MINABYB",referralDescription:"Share your personal link and earn special badges for every confirmed signup.",referralCTA:"Start inviting"});
