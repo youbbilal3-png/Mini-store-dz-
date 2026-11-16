@@ -645,10 +645,12 @@ el("closeContactDialog")?.addEventListener("click",()=>closeInfoDialog("contactD
 if(el("copyStoreLink"))el("copyStoreLink").addEventListener("click",copyStoreLink);
 el("globalSearchToggle")?.addEventListener("click",()=>{
  if(isPlatformHome&&el("globalSearchPanel")){
-  const panel=el("globalSearchPanel");panel.hidden=!panel.hidden;
-  if(!panel.hidden){panel.scrollIntoView({behavior:"smooth",block:"start"});window.setTimeout(()=>el("globalSearchInput")?.focus(),250);}
+  const panel=el("globalSearchPanel");panel.hidden=false;
+  panel.scrollIntoView({behavior:"smooth",block:"center"});
+  window.setTimeout(()=>el("globalSearchInput")?.focus(),150);
  }else{el("products")?.scrollIntoView({behavior:"smooth",block:"start"});window.setTimeout(()=>el("searchInput")?.focus(),250);}
 });
+el("appBottomMenuButton")?.addEventListener("click",()=>el("siteMenuToggle")?.click());
 el("globalSearchInput")?.addEventListener("input",event=>renderGlobalSearch(event.target.value));
 function keepGlobalSearchInputVisible(){
  const input=el("globalSearchInput");
