@@ -1834,3 +1834,58 @@ html[data-theme="dark"] #authenticatedSite .product-card{
   #authenticatedSite .product-card,#authenticatedSite .featured-store-card,
   #authenticatedSite .text-link{transition:none!important}
 }
+
+/* MINABYB App-like Home v3 — refined mobile marketplace shell */
+#authenticatedSite .site-header{position:relative;z-index:30;width:min(1280px,100%);margin:0 auto;padding:12px clamp(14px,3vw,34px) 8px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:transparent;border:0;box-shadow:none}
+#authenticatedSite .brand-row{padding:0;background:transparent;box-shadow:none}
+#authenticatedSite .brand-symbol{width:48px;height:48px}
+#authenticatedSite .brand-name{font-size:clamp(21px,3vw,29px);letter-spacing:-.8px}
+#authenticatedSite .brand-tagline{font-size:8px;letter-spacing:1.7px}
+#authenticatedSite .header-tools{display:flex;align-items:center;gap:8px}
+#authenticatedSite .header-tools>button{min-height:42px;border-radius:14px}
+#authenticatedSite .app-search-panel{display:block!important;position:relative;z-index:5;width:min(1180px,calc(100% - 32px));margin:8px auto 18px;padding:14px;border:1px solid #DCEAF4;border-radius:22px;background:linear-gradient(145deg,#fff 0%,#F8FCFF 55%,#EDFAF6 100%);box-shadow:inset 0 1px 0 #fff,0 5px 0 rgba(98,184,255,.10),0 15px 32px rgba(35,88,120,.09)}
+#authenticatedSite .app-search-panel .global-search-input-row{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 13px;border:1px solid #D9E7F1;border-radius:15px;background:#fff}
+#authenticatedSite .app-search-symbol{font-size:25px;line-height:1;color:#159F87}
+#authenticatedSite .app-search-panel .global-search-input-row input{flex:1;min-width:0;border:0!important;box-shadow:none!important;background:transparent!important;min-height:44px;padding-inline:4px}
+#authenticatedSite .app-search-panel .global-search-input-row button{width:32px;height:32px;border:0;border-radius:10px;background:#F0F7FB;color:#557084}
+#authenticatedSite .app-search-panel .global-search-location-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+#authenticatedSite .app-search-panel .global-search-location-row label{min-width:0;padding:7px 10px;border:1px solid #E1ECF3;border-radius:13px;background:#F9FCFF}
+#authenticatedSite .app-search-panel .global-search-location-row label span{display:block;margin-bottom:3px;font-size:11px;font-weight:800;color:#6A8294}
+#authenticatedSite .app-search-panel .global-search-location-row select,#authenticatedSite .app-search-panel .global-search-location-row input{width:100%;min-width:0;border:0!important;padding:3px 0;background:transparent!important;box-shadow:none!important;font-size:13px;font-weight:750;color:#24465B}
+#authenticatedSite .hero{padding-top:8px}
+#authenticatedSite .hero-product-showcase{border-radius:25px}
+#authenticatedSite .home-promos-row{margin-top:22px}
+#authenticatedSite .app-bottom-nav{display:none}
+@media(max-width:760px){
+ body:not(.public-locked) #authenticatedSite{padding-bottom:82px}
+ #authenticatedSite .site-header{position:sticky;top:0;width:100%;padding:8px 13px;background:rgba(248,252,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(211,229,239,.8);box-shadow:0 5px 18px rgba(35,88,120,.06)}
+ #authenticatedSite .brand-symbol{width:40px;height:40px}
+ #authenticatedSite .brand-name{font-size:20px}
+ #authenticatedSite .brand-tagline{font-size:7px;letter-spacing:1.25px}
+ #authenticatedSite .header-tools{gap:6px}
+ #authenticatedSite .header-tools>button{min-height:39px;padding:0 10px;border-radius:12px}
+ #authenticatedSite .theme-toggle-label{display:none}
+ #authenticatedSite .global-search-toggle span[data-i18n="searchSiteLabel"]{display:none}
+ #authenticatedSite .global-search-toggle{width:40px;padding:0;justify-content:center}
+ #authenticatedSite .app-search-panel{width:calc(100% - 24px);margin:12px auto 14px;padding:11px;border-radius:19px}
+ #authenticatedSite .app-search-panel .global-search-location-row{gap:7px}
+ #authenticatedSite .app-search-panel .global-search-location-row label{padding:6px 8px}
+ #authenticatedSite .hero{padding:7px 12px 10px}
+ #authenticatedSite .hero-product-showcase{height:clamp(205px,57vw,255px);border-radius:21px}
+ #authenticatedSite .app-bottom-nav{position:fixed;z-index:80;inset-inline:10px;bottom:max(9px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));border:1px solid rgba(214,231,241,.95);border-radius:20px;background:rgba(255,255,255,.94);backdrop-filter:blur(20px);box-shadow:0 8px 0 rgba(37,201,160,.08),0 15px 35px rgba(25,65,94,.18)}
+ #authenticatedSite .app-bottom-nav-item{min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;border-radius:13px;background:transparent;color:#6B8191;text-decoration:none;font:inherit;cursor:pointer}
+ #authenticatedSite .app-bottom-nav-item>span{font-size:22px;line-height:1.1;font-weight:800}
+ #authenticatedSite .app-bottom-nav-item small{font-size:10px;font-weight:800;white-space:nowrap}
+ #authenticatedSite .app-bottom-nav-item.active{color:#087E6B;background:linear-gradient(145deg,#E4FAF3,#EFF9FF);box-shadow:inset 0 1px 0 #fff,0 2px 0 rgba(37,201,160,.15)}
+ #authenticatedSite footer{padding-bottom:18px}
+}
+@media(max-width:360px){#authenticatedSite .brand-tagline{display:none}#authenticatedSite .header-tools>button{padding:0 8px}#authenticatedSite .app-bottom-nav{inset-inline:6px}}
+html[data-theme="dark"] #authenticatedSite .site-header{background:rgba(18,30,43,.93);border-color:#2B4054}
+html[data-theme="dark"] #authenticatedSite .app-search-panel{background:linear-gradient(145deg,#172536,#142334);border-color:#2B4054}
+html[data-theme="dark"] #authenticatedSite .app-search-panel .global-search-input-row,html[data-theme="dark"] #authenticatedSite .app-search-panel .global-search-location-row label{background:#101C29;border-color:#344B60}
+html[data-theme="dark"] #authenticatedSite .app-search-panel .global-search-location-row select,html[data-theme="dark"] #authenticatedSite .app-search-panel .global-search-location-row input{color:#EDF2F7}
+@media(max-width:760px){
+ html[data-theme="dark"] #authenticatedSite .app-bottom-nav{background:rgba(20,34,49,.95);border-color:#344B60;box-shadow:0 8px 0 rgba(0,0,0,.12),0 15px 35px rgba(0,0,0,.35)}
+ html[data-theme="dark"] #authenticatedSite .app-bottom-nav-item{color:#A9BDCE}
+ html[data-theme="dark"] #authenticatedSite .app-bottom-nav-item.active{color:#73E4C5;background:linear-gradient(145deg,#173A3B,#1A3042)}
+}
