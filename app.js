@@ -264,7 +264,7 @@ function refreshGlobalSearchLocationOptions(){
  geo.populateWilayaSelect(wilayaSelect,{lang:language,selected:isAlgeria?selectedWilaya:"",allLabel:words.allWilayas});
  const regionWrap=el("globalSearchRegionWrap"),regionInput=el("globalSearchRegion");
  if(regionWrap)regionWrap.hidden=!countrySelect.value||isAlgeria;
- if(isAlgeria&&regionInput)regionInput.value="";
+ if((isAlgeria||!countrySelect.value)&&regionInput)regionInput.value="";
  const countryLabel=el("globalSearchCountryLabel"),wilayaLabel=el("globalSearchWilayaLabel"),regionLabel=el("globalSearchRegionLabel");
  if(countryLabel)countryLabel.textContent=words.country;
  if(wilayaLabel)wilayaLabel.textContent=words.wilaya;
