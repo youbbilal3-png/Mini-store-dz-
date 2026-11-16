@@ -287,8 +287,8 @@ function renderGlobalSearch(value){
     const geo=window.MINABYBLocations;if(!geo)return "";
     const parts=[];
     if(store.wilaya_code)parts.push(geo.wilayaName(store.wilaya_code,language));
+    if(store.region_name&&!store.wilaya_code)parts.push(store.region_name);
     if(store.country_code)parts.push(geo.countryName(store.country_code,language));
-    else if(store.region_name)parts.push(store.region_name);
     return parts.filter(Boolean).join(" · ");
    };
    const storeCards=matchedStores.map(store=>'<a class="global-search-store" href="store.html?store='+encodeURIComponent(store.slug)+'">'+(store.avatar_url?'<img src="'+safe(store.avatar_url)+'" alt="" loading="lazy">':'<span class="global-search-store-icon">🏪</span>')+'<span><b>'+safe(store.store_name||store.seller_name||"Mini Store")+'</b><small>'+safe([store.seller_name||"",locationLabel(store)].filter(Boolean).join(" · "))+'</small><em>'+safe(words.visit)+' ↗</em></span></a>').join("");
