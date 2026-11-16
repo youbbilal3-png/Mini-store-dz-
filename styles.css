@@ -1398,3 +1398,10 @@ html[data-theme="dark"] .latest-merchant-product-info small{color:#b8df76}
 .global-search-location-row label{display:grid;gap:6px;min-width:0;color:var(--muted);font-size:12px;font-weight:800}
 .global-search-location-row select,.global-search-location-row input{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#101827;font:inherit;font-size:14px;box-sizing:border-box}
 @media(max-width:600px){.global-search-location-row{grid-template-columns:1fr}}
+
+
+/* Owner-only administration shortcut in the homepage menu */
+.site-menu-panel #adminDashboardLink{display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:45px;padding:10px 13px;border:1px solid #b8d77a;border-radius:11px;background:linear-gradient(135deg,#173b2b,#176b42);color:#fff!important;text-decoration:none;font:inherit;font-size:14px;font-weight:900;box-shadow:0 4px 0 #0d3925,0 7px 14px #0b2d1d24}
+.site-menu-panel #adminDashboardLink[hidden]{display:none!important}
+.site-menu-panel #adminDashboardLink:hover{background:linear-gradient(135deg,#205239,#218052);transform:translateY(-1px)}
+.site-menu-panel #adminDashboardLink:active{transform:translateY(2px);box-shadow:0 2px 0 #0d3925}
