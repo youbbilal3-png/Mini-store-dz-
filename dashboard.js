@@ -554,6 +554,7 @@ async function init(){
  applyFeaturedPromotionLanguage();
  // Show a clean icon launcher first; each feature opens its own panel.
  const dashboardPanels=[...document.querySelectorAll(".dashboard-content > .dash-panel")];
+ const requestedSectionId=["referrals","featured-promotion"].includes(location.hash.slice(1))?location.hash.slice(1):"";
  dashboardPanels.forEach(panel=>panel.hidden=true);
  const dashboardLinks=[...document.querySelectorAll(".dashboard-sidebar .side-link[href^='#']")];
  dashboardLinks.forEach(link=>link.addEventListener("click",event=>{
@@ -565,8 +566,14 @@ async function init(){
   history.replaceState(null,"",link.getAttribute("href"));
   target.scrollIntoView({behavior:"smooth",block:"start"});
  }));
- // Opening or refreshing the dashboard always returns to the icon launcher.
- if(location.hash)history.replaceState(null,"",location.pathname+location.search);
+ // Honor a requested section passed through the sign-in redirect.
+ if(requestedSectionId){
+  const requestedPanel=$(requestedSectionId);
+  if(requestedPanel){
+   dashboardPanels.forEach(panel=>panel.hidden=panel!==requestedPanel);
+   dashboardLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+requestedSectionId));
+  }
+ }
  // Register controls before waiting for Supabase; slow requests must not disable the dashboard.
  $("saveProfile").addEventListener("click",saveProfile);
  $("storeCountryInput").addEventListener("change",()=>refreshDashboardLocationOptions());
