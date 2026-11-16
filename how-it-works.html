@@ -65,5 +65,6 @@ const picker=document.getElementById("guideLanguage");
 function setLang(lang){const code=dict[lang]?lang:"ar";document.documentElement.lang=code;document.documentElement.dir=code==="ar"?"rtl":"ltr";picker.value=code;document.querySelectorAll("[data-k]").forEach(el=>{const val=dict[code][el.dataset.k];if(val!==undefined)el.innerHTML=val;});try{localStorage.setItem("msdz-language",code);}catch(_){}}
 let initial="ar";try{initial=localStorage.getItem("msdz-language")||"ar";}catch(_){}setLang(initial);picker.addEventListener("change",()=>setLang(picker.value));document.getElementById("year").textContent=new Date().getFullYear();
 </script>
+<script defer src="quran-frame.js?v=20261116-1"></script>
 </body>
 </html>
