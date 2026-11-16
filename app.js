@@ -73,6 +73,12 @@ Object.assign(translations.es,{whatsappUs:"Contactar con la tienda por WhatsApp"
 Object.assign(translations.de,{whatsappUs:"Shop über WhatsApp kontaktieren",whatsappUnavailable:"Dieser Shop hat noch keine WhatsApp-Nummer hinzugefügt"});
 Object.assign(translations.tr,{whatsappUs:"WhatsApp üzerinden mağazayla iletişime geç",whatsappUnavailable:"Bu mağaza henüz bir WhatsApp numarası eklemedi"});
 
+Object.assign(translations.ar,{bottomNavLabel:"التنقل الرئيسي",bottomHome:"الرئيسية",bottomStores:"المتاجر",bottomProducts:"المنتجات",bottomAccount:"حسابي",bottomMenu:"القائمة",adminDashboard:"لوحة إدارة المنصة"});
+Object.assign(translations.fr,{bottomNavLabel:"Navigation principale",bottomHome:"Accueil",bottomStores:"Boutiques",bottomProducts:"Produits",bottomAccount:"Mon compte",bottomMenu:"Menu",adminDashboard:"Administration de la plateforme"});
+Object.assign(translations.en,{bottomNavLabel:"Main navigation",bottomHome:"Home",bottomStores:"Stores",bottomProducts:"Products",bottomAccount:"Account",bottomMenu:"Menu",adminDashboard:"Platform administration"});
+Object.assign(translations.es,{bottomNavLabel:"Navegación principal",bottomHome:"Inicio",bottomStores:"Tiendas",bottomProducts:"Productos",bottomAccount:"Mi cuenta",bottomMenu:"Menú",adminDashboard:"Administración de la plataforma"});
+Object.assign(translations.de,{bottomNavLabel:"Hauptnavigation",bottomHome:"Startseite",bottomStores:"Shops",bottomProducts:"Produkte",bottomAccount:"Konto",bottomMenu:"Menü",adminDashboard:"Plattformverwaltung"});
+Object.assign(translations.tr,{bottomNavLabel:"Ana gezinme",bottomHome:"Ana sayfa",bottomStores:"Mağazalar",bottomProducts:"Ürünler",bottomAccount:"Hesabım",bottomMenu:"Menü",adminDashboard:"Platform yönetimi"});
 Object.assign(translations.ar,{homeRewardsButton:"المكافآت"});
 Object.assign(translations.fr,{homeRewardsButton:"Récompenses"});
 Object.assign(translations.en,{homeRewardsButton:"Rewards"});
