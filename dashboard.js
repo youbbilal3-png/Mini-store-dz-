@@ -278,6 +278,20 @@ async function loadProducts(){
  const {data,error}=await supabase.from("products").select("*").eq("store_id",store.id).order("created_at",{ascending:false});
  if(error)throw error;products=data||[];renderProducts();
 }
+function refreshDashboardLocationOptions(selectedCountry,selectedWilaya,selectedRegion){
+ const geo=window.MINABYBLocations;if(!geo)return;
+ const countrySelect=$("storeCountryInput"),wilayaSelect=$("storeWilayaInput");
+ const lang=document.documentElement.lang||"ar";
+ const countryValue=selectedCountry!==undefined?selectedCountry:countrySelect.value;
+ geo.populateCountrySelect(countrySelect,{lang,selected:countryValue,placeholder:"اختر البلد"});
+ const country=countrySelect.value,isAlgeria=country==="DZ";
+ $("storeWilayaWrap").hidden=!isAlgeria;
+ $("storeRegionWrap").hidden=!country||isAlgeria;
+ geo.populateWilayaSelect(wilayaSelect,{lang,selected:selectedWilaya!==undefined?selectedWilaya:wilayaSelect.value,placeholder:"اختر الولاية"});
+ wilayaSelect.required=isAlgeria;
+ if(selectedRegion!==undefined)$("storeRegionInput").value=selectedRegion||"";
+ if(isAlgeria)$("storeRegionInput").value="";
+}
 function fillSettings(){
  $("sellerNameInput").value=store.seller_name||"";
  $("sellerBioInput").value=store.seller_bio||"";
@@ -288,6 +302,7 @@ function fillSettings(){
  $("identityPublishStatus").textContent=store.is_published?"متجرك منشور للعامة":"متجرك غير منشور بعد";
  $("identityPublishStatus").classList.toggle("is-published",!!store.is_published);
  $("whatsappInput").value=store.whatsapp||"";
+ refreshDashboardLocationOptions(store.country_code||"",store.wilaya_code||"",store.region_name||"");
  $("accountEmail").textContent=user.email||"حساب التاجر";
  const publicUrl=new URL("store.html?store="+encodeURIComponent(store.slug),location.href).href;
  $("storeLink").href=publicUrl;
@@ -309,9 +324,11 @@ function showAvatar(){
 async function saveProfile(){
  if(!store?.id){message("profileFeedback","لم تكتمل تهيئة بيانات المتجر بعد. انتظر لحظة ثم حاول مجدداً.");return;}
  const whatsapp=$("whatsappInput").value.trim().replace(/[\s+()-]/g,"");
+ const countryCode=$("storeCountryInput").value,wilayaCode=countryCode==="DZ"?$("storeWilayaInput").value:null,regionName=countryCode!=="DZ"?$("storeRegionInput").value.trim()||null:null;
+ if(!countryCode||(countryCode==="DZ"&&!wilayaCode)){message("profileFeedback","اختر البلد والولاية قبل حفظ بيانات المتجر.");return;}
  if(store.is_published&&!whatsapp){message("profileFeedback","أضف رقم WhatsApp قبل نشر متجرك حتى يتمكن الزبائن من إرسال الطلبات.");return;}
  if(whatsapp&&!/^\d{8,15}$/.test(whatsapp)){message("profileFeedback","تحقق من رقم WhatsApp ورمز الدولة.");return;}
- const updates={seller_name:$("sellerNameInput").value.trim()||"Store Owner",seller_bio:$("sellerBioInput").value.trim(),store_name:$("storeNameInput").value.trim()||"متجري",whatsapp:whatsapp||null,updated_at:new Date().toISOString()};
+ const updates={country_code:countryCode,wilaya_code:wilayaCode,region_name:regionName,seller_name:$("sellerNameInput").value.trim()||"Store Owner",seller_bio:$("sellerBioInput").value.trim(),store_name:$("storeNameInput").value.trim()||"متجري",whatsapp:whatsapp||null,updated_at:new Date().toISOString()};
  const {data,error}=await supabase.from("stores").update(updates).eq("id",store.id).select("*").single();
  if(error){message("profileFeedback",error.message);return;}
  store=data;fillSettings();message("profileFeedback","تم حفظ بيانات متجرك على السحابة.");
@@ -551,6 +568,7 @@ async function init(){
  if(location.hash)history.replaceState(null,"",location.pathname+location.search);
  // Register controls before waiting for Supabase; slow requests must not disable the dashboard.
  $("saveProfile").addEventListener("click",saveProfile);
+ $("storeCountryInput").addEventListener("change",()=>refreshDashboardLocationOptions());
  $("avatarUpload").addEventListener("change",uploadAvatar);
  $("removeAvatar").addEventListener("click",removeAvatar);
  $("productForm").addEventListener("submit",saveProduct);
