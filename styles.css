@@ -1945,3 +1945,29 @@ html[data-theme="dark"] #authenticatedSite .app-search-panel:not([hidden]){backg
 @media(max-width:370px){#authenticatedSite .brand-full-logo{width:178px}#authenticatedSite .site-menu-toggle{padding:0 11px}}
 html[data-theme="dark"] #authenticatedSite .site-menu-panel .site-menu-quick-tools{background:linear-gradient(145deg,#172536,#142B35);border-color:#344B60}
 html[data-theme="dark"] #authenticatedSite .site-menu-panel .site-menu-quick-tools button{background:#20364A!important;color:#E9F5FA!important}
+
+/* Final header correction: logo alone in the top bar; menu lives in bottom navigation */
+#authenticatedSite .site-header{justify-content:flex-start!important;padding:8px clamp(12px,3vw,28px)!important;min-height:86px}
+#authenticatedSite .brand-row{width:100%;flex:1 1 100%;display:flex;align-items:center;justify-content:center}
+#authenticatedSite .brand-logo-lockup{display:flex;width:min(100%,560px);max-width:560px;margin:0 auto;align-items:center;justify-content:center}
+#authenticatedSite .brand-full-logo{width:clamp(270px,52vw,500px)!important;max-height:116px!important;height:auto!important;object-fit:contain;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;filter:none!important}
+#authenticatedSite .site-header>.header-tools{display:none!important}
+#authenticatedSite .site-header .site-menu-toggle{display:none!important}
+#authenticatedSite .site-header .brand-symbol{display:none!important}
+#authenticatedSite .referral-promo-section{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;min-height:0!important;margin:18px 20px!important;padding:10px 12px!important;border:0!important;outline:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#authenticatedSite .referral-promo-section::before,#authenticatedSite .referral-promo-section::after{display:none!important;content:none!important}
+#authenticatedSite .referral-promo-icon{width:38px!important;height:38px!important;min-width:38px!important;border:0!important;box-shadow:none!important;border-radius:12px!important;font-size:21px!important}
+#authenticatedSite .referral-promo-copy{min-width:0}
+#authenticatedSite .referral-promo-copy h2{font-size:15px!important;line-height:1.35!important;margin:1px 0!important}
+#authenticatedSite .referral-promo-copy p{font-size:11px!important;line-height:1.45!important;margin:2px 0!important}
+#authenticatedSite .referral-promo-cta{padding:8px 11px!important;border-radius:11px!important;font-size:12px!important;box-shadow:none!important}
+@media(max-width:760px){
+ #authenticatedSite .site-header{min-height:68px;padding:5px 10px!important}
+ #authenticatedSite .brand-full-logo{width:clamp(255px,74vw,390px)!important;max-height:82px!important}
+ #authenticatedSite .referral-promo-section{grid-template-columns:auto minmax(0,1fr)!important;gap:8px!important;margin:12px 12px!important;padding:8px 2px!important}
+ #authenticatedSite .referral-promo-icon{width:34px!important;height:34px!important;min-width:34px!important;font-size:19px!important}
+ #authenticatedSite .referral-promo-copy h2{font-size:14px!important}
+ #authenticatedSite .referral-promo-copy p{font-size:10px!important}
+ #authenticatedSite .referral-promo-cta{grid-column:2!important;justify-self:start!important;margin-top:2px!important}
+}
+@media(max-width:370px){#authenticatedSite .brand-full-logo{width:250px!important}}
