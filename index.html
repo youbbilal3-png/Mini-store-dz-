@@ -18,9 +18,10 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261115-16">
+<link rel="stylesheet" href="styles.css?v=20261116-2">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
-<script type="module" src="app.js?v=20261115-16"></script>
+<script src="location-data.js?v=20261116-1"></script>
+<script type="module" src="app.js?v=20261116-2"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body class="auth-checking">
@@ -101,6 +102,7 @@
 
   <section class="global-search-panel" id="globalSearchPanel" hidden>
     <div class="global-search-input-row"><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
+    <div class="global-search-location-row"><label><span id="globalSearchCountryLabel">البلد</span><select id="globalSearchCountry"></select></label><label id="globalSearchWilayaWrap" hidden><span id="globalSearchWilayaLabel">الولاية</span><select id="globalSearchWilaya"></select></label></div>
     <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
   </section>
   
