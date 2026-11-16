@@ -1396,5 +1396,5 @@ html[data-theme="dark"] .latest-merchant-product-info small{color:#b8df76}
 /* Marketplace country and wilaya search filters */
 .global-search-location-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:760px;margin-top:11px}
 .global-search-location-row label{display:grid;gap:6px;min-width:0;color:var(--muted);font-size:12px;font-weight:800}
-.global-search-location-row select{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#101827;font:inherit;font-size:14px;box-sizing:border-box}
+.global-search-location-row select,.global-search-location-row input{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:#101827;font:inherit;font-size:14px;box-sizing:border-box}
 @media(max-width:600px){.global-search-location-row{grid-template-columns:1fr}}
