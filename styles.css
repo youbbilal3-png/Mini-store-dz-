@@ -2607,3 +2607,63 @@ html[data-theme="system"] .info-dialog-card .order-close{
 html[data-theme="dark"] #authenticatedSite .site-menu-group>a,html[data-theme="dark"] #authenticatedSite .site-menu-group>button,html[data-theme="dark"] #authenticatedSite .site-menu-group>nav>a,html[data-theme="dark"] #authenticatedSite .site-menu-group>nav>button,html[data-theme="dark"] #authenticatedSite .site-menu-quick-tools button,html[data-theme="dark"] #authenticatedSite .site-menu-share .share-platform-btn{background:linear-gradient(145deg,#214B49,#1B3D4C)!important;border-color:#397B79!important;color:#E6FFF8!important;-webkit-text-fill-color:#E6FFF8!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 3px 0 #142E38,0 5px 10px rgba(0,0,0,.18)!important}
 html[data-theme="dark"] #authenticatedSite .site-menu-group #navProducts,html[data-theme="dark"] #authenticatedSite .site-menu-group #adminDashboardLink,html[data-theme="dark"] #authenticatedSite .site-menu-group #headerLoginLink,html[data-theme="dark"] #authenticatedSite .site-menu-group #headerAccountLink,html[data-theme="dark"] #authenticatedSite .site-menu-quick-tools .theme-toggle,html[data-theme="dark"] #authenticatedSite .site-menu-share .share-platform-btn{background:linear-gradient(145deg,#234D70,#1D405E)!important;border-color:#426F91!important;color:#EAF6FF!important;-webkit-text-fill-color:#EAF6FF!important}
 @media(max-width:760px){#authenticatedSite .site-menu-group{gap:7px!important}#authenticatedSite .site-menu-group>a,#authenticatedSite .site-menu-group>button,#authenticatedSite .site-menu-group>nav>a,#authenticatedSite .site-menu-group>nav>button{min-height:34px!important;padding:7px 11px!important;font-size:11.5px!important}}
+
+
+/* Menu viewport and grid correction: keep every control inside the drawer. */
+#authenticatedSite>.site-menu-panel{
+  box-sizing:border-box!important;position:fixed!important;
+  inset-block:0!important;inset-inline-start:auto!important;inset-inline-end:0!important;
+  width:min(350px,calc(100vw - 16px))!important;max-width:calc(100vw - 16px)!important;
+  height:100dvh!important;max-height:100dvh!important;
+  padding:14px 12px calc(18px + env(safe-area-inset-bottom))!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+}
+#authenticatedSite .site-menu-panel *,
+#authenticatedSite .site-menu-panel *::before,
+#authenticatedSite .site-menu-panel *::after{box-sizing:border-box!important}
+#authenticatedSite .site-menu-heading{width:100%!important;margin:0 0 10px!important;padding:8px 0!important}
+#authenticatedSite .site-menu-quick-tools{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  width:100%!important;gap:7px!important;margin:4px 0 9px!important
+}
+#authenticatedSite .site-menu-quick-tools button{width:100%!important;min-width:0!important;padding:7px 5px!important}
+#authenticatedSite .site-menu-language{width:100%!important;min-width:0!important;margin:0!important}
+#authenticatedSite .site-menu-language select{min-width:0!important;max-width:58%!important}
+#authenticatedSite .site-menu-group{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;gap:7px!important;width:100%!important;
+  min-width:0!important;margin:10px 0!important
+}
+#authenticatedSite .site-menu-section-title{grid-column:1/-1!important;min-width:0!important}
+#authenticatedSite .site-menu-group>a,
+#authenticatedSite .site-menu-group>button{
+  display:flex!important;width:100%!important;min-width:0!important;max-width:100%!important;
+  min-height:36px!important;padding:7px 6px!important;margin:0!important;
+  justify-content:center!important;text-align:center!important;
+  white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;
+  font-size:11.5px!important;line-height:1.3!important
+}
+#authenticatedSite .site-menu-group>nav{
+  grid-column:1/-1!important;display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;width:100%!important;min-width:0!important
+}
+#authenticatedSite .site-menu-group>nav>a,
+#authenticatedSite .site-menu-group>nav>button{
+  display:flex!important;width:100%!important;min-width:0!important;max-width:100%!important;
+  min-height:36px!important;padding:7px 6px!important;margin:0!important;
+  justify-content:center!important;text-align:center!important;
+  white-space:normal!important;overflow-wrap:anywhere!important;
+  font-size:11.5px!important;line-height:1.3!important
+}
+#authenticatedSite .site-menu-group #merchantAccountLink,
+#authenticatedSite .site-menu-group #adminDashboardLink{grid-column:1/-1!important}
+#authenticatedSite .site-menu-share{width:100%!important;min-width:0!important;margin-top:8px!important;padding-top:8px!important}
+#authenticatedSite .site-menu-share .brand-share-wrap{width:100%!important;align-items:stretch!important}
+#authenticatedSite .site-menu-share .share-platform-btn{align-self:flex-start!important;max-width:100%!important}
+@media(max-width:380px){
+  #authenticatedSite>.site-menu-panel{width:calc(100vw - 12px)!important;max-width:calc(100vw - 12px)!important;padding-inline:10px!important}
+  #authenticatedSite .site-menu-group,#authenticatedSite .site-menu-group>nav{gap:6px!important}
+  #authenticatedSite .site-menu-group>a,#authenticatedSite .site-menu-group>button,
+  #authenticatedSite .site-menu-group>nav>a,#authenticatedSite .site-menu-group>nav>button{font-size:10.8px!important;padding:7px 4px!important}
+}
