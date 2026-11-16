@@ -8,6 +8,7 @@ const translations={
  tr:{bismillah:"Rahmân ve Rahîm olan Allah’ın adıyla",verse:"haset ettiği zaman hasetçinin şerrinden",closing:"Yüce Allah doğru söylemiştir"}
 };
 const css=`
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap");
 .quran-brand-suite{display:flex;align-items:center;gap:clamp(10px,2vw,22px);min-width:0;max-width:100%}
 .quran-brand-suite>.brand,.quran-brand-suite>.brand-logo-lockup{flex:0 0 auto;transform:translateX(-5px)}
 .quran-verse-frame{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:230px;max-width:390px;padding:10px 19px 9px;border:1px solid rgba(37,201,160,.52);border-radius:19px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(237,249,255,.94));box-shadow:0 7px 0 rgba(26,139,132,.08),0 12px 25px rgba(46,112,145,.12),inset 0 1px 0 #fff;color:#176e67;text-align:center;overflow:hidden}
