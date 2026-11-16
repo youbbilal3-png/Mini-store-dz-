@@ -197,6 +197,7 @@ async function createSponsoredAd(event){
   const finalImages=imageUrls;
   if(!finalImages.length)throw new Error("أضف صورة أو فيديو للإعلان.");
   const payload={advertiser_name:$("adAdvertiser").value.trim(),title:$("adTitle").value.trim(),amount_dzd:amount,image_url:finalImages[0],image_urls:finalImages,target_url:target,starts_at:start.toISOString(),ends_at:end.toISOString()};
+  if(amount===0)payload.payment_status="paid";
   let result;
   if(editingSponsoredAdId){
    result=await supabase.from("sponsored_ads").update(payload).eq("id",editingSponsoredAdId);
