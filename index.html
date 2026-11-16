@@ -18,10 +18,10 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261116-6">
+<link rel="stylesheet" href="styles.css?v=20261116-7">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="location-data.js?v=20261116-4"></script>
-<script type="module" src="app.js?v=20261116-4"></script>
+<script type="module" src="app.js?v=20261116-5"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body class="auth-checking">
@@ -79,7 +79,12 @@
     </aside>
   </div>
 </header>
-<main>
+<main id="top">
+  <section class="global-search-panel app-search-panel" id="globalSearchPanel">
+    <div class="global-search-input-row"><span class="app-search-symbol" aria-hidden="true">⌕</span><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
+    <div class="global-search-location-row"><label><span id="globalSearchCountryLabel">البلد</span><select id="globalSearchCountry"></select></label><label id="globalSearchWilayaWrap" hidden><span id="globalSearchWilayaLabel">الولاية</span><select id="globalSearchWilaya"></select></label><label id="globalSearchRegionWrap" hidden><span id="globalSearchRegionLabel">المنطقة / الولاية الإدارية</span><input id="globalSearchRegion" type="search" placeholder="اكتب اسم المنطقة"></label></div>
+    <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
+  </section>
   <section class="hero hero-showcase-only">
     <div class="hero-advertising-grid">
     <div class="hero-product-showcase" id="heroShowcase" aria-label="منتجات مختارة تتغير تلقائياً" data-i18n-aria-label="slideAria">
@@ -101,11 +106,7 @@
     </div>
   </section>
 
-  <section class="global-search-panel" id="globalSearchPanel" hidden>
-    <div class="global-search-input-row"><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
-    <div class="global-search-location-row"><label><span id="globalSearchCountryLabel">البلد</span><select id="globalSearchCountry"></select></label><label id="globalSearchWilayaWrap" hidden><span id="globalSearchWilayaLabel">الولاية</span><select id="globalSearchWilaya"></select></label><label id="globalSearchRegionWrap" hidden><span id="globalSearchRegionLabel">المنطقة / الولاية الإدارية</span><input id="globalSearchRegion" type="search" placeholder="اكتب اسم المنطقة"></label></div>
-    <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
-  </section>
+
   
   <div class="home-promos-row">
     <section class="referral-promo-section" id="referralProgramSection">
@@ -179,6 +180,13 @@
 <div class="order-form-fields"><label>الاسم الكامل<input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل"></label><label>رقم الهاتف<input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..."></label><label>ملاحظات (اختياري)<textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
 <div class="order-dialog-total" id="orderDialogTotal"></div><button class="primary-btn" id="submitCustomerOrder" type="submit">تأكيد الطلب والمتابعة إلى WhatsApp</button><p class="order-dialog-feedback" id="orderDialogFeedback" role="status"></p></form></dialog>
 </main>
+<nav class="app-bottom-nav" aria-label="التنقل الرئيسي">
+ <a class="app-bottom-nav-item active" href="#top" aria-label="الرئيسية"><span aria-hidden="true">⌂</span><small>الرئيسية</small></a>
+ <a class="app-bottom-nav-item" href="#featuredStoresSection" aria-label="المتاجر"><span aria-hidden="true">▦</span><small>المتاجر</small></a>
+ <a class="app-bottom-nav-item" href="#products" aria-label="المنتجات"><span aria-hidden="true">◇</span><small>المنتجات</small></a>
+ <a class="app-bottom-nav-item" href="account.html" aria-label="حسابي"><span aria-hidden="true">◎</span><small>حسابي</small></a>
+ <button class="app-bottom-nav-item" type="button" id="appBottomMenuButton" aria-label="القائمة"><span aria-hidden="true">☰</span><small>القائمة</small></button>
+</nav>
 <footer>
   <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
   <div class="footer-credit"><strong>Founder of MINABYB — B.YB</strong><p>© <span id="year"></span> MINABYB. <span data-i18n="rights">جميع الحقوق محفوظة.</span></p></div>
