@@ -26,3 +26,190 @@
 .account-page .site-header .account-home-link:hover{background:#b8eb54;box-shadow:0 6px 16px #719c2b30;transform:translateY(-1px)}
 .account-page .site-header .account-home-link:focus-visible{outline:3px solid #719c2b;outline-offset:3px}
 @media(max-width:600px){.account-page .site-header .account-home-link{min-height:40px;padding:9px 13px;font-size:12px}}
+
+
+/* MINABYB Account Studio — premium 3D hybrid visual layer */
+.account-page{
+  min-height:100vh;
+  color:#17243a;
+  background:
+    radial-gradient(ellipse at 8% 12%,rgba(98,184,255,.18),transparent 34%),
+    radial-gradient(ellipse at 92% 28%,rgba(37,201,160,.18),transparent 36%),
+    linear-gradient(145deg,#f4f8ff 0%,#f8fcff 48%,#effbf8 100%);
+}
+.account-page .site-header{
+  position:relative;
+  min-height:76px;
+  padding:12px clamp(16px,5vw,64px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  background:rgba(255,255,255,.84);
+  border-bottom:1px solid rgba(160,190,214,.34);
+  box-shadow:0 8px 28px rgba(31,69,105,.06);
+  backdrop-filter:blur(16px);
+}
+.account-page .brand{gap:12px}
+.account-page .brand-symbol{
+  width:43px;height:43px;object-fit:contain;
+  border-radius:14px;
+  filter:drop-shadow(0 5px 7px rgba(37,201,160,.2));
+}
+.account-page .brand-name{font-size:19px;letter-spacing:.035em}
+.account-page .brand-mina{color:#1d4268}
+.account-page .brand-byb{color:#20b991}
+.account-page .brand-tagline{display:block;margin-top:-3px;font-size:8px;letter-spacing:.22em;color:#7b91a7}
+.account-main{
+  width:min(100% - 32px,680px);
+  margin:clamp(34px,7vh,76px) auto;
+  flex:1;
+  display:flex;
+  align-items:flex-start;
+}
+.account-card{
+  position:relative;
+  isolation:isolate;
+  width:100%;
+  overflow:hidden;
+  padding:clamp(23px,5vw,42px);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:30px;
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(248,252,255,.96));
+  box-shadow:0 26px 65px rgba(34,76,112,.12),0 7px 18px rgba(34,76,112,.06),inset 0 1px 0 #fff;
+}
+.account-card:before{
+  content:"";position:absolute;z-index:-1;inset:0 0 auto;height:7px;
+  background:linear-gradient(90deg,#25c9a0 0%,#62b8ff 55%,#ff9b70 100%);
+}
+.account-card:after{
+  content:"";position:absolute;z-index:-1;width:230px;height:230px;inset-inline-end:-105px;top:-115px;
+  border-radius:50%;background:radial-gradient(circle,rgba(98,184,255,.15),transparent 70%);
+  pointer-events:none;
+}
+.account-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 12px;border:1px solid #d9f2ec;border-radius:999px;
+  background:linear-gradient(135deg,#effcf8,#eef7ff);
+  color:#168c76;font-size:10px;font-weight:900;letter-spacing:.12em;
+}
+.account-profile-head{position:relative;gap:19px;margin:24px 0 22px}
+.account-avatar{
+  flex-basis:100px;width:100px;height:100px;
+  border:4px solid #fff;
+  background:linear-gradient(145deg,#b8f3e4,#8acfff 70%,#d8eaff);
+  color:#174b61;font-size:36px;
+  box-shadow:0 10px 22px rgba(37,126,157,.18),inset 0 2px 5px rgba(255,255,255,.9);
+}
+.account-profile-heading h1{
+  color:#172f49;font-size:clamp(27px,5vw,35px);font-weight:900;letter-spacing:-.035em;
+}
+.account-profile-heading p{color:#71849a;font-size:13px}
+.account-photo-actions{margin:0 0 24px 119px;gap:8px}
+.account-photo-button,.account-photo-save,.account-photo-remove{
+  min-height:38px;padding:8px 13px;border-radius:12px;
+  font-size:11px;font-weight:850;
+  box-shadow:0 3px 0 rgba(28,63,91,.08),0 7px 14px rgba(28,63,91,.06);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.account-photo-button{border:1px solid #bcefe2;background:linear-gradient(180deg,#f5fffc,#dff9f1);color:#147d6a}
+.account-photo-save{border:1px solid #9de3d1;background:linear-gradient(180deg,#baf5e5,#78dfc5);color:#105b50}
+.account-photo-remove{border:1px solid #ffd8cf;background:linear-gradient(180deg,#fff8f6,#ffebe5);color:#ad5545}
+.account-photo-button:hover,.account-photo-save:hover,.account-photo-remove:hover{transform:translateY(-2px);filter:saturate(1.08);box-shadow:0 5px 0 rgba(28,63,91,.06),0 11px 18px rgba(28,63,91,.1)}
+.account-details{
+  display:grid;gap:0;margin:25px 0;
+  border:1px solid #e1edf5;border-radius:19px;overflow:hidden;
+  background:linear-gradient(145deg,#fbfdff,#f4faff);
+  box-shadow:inset 0 1px 3px rgba(34,76,112,.035),0 7px 18px rgba(34,76,112,.045);
+}
+.account-details>div{
+  min-height:66px;align-items:center;padding:15px 19px;
+  border-bottom:1px solid #e7f0f6;
+}
+.account-details>div:last-child{border-bottom:0}
+.account-details span{color:#71869b;font-size:12px;font-weight:700}
+.account-details strong{color:#203d59;font-size:14px;font-weight:850}
+.account-actions{gap:12px;margin-top:25px}
+.account-primary-action,.account-secondary-action{
+  min-height:49px;padding:12px 21px;border-radius:14px;
+  font-size:13px;font-weight:900;
+  box-shadow:0 4px 0 rgba(25,65,91,.1),0 10px 18px rgba(25,65,91,.08);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.account-primary-action{
+  border:1px solid #91e4d0;
+  background:linear-gradient(180deg,#8cebd3 0%,#36cda9 100%);
+  color:#104f4a;
+}
+.account-secondary-action{
+  border:1px solid #c9dff2;
+  background:linear-gradient(180deg,#f8fcff 0%,#dceeff 100%);
+  color:#24577f;
+}
+.account-primary-action:hover,.account-secondary-action:hover{
+  transform:translateY(-2px);filter:saturate(1.08);
+  box-shadow:0 6px 0 rgba(25,65,91,.07),0 14px 22px rgba(25,65,91,.12);
+}
+.account-primary-action:active,.account-secondary-action:active{transform:translateY(1px);box-shadow:0 2px 0 rgba(25,65,91,.08)}
+.account-feedback{min-height:22px;margin:15px 0 0;color:#648096;font-size:12px}
+.account-page .site-header .account-home-link{
+  min-height:43px;padding:10px 17px;border:1px solid #a9e8d9;border-radius:13px;
+  background:linear-gradient(180deg,#eafff8,#c9f5e9);color:#147865;
+  font-size:12px;font-weight:900;
+  box-shadow:0 4px 0 #b5e9dc,0 8px 15px rgba(37,201,160,.12);
+}
+.account-page .site-header .account-home-link:hover{transform:translateY(-2px);box-shadow:0 6px 0 #b5e9dc,0 12px 18px rgba(37,201,160,.17)}
+.account-page footer{
+  justify-content:center;padding:22px 16px;
+  background:transparent;color:#7890a5;
+}
+.account-page footer strong{color:#6e91a6;font-size:10px;letter-spacing:.12em}
+.account-photo-preview{background:rgba(10,25,42,.9)}
+.account-photo-preview-close{border-color:#ffffff80;background:rgba(255,255,255,.18);box-shadow:0 5px 16px #0004}
+@media(max-width:600px){
+  .account-page .site-header{min-height:64px;padding:9px 13px}
+  .account-page .brand-symbol{width:36px;height:36px}
+  .account-page .brand-name{font-size:16px}
+  .account-page .brand-tagline{font-size:7px}
+  .account-page .site-header .account-home-link{min-height:38px;padding:8px 11px;font-size:11px}
+  .account-main{width:calc(100% - 24px);margin:25px auto 34px}
+  .account-card{padding:23px 17px;border-radius:24px}
+  .account-profile-head{gap:13px;margin:20px 0 19px}
+  .account-avatar{flex-basis:78px;width:78px;height:78px;font-size:29px}
+  .account-profile-heading h1{font-size:27px}
+  .account-profile-heading p{font-size:11px}
+  .account-photo-actions{margin:0 0 20px;justify-content:flex-start}
+  .account-photo-actions button{flex:0 1 auto}
+  .account-details{margin:21px 0}
+  .account-details>div{min-height:60px;align-items:flex-start;flex-direction:column;gap:4px;padding:12px 14px}
+  .account-details strong{text-align:start;font-size:13px}
+  .account-actions{gap:10px}
+  .account-actions>*{flex:1 1 100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .account-photo-button,.account-photo-save,.account-photo-remove,.account-primary-action,.account-secondary-action,.account-home-link{transition:none}
+}
+html[data-theme="dark"] .account-page{
+  background:radial-gradient(ellipse at 8% 12%,rgba(98,184,255,.12),transparent 34%),radial-gradient(ellipse at 92% 28%,rgba(37,201,160,.12),transparent 36%),linear-gradient(145deg,#0b1724,#102131);
+}
+html[data-theme="dark"] .account-page .site-header{background:rgba(15,29,44,.92);border-color:#263c50}
+html[data-theme="dark"] .account-page .brand-mina{color:#c5e1ff}
+html[data-theme="dark"] .account-page .brand-tagline{color:#91a8bd}
+html[data-theme="dark"] .account-card{background:linear-gradient(145deg,#172a3c,#122437);border-color:#30495e;box-shadow:0 26px 65px #0004,inset 0 1px 0 #ffffff12}
+html[data-theme="dark"] .account-profile-heading h1,html[data-theme="dark"] .account-details strong{color:#e7f2fb}
+html[data-theme="dark"] .account-profile-heading p,html[data-theme="dark"] .account-details span,html[data-theme="dark"] .account-feedback{color:#a8bed0}
+html[data-theme="dark"] .account-details{background:linear-gradient(145deg,#14283a,#102235);border-color:#30495e}
+html[data-theme="dark"] .account-details>div{border-color:#2a4054}
+html[data-theme="dark"] .account-page footer strong{color:#9bb7ca}
+@media(prefers-color-scheme:dark){
+ html[data-theme="system"] .account-page{background:radial-gradient(ellipse at 8% 12%,rgba(98,184,255,.12),transparent 34%),radial-gradient(ellipse at 92% 28%,rgba(37,201,160,.12),transparent 36%),linear-gradient(145deg,#0b1724,#102131)}
+ html[data-theme="system"] .account-page .site-header{background:rgba(15,29,44,.92);border-color:#263c50}
+ html[data-theme="system"] .account-page .brand-mina{color:#c5e1ff}
+ html[data-theme="system"] .account-page .brand-tagline{color:#91a8bd}
+ html[data-theme="system"] .account-card{background:linear-gradient(145deg,#172a3c,#122437);border-color:#30495e;box-shadow:0 26px 65px #0004,inset 0 1px 0 #ffffff12}
+ html[data-theme="system"] .account-profile-heading h1,html[data-theme="system"] .account-details strong{color:#e7f2fb}
+ html[data-theme="system"] .account-profile-heading p,html[data-theme="system"] .account-details span,html[data-theme="system"] .account-feedback{color:#a8bed0}
+ html[data-theme="system"] .account-details{background:linear-gradient(145deg,#14283a,#102235);border-color:#30495e}
+ html[data-theme="system"] .account-details>div{border-color:#2a4054}
+ html[data-theme="system"] .account-page footer strong{color:#9bb7ca}
+}
