@@ -1661,3 +1661,176 @@ html[data-theme="dark"] .order-dialog-total,html[data-theme="dark"] .reviews-sum
  html[data-theme="system"] .product-details-card{background:linear-gradient(155deg,#1B2D40,#172536)}
  html[data-theme="system"] .order-dialog-total,html[data-theme="system"] .reviews-summary{background:linear-gradient(145deg,#1C3C3C,#1C3047)}
 }
+
+
+/* =========================================================
+   MINABYB Homepage Experience v2 — mobile-first 3D marketplace
+   Visual-only refinement; existing IDs, links and behavior stay intact.
+   ========================================================= */
+#authenticatedSite main{overflow:hidden}
+#authenticatedSite .hero{
+  padding:22px clamp(16px,4vw,56px) 18px;
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(98,184,255,.16),transparent 38%),
+    radial-gradient(ellipse at 88% 18%,rgba(37,201,160,.14),transparent 34%),
+    linear-gradient(180deg,#F4F8FF 0%,#EDF7F8 100%);
+}
+#authenticatedSite .hero-advertising-grid{
+  width:min(1240px,100%);margin-inline:auto;align-items:stretch;gap:18px;
+}
+#authenticatedSite .hero-product-showcase{
+  width:min(43vw,520px);height:clamp(250px,31vw,360px);
+  border:4px solid rgba(255,255,255,.88);border-radius:26px;
+  box-shadow:0 7px 0 rgba(37,201,160,.12),0 22px 44px rgba(24,58,87,.18);
+}
+#authenticatedSite .showcase-caption{
+  inset-inline:24px;bottom:38px;gap:6px;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+}
+#authenticatedSite .showcase-caption b{font-size:clamp(19px,2.2vw,27px);font-weight:950}
+#authenticatedSite .showcase-caption small{font-size:13px}
+#authenticatedSite .showcase-dots button.active{background:var(--minabyb-mint)}
+#authenticatedSite .sponsored-ads-home{
+  flex:1 1 300px;min-width:0;align-self:stretch;
+  padding:22px;border-radius:24px;
+  background:linear-gradient(145deg,#fff 0%,#F1FAFF 58%,#E9FAF5 100%);
+  border:1px solid #D9EAF3;
+  box-shadow:inset 0 1px 0 #fff,0 6px 0 rgba(98,184,255,.09),0 18px 35px rgba(34,88,124,.10);
+}
+#authenticatedSite .sponsored-ads-heading h2{font-size:22px;color:var(--minabyb-deep)}
+#authenticatedSite .sponsored-ads-empty{
+  min-height:170px;border:1px dashed #A8DCCD;border-radius:18px;
+  background:linear-gradient(145deg,#F7FFFC,#F2F8FF);
+}
+#authenticatedSite .global-search-panel:not([hidden]){
+  width:min(1160px,calc(100% - 32px));margin:16px auto 22px;
+  padding:17px;border:1px solid #D7E9F1;border-radius:22px;
+  background:linear-gradient(145deg,#fff,#F2FAFF);
+  box-shadow:0 5px 0 rgba(98,184,255,.09),0 16px 34px rgba(32,76,108,.10);
+}
+#authenticatedSite .home-promos-row{
+  width:min(1240px,calc(100% - 32px));margin:20px auto 26px;
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;
+}
+#authenticatedSite .referral-promo-section,
+#authenticatedSite .featured-promo-section{
+  min-width:0;border-radius:23px;overflow:hidden;
+  box-shadow:0 6px 0 rgba(37,201,160,.08),0 16px 32px rgba(32,76,108,.09);
+}
+#authenticatedSite .referral-promo-section{
+  padding:22px;background:linear-gradient(140deg,#E8FBF5 0%,#F5FAFF 70%,#fff 100%);
+}
+#authenticatedSite .referral-promo-copy h2,
+#authenticatedSite .featured-promo-copy h2{font-size:clamp(18px,2vw,24px);line-height:1.4}
+#authenticatedSite .referral-promo-icon,
+#authenticatedSite .featured-promo-icon{
+  width:54px;height:54px;border-radius:17px;font-size:27px;
+}
+#authenticatedSite .featured-promo-section{
+  padding:22px;background:linear-gradient(135deg,#174A5A 0%,#197D83 60%,#25A58E 100%);
+}
+#authenticatedSite .featured-promo-grid{margin-top:14px}
+#authenticatedSite .latest-merchant-products-section,
+#authenticatedSite .featured-stores-section,
+#authenticatedSite #products{
+  width:min(1240px,100%);margin-inline:auto;
+  border-radius:26px;
+}
+#authenticatedSite .latest-merchant-products-section{
+  margin-block:22px;padding:30px clamp(16px,3vw,34px);
+  background:linear-gradient(145deg,#fff 0%,#F2FAFF 100%);
+  border:1px solid #E0EDF5;
+  box-shadow:0 8px 26px rgba(32,76,108,.055);
+}
+#authenticatedSite .featured-stores-section{
+  margin-block:22px;padding:32px clamp(16px,3vw,34px);
+  background:linear-gradient(145deg,#EAF9F5 0%,#F4F8FF 100%);
+  border:1px solid #DDEFEA;
+}
+#authenticatedSite #products.section{
+  margin-block:22px;padding:32px clamp(16px,3vw,34px);
+  background:#fff;border:1px solid #E2ECF4;
+  box-shadow:0 8px 26px rgba(32,76,108,.055);
+}
+#authenticatedSite .section-heading{gap:14px;margin-bottom:20px}
+#authenticatedSite .section-heading h2{font-size:clamp(21px,2.4vw,28px);font-weight:950}
+#authenticatedSite .section-heading .eyebrow{font-weight:900;letter-spacing:.3px}
+#authenticatedSite .featured-store-card{
+  border-radius:18px;padding:16px;background:linear-gradient(145deg,#fff,#F8FCFF);
+}
+#authenticatedSite .latest-merchant-product-card{
+  border-radius:18px;overflow:hidden;
+}
+#authenticatedSite .product-grid{gap:16px}
+#authenticatedSite .product-card{
+  border-radius:19px;overflow:hidden;padding:10px;
+  background:linear-gradient(145deg,#fff 0%,#FBFDFF 100%);
+}
+#authenticatedSite .product-image-button{border-radius:13px;overflow:hidden}
+#authenticatedSite .product-info{padding:8px 3px 3px}
+#authenticatedSite .toolbar{
+  padding:13px;border:1px solid #E1ECF4;border-radius:18px;
+  background:linear-gradient(145deg,#F8FCFF,#F0FAF7);
+  box-shadow:inset 0 1px 0 #fff,0 4px 12px rgba(32,76,108,.05);
+}
+#authenticatedSite #searchInput,
+#authenticatedSite .category-select{
+  min-height:46px;border-radius:13px;border-color:#D4E5EF;
+}
+#authenticatedSite .text-link{
+  color:#117F70;border-color:#A8E3D4;background:#F3FFFB;
+  box-shadow:0 3px 0 rgba(37,201,160,.12);
+}
+#authenticatedSite .text-link:hover{transform:translateY(-2px)}
+html[data-theme="dark"] #authenticatedSite .hero{
+  background:radial-gradient(ellipse at 12% 0%,#28507155,transparent 38%),linear-gradient(180deg,#101D2A,#0F1A27)
+}
+html[data-theme="dark"] #authenticatedSite .sponsored-ads-home,
+html[data-theme="dark"] #authenticatedSite .latest-merchant-products-section,
+html[data-theme="dark"] #authenticatedSite #products.section{
+  background:linear-gradient(145deg,#172536,#122131);border-color:#2B4054
+}
+html[data-theme="dark"] #authenticatedSite .featured-stores-section{
+  background:linear-gradient(145deg,#142B34,#132333);border-color:#294653
+}
+html[data-theme="dark"] #authenticatedSite .referral-promo-section{
+  background:linear-gradient(140deg,#173A3B,#172536);border-color:#315B5C
+}
+html[data-theme="dark"] #authenticatedSite .toolbar{
+  background:linear-gradient(145deg,#172536,#142334);border-color:#2B4054
+}
+html[data-theme="dark"] #authenticatedSite .featured-store-card,
+html[data-theme="dark"] #authenticatedSite .product-card{
+  background:linear-gradient(145deg,#1B2D40,#172536)
+}
+@media(max-width:760px){
+  #authenticatedSite .hero{padding:14px 13px 12px}
+  #authenticatedSite .hero-advertising-grid{gap:12px}
+  #authenticatedSite .hero-product-showcase{width:100%;height:clamp(205px,58vw,270px);max-width:none;border-radius:20px}
+  #authenticatedSite .sponsored-ads-home{padding:16px;border-radius:19px}
+  #authenticatedSite .sponsored-ads-empty{min-height:125px}
+  #authenticatedSite .home-promos-row{
+    width:calc(100% - 26px);grid-template-columns:1fr;gap:12px;margin:14px auto 20px
+  }
+  #authenticatedSite .referral-promo-section,
+  #authenticatedSite .featured-promo-section{padding:17px;border-radius:19px}
+  #authenticatedSite .latest-merchant-products-section,
+  #authenticatedSite .featured-stores-section,
+  #authenticatedSite #products.section{
+    width:calc(100% - 20px);margin:14px auto;padding:22px 13px;border-radius:20px
+  }
+  #authenticatedSite .section-heading{margin-bottom:15px}
+  #authenticatedSite .product-grid{gap:10px}
+  #authenticatedSite .product-card{padding:7px;border-radius:15px}
+  #authenticatedSite .product-image-button{border-radius:10px}
+  #authenticatedSite .toolbar{padding:10px;border-radius:15px;gap:9px}
+}
+@media(max-width:380px){
+  #authenticatedSite .home-promos-row{width:calc(100% - 20px)}
+  #authenticatedSite .featured-promo-copy h2,
+  #authenticatedSite .referral-promo-copy h2{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){
+  #authenticatedSite .product-card,#authenticatedSite .featured-store-card,
+  #authenticatedSite .text-link{transition:none!important}
+}
