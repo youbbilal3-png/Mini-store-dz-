@@ -18,10 +18,10 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261116-8">
+<link rel="stylesheet" href="styles.css?v=20261116-9">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="location-data.js?v=20261116-4"></script>
-<script type="module" src="app.js?v=20261116-6"></script>
+<script type="module" src="app.js?v=20261116-7"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body class="auth-checking">
@@ -38,16 +38,18 @@
 
 <header class="site-header">
   <div class="brand-row">
-    <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg?v=20261116-2" alt="MINABYB shopping bag logo"><span class="brand-name" dir="ltr"><span class="brand-wordmark">MINABYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
+    <a class="brand brand-logo-lockup" href="#" aria-label="MINABYB — WORLD OF SHOPPING"><img class="brand-full-logo" src="app-logo.svg?v=20261116-1" alt="MINABYB — WORLD OF SHOPPING"></a>
     
   </div>
   <div class="header-tools">
-    <button type="button" class="global-search-toggle" id="globalSearchToggle" aria-label="بحث" title="بحث"><span aria-hidden="true">⌕</span><span data-i18n="searchSiteLabel">بحث</span></button>
-    <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button>
     <button type="button" class="site-menu-toggle" id="siteMenuToggle" aria-expanded="false" aria-controls="siteMenuPanel"><span aria-hidden="true">☰</span><span data-i18n="menuLabel">القائمة</span></button>
     <button type="button" class="site-menu-backdrop" id="siteMenuBackdrop" aria-label="إغلاق القائمة" hidden></button>
     <aside class="site-menu-panel" id="siteMenuPanel" aria-label="القائمة الرئيسية" hidden>
       <div class="site-menu-heading"><strong data-i18n="menuLabel">القائمة</strong><button type="button" id="siteMenuClose" aria-label="إغلاق القائمة">×</button></div>
+      <div class="site-menu-quick-tools">
+        <button type="button" class="global-search-toggle" id="globalSearchToggle" aria-label="بحث" title="بحث"><span aria-hidden="true">⌕</span><span data-i18n="searchSiteLabel">بحث</span></button>
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" title="تغيير المظهر"><span class="theme-toggle-icon" id="themeToggleIcon">◐</span><span class="theme-toggle-label" id="themeToggleLabel">تلقائي</span></button>
+      </div>
       <label class="language-picker site-menu-language">
         <span data-i18n="languageLabel">اللغة</span>
         <select id="languageSelect" aria-label="Choose language">
