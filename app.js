@@ -777,8 +777,32 @@ function refreshHeaderAccount(session){
  if(logoutButton)logoutButton.hidden=!session;
  if(loginLink){loginLink.hidden=!!session;loginLink.href="auth.html?next=account.html&lang="+encodeURIComponent(language);}
 }
-supabase.auth.getSession().then(({data})=>refreshHeaderAccount(data.session));
-supabase.auth.onAuthStateChange((_event,session)=>refreshHeaderAccount(session));
+let adminLinkCheck=0;
+async function refreshAdminDashboardLink(session){
+ const link=el("adminDashboardLink");
+ if(!link)return;
+ const check=++adminLinkCheck;
+ link.hidden=true;
+ if(!session?.user?.id)return;
+ try{
+  const {data,error}=await supabase.auth.getUser();
+  if(error)throw error;
+  if(check!==adminLinkCheck)return;
+  const user=data?.user;
+  link.hidden=!(user&&user.id===session.user.id&&user.app_metadata?.role==="admin");
+ }catch(error){
+  if(check===adminLinkCheck)link.hidden=true;
+  console.warn("Could not verify platform owner role; keeping admin link hidden.",error);
+ }
+}
+supabase.auth.getSession().then(({data})=>{
+ refreshHeaderAccount(data.session);
+ refreshAdminDashboardLink(data.session);
+});
+supabase.auth.onAuthStateChange((_event,session)=>{
+ refreshHeaderAccount(session);
+ refreshAdminDashboardLink(session);
+});
 const headerLogout=el("headerLogoutButton");
 if(headerLogout)headerLogout.addEventListener("click",async()=>{
  headerLogout.disabled=true;
