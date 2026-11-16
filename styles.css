@@ -2400,3 +2400,136 @@ html[data-theme="dark"] #authenticatedSite .site-menu-share .share-platform-btn{
   #authenticatedSite .site-menu-group>nav>a,
   #authenticatedSite .site-menu-group>nav>button{transition:none!important}
 }
+
+
+/* MINABYB readable About & Contact dialogs */
+.info-dialog{
+  width:min(92vw,640px);
+  max-height:min(82dvh,760px);
+  overflow:auto;
+  overscroll-behavior:contain;
+  border:1px solid rgba(98,184,255,.24);
+  border-radius:24px;
+  box-shadow:0 28px 90px rgba(18,49,77,.24),0 8px 24px rgba(18,49,77,.12);
+}
+.info-dialog-card{
+  padding:58px clamp(22px,5vw,38px) 30px!important;
+  background:linear-gradient(145deg,#ffffff 0%,#f6fbff 100%);
+  color:#18334d;
+}
+.info-dialog-card .about-section,
+.info-dialog-card .contact-section{
+  gap:18px!important;
+}
+.info-dialog-card .about-section .eyebrow,
+.info-dialog-card .contact-section .eyebrow{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  padding:7px 12px;
+  border:1px solid #ccefe5;
+  border-radius:999px;
+  background:#effbf7;
+  color:#12836f;
+  font-size:12px;
+  font-weight:850;
+}
+.info-dialog-card .about-section h2,
+.info-dialog-card .contact-section h2{
+  margin:8px 0 0;
+  color:#173c59!important;
+  font-size:clamp(24px,4.5vw,31px);
+  font-weight:900;
+  line-height:1.45;
+  letter-spacing:0;
+}
+.info-dialog-card .about-section p,
+.info-dialog-card .contact-section p{
+  margin:0;
+  color:#425c73!important;
+  font-size:16px;
+  font-weight:550;
+  line-height:2;
+  text-align:start;
+  overflow-wrap:anywhere;
+}
+.info-dialog-card .contact-email{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #d8eaf4;
+  border-radius:14px;
+  background:#f0f8ff;
+  font-size:15px;
+  font-weight:800;
+}
+.info-dialog-card .contact-email>span{
+  flex:0 0 36px;
+  width:36px;height:36px;
+  background:linear-gradient(145deg,#b8f2e3,#8bdcc9);
+  color:#145b58;
+}
+.info-dialog-card .contact-email a{
+  color:#175d86!important;
+  font-weight:850;
+  text-decoration:none;
+}
+.info-dialog-card #contactButton{
+  display:flex;
+  width:100%;
+  min-height:50px;
+  white-space:normal;
+  text-align:center;
+  line-height:1.6;
+  border:1px solid #9be5d3;
+  background:linear-gradient(180deg,#8cebd3,#36cda9);
+  color:#104f4a;
+  box-shadow:0 4px 0 #b5e9dc,0 9px 18px rgba(37,201,160,.14);
+}
+.info-dialog-card .order-close{
+  width:42px!important;height:42px!important;
+  display:grid!important;place-items:center!important;
+  border:1px solid #d7e7f1!important;
+  border-radius:13px!important;
+  background:linear-gradient(180deg,#fff,#eaf4fb)!important;
+  color:#315c79!important;
+  font-size:27px!important;
+  box-shadow:0 3px 0 rgba(42,88,119,.08),0 7px 14px rgba(42,88,119,.08);
+}
+html[data-theme="dark"] .info-dialog-card,
+html[data-theme="system"] .info-dialog-card{
+  background:linear-gradient(145deg,#172d42,#112438)!important;
+  color:#eaf4fb!important;
+}
+html[data-theme="dark"] .info-dialog-card .about-section h2,
+html[data-theme="dark"] .info-dialog-card .contact-section h2,
+html[data-theme="system"] .info-dialog-card .about-section h2,
+html[data-theme="system"] .info-dialog-card .contact-section h2{
+  color:#f0f7ff!important;
+}
+html[data-theme="dark"] .info-dialog-card .about-section p,
+html[data-theme="dark"] .info-dialog-card .contact-section p,
+html[data-theme="system"] .info-dialog-card .about-section p,
+html[data-theme="system"] .info-dialog-card .contact-section p{
+  color:#d1e0ed!important;
+}
+html[data-theme="dark"] .info-dialog-card .contact-email,
+html[data-theme="system"] .info-dialog-card .contact-email{
+  background:#1b3850;border-color:#35546c;
+}
+html[data-theme="dark"] .info-dialog-card .contact-email a,
+html[data-theme="system"] .info-dialog-card .contact-email a{color:#9bd7ff!important}
+html[data-theme="dark"] .info-dialog-card .order-close,
+html[data-theme="system"] .info-dialog-card .order-close{
+  background:linear-gradient(180deg,#29445b,#1b344a)!important;
+  border-color:#46647a!important;color:#f1f7fc!important;
+}
+@media(max-width:600px){
+  .info-dialog{width:calc(100vw - 22px);max-height:80dvh;border-radius:20px}
+  .info-dialog-card{padding:56px 19px 22px!important}
+  .info-dialog-card .about-section,.info-dialog-card .contact-section{gap:15px!important}
+  .info-dialog-card .about-section p,.info-dialog-card .contact-section p{
+    font-size:15px;line-height:1.95;
+  }
+  .info-dialog-card .contact-email{align-items:flex-start;gap:9px;padding:10px;font-size:13px}
+  .info-dialog-card #contactButton{min-height:48px;font-size:13px}
+}
