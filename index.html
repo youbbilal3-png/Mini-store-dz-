@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="styles.css?v=20261116-11">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="location-data.js?v=20261116-4"></script>
-<script type="module" src="app.js?v=20261116-10"></script>
+<script type="module" src="app.js?v=20261116-11"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body class="auth-checking">
@@ -68,7 +68,7 @@
       <section class="site-menu-group" aria-label="Store">
         <span class="site-menu-section-title" data-i18n="menuStoreSection">المتجر</span>
         <a href="dashboard.html" id="merchantAccountLink" data-i18n="merchantAccount">متجري / لوحة التاجر</a>
-        <a href="admin.html" id="adminDashboardLink" hidden>🛡️ لوحة إدارة المنصة / Admin</a>
+        <a href="admin.html" id="adminDashboardLink" data-i18n-aria-label="adminDashboard" aria-label="لوحة إدارة المنصة"><span aria-hidden="true">🛡️ </span><span data-i18n="adminDashboard">لوحة إدارة المنصة / Admin</span></a>
         <a class="header-merchant-cta" id="createStoreLink" href="dashboard.html" data-i18n="joinMerchant">أنشئ متجرك</a>
       </section>
       <section class="site-menu-group" aria-label="Explore and help">
@@ -183,12 +183,12 @@
 <div class="order-form-fields"><label>الاسم الكامل<input id="customerName" required maxlength="80" autocomplete="name" placeholder="اسمك الكامل"></label><label>رقم الهاتف<input id="customerPhone" required type="tel" maxlength="20" autocomplete="tel" placeholder="05 أو 06 أو 07..."></label><label>ملاحظات (اختياري)<textarea id="customerNotes" rows="2" maxlength="300"></textarea></label></div>
 <div class="order-dialog-total" id="orderDialogTotal"></div><button class="primary-btn" id="submitCustomerOrder" type="submit">تأكيد الطلب والمتابعة إلى WhatsApp</button><p class="order-dialog-feedback" id="orderDialogFeedback" role="status"></p></form></dialog>
 </main>
-<nav class="app-bottom-nav" aria-label="التنقل الرئيسي">
- <a class="app-bottom-nav-item active" href="#top" aria-label="الرئيسية"><span aria-hidden="true">⌂</span><small>الرئيسية</small></a>
- <a class="app-bottom-nav-item" href="#featuredStoresSection" aria-label="المتاجر"><span aria-hidden="true">▦</span><small>المتاجر</small></a>
- <a class="app-bottom-nav-item" href="#products" aria-label="المنتجات"><span aria-hidden="true">◇</span><small>المنتجات</small></a>
- <a class="app-bottom-nav-item" href="account.html" aria-label="حسابي"><span aria-hidden="true">◎</span><small>حسابي</small></a>
- <button class="app-bottom-nav-item" type="button" id="appBottomMenuButton" aria-label="القائمة"><span aria-hidden="true">☰</span><small>القائمة</small></button>
+<nav class="app-bottom-nav" aria-label="التنقل الرئيسي" data-i18n-aria-label="bottomNavLabel">
+ <a class="app-bottom-nav-item active" href="#top" aria-label="الرئيسية" data-i18n-aria-label="bottomHome"><span aria-hidden="true">⌂</span><small data-i18n="bottomHome">الرئيسية</small></a>
+ <a class="app-bottom-nav-item" href="#featuredStoresSection" aria-label="المتاجر" data-i18n-aria-label="bottomStores"><span aria-hidden="true">▦</span><small data-i18n="bottomStores">المتاجر</small></a>
+ <a class="app-bottom-nav-item" href="#products" aria-label="المنتجات" data-i18n-aria-label="bottomProducts"><span aria-hidden="true">◇</span><small data-i18n="bottomProducts">المنتجات</small></a>
+ <a class="app-bottom-nav-item" href="account.html" aria-label="حسابي" data-i18n-aria-label="bottomAccount"><span aria-hidden="true">◎</span><small data-i18n="bottomAccount">حسابي</small></a>
+ <button class="app-bottom-nav-item" type="button" id="appBottomMenuButton" aria-label="القائمة" data-i18n-aria-label="bottomMenu"><span aria-hidden="true">☰</span><small data-i18n="bottomMenu">القائمة</small></button>
 </nav>
 <footer>
   <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
