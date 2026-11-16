@@ -37,7 +37,9 @@ function mount(){
  if(!brand||!brand.parentElement)return;
  const suite=document.createElement("div");suite.className="quran-brand-suite";
  brand.parentElement.insertBefore(suite,brand);suite.appendChild(brand);
- const lang=(document.documentElement.lang||(()=>{try{return localStorage.getItem("msdz-language")||"ar"}catch(e){return"ar"}})()).toLowerCase().slice(0,2);
+ let initialLang=(document.documentElement.lang||"ar").toLowerCase().slice(0,2);
+ if(initialLang==="ar"){try{initialLang=(localStorage.getItem("msdz-language")||"ar").toLowerCase().slice(0,2)}catch(e){}}
+ const lang=initialLang;
  const tr=translations[lang]||null;
  const frame=document.createElement("div");frame.className="quran-verse-frame";frame.setAttribute("role","note");frame.setAttribute("aria-label","آيات من سورة الفلق");
  frame.innerHTML='<span class="quran-frame-kicker">✦ آية مباركة ✦</span><span class="quran-frame-arabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span><span class="quran-frame-arabic" lang="ar" dir="rtl">وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ</span>'+(tr?'<span class="quran-frame-translation" lang="'+lang+'" dir="auto">'+tr.bismillah+' · '+tr.verse+'</span>':'')+'<span class="quran-frame-closing" lang="ar" dir="rtl">صَدَقَ اللَّهُ الْعَظِيمُ</span>'+(tr?'<span class="quran-frame-translation" lang="'+lang+'" dir="auto">'+tr.closing+'</span>':'');
