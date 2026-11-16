@@ -1914,3 +1914,34 @@ html[data-theme="dark"] #authenticatedSite .app-search-panel .global-search-loca
  #authenticatedSite .app-search-panel:not([hidden]){top:calc(env(safe-area-inset-top) + 76px);max-height:calc(100dvh - 96px);padding:12px}
 }
 html[data-theme="dark"] #authenticatedSite .app-search-panel:not([hidden]){background:linear-gradient(145deg,#172536,#142334)}
+
+/* MINABYB reference-matched brand header and menu controls */
+#authenticatedSite .site-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(14px,3vw,30px)}
+#authenticatedSite .brand-row{flex:1;min-width:0}
+#authenticatedSite .brand-logo-lockup{display:inline-flex;align-items:center;max-width:min(560px,100%);text-decoration:none}
+#authenticatedSite .brand-full-logo{display:block;width:clamp(235px,36vw,440px);height:auto;max-height:112px;object-fit:contain;filter:drop-shadow(0 5px 7px rgba(21,74,88,.12))}
+#authenticatedSite .header-tools{display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto}
+#authenticatedSite .site-menu-toggle{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 22px;border:1px solid rgba(37,201,160,.42)!important;border-radius:17px;background:linear-gradient(145deg,#35D9B0,#149B86)!important;color:#073E3B!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.65),0 5px 0 #0C7D70,0 9px 18px rgba(20,130,112,.16)!important;font-weight:900}
+#authenticatedSite .site-menu-panel .site-menu-quick-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 16px;padding:10px;border:1px solid #DCEAF2;border-radius:17px;background:linear-gradient(145deg,#F7FCFF,#EAF8F5)}
+#authenticatedSite .site-menu-panel .site-menu-quick-tools .global-search-toggle,#authenticatedSite .site-menu-panel .site-menu-quick-tools .theme-toggle{display:flex;align-items:center;justify-content:center;gap:9px;min-height:48px;width:100%;padding:10px 13px;border:0!important;outline:0!important;border-radius:13px;background:#fff!important;color:#23475A!important;box-shadow:0 3px 0 rgba(42,111,133,.12),0 6px 14px rgba(25,75,95,.08)!important;font:inherit;font-weight:850}
+#authenticatedSite .site-menu-panel .site-menu-quick-tools button:focus-visible{outline:2px solid #25C9A0!important;outline-offset:2px}
+#authenticatedSite .site-menu-panel .site-menu-quick-tools .global-search-toggle span:first-child,#authenticatedSite .site-menu-panel .site-menu-quick-tools .theme-toggle-icon{font-size:21px;line-height:1}
+#authenticatedSite .referral-promo-section{margin:18px clamp(12px,3vw,34px);padding:16px 20px;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;border-radius:18px}
+#authenticatedSite .referral-promo-icon{width:48px;height:48px;border-radius:14px;font-size:25px}
+#authenticatedSite .referral-promo-copy h2{margin:2px 0;font-size:clamp(16px,2vw,21px)}
+#authenticatedSite .referral-promo-copy p{font-size:12px;line-height:1.6}
+#authenticatedSite .referral-promo-cta{padding:10px 14px;font-size:13px}
+@media(max-width:760px){
+ #authenticatedSite .site-header{padding:7px 12px;gap:8px}
+ #authenticatedSite .brand-full-logo{width:clamp(190px,56vw,270px);max-height:72px}
+ #authenticatedSite .site-menu-toggle{min-height:45px;padding:0 15px;border-radius:14px}
+ #authenticatedSite .site-menu-panel{width:min(360px,calc(100vw - 24px))}
+ #authenticatedSite .referral-promo-section{margin:14px 12px;padding:13px 14px;grid-template-columns:auto minmax(0,1fr);gap:10px}
+ #authenticatedSite .referral-promo-icon{width:42px;height:42px;font-size:22px}
+ #authenticatedSite .referral-promo-copy h2{font-size:16px}
+ #authenticatedSite .referral-promo-copy p{font-size:11px;line-height:1.45}
+ #authenticatedSite .referral-promo-cta{grid-column:2;justify-self:start;padding:8px 12px}
+}
+@media(max-width:370px){#authenticatedSite .brand-full-logo{width:178px}#authenticatedSite .site-menu-toggle{padding:0 11px}}
+html[data-theme="dark"] #authenticatedSite .site-menu-panel .site-menu-quick-tools{background:linear-gradient(145deg,#172536,#142B35);border-color:#344B60}
+html[data-theme="dark"] #authenticatedSite .site-menu-panel .site-menu-quick-tools button{background:#20364A!important;color:#E9F5FA!important}
