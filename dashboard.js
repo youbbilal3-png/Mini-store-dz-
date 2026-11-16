@@ -289,8 +289,9 @@ function refreshDashboardLocationOptions(selectedCountry,selectedWilaya,selected
  $("storeRegionWrap").hidden=!country||isAlgeria;
  geo.populateWilayaSelect(wilayaSelect,{lang,selected:selectedWilaya!==undefined?selectedWilaya:wilayaSelect.value,placeholder:"اختر الولاية"});
  wilayaSelect.required=isAlgeria;
+ if(!isAlgeria)wilayaSelect.value="";
  if(selectedRegion!==undefined)$("storeRegionInput").value=selectedRegion||"";
- if(isAlgeria)$("storeRegionInput").value="";
+ if(isAlgeria||!country)$("storeRegionInput").value="";
 }
 function fillSettings(){
  $("sellerNameInput").value=store.seller_name||"";
