@@ -2086,3 +2086,31 @@ html[data-theme="dark"] #authenticatedSite .app-search-panel .global-search-loca
   #authenticatedSite .sponsored-ads-home{width:calc(100% - 20px);margin:14px auto;padding:16px 12px;border-radius:20px}
   #authenticatedSite .sponsored-ads-home .sponsored-ads-empty{min-height:120px}
 }
+
+
+/* Minimal paired homepage shortcuts: featured stores and rewards. */
+#authenticatedSite .home-shortcut-links{
+  width:min(760px,calc(100% - 32px));margin:24px auto 30px;padding:0;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+  background:transparent;border:0;box-shadow:none;
+}
+#authenticatedSite .home-shortcut-btn{
+  min-width:0;min-height:62px;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:10px;
+  border:1px solid rgba(255,255,255,.78);border-radius:17px;
+  background:linear-gradient(145deg,#E5FFF7 0%,#BCEFE1 52%,#BBDFFF 100%);
+  color:#17445A;text-decoration:none;font-size:clamp(13px,1.7vw,16px);font-weight:900;
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.9),0 5px 0 #78BEB4,0 10px 18px rgba(32,91,119,.13);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+#authenticatedSite .home-shortcut-btn:active{transform:translateY(3px);box-shadow:inset 0 2px 3px rgba(255,255,255,.8),0 2px 0 #78BEB4,0 5px 10px rgba(32,91,119,.12)}
+#authenticatedSite .home-shortcut-icon{font-size:21px;line-height:1}
+#authenticatedSite .home-shortcut-arrow{font-size:15px;color:#278D87}
+@media(max-width:480px){
+ #authenticatedSite .home-shortcut-links{width:calc(100% - 20px);gap:9px;margin:18px auto 24px}
+ #authenticatedSite .home-shortcut-btn{min-height:56px;padding:10px 7px;gap:6px;border-radius:14px;font-size:12px}
+ #authenticatedSite .home-shortcut-icon{font-size:18px}
+}
+html[data-theme="dark"] #authenticatedSite .home-shortcut-btn{
+ background:linear-gradient(145deg,#234A4A,#24435C);color:#EAFBF7;border-color:#477A83;
+ box-shadow:inset 0 2px 3px rgba(255,255,255,.08),0 5px 0 #173A46,0 10px 18px rgba(0,0,0,.2)
+}
