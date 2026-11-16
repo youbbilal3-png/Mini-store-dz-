@@ -42,6 +42,19 @@ function mount(){
  const frame=document.createElement("div");frame.className="quran-verse-frame";frame.setAttribute("role","note");frame.setAttribute("aria-label","آيات من سورة الفلق");
  frame.innerHTML='<span class="quran-frame-kicker">✦ آية مباركة ✦</span><span class="quran-frame-arabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span><span class="quran-frame-arabic" lang="ar" dir="rtl">وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ</span>'+(tr?'<span class="quran-frame-translation" lang="'+lang+'" dir="auto">'+tr.bismillah+' · '+tr.verse+'</span>':'')+'<span class="quran-frame-closing" lang="ar" dir="rtl">صَدَقَ اللَّهُ الْعَظِيمُ</span>'+(tr?'<span class="quran-frame-translation" lang="'+lang+'" dir="auto">'+tr.closing+'</span>':'');
  suite.appendChild(frame);
+ function refreshQuranTranslation(){
+  let current=(document.documentElement.lang||"ar").toLowerCase().slice(0,2);
+  if(current==="ar"){try{current=(localStorage.getItem("msdz-language")||"ar").toLowerCase().slice(0,2)}catch(e){}}
+  const copy=translations[current]||null;
+  const lines=frame.querySelectorAll(".quran-frame-translation");
+  if(copy){
+   if(lines[0])lines[0].textContent=copy.bismillah+" · "+copy.verse;
+   if(lines[1])lines[1].textContent=copy.closing;
+  }
+  frame.querySelector(".quran-frame-kicker").textContent=copy?"✦ "+({fr:"VERSET CORANIQUE",en:"QURANIC VERSE",es:"VERSÍCULO CORÁNICO",de:"KORANVERS",tr:"KUR’AN AYETİ"}[current]||"✦ آية مباركة ✦")+" ✦":"✦ آية مباركة ✦";
+ }
+ new MutationObserver(refreshQuranTranslation).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+ document.querySelectorAll("select[id*=Language],select[id*=language]").forEach(select=>select.addEventListener("change",()=>setTimeout(refreshQuranTranslation,0)));
  const style=document.createElement("style");style.id="quran-brand-frame-styles";style.textContent=css;document.head.appendChild(style);
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
