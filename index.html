@@ -18,10 +18,10 @@
 <link rel="icon" href="app-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="app-icon.svg?v=2">
 <title>MINABYB | اكتشف المتاجر والمنتجات في الجزائر</title>
-<link rel="stylesheet" href="styles.css?v=20261116-7">
+<link rel="stylesheet" href="styles.css?v=20261116-8">
 <script>document.documentElement.classList.add("language-loading");window.setTimeout(()=>document.documentElement.classList.remove("language-loading"),3000);try{const l=localStorage.getItem("msdz-language");if(["ar","fr","en","es","de","tr"].includes(l)){document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";}}catch(e){}</script>
 <script src="location-data.js?v=20261116-4"></script>
-<script type="module" src="app.js?v=20261116-5"></script>
+<script type="module" src="app.js?v=20261116-6"></script>
 <script defer src="pwa.js?v=20261114-2"></script>
 </head>
 <body class="auth-checking">
@@ -38,7 +38,7 @@
 
 <header class="site-header">
   <div class="brand-row">
-    <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg" alt=""><span class="brand-name" dir="ltr"><span class="brand-mina">MINA</span><span class="brand-byb">BYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
+    <a class="brand" href="#" aria-label="MINABYB home"><img class="brand-symbol" src="app-icon.svg?v=20261116-2" alt="MINABYB shopping bag logo"><span class="brand-name" dir="ltr"><span class="brand-wordmark">MINABYB</span><small class="brand-tagline">WORLD OF SHOPPING</small></span></a>
     
   </div>
   <div class="header-tools">
@@ -80,7 +80,7 @@
   </div>
 </header>
 <main id="top">
-  <section class="global-search-panel app-search-panel" id="globalSearchPanel">
+  <section class="global-search-panel app-search-panel" id="globalSearchPanel" hidden>
     <div class="global-search-input-row"><span class="app-search-symbol" aria-hidden="true">⌕</span><input id="globalSearchInput" type="search" placeholder="ابحث عن متجر أو منتج..." aria-label="بحث"><button type="button" id="globalSearchClose" aria-label="إغلاق البحث" title="إغلاق">×</button></div>
     <div class="global-search-location-row"><label><span id="globalSearchCountryLabel">البلد</span><select id="globalSearchCountry"></select></label><label id="globalSearchWilayaWrap" hidden><span id="globalSearchWilayaLabel">الولاية</span><select id="globalSearchWilaya"></select></label><label id="globalSearchRegionWrap" hidden><span id="globalSearchRegionLabel">المنطقة / الولاية الإدارية</span><input id="globalSearchRegion" type="search" placeholder="اكتب اسم المنطقة"></label></div>
     <div class="global-search-results" id="globalSearchResults" hidden aria-live="polite"></div>
