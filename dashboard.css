@@ -240,3 +240,277 @@ html[data-theme="dark"] .payment-form-footer{border-color:var(--line,#344256);ba
 .store-switcher{max-width:180px;min-width:110px;min-height:38px;padding:7px 10px;border:1px solid #dce5d4;border-radius:10px;background:#fff;color:#243247;font:inherit;font-size:12px;font-weight:800}.store-switcher[hidden]{display:none!important}@media(max-width:600px){.dashboard-header-actions{gap:7px}.store-switcher{max-width:130px;min-width:90px;font-size:11px}.dashboard-header-actions .dashboard-back{padding:8px 10px;font-size:11px}}
 
 .form-fields select{width:100%;border:1px solid #dfe5d8;border-radius:10px;padding:11px 12px;font:inherit;font-size:13px;color:#101827;background:#fff;outline:none;min-height:42px}.form-fields select:focus{border-color:#8eae53;box-shadow:0 0 0 3px #c7f36b33}
+
+
+/* MINABYB Merchant Studio — premium 3D dashboard visual layer */
+.dashboard-page{
+  --dash-ink:#203247;--dash-muted:#71869A;--dash-line:#DDE9F2;
+  --dash-mint:#25C9A0;--dash-blue:#62B8FF;--dash-coral:#FF9B70;--dash-ice:#F4F8FF;
+  min-height:100vh;background:
+    radial-gradient(ellipse at 8% 0%,rgba(98,184,255,.13),transparent 34%),
+    radial-gradient(ellipse at 95% 8%,rgba(37,201,160,.12),transparent 30%),#F4F8FF!important;
+  color:var(--dash-ink)
+}
+.dashboard-page .dashboard-header{
+  position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:12px clamp(14px,3vw,34px);
+  border:0;border-bottom:1px solid rgba(211,229,241,.85);
+  background:rgba(255,255,255,.90);backdrop-filter:blur(18px);
+  box-shadow:0 5px 18px rgba(35,75,105,.07)
+}
+.dashboard-page .dashboard-header .brand{gap:10px}
+.dashboard-page .dashboard-header .brand-symbol{filter:drop-shadow(0 4px 7px rgba(37,150,140,.2))}
+.dashboard-page .dashboard-header .brand-name{font-weight:950;letter-spacing:.3px}
+.dashboard-page .dashboard-header .brand-mina{color:#287DAE}
+.dashboard-page .dashboard-header .brand-byb{color:#159F87}
+.dashboard-page .dashboard-header-actions{gap:8px}
+.dashboard-page .dashboard-header-actions .language-picker,
+.dashboard-page .dashboard-header-actions .theme-toggle,
+.dashboard-page .store-switcher{
+  min-height:38px;padding:6px 10px;border:1px solid #DCEAF3;border-radius:11px;
+  background:linear-gradient(145deg,#fff,#F0F7FF);color:#31536B;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #DCE8F0,0 6px 12px rgba(38,82,112,.07)
+}
+.dashboard-page .dashboard-tag{
+  padding:7px 11px;border:1px solid #D9EEE8;border-radius:999px;
+  background:#EAF9F4;color:#267C69;font-weight:850
+}
+.dashboard-page .dashboard-back{
+  border:1px solid #A9D9F5;border-radius:11px;
+  background:linear-gradient(145deg,#E7F5FF,#CDEAFF);color:#245D82;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #A8CFE6,0 6px 12px rgba(65,132,190,.12);
+  transition:transform .16s ease,box-shadow .16s ease
+}
+.dashboard-page #storeLink{background:linear-gradient(145deg,#D8F8EE,#B8EEDD);border-color:#A5E6D3;color:#126D59}
+.dashboard-page .dashboard-header-actions .text-button{
+  padding:8px 11px;border:1px solid #F2D2D0;border-radius:10px;
+  background:linear-gradient(145deg,#FFF8F7,#FDEBE9);color:#A64E4A;font-weight:800
+}
+.dashboard-page .dashboard-main{max-width:1320px;padding:30px clamp(14px,3vw,34px) 64px}
+.dashboard-page .dashboard-welcome{
+  position:relative;overflow:hidden;align-items:center;margin-bottom:22px;padding:clamp(20px,3vw,30px);
+  border:1px solid #D6EAF4;border-radius:25px;
+  background:linear-gradient(120deg,#FFFFFF 0%,#EDF7FF 54%,#E7FAF3 100%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.95),0 5px 0 rgba(98,184,255,.12),0 16px 32px rgba(36,89,123,.10)
+}
+.dashboard-page .dashboard-welcome::after{
+  content:"";position:absolute;inset:auto -35px -90px auto;width:230px;height:230px;border-radius:50%;
+  border:1px solid rgba(37,201,160,.16);box-shadow:0 0 0 18px rgba(37,201,160,.045),0 0 0 38px rgba(98,184,255,.035);
+  pointer-events:none
+}
+.dashboard-page .dashboard-welcome .eyebrow{color:#159F87;font-weight:950;letter-spacing:1.2px}
+.dashboard-page .dashboard-welcome h1{color:#203D55;font-size:clamp(25px,4vw,38px);font-weight:950;letter-spacing:-.6px}
+.dashboard-page .dashboard-welcome p{color:#6B8294;font-size:13px}
+.dashboard-page .dashboard-status{
+  position:relative;z-index:1;border:1px solid #BDEBDD;border-radius:999px;
+  background:linear-gradient(145deg,#F1FFF9,#DDF8ED);color:#267C69;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #B7E7D5,0 7px 14px rgba(37,150,120,.08);
+  font-weight:850
+}
+.dashboard-page .status-dot{background:#25C9A0;box-shadow:0 0 0 4px rgba(37,201,160,.13)}
+.dashboard-page .dashboard-grid{gap:24px}
+.dashboard-page .dashboard-sidebar{
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:2px
+}
+.dashboard-page .dashboard-sidebar .side-link{
+  position:relative;min-height:104px;padding:12px 10px;gap:8px;
+  border:1px solid #DFEAF2;border-radius:17px;
+  background:linear-gradient(150deg,#FFFFFF,#F5F9FF);color:#38566B;
+  box-shadow:inset 0 1px 0 #fff,0 4px 0 #DCE8F0,0 9px 17px rgba(38,82,112,.07);
+  font-size:12px;font-weight:900;line-height:1.35;
+  transition:transform .17s ease,box-shadow .17s ease,border-color .17s ease,filter .17s ease
+}
+.dashboard-page .dashboard-sidebar .side-link:hover{
+  transform:translateY(-2px);border-color:#A9DCCD;filter:saturate(1.06);
+  box-shadow:inset 0 1px 0 #fff,0 5px 0 #CFE5E9,0 12px 20px rgba(38,112,120,.11)
+}
+.dashboard-page .dashboard-sidebar .side-link.active{
+  transform:translateY(-1px);border-color:#8EDFC9;
+  background:linear-gradient(145deg,#E9FFF7,#D7F7EC);color:#126D59;
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #A8E2D0,0 8px 16px rgba(37,160,130,.12)
+}
+.dashboard-page .dashboard-menu-icon{
+  width:43px;height:43px;border:1px solid rgba(255,255,255,.95);border-radius:13px;
+  background:linear-gradient(145deg,#E5F7FF,#CDEAFF);font-size:22px;
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.95),0 3px 0 #BBD9EB,0 6px 10px rgba(50,110,145,.12);
+  transform:perspective(180px) rotateX(5deg)
+}
+.dashboard-page .dashboard-sidebar .side-link:nth-child(4n+2) .dashboard-menu-icon{background:linear-gradient(145deg,#E6FFF6,#C8F3E4);box-shadow:inset 0 2px 3px #fff,0 3px 0 #B0E2CF,0 6px 10px rgba(37,150,120,.12)}
+.dashboard-page .dashboard-sidebar .side-link:nth-child(4n+3) .dashboard-menu-icon{background:linear-gradient(145deg,#FFF1E9,#FFDDCC);box-shadow:inset 0 2px 3px #fff,0 3px 0 #F0C4AC,0 6px 10px rgba(190,120,80,.11)}
+.dashboard-page .dashboard-sidebar .side-link:nth-child(4n) .dashboard-menu-icon{background:linear-gradient(145deg,#F1EDFF,#E0D9FF);box-shadow:inset 0 2px 3px #fff,0 3px 0 #CEC4EF,0 6px 10px rgba(120,100,180,.11)}
+.dashboard-page .dashboard-sidebar .featured-promotion-link{
+  border-color:#F0D69A;background:linear-gradient(145deg,#FFF9E8,#FFF0C9);color:#79591B
+}
+.dashboard-page .dashboard-sidebar .featured-promotion-link .dashboard-menu-icon{
+  background:linear-gradient(145deg,#FFF1BD,#F8D978);box-shadow:inset 0 2px 3px #fff,0 3px 0 #E5C15E,0 6px 10px rgba(170,125,35,.13)
+}
+.dashboard-page .dashboard-sidebar .home-dashboard-link{
+  border-color:#A7E7D6;background:linear-gradient(145deg,#F0FFF9,#DDF8EF);color:#176E5C
+}
+.dashboard-page .dashboard-content{gap:18px}
+.dashboard-page .dash-panel{
+  padding:clamp(16px,2.3vw,26px);border:1px solid #DFEAF2;border-radius:21px;
+  background:linear-gradient(155deg,#FFFFFF 0%,#FBFDFF 100%);
+  box-shadow:inset 0 1px 0 #fff,0 4px 0 rgba(98,184,255,.07),0 12px 26px rgba(38,82,112,.065)
+}
+.dashboard-page .panel-heading h2{color:#203D55;font-weight:950;font-size:clamp(19px,2.4vw,24px)}
+.dashboard-page .panel-heading h3{color:#294B62;font-weight:900}
+.dashboard-page .panel-heading p{color:#74899A;line-height:1.8}
+.dashboard-page .panel-heading .eyebrow{color:#159F87;font-size:10px;font-weight:950;letter-spacing:1px}
+.dashboard-page .form-fields label,.dashboard-page .order-form-fields label{color:#38566B;font-weight:850}
+.dashboard-page .form-fields input,.dashboard-page .form-fields textarea,.dashboard-page .form-fields select,
+.dashboard-page .dashboard-search-row input,.dashboard-page .order-form-fields input,.dashboard-page .order-form-fields textarea,
+.dashboard-page .managed-order-controls select{
+  border:1px solid #DCE8F1;border-radius:11px;background:linear-gradient(180deg,#fff,#FAFCFF);
+  color:#263F53;box-shadow:inset 0 2px 4px rgba(40,80,110,.035);
+  transition:border-color .16s ease,box-shadow .16s ease
+}
+.dashboard-page .form-fields input:focus,.dashboard-page .form-fields textarea:focus,.dashboard-page .form-fields select:focus,
+.dashboard-page .dashboard-search-row input:focus,.dashboard-page .order-form-fields input:focus,.dashboard-page .order-form-fields textarea:focus{
+  border-color:#62B8FF;box-shadow:0 0 0 3px rgba(98,184,255,.16),inset 0 2px 4px rgba(40,80,110,.025);outline:none
+}
+.dashboard-page .save-button,.dashboard-page .primary-btn,.dashboard-page .upload-button{
+  border:1px solid #8EE2CD;border-radius:11px;
+  background:linear-gradient(145deg,#43D9B6,#20B995);color:#073F36;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 3px 0 #15977E,0 7px 14px rgba(21,157,131,.15);
+  font-weight:900;transition:transform .15s ease,box-shadow .15s ease,filter .15s ease
+}
+.dashboard-page .cancel-button{
+  border:1px solid #D7E5EF;border-radius:11px;background:linear-gradient(145deg,#fff,#EFF6FC);
+  color:#3C6078;box-shadow:inset 0 1px 0 #fff,0 3px 0 #D8E5EE,0 6px 12px rgba(40,80,110,.06);font-weight:800
+}
+.dashboard-page .save-button:hover,.dashboard-page .primary-btn:hover,.dashboard-page .upload-button:hover,
+.dashboard-page .cancel-button:hover,.dashboard-page .dashboard-back:hover{transform:translateY(-1px);filter:saturate(1.06)}
+.dashboard-page .save-button:active,.dashboard-page .primary-btn:active,.dashboard-page .upload-button:active,
+.dashboard-page .cancel-button:active,.dashboard-page .dashboard-back:active{transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 1px 0 rgba(40,80,110,.15)}
+.dashboard-page .product-form,.dashboard-page .subscription-payment-box{
+  border:1px solid #DFEAF2;border-radius:17px;background:linear-gradient(145deg,#F7FBFF,#F0FAF7);
+  box-shadow:inset 0 1px 0 #fff
+}
+.dashboard-page .store-identity-card{
+  border:1px solid #CFECE3;border-radius:18px;
+  background:linear-gradient(120deg,#F0FFF9,#EDF7FF);
+  box-shadow:inset 0 1px 0 #fff,0 4px 0 rgba(37,201,160,.09),0 10px 20px rgba(38,112,120,.07)
+}
+.dashboard-page .store-identity-avatar,.dashboard-page .avatar-preview{
+  border:3px solid #fff;background:linear-gradient(145deg,#D5F8ED,#A8EBD7);
+  box-shadow:inset 0 2px 4px rgba(255,255,255,.8),0 5px 0 rgba(37,160,130,.12),0 10px 20px rgba(35,95,100,.12)
+}
+.dashboard-page .identity-publish-status{border:1px solid #F1D9A7;background:#FFF5DE;color:#8A641E}
+.dashboard-page .identity-publish-status.is-published{border-color:#B9E8D5;background:#E6FAF1;color:#237557}
+.dashboard-page .stats-grid{gap:11px}
+.dashboard-page .stat-card{
+  border:1px solid #DFEAF2;border-radius:16px;
+  background:linear-gradient(145deg,#FFFFFF,#F3F9FF);
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 #DDEAF2,0 8px 16px rgba(38,82,112,.06)
+}
+.dashboard-page .stat-card:nth-child(2){background:linear-gradient(145deg,#F0FFF9,#E1F8EF);border-color:#C6ECDD}
+.dashboard-page .stat-card:nth-child(3){background:linear-gradient(145deg,#F0F7FF,#E2F0FF);border-color:#C9E0F6}
+.dashboard-page .stat-card:nth-child(4){background:linear-gradient(145deg,#FFF6EF,#FFE9DC);border-color:#F5D9C7}
+.dashboard-page .stat-card:nth-child(5){background:linear-gradient(145deg,#F5F1FF,#EBE5FF);border-color:#DCD2F6}
+.dashboard-page .stat-card strong{color:#203D55}
+.dashboard-page .chart-card,.dashboard-page .subscription-card{
+  border:1px solid #DFEAF2;border-radius:16px;background:linear-gradient(145deg,#fff,#F7FBFF);
+  box-shadow:inset 0 1px 0 #fff,0 3px 0 rgba(98,184,255,.07),0 8px 16px rgba(38,82,112,.05)
+}
+.dashboard-page .daily-chart-track{background:#EAF2F8}
+.dashboard-page .daily-chart-bar{background:linear-gradient(180deg,#62B8FF,#348BCB);border-radius:7px 7px 3px 3px}
+.dashboard-page .daily-chart-bar.sales{background:linear-gradient(180deg,#48D6B0,#159F87)}
+.dashboard-page .managed-product,.dashboard-page .managed-order,.dashboard-page .managed-review{
+  border:1px solid #E0EAF2;border-radius:15px;background:linear-gradient(145deg,#fff,#F8FBFF);
+  box-shadow:0 3px 0 rgba(98,184,255,.055),0 7px 14px rgba(38,82,112,.045)
+}
+.dashboard-page .managed-product-emoji{border:1px solid #DCEAF2;border-radius:12px;background:linear-gradient(145deg,#E7F8FF,#D4F1FF)}
+.dashboard-page .managed-product-actions button,.dashboard-page .managed-review-actions button{
+  border:1px solid #D9E6EF;border-radius:9px;background:linear-gradient(145deg,#fff,#F0F6FC);
+  color:#31536B;box-shadow:0 2px 0 #DCE8F0;font-weight:800
+}
+.dashboard-page .products-total,.dashboard-page .referral-count-pill,.dashboard-page .featured-promotion-price{
+  border:1px solid #CFE6F3;border-radius:999px;background:linear-gradient(145deg,#F0F8FF,#E4F3FF);
+  color:#316987;font-weight:900
+}
+.dashboard-page .featured-promotion-panel .featured-promotion-price{
+  border-color:#F0D69A;background:linear-gradient(145deg,#FFF8E5,#FFEDC2);color:#79591B
+}
+.dashboard-page .featured-promotion-benefits span{
+  border:1px solid #D7EDE4;border-radius:11px;background:linear-gradient(145deg,#F1FFF9,#E2F7EF);
+  color:#27735F;box-shadow:0 2px 0 rgba(37,160,130,.08);font-weight:850
+}
+.dashboard-page .subscription-status{border:1px solid #BDEBDD;background:linear-gradient(145deg,#F1FFF9,#DDF8ED);color:#267C69}
+.dashboard-page .subscription-current{border-color:#CDE9DC;border-radius:14px;background:linear-gradient(145deg,#F1FFF9,#EAF7FF)}
+.dashboard-page .billing-cycle-switch{border:1px solid #DCE8F1;background:#EDF4F9;border-radius:12px}
+.dashboard-page .billing-cycle-switch button.active{background:linear-gradient(145deg,#fff,#E9F8F2);color:#16715D;box-shadow:inset 0 1px 0 #fff,0 2px 0 #D4E7E0,0 5px 10px rgba(37,130,110,.08)}
+.dashboard-page .subscription-card.plan-pro{border-color:#A9E4D2;background:linear-gradient(150deg,#F5FFFB,#fff)}
+.dashboard-page .subscription-card.plan-premium{border-color:#D9CCF4;background:linear-gradient(150deg,#F8F5FF,#fff)}
+.dashboard-page .subscription-card .plan-label{color:#16856D}
+.dashboard-page .subscription-card.plan-premium .plan-label{color:#7659A6}
+.dashboard-page .subscription-card .plan-current{background:#EAF8F2;color:#26745F}
+.dashboard-page .payment-form-section,.dashboard-page .payment-form-footer,.dashboard-page .payment-details-view{
+  border:1px solid #DFEAF2;border-radius:13px;background:linear-gradient(145deg,#fff,#F5FAFF)
+}
+.dashboard-page .payment-amount-line strong{color:#159F87}
+.dashboard-page .review-admin-summary{border:1px solid #F2E2B9;background:linear-gradient(145deg,#FFF9E8,#FFF0CE)}
+.dashboard-page .dashboard-footer{color:#7B91A2}
+.dashboard-page .dashboard-footer strong{color:#159F87}
+.dashboard-page :focus-visible{outline:3px solid rgba(98,184,255,.55);outline-offset:2px}
+html[data-theme="dark"] .dashboard-page{
+  --dash-ink:#E8F2F8;--dash-muted:#A9BDCC;--dash-line:#344B60;
+  background:radial-gradient(ellipse at 8% 0%,rgba(50,115,155,.16),transparent 34%),radial-gradient(ellipse at 95% 8%,rgba(37,150,125,.12),transparent 30%),#0D1926!important;color:#E8F2F8
+}
+html[data-theme="dark"] .dashboard-page .dashboard-header{background:rgba(18,31,45,.94);border-color:#30475B}
+html[data-theme="dark"] .dashboard-page .dashboard-tag{background:#1D3C3A;border-color:#356B62;color:#B9F3E1}
+html[data-theme="dark"] .dashboard-page .dashboard-back{background:linear-gradient(145deg,#24435A,#1C3449);border-color:#42657D;color:#E2F3FC;box-shadow:0 3px 0 #13283A,0 6px 12px #0003}
+html[data-theme="dark"] .dashboard-page #storeLink{background:linear-gradient(145deg,#20584F,#19463F);border-color:#397A6D;color:#DFFFF5}
+html[data-theme="dark"] .dashboard-page .dashboard-welcome{background:linear-gradient(120deg,#172B3D,#193448 55%,#173B39);border-color:#35566A}
+html[data-theme="dark"] .dashboard-page .dashboard-welcome h1,html[data-theme="dark"] .dashboard-page .panel-heading h2,html[data-theme="dark"] .dashboard-page .panel-heading h3{color:#EAF4FA}
+html[data-theme="dark"] .dashboard-page .dashboard-welcome p,html[data-theme="dark"] .dashboard-page .panel-heading p{color:#A9BDCC}
+html[data-theme="dark"] .dashboard-page .dashboard-status{background:linear-gradient(145deg,#1E4942,#193C38);border-color:#356B62;color:#B9F3E1}
+html[data-theme="dark"] .dashboard-page .dashboard-sidebar .side-link{background:linear-gradient(150deg,#1C3043,#172839);border-color:#344B60;color:#D8E8F1;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 4px 0 #102131,0 8px 16px #0003}
+html[data-theme="dark"] .dashboard-page .dashboard-sidebar .side-link.active{background:linear-gradient(145deg,#1D4942,#1A3C3B);border-color:#3E8A79;color:#BFF7E6}
+html[data-theme="dark"] .dashboard-page .dashboard-sidebar .featured-promotion-link{background:linear-gradient(145deg,#4B3A1A,#382D19);border-color:#8D7138;color:#FFE5A0}
+html[data-theme="dark"] .dashboard-page .dashboard-menu-icon{border-color:#40596C;background:linear-gradient(145deg,#2A5066,#203B50);box-shadow:inset 0 2px 3px #ffffff20,0 3px 0 #142A3A,0 6px 10px #0004}
+html[data-theme="dark"] .dashboard-page .dash-panel{background:linear-gradient(155deg,#172839,#142333);border-color:#344B60;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 4px 0 rgba(0,0,0,.12),0 12px 26px rgba(0,0,0,.16)}
+html[data-theme="dark"] .dashboard-page .form-fields label,html[data-theme="dark"] .dashboard-page .order-form-fields label{color:#C8D9E4}
+html[data-theme="dark"] .dashboard-page .form-fields input,html[data-theme="dark"] .dashboard-page .form-fields textarea,html[data-theme="dark"] .dashboard-page .form-fields select,html[data-theme="dark"] .dashboard-page .dashboard-search-row input,html[data-theme="dark"] .dashboard-page .order-form-fields input,html[data-theme="dark"] .dashboard-page .order-form-fields textarea,html[data-theme="dark"] .dashboard-page .managed-order-controls select{background:#101E2B;border-color:#385268;color:#EAF4FA}
+html[data-theme="dark"] .dashboard-page .product-form,html[data-theme="dark"] .dashboard-page .subscription-payment-box{background:linear-gradient(145deg,#1A3042,#172A3B);border-color:#344B60}
+html[data-theme="dark"] .dashboard-page .store-identity-card{background:linear-gradient(120deg,#1A3B3B,#1B3044);border-color:#3C6D69}
+html[data-theme="dark"] .dashboard-page .stat-card,html[data-theme="dark"] .dashboard-page .chart-card,html[data-theme="dark"] .dashboard-page .subscription-card,html[data-theme="dark"] .dashboard-page .managed-product,html[data-theme="dark"] .dashboard-page .managed-order,html[data-theme="dark"] .dashboard-page .managed-review{background:linear-gradient(145deg,#1B3042,#17293A);border-color:#344B60;color:#E8F2F8}
+html[data-theme="dark"] .dashboard-page .stat-card strong,html[data-theme="dark"] .dashboard-page .chart-heading h3,html[data-theme="dark"] .dashboard-page .store-identity-copy h3{color:#EAF4FA}
+html[data-theme="dark"] .dashboard-page .payment-form-section,html[data-theme="dark"] .dashboard-page .payment-form-footer,html[data-theme="dark"] .dashboard-page .payment-details-view{background:linear-gradient(145deg,#1B3042,#17293A);border-color:#344B60;color:#E8F2F8}
+html[data-theme="dark"] .dashboard-page .cancel-button,html[data-theme="dark"] .dashboard-page .managed-product-actions button,html[data-theme="dark"] .dashboard-page .managed-review-actions button{background:linear-gradient(145deg,#263F53,#203449);border-color:#40596D;color:#E8F2F8;box-shadow:0 2px 0 #13283A}
+html[data-theme="dark"] .dashboard-page .products-total,html[data-theme="dark"] .dashboard-page .referral-count-pill{background:linear-gradient(145deg,#203F54,#1B3448);border-color:#3B6178;color:#C7E9FB}
+html[data-theme="dark"] .dashboard-page .featured-promotion-price{background:linear-gradient(145deg,#4B3A1A,#382D19);border-color:#8D7138;color:#FFE5A0}
+html[data-theme="dark"] .dashboard-page .featured-promotion-benefits span{background:#1D403A;border-color:#356B62;color:#B9F3E1}
+html[data-theme="dark"] .dashboard-page .subscription-status{background:#1E4942;border-color:#356B62;color:#B9F3E1}
+html[data-theme="dark"] .dashboard-page .subscription-current{background:#1A3B36;border-color:#356B62;color:#D9F7EC}
+html[data-theme="dark"] .dashboard-page .billing-cycle-switch{background:#101E2B;border-color:#344B60}
+html[data-theme="dark"] .dashboard-page .billing-cycle-switch button.active{background:#244A46;color:#DFFFF5;box-shadow:0 2px 0 #153530}
+html[data-theme="dark"] .dashboard-page .subscription-card.plan-pro{background:linear-gradient(150deg,#193D39,#172D34);border-color:#356B62}
+html[data-theme="dark"] .dashboard-page .subscription-card.plan-premium{background:linear-gradient(150deg,#302B48,#202B40);border-color:#5D527F}
+html[data-theme="dark"] .dashboard-page .subscription-card .plan-current{background:#23463E;color:#DFFFF5}
+html[data-theme="dark"] .dashboard-page .review-admin-summary{background:linear-gradient(145deg,#44381F,#342C1D);border-color:#6E5B35}
+html[data-theme="system"] .dashboard-page .dashboard-welcome{border-color:#35566A}
+@media(max-width:900px){.dashboard-page .dashboard-sidebar{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){
+  .dashboard-page .dashboard-header{position:relative;align-items:flex-start;flex-direction:column;padding:10px 14px}
+  .dashboard-page .dashboard-header-actions{width:100%;gap:7px}
+  .dashboard-page .dashboard-header-actions>*{max-width:100%}
+  .dashboard-page .dashboard-main{padding-top:18px}
+  .dashboard-page .dashboard-welcome{align-items:flex-start;flex-direction:column;gap:12px;border-radius:19px}
+  .dashboard-page .dashboard-sidebar{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .dashboard-page .dashboard-sidebar .side-link{min-height:88px;padding:9px 5px;gap:6px;font-size:10.5px;border-radius:14px}
+  .dashboard-page .dashboard-menu-icon{width:36px;height:36px;border-radius:11px;font-size:19px}
+  .dashboard-page .dash-panel{border-radius:17px}
+  .dashboard-page .panel-actions{gap:8px}
+  .dashboard-page .panel-actions>*{max-width:100%}
+}
+@media(max-width:420px){
+  .dashboard-page .dashboard-sidebar{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .dashboard-page .dashboard-sidebar .side-link{min-height:82px}
+  .dashboard-page .dashboard-header-actions{flex-wrap:wrap}
+  .dashboard-page .dashboard-tag{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .dashboard-page .dashboard-sidebar .side-link,.dashboard-page .save-button,.dashboard-page .cancel-button,
+  .dashboard-page .dashboard-back{transition:none!important}
+}
