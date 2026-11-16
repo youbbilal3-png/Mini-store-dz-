@@ -31,8 +31,9 @@ function refreshCreateStoreLocationOptions(selectedCountry,selectedWilaya,select
  $("newStoreRegionWrap").hidden=!country||isAlgeria;
  geo.populateWilayaSelect(wilayaSelect,{lang,selected:selectedWilaya!==undefined?selectedWilaya:wilayaSelect.value,placeholder:words.chooseWilaya});
  wilayaSelect.required=isAlgeria;
+ if(!isAlgeria)wilayaSelect.value="";
  if(selectedRegion!==undefined)$("newStoreRegion").value=selectedRegion||"";
- if(isAlgeria)$("newStoreRegion").value="";
+ if(isAlgeria||!country)$("newStoreRegion").value="";
 }
 function applyLanguage(next){lang=translations[next]?next:"ar";words=translations[lang];document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-t]").forEach(node=>{const key=node.dataset.t;if(words[key])node.textContent=words[key];});$("createStoreLanguage").value=lang;try{localStorage.setItem("msdz-language",lang);}catch(e){}refreshCreateStoreLocationOptions();}
 const requested=new URLSearchParams(location.search).get("lang");let saved="ar";try{saved=localStorage.getItem("msdz-language")||"ar";}catch(e){}applyLanguage(translations[requested]?requested:saved);
